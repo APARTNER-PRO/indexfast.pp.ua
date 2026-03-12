@@ -107,6 +107,122 @@
   }
   </script>
 
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "Як підключити IndexFast і прискорити індексацію сайту в Google",
+    "description": "Покроковий гайд з підключення IndexFast — сервісу для миттєвої індексації сторінок у Google через офіційний Indexing API. Займає до 10 хвилин.",
+    "image": {
+        "@type": "ImageObject",
+        "url": "https://indexfast.pp.ua/og-image.jpg",
+        "width": 1200,
+        "height": 630
+    },
+    "totalTime": "PT10M",
+    "estimatedCost": {
+        "@type": "MonetaryAmount",
+        "currency": "UAH",
+        "value": "0"
+    },
+    "supply": [
+        {
+            "@type": "HowToSupply",
+            "name": "Акаунт Google"
+        },
+        {
+            "@type": "HowToSupply",
+            "name": "Сайт з sitemap.xml"
+        },
+        {
+            "@type": "HowToSupply",
+            "name": "Доступ до Google Search Console"
+        }
+    ],
+    "tool": [
+        {
+            "@type": "HowToTool",
+            "name": "Google Search Console"
+        },
+        {
+            "@type": "HowToTool",
+            "name": "Google Cloud Console"
+        },
+        {
+            "@type": "HowToTool",
+            "name": "IndexFast"
+        }
+    ],
+    "step": [
+        {
+            "@type": "HowToStep",
+            "position": 1,
+            "name": "Зареєструйтесь в IndexFast",
+            "text": "Перейдіть на indexfast.pp.ua та створіть безкоштовний акаунт. Реєстрація займає менше хвилини — потрібен лише email або акаунт Google.",
+            "url": "https://indexfast.pp.ua/auth.html?mode=register",
+            "image": {
+                "@type": "ImageObject",
+                "url": "https://indexfast.pp.ua/og-image.jpg",
+                "width": 1200,
+                "height": 630
+            }
+        },
+        {
+            "@type": "HowToStep",
+            "position": 2,
+            "name": "Підключіть Google Search Console",
+            "text": "Додайте свій сайт і підтвердіть право власності через Google Search Console. Це дозволяє IndexFast відправляти URL на індексацію від вашого імені.",
+            "url": "https://indexfast.pp.ua/docs/",
+            "image": {
+                "@type": "ImageObject",
+                "url": "https://indexfast.pp.ua/og-image.jpg",
+                "width": 1200,
+                "height": 630
+            }
+        },
+        {
+            "@type": "HowToStep",
+            "position": 3,
+            "name": "Створіть Service Account у Google Cloud",
+            "text": "У Google Cloud Console створіть проєкт, увімкніть Indexing API, додайте Service Account і завантажте JSON-ключ. Детальна інструкція є в документації IndexFast.",
+            "url": "https://indexfast.pp.ua/docs/",
+            "image": {
+                "@type": "ImageObject",
+                "url": "https://indexfast.pp.ua/og-image.jpg",
+                "width": 1200,
+                "height": 630
+            }
+        },
+        {
+            "@type": "HowToStep",
+            "position": 4,
+            "name": "Додайте сайт і вкажіть sitemap",
+            "text": "В кабінеті IndexFast додайте свій сайт, завантажте JSON-ключ Service Account і вкажіть URL sitemap.xml. Сервіс автоматично визначить всі сторінки для індексації.",
+            "url": "https://indexfast.pp.ua/dashboard/",
+            "image": {
+                "@type": "ImageObject",
+                "url": "https://indexfast.pp.ua/og-image.jpg",
+                "width": 1200,
+                "height": 630
+            }
+        },
+        {
+            "@type": "HowToStep",
+            "position": 5,
+            "name": "Запустіть індексацію",
+            "text": "Натисніть «Запустити» — IndexFast відправить URL через Google Indexing API. Перші результати з'являються вже через 24 години. На безкоштовному плані — до 20 URL на день.",
+            "url": "https://indexfast.pp.ua/dashboard/",
+            "image": {
+                "@type": "ImageObject",
+                "url": "https://indexfast.pp.ua/og-image.jpg",
+                "width": 1200,
+                "height": 630
+            }
+        }
+    ]
+}
+  </script>
   <!-- ═══ FONTS ═══ -->
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap">
   <link rel="preconnect" href="https://fonts.googleapis.com">
