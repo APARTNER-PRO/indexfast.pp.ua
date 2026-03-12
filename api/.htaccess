@@ -1,0 +1,13 @@
+Options -Indexes
+
+# Забороняємо прямий доступ до helper файлів
+<FilesMatch "^(config|db|helpers|middleware)\.php$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Дозволяємо тільки PHP файли в auth/
+<Files "*.php">
+    Order allow,deny
+    Allow from all
+</Files>
