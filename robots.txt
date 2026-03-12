@@ -8,6 +8,7 @@ Allow: /
 Disallow: /api/
 Disallow: /admin/
 Disallow: /dashboard/
+Disallow: /auth.html
 Disallow: /*.json$
 
 # Sitemap
