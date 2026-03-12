@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23050508'/><text x='16' y='22' font-family='system-ui,sans-serif' font-size='15' font-weight='800' fill='%2300ff88' text-anchor='middle'>IF</text></svg>">
+  <link rel="apple-touch-icon" sizes="180x180" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23050508'/><text x='16' y='22' font-family='system-ui,sans-serif' font-size='15' font-weight='800' fill='%2300ff88' text-anchor='middle'>IF</text></svg>">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Документація — IndexFast</title>
+  <meta name="description" content="Повна документація IndexFast: швидкий старт, налаштування Google Indexing API, автоматизація, API reference та приклади інтеграцій.">
+  <link rel="canonical" href="https://indexfast.pp.ua/docs/">
+
+    <meta property="og:type" content="website">
+  <meta property="og:url" content="https://indexfast.pp.ua/docs/">
+  <meta property="og:title" content="Документація — IndexFast">
+  <meta property="og:description" content="Повна документація IndexFast: швидкий старт, налаштування Google Indexing API, PHP скрипт, автоматизація та API reference.">
+  <meta property="og:image" content="https://indexfast.pp.ua/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="uk_UA">
+  <meta property="og:site_name" content="IndexFast">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Документація — IndexFast">
+  <meta name="twitter:description" content="Повна документація IndexFast: швидкий старт, налаштування Google Indexing API, PHP скрипт, автоматизація та API reference.">
+  <meta name="twitter:image" content="https://indexfast.pp.ua/og-image.jpg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --black:   #050508;
+      --dark:    #0c0c14;
+      --card:    #111119;
+      --card2:   #16161f;
+      --border:  rgba(255,255,255,0.07);
+      --border2: rgba(255,255,255,0.04);
+      --green:   #00ff88;
+      --green-d: #00c96a;
+      --blue:    #4db8ff;
+      --yellow:  #ffd060;
+      --red:     #ff6b6b;
+      --white:   #eeeef6;
+      --muted:   #72728a;
+      --font-ui:   'Syne', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --nav-h: 60px;
+      --sidebar-w: 260px;
+    }
+
+    html { scroll-behavior: smooth; scroll-padding-top: 88px; }
+    body { background: var(--black); color: var(--white); font-family: var(--font-body); font-weight: 300; line-height: 1.7; overflow-x: hidden; }
+
+    /* ── TOP NAV ── */
+    .top-nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 300;
+      height: var(--nav-h); padding: 0 28px;
+      display: flex; align-items: center; justify-content: space-between;
+      background: rgba(5,5,8,0.96); backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-left { display: flex; align-items: center; gap: 20px; }
+    .logo { font-family: var(--font-ui); font-size: 1.25rem; font-weight: 800; letter-spacing: -0.03em; color: var(--white); text-decoration: none; }
+    .logo span { color: var(--green); }
+    .nav-divider { width: 1px; height: 18px; background: var(--border); }
+    .nav-badge { font-size: 0.72rem; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; font-weight: 500; }
+    .nav-right { display: flex; align-items: center; gap: 16px; }
+    .nav-link { color: var(--muted); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
+    .nav-link:hover { color: var(--white); }
+    .nav-cta { background: var(--green); color: var(--black); padding: 7px 18px; border-radius: 100px; font-family: var(--font-ui); font-weight: 700; font-size: 0.8rem; text-decoration: none; transition: box-shadow 0.2s; }
+    .nav-cta:hover { box-shadow: 0 0 20px rgba(0,255,136,0.4); }
+
+    /* ── SEARCH BAR ── */
+    .search-wrap {
+      position: fixed; top: var(--nav-h); left: var(--sidebar-w); right: 0; z-index: 200;
+      padding: 10px 28px;
+      background: rgba(5,5,8,0.94); backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border2);
+      transition: left 0.3s;
+    }
+    .search-inner { max-width: 640px; position: relative; }
+    .search-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--muted); font-size: 0.9rem; pointer-events: none; }
+    .search-input {
+      width: 100%; background: var(--card); border: 1px solid var(--border);
+      border-radius: 10px; padding: 9px 14px 9px 38px;
+      color: var(--white); font-family: var(--font-body); font-size: 0.875rem;
+      outline: none; transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-input::placeholder { color: var(--muted); }
+    .search-input:focus { border-color: rgba(0,255,136,0.3); box-shadow: 0 0 0 3px rgba(0,255,136,0.07); }
+    .search-kbd { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); display: flex; gap: 3px; }
+    .kbd { background: var(--card2); border: 1px solid var(--border); border-radius: 5px; padding: 2px 6px; font-family: var(--font-mono); font-size: 0.65rem; color: var(--muted); }
+
+    /* ── LAYOUT ── */
+    .docs-layout {
+      display: flex;
+      min-height: 100vh;
+      padding-top: var(--nav-h);
+    }
+
+    /* ── SIDEBAR ── */
+    .sidebar {
+      position: fixed;
+      top: var(--nav-h);
+      left: 0;
+      width: var(--sidebar-w);
+      height: calc(100vh - var(--nav-h));
+      overflow-y: auto;
+      padding: 52px 0 60px;
+      border-right: 1px solid var(--border);
+      flex-shrink: 0;
+      scrollbar-width: thin;
+      scrollbar-color: var(--border) transparent;
+    }
+    .sidebar::-webkit-scrollbar { width: 4px; }
+    .sidebar::-webkit-scrollbar-track { background: transparent; }
+    .sidebar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+    .sidebar-group { margin-bottom: 28px; }
+    .sidebar-group-title {
+      font-family: var(--font-ui); font-size: 0.67rem; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted);
+      padding: 0 20px; margin-bottom: 6px;
+    }
+    .sidebar-link {
+      display: flex; align-items: center; gap: 8px;
+      padding: 6px 20px; color: var(--muted); text-decoration: none;
+      font-size: 0.855rem; transition: color 0.15s, background 0.15s;
+      border-left: 2px solid transparent; margin-left: -1px;
+      position: relative;
+    }
+    .sidebar-link:hover { color: var(--white); background: rgba(255,255,255,0.03); }
+    .sidebar-link.active { color: var(--green); border-left-color: var(--green); background: rgba(0,255,136,0.05); }
+    .sidebar-link .badge {
+      margin-left: auto; font-size: 0.6rem; padding: 1px 6px; border-radius: 100px;
+      font-family: var(--font-ui); font-weight: 700; letter-spacing: 0.06em;
+    }
+    .badge-new { background: rgba(0,255,136,0.15); color: var(--green); }
+    .badge-soon { background: rgba(255,255,255,0.07); color: var(--muted); }
+
+    /* ── MAIN CONTENT ── */
+    .docs-main {
+      min-width: 0;
+      flex: 1;
+      margin-left: var(--sidebar-w);
+      padding: 96px 60px 100px 52px;
+      max-width: calc(var(--sidebar-w) + 860px);
+    }
+
+    /* ── TOC (right) ── */
+    .toc-aside {
+      position: fixed;
+      top: calc(var(--nav-h) + 60px);
+      right: 28px;
+      width: 200px;
+    }
+    .toc-title { font-size: 0.67rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); font-weight: 700; margin-bottom: 10px; font-family: var(--font-ui); }
+    .toc-list { list-style: none; display: flex; flex-direction: column; gap: 2px; }
+    .toc-list a { font-size: 0.8rem; color: var(--muted); text-decoration: none; padding: 3px 0 3px 10px; border-left: 1px solid var(--border); display: block; transition: color 0.2s, border-color 0.2s; line-height: 1.4; }
+    .toc-list a:hover, .toc-list a.active { color: var(--green); border-left-color: var(--green); }
+
+    /* ── TYPOGRAPHY ── */
+    .docs-section { margin-bottom: 72px; }
+    .docs-section:last-child { margin-bottom: 0; }
+
+    .section-eyebrow { font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--green); font-weight: 600; font-family: var(--font-ui); margin-bottom: 10px; }
+    h1.docs-h1 { font-family: var(--font-ui); font-size: 2.4rem; font-weight: 800; letter-spacing: -0.04em; line-height: 1.05; margin-bottom: 16px; }
+    h2.docs-h2 { font-family: var(--font-ui); font-size: 1.5rem; font-weight: 700; letter-spacing: -0.03em; margin-bottom: 16px; scroll-margin-top: 88px; padding-top: 40px; }
+    h2.docs-h2:first-child { padding-top: 0; }
+    h3.docs-h3 { font-family: var(--font-ui); font-size: 1.05rem; font-weight: 700; margin-bottom: 12px; scroll-margin-top: 88px; padding-top: 24px; color: rgba(238,238,246,0.9); }
+    .docs-lead { font-size: 1.05rem; color: rgba(238,238,246,0.7); line-height: 1.75; margin-bottom: 32px; max-width: 580px; }
+    .docs-p { color: rgba(238,238,246,0.72); line-height: 1.8; margin-bottom: 16px; font-size: 0.95rem; }
+    .docs-p:last-child { margin-bottom: 0; }
+    .docs-p a { color: var(--green); text-decoration: none; border-bottom: 1px solid rgba(0,255,136,0.3); transition: border-color 0.2s; }
+    .docs-p a:hover { border-bottom-color: var(--green); }
+
+    strong { font-weight: 600; color: var(--white); }
+    code { font-family: var(--font-mono); font-size: 0.82em; background: rgba(255,255,255,0.07); border: 1px solid var(--border); border-radius: 5px; padding: 1px 6px; color: var(--green); }
+
+    /* ── DIVIDER ── */
+    .docs-hr { border: none; border-top: 1px solid var(--border); margin: 48px 0; }
+
+    /* ── CALLOUTS ── */
+    .callout {
+      display: flex; gap: 14px; padding: 16px 20px;
+      border-radius: 12px; margin: 20px 0; font-size: 0.9rem;
+    }
+    .callout-icon { font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
+    .callout-body { line-height: 1.65; }
+    .callout-body strong { display: block; margin-bottom: 4px; font-size: 0.9rem; }
+    .callout.tip { background: rgba(0,255,136,0.05); border: 1px solid rgba(0,255,136,0.15); }
+    .callout.tip .callout-body { color: rgba(238,238,246,0.8); }
+    .callout.warn { background: rgba(255,208,96,0.05); border: 1px solid rgba(255,208,96,0.2); }
+    .callout.warn .callout-body { color: rgba(238,238,246,0.8); }
+    .callout.info { background: rgba(77,184,255,0.05); border: 1px solid rgba(77,184,255,0.15); }
+    .callout.info .callout-body { color: rgba(238,238,246,0.8); }
+
+    /* ── CODE BLOCKS ── */
+    .code-block {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 14px; overflow: hidden; margin: 20px 0;
+    }
+    .code-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 16px; border-bottom: 1px solid var(--border);
+      background: var(--card2);
+    }
+    .code-lang { font-family: var(--font-mono); font-size: 0.72rem; color: var(--muted); letter-spacing: 0.06em; }
+    .code-filename { font-family: var(--font-mono); font-size: 0.72rem; color: var(--muted); }
+    .copy-btn {
+      background: none; border: 1px solid var(--border); color: var(--muted); cursor: pointer;
+      font-size: 0.72rem; padding: 3px 10px; border-radius: 6px; font-family: var(--font-body);
+      transition: all 0.2s; letter-spacing: 0.04em;
+    }
+    .copy-btn:hover { border-color: var(--green); color: var(--green); }
+    .copy-btn.copied { border-color: var(--green); color: var(--green); }
+    pre {
+      padding: 20px; overflow-x: auto; font-family: var(--font-mono);
+      font-size: 0.82rem; line-height: 1.8; color: rgba(238,238,246,0.85);
+    }
+    pre .c  { color: var(--muted); font-style: italic; }
+    pre .k  { color: #c792ea; }
+    pre .s  { color: #c3e88d; }
+    pre .n  { color: var(--blue); }
+    pre .v  { color: var(--yellow); }
+    pre .g  { color: var(--green); }
+    pre .r  { color: var(--red); }
+    pre .p  { color: rgba(238,238,246,0.5); }
+
+    /* ── STEPS ── */
+    .steps { display: flex; flex-direction: column; gap: 0; margin: 24px 0; counter-reset: steps; }
+    .step {
+      display: flex; gap: 16px; counter-increment: steps;
+      padding: 20px 0; border-bottom: 1px solid var(--border2);
+    }
+    .step:last-child { border-bottom: none; }
+    .step-num {
+      width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
+      background: rgba(0,255,136,0.08); border: 1px solid rgba(0,255,136,0.2);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-ui); font-weight: 800; font-size: 0.78rem; color: var(--green);
+      margin-top: 2px;
+    }
+    .step-body strong { display: block; font-size: 0.95rem; margin-bottom: 6px; color: var(--white); }
+    .step-body p { color: var(--muted); font-size: 0.875rem; line-height: 1.65; }
+    .step-body code { font-size: 0.78em; }
+
+    /* ── TABS ── */
+    .tabs { margin: 20px 0; }
+    .tab-nav { display: flex; gap: 0; border-bottom: 1px solid var(--border); margin-bottom: 0; }
+    .tab-btn {
+      padding: 9px 18px; background: none; border: none; border-bottom: 2px solid transparent;
+      color: var(--muted); cursor: pointer; font-family: var(--font-body); font-size: 0.85rem;
+      transition: color 0.2s, border-color 0.2s; margin-bottom: -1px;
+    }
+    .tab-btn.active { color: var(--green); border-bottom-color: var(--green); }
+    .tab-pane { display: none; }
+    .tab-pane.active { display: block; }
+
+    /* ── TABLE ── */
+    .docs-table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 0.875rem; }
+    .docs-table th { background: var(--card2); color: var(--muted); font-family: var(--font-ui); font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 10px 14px; text-align: left; border: 1px solid var(--border); }
+    .docs-table td { padding: 10px 14px; border: 1px solid var(--border2); color: rgba(238,238,246,0.75); vertical-align: top; line-height: 1.5; }
+    .docs-table tr:hover td { background: rgba(255,255,255,0.015); }
+    .docs-table td code { font-size: 0.78em; }
+    .required { color: var(--red); font-size: 0.7rem; font-family: var(--font-mono); }
+    .optional { color: var(--muted); font-size: 0.7rem; font-family: var(--font-mono); }
+
+    /* ── BREADCRUMB ── */
+    .breadcrumb { display: flex; align-items: center; gap: 6px; margin-bottom: 24px; font-size: 0.8rem; color: var(--muted); }
+    .breadcrumb a { color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .breadcrumb a:hover { color: var(--white); }
+    .breadcrumb-sep { opacity: 0.4; }
+
+    /* ── PREV / NEXT ── */
+    .docs-nav-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 64px; }
+    .docs-nav-btn {
+      background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+      padding: 18px 20px; text-decoration: none; color: var(--white);
+      transition: border-color 0.2s, transform 0.2s;
+      display: flex; flex-direction: column; gap: 4px;
+    }
+    .docs-nav-btn:hover { border-color: rgba(0,255,136,0.25); transform: translateY(-2px); }
+    .docs-nav-btn.next { text-align: right; }
+    .dnb-label { font-size: 0.72rem; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; }
+    .dnb-title { font-family: var(--font-ui); font-weight: 700; font-size: 0.95rem; }
+
+    /* ── QUICK START CARDS ── */
+    .qs-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 24px 0; }
+    .qs-card {
+      background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+      padding: 20px; text-decoration: none; color: var(--white);
+      transition: border-color 0.25s, transform 0.25s;
+      display: flex; flex-direction: column; gap: 10px;
+    }
+    .qs-card:hover { border-color: rgba(0,255,136,0.25); transform: translateY(-3px); }
+    .qs-icon { font-size: 1.5rem; }
+    .qs-title { font-family: var(--font-ui); font-weight: 700; font-size: 0.9rem; }
+    .qs-desc { font-size: 0.8rem; color: var(--muted); line-height: 1.5; }
+    .qs-link { font-size: 0.78rem; color: var(--green); margin-top: auto; }
+
+    /* ── PLATFORM TAGS ── */
+    .platform-tags { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0; }
+    .ptag {
+      display: flex; align-items: center; gap: 6px;
+      background: var(--card); border: 1px solid var(--border);
+      padding: 5px 12px; border-radius: 8px; font-size: 0.8rem; color: rgba(238,238,246,0.75);
+    }
+    .ptag-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+
+    /* ── FOOTER ── */
+    .docs-footer { border-top: 1px solid var(--border); padding: 28px 52px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; margin-left: var(--sidebar-w); }
+    .docs-footer a { color: var(--muted); text-decoration: none; font-size: 0.82rem; transition: color 0.2s; }
+    .docs-footer a:hover { color: var(--white); }
+    .footer-links { display: flex; gap: 24px; flex-wrap: wrap; }
+    .docs-footer p { color: var(--muted); font-size: 0.78rem; }
+
+    /* ── MOBILE ── */
+    .mob-sidebar-toggle { display: none; background: var(--card); border: 1px solid var(--border); color: var(--white); padding: 7px 12px; border-radius: 8px; cursor: pointer; font-size: 0.85rem; }
+
+    @media (max-width: 1200px) { .toc-aside { display: none; } }
+    @media (max-width: 860px) {
+      :root { --sidebar-w: 0px; }
+      .sidebar {
+        display: none; width: 260px; z-index: 250;
+        background: var(--dark); top: var(--nav-h);
+        height: calc(100vh - var(--nav-h));
+        box-shadow: 4px 0 40px rgba(0,0,0,0.5);
+      }
+      .sidebar.open { display: block; }
+      .search-wrap { left: 0; padding: 10px 16px; }
+      .docs-main { margin-left: 0; padding: 86px 20px 80px; }
+      .qs-grid { grid-template-columns: 1fr; }
+      .docs-nav-btns { grid-template-columns: 1fr; }
+      .mob-sidebar-toggle { display: block; }
+      .top-nav { padding: 0 16px; }
+      .docs-footer { padding: 20px; margin-left: 0; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- TOP NAV -->
+<nav class="top-nav">
+  <div class="nav-left">
+    <a href="/" class="logo">Index<span>Fast</span></a>
+    <div class="nav-divider"></div>
+    <span class="nav-badge">Документація</span>
+    <button class="mob-sidebar-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open')">☰ Меню</button>
+  </div>
+  <div class="nav-right">
+    <a href="/" class="nav-link">Головна</a>
+    <a href="/blog/" class="nav-link">Блог</a>
+    <a href="/#pricing" class="nav-cta">Спробувати →</a>
+  </div>
+</nav>
+
+<!-- SEARCH -->
+<div class="search-wrap">
+  <div class="search-inner">
+    <span class="search-icon">🔍</span>
+    <input type="search" class="search-input" placeholder="Пошук по документації..." id="docsSearch">
+    <div class="search-kbd"><span class="kbd">⌘</span><span class="kbd">K</span></div>
+  </div>
+</div>
+
+<div class="docs-layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+
+    <div class="sidebar-group">
+      <div class="sidebar-group-title">Початок роботи</div>
+      <a href="#overview" class="sidebar-link active">📖 Огляд</a>
+      <a href="#quickstart" class="sidebar-link">⚡ Швидкий старт</a>
+      <a href="#requirements" class="sidebar-link">✅ Вимоги</a>
+    </div>
+
+    <div class="sidebar-group">
+      <div class="sidebar-group-title">Налаштування</div>
+      <a href="#google-cloud" class="sidebar-link">☁️ Google Cloud</a>
+      <a href="#service-account" class="sidebar-link">🔑 Service Account</a>
+      <a href="#search-console" class="sidebar-link">🔗 Search Console</a>
+      <a href="#sitemap" class="sidebar-link">🗺 Sitemap.xml</a>
+    </div>
+
+    <div class="sidebar-group">
+      <div class="sidebar-group-title">Використання</div>
+      <a href="#php-script" class="sidebar-link">🐘 PHP скрипт</a>
+      <a href="#manual" class="sidebar-link">🖱 Ручна індексація</a>
+      <a href="#automation" class="sidebar-link">🤖 Автоматизація</a>
+      <a href="#limits" class="sidebar-link">📊 Ліміти API</a>
+    </div>
+
+    <div class="sidebar-group">
+      <div class="sidebar-group-title">Інтеграції</div>
+      <a href="#wordpress" class="sidebar-link">🟦 WordPress</a>
+      <a href="#shopify" class="sidebar-link">🟩 Shopify</a>
+      <a href="#laravel" class="sidebar-link">🟥 Laravel</a>
+      <a href="#other" class="sidebar-link">🔧 Інші платформи</a>
+    </div>
+
+    <div class="sidebar-group">
+      <div class="sidebar-group-title">API Reference</div>
+      <a href="#api-auth" class="sidebar-link">🔐 Авторизація</a>
+      <a href="#api-submit" class="sidebar-link">📤 Відправка URL <span class="badge badge-new">NEW</span></a>
+      <a href="#api-status" class="sidebar-link">📡 Статус URL</a>
+      <a href="#api-errors" class="sidebar-link">⚠️ Помилки</a>
+    </div>
+
+    <div class="sidebar-group">
+      <div class="sidebar-group-title">Додатково</div>
+      <a href="#faq" class="sidebar-link">❓ FAQ</a>
+      <a href="#changelog" class="sidebar-link">📋 Changelog <span class="badge badge-new">v2.1</span></a>
+      <a href="#support" class="sidebar-link">💬 Підтримка</a>
+    </div>
+
+  </aside>
+
+  <!-- MAIN -->
+  <main class="docs-main" id="docsMain">
+
+    <!-- BREADCRUMB -->
+    <div class="breadcrumb">
+      <a href="/">IndexFast</a>
+      <span class="breadcrumb-sep">/</span>
+      <span>Документація</span>
+    </div>
+
+    <!-- ══════════════ OVERVIEW ══════════════ -->
+    <section class="docs-section" id="overview">
+      <p class="section-eyebrow">Документація</p>
+      <h1 class="docs-h1">Як працює IndexFast</h1>
+      <p class="docs-lead">Повний посібник з налаштування та використання IndexFast — від отримання ключа API до автоматичної щоденної індексації.</p>
+
+      <div class="qs-grid">
+        <a href="#quickstart" class="qs-card">
+          <div class="qs-icon">⚡</div>
+          <div class="qs-title">Швидкий старт</div>
+          <div class="qs-desc">Налаштуйте і відправте перші URL за 10 хвилин</div>
+          <div class="qs-link">Читати →</div>
+        </a>
+        <a href="#php-script" class="qs-card">
+          <div class="qs-icon">🐘</div>
+          <div class="qs-title">PHP скрипт</div>
+          <div class="qs-desc">Готовий скрипт для автоматичної індексації з sitemap</div>
+          <div class="qs-link">Читати →</div>
+        </a>
+        <a href="#api-submit" class="qs-card">
+          <div class="qs-icon">📡</div>
+          <div class="qs-title">API Reference</div>
+          <div class="qs-desc">Повна документація Google Indexing API</div>
+          <div class="qs-link">Читати →</div>
+        </a>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">ℹ️</span>
+        <div class="callout-body">
+          <strong>Що таке Google Indexing API?</strong>
+          Офіційний інструмент Google для сповіщення пошукача про нові або оновлені сторінки. Дозволяє відправити до <strong>200 URL на добу</strong> безкоштовно і отримати відповідь протягом 24–48 годин.
+        </div>
+      </div>
+    </section>
+
+    <hr class="docs-hr">
+
+    <!-- ══════════════ QUICKSTART ══════════════ -->
+    <section class="docs-section" id="quickstart">
+      <h2 class="docs-h2">⚡ Швидкий старт</h2>
+      <p class="docs-p">Щоб почати роботу з IndexFast вам потрібно виконати 5 кроків. Весь процес займає близько 10–15 хвилин.</p>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <strong>Створіть проєкт у Google Cloud Console</strong>
+            <p>Перейдіть на <a href="https://console.cloud.google.com" target="_blank">console.cloud.google.com</a>, створіть новий проєкт (або оберіть існуючий) та увімкніть <strong>Web Search Indexing API</strong>.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <strong>Створіть Service Account і завантажте JSON-ключ</strong>
+            <p>У розділі <em>IAM & Admin → Service Accounts</em> створіть акаунт з роллю <code>Owner</code>. Згенеруйте ключ формату <strong>JSON</strong> і збережіть файл.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <strong>Додайте Service Account до Google Search Console</strong>
+            <p>Скопіюйте email вашого service account (вигляд: <code><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e789868a82a79795888d828493c98e868ac980948295918e848286848488928993c984888a">[email&#160;protected]</a></code>). У Search Console → Налаштування → Користувачі додайте його як <strong>власника</strong>.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <strong>Завантажте PHP скрипт IndexFast</strong>
+            <p>Скачайте <code>google_indexing.php</code> з вашого особистого кабінету. Помістіть поруч JSON-ключ.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">5</div>
+          <div class="step-body">
+            <strong>Запустіть скрипт</strong>
+            <p>Виконайте команду в терміналі — і ваші сторінки вже в черзі на індексацію.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">BASH</span>
+          <button class="copy-btn" onclick="copyCode(this)">Копіювати</button>
+        </div>
+        <pre>php google_indexing.php https://your-site.com/sitemap.xml</pre>
+      </div>
+    </section>
+
+    <hr class="docs-hr">
+
+    <!-- ══════════════ GOOGLE CLOUD ══════════════ -->
+    <section class="docs-section" id="google-cloud">
+      <h2 class="docs-h2">☁️ Налаштування Google Cloud</h2>
+
+      <h3 class="docs-h3">Увімкнення API</h3>
+      <p class="docs-p">Перейдіть до Google Cloud Console → <strong>APIs & Services → Library</strong>. Знайдіть <strong>«Web Search Indexing API»</strong> і натисніть <em>Enable</em>.</p>
+
+      <div class="callout warn">
+        <span class="callout-icon">⚠️</span>
+        <div class="callout-body">
+          <strong>Важливо</strong>
+          API має бути увімкнений саме у тому проєкті, до якого прив'язаний ваш Service Account. Якщо API не активовано — ви отримаєте помилку <code>403 accessNotConfigured</code>.
+        </div>
+      </div>
+
+      <h3 class="docs-h3" id="service-account">Створення Service Account</h3>
+      <p class="docs-p">Service Account — це технічний обліковий запис без пароля, який ваш скрипт використовує для авторизації в Google API.</p>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <strong>IAM & Admin → Service Accounts → Create Service Account</strong>
+            <p>Дайте назву, наприклад <code>indexfast-bot</code>. Роль — <code>Owner</code> або <code>Service Account Token Creator</code>.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <strong>Створіть JSON ключ</strong>
+            <p>Відкрийте акаунт → вкладка <em>Keys</em> → <em>Add Key → Create new key → JSON</em>. Файл завантажиться автоматично.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <strong>Збережіть ключ безпечно</strong>
+            <p>Назвіть файл <code>service-account.json</code>. Ніколи не публікуйте його в Git або публічних місцях.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout tip">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">Файл JSON має виглядати так — якщо структура відрізняється, ключ згенеровано неправильно.</div>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">JSON</span>
+          <span class="code-filename">service-account.json</span>
+          <button class="copy-btn" onclick="copyCode(this)">Копіювати</button>
+        </div>
+        <pre>{
+  <span class="s">"type"</span>: <span class="s">"service_account"</span>,
+  <span class="s">"project_id"</span>: <span class="s">"your-project-id"</span>,
+  <span class="s">"private_key_id"</span>: <span class="s">"abc123..."</span>,
+  <span class="s">"private_key"</span>: <span class="s">"-----BEGIN RSA PRIVATE KEY-----\n..."</span>,
+  <span class="s">"client_email"</span>: <span class="s">"<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f69f9892938e90978582db949982b68f998384db8684999c939582d89f979bd891859384809f959397959599839882d895999b">[email&#160;protected]</a>"</span>,
+  <span class="s">"client_id"</span>: <span class="s">"123456789"</span>,
+  <span class="s">"auth_uri"</span>: <span class="s">"https://accounts.google.com/o/oauth2/auth"</span>,
+  <span class="s">"token_uri"</span>: <span class="s">"https://oauth2.googleapis.com/token"</span>
+}</pre>
+      </div>
+    </section>
+
+    <hr class="docs-hr">
+
+    <!-- ══════════════ SEARCH CONSOLE ══════════════ -->
+    <section class="docs-section" id="search-console">
+      <h2 class="docs-h2">🔗 Підключення Search Console</h2>
+      <p class="docs-p">Без цього кроку API буде повертати помилку <code>403 Forbidden</code> навіть при правильному ключі. Service Account має бути власником сайту в Search Console.</p>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <strong>Скопіюйте email Service Account</strong>
+            <p>Він виглядає так: <code><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="d4bdbab0b1acb2b5a7a0f9b6bba094adbba1a6f9a4a6bbbeb1b7a0fabdb5b9fab3a7b1a6a2bdb7b1b5b7b7bba1baa0fab7bbb9">[email&#160;protected]</a></code> — знаходиться у JSON-файлі в полі <code>client_email</code>.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <strong>Search Console → Налаштування → Користувачі та дозволи</strong>
+            <p>Натисніть <em>«Додати користувача»</em>, вставте email, встановіть роль <strong>Власник</strong> (не «Повний доступ» — саме Власник).</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <strong>Зачекайте 1–2 хвилини</strong>
+            <p>Права застосовуються не миттєво. Після цього скрипт зможе відправляти URL на індексацію.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="docs-hr">
+
+    <!-- ══════════════ PHP SCRIPT ══════════════ -->
+    <section class="docs-section" id="php-script">
+      <h2 class="docs-h2">🐘 PHP скрипт</h2>
+      <p class="docs-p">Основний інструмент IndexFast — PHP скрипт, який автоматично зчитує ваш <code>sitemap.xml</code> і відправляє всі URL через Google Indexing API.</p>
+
+      <h3 class="docs-h3">Параметри запуску</h3>
+      <p class="docs-p">Скрипт підтримує кілька способів вказати sitemap:</p>
+
+      <div class="tabs" id="tabs1">
+        <div class="tab-nav">
+          <button class="tab-btn active" onclick="switchTab('tabs1', 0)">Позиційний аргумент</button>
+          <button class="tab-btn" onclick="switchTab('tabs1', 1)">Іменований параметр</button>
+          <button class="tab-btn" onclick="switchTab('tabs1', 2)">Тільки домен</button>
+          <button class="tab-btn" onclick="switchTab('tabs1', 3)">Інтерактивний</button>
+        </div>
+        <div class="tab-pane active">
+          <div class="code-block">
+            <div class="code-header"><span class="code-lang">BASH</span><button class="copy-btn" onclick="copyCode(this)">Копіювати</button></div>
+            <pre>php google_indexing.php https://your-site.com/sitemap.xml</pre>
+          </div>
+        </div>
+        <div class="tab-pane">
+          <div class="code-block">
+            <div class="code-header"><span class="code-lang">BASH</span><button class="copy-btn" onclick="copyCode(this)">Копіювати</button></div>
+            <pre>php google_indexing.php <span class="n">--sitemap</span>=https://your-site.com/sitemap.xml</pre>
+          </div>
+        </div>
+        <div class="tab-pane">
+          <div class="code-block">
+            <div class="code-header"><span class="code-lang">BASH</span><button class="copy-btn" onclick="copyCode(this)">Копіювати</button></div>
+            <pre><span class="c"># /sitemap.xml додається автоматично</span>
+php google_indexing.php https://your-site.com</pre>
+          </div>
+        </div>
+        <div class="tab-pane">
+          <div class="code-block">
+            <div class="code-header"><span class="code-lang">BASH</span><button class="copy-btn" onclick="copyCode(this)">Копіювати</button></div>
+            <pre><span class="c"># Скрипт запитає URL інтерактивно</span>
+php google_indexing.php</pre>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="docs-h3">Конфігурація скрипта</h3>
+      <p class="docs-p">На початку файлу <code>google_indexing.php</code> є розділ з налаштуваннями:</p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">PHP</span>
+          <span class="code-filename">google_indexing.php</span>
+          <button class="copy-btn" onclick="copyCode(this)">Копіювати</button>
+        </div>
+        <pre><span class="c">// ── Конфігурація ──────────────────────────────────</span>
+
+<span class="c">// Шлях до JSON-ключа Service Account</span>
+<span class="k">define</span>(<span class="s">'SERVICE_ACCOUNT_FILE'</span>, <span class="k">__DIR__</span> . <span class="s">'/service-account.json'</span>);
+
+<span class="c">// Ліміт URL на добу (безкоштовно — 200)</span>
+<span class="k">define</span>(<span class="s">'DAILY_QUOTA'</span>, <span class="v">200</span>);
+
+<span class="c">// Файл для логування результатів</span>
+<span class="k">define</span>(<span class="s">'LOG_FILE'</span>, <span class="k">__DIR__</span> . <span class="s">'/indexing.log'</span>);
+
+<span class="c">// URL sitemap за замовчуванням (якщо не передано аргумент)</span>
+<span class="k">define</span>(<span class="s">'DEFAULT_SITEMAP_URL'</span>, <span class="s">''</span>);</pre>
+      </div>
+    </section>
+
+    <hr class="docs-hr">
+
+    <!-- ══════════════ AUTOMATION ══════════════ -->
+    <section class="docs-section" id="automation">
+      <h2 class="docs-h2">🤖 Автоматизація (Cron)</h2>
+      <p class="docs-p">Щоб скрипт запускався автоматично щодня — налаштуйте задачу через <strong>crontab</strong> на вашому сервері.</p>
+
+      <h3 class="docs-h3">Щоденний запуск о 9:00</h3>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">BASH</span>
+          <button class="copy-btn" onclick="copyCode(this)">Копіювати</button>
+        </div>
+        <pre><span class="c"># Відкрийте редактор cron</span>
+crontab -e
+
+<span class="c"># Додайте рядок (запуск щодня о 09:00)</span>
+<span class="g">0 9 * * * /usr/bin/php /var/www/your-site/google_indexing.php https://your-site.com/sitemap.xml >> /var/log/indexing.log 2>&1</span></pre>
+      </div>
+
+      <div class="callout tip">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <strong>Порада</strong>
+          Скрипт автоматично відслідковує добовий ліміт у 200 URL і зупиняється при досягненні. Якщо у вас більше сторінок — скрипт продовжить з того місця наступного дня.
+        </div>
+      </div>
+
+      <h3 class="docs-h3" id="limits">Ліміти Google Indexing API</h3>
+
+      <table class="docs-table">
+        <thead>
+          <tr><th>Параметр</th><th>Значення</th><th>Примітка</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>URL на добу</td><td><strong>200</strong></td><td>Безкоштовний ліміт</td></tr>
+          <tr><td>Запитів на секунду</td><td><strong>600</strong></td><td>Пакетні запити</td></tr>
+          <tr><td>Час обробки</td><td><strong>24–48 год</strong></td><td>Зазвичай швидше</td></tr>
+          <tr><td>Підтримувані типи</td><td><code>URL_UPDATED</code>, <code>URL_DELETED</code></td><td>—</td></tr>
+          <tr><td>Форматsitemap</td><td>XML, Sitemap Index</td><td>Підтримка вкладеності</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <hr class="docs-hr">
+
+    <!-- ══════════════ INTEGRATIONS ══════════════ -->
+    <section class="docs-section" id="wordpress">
+      <h2 class="docs-h2">🔧 Інтеграції з платформами</h2>
+
+      <h3 class="docs-h3" id="wordpress">WordPress</h3>
+      <p class="docs-p">Якщо ви використовуєте <strong>Yoast SEO</strong> або <strong>Rank Math</strong> — sitemap вже готовий:</p>
+      <div class="platform-tags">
+        <span class="ptag"><span class="ptag-dot" style="background:#21759B"></span>Yoast SEO → <code>/sitemap_index.xml</code></span>
+        <span class="ptag"><span class="ptag-dot" style="background:#f72a2a"></span>Rank Math → <code>/sitemap_index.xml</code></span>
+        <span class="ptag"><span class="ptag-dot" style="background:#1e7c42"></span>All in One SEO → <code>/sitemap.xml</code></span>
+      </div>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">BASH</span><button class="copy-btn" onclick="copyCode(this)">Копіювати</button></div>
+        <pre>php google_indexing.php https://your-wordpress-site.com/sitemap_index.xml</pre>
+      </div>
+
+      <h3 class="docs-h3" id="shopify">Shopify</h3>
+      <p class="docs-p">Shopify автоматично генерує sitemap за адресою <code>/sitemap.xml</code>. Він включає сторінки, товари, колекції та блог-пости.</p>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">BASH</span><button class="copy-btn" onclick="copyCode(this)">Копіювати</button></div>
+        <pre>php google_indexing.php https://your-store.myshopify.com/sitemap.xml</pre>
+      </div>
+
+      <h3 class="docs-h3" id="laravel">Laravel</h3>
+      <p class="docs-p">Для генерації sitemap у Laravel рекомендуємо пакет <code>spatie/laravel-sitemap</code>:</p>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">BASH</span><button class="copy-btn" onclick="copyCode(this)">Копіювати</button></div>
+        <pre>composer require spatie/laravel-sitemap</pre>
+      </div>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">PHP</span><button class="copy-btn" onclick="copyCode(this)">Копіювати</button></div>
+        <pre><span class="k">use</span> <span class="n">Spatie\Sitemap\SitemapGenerator</span>;
+
+SitemapGenerator::create(<span class="s">'https://your-site.com'</span>)
+    ->writeToFile(public_path(<span class="s">'sitemap.xml'</span>));</pre>
+      </div>
+
+      <h3 class="docs-h3" id="other">Інші платформи</h3>
+      <div class="platform-tags">
+        <span class="ptag"><span class="ptag-dot" style="background:#DF0067"></span>PrestaShop → <code>/sitemap.xml</code></span>
+        <span class="ptag"><span class="ptag-dot" style="background:#23ADEF"></span>OpenCart → модуль SEO Sitemap</span>
+        <span class="ptag"><span class="ptag-dot" style="background:#FAAD00"></span>Wix → <code>/sitemap.xml</code></span>
+        <span class="ptag"><span class="ptag-dot" style="background:#4353FF"></span>Webflow → <code>/sitemap.xml</code></span>
+        <span class="ptag"><span class="ptag-dot" style="background:#F44321"></span>Joomla → плагін OSMap</span>
+      </div>
+      <div class="callout tip">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">IndexFast працює з будь-якою платформою, яка генерує валідний <code>sitemap.xml</code>. Перевірте наявність файлу за адресою <code>https://your-site.com/sitemap.xml</code>.</div>
+      </div>
+    </section>
+
+    <hr class="docs-hr">
+
+    <!-- ══════════════ API REFERENCE ══════════════ -->
+    <section class="docs-section" id="api-auth">
+      <h2 class="docs-h2">📡 API Reference</h2>
+
+      <h3 class="docs-h3">Авторизація</h3>
+      <p class="docs-p">Google Indexing API використовує <strong>OAuth 2.0</strong> через Service Account. IndexFast обробляє авторизацію автоматично — вам потрібен лише JSON-ключ.</p>
+      <p class="docs-p">Endpoint для отримання токена:</p>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">HTTP</span><button class="copy-btn" onclick="copyCode(this)">Копіювати</button></div>
+        <pre><span class="k">POST</span> https://oauth2.googleapis.com/token
+
+Content-Type: application/x-www-form-urlencoded
+
+<span class="n">grant_type</span>=urn:ietf:params:oauth:grant-type:jwt-bearer
+<span class="n">&assertion</span>=<span class="v">{JWT_TOKEN}</span></pre>
+      </div>
+
+      <h3 class="docs-h3" id="api-submit">Відправка URL на індексацію</h3>
+
+      <table class="docs-table">
+        <thead>
+          <tr><th>Параметр</th><th>Тип</th><th>Обов'язковий</th><th>Опис</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>url</code></td><td>string</td><td><span class="required">required</span></td><td>Повна URL з https://</td></tr>
+          <tr><td><code>type</code></td><td>enum</td><td><span class="required">required</span></td><td><code>URL_UPDATED</code> або <code>URL_DELETED</code></td></tr>
+        </tbody>
+      </table>
+
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">HTTP</span><button class="copy-btn" onclick="copyCode(this)">Копіювати</button></div>
+        <pre><span class="k">POST</span> https://indexing.googleapis.com/v3/urlNotifications:publish
+
+Authorization: Bearer <span class="v">{ACCESS_TOKEN}</span>
+Content-Type: application/json
+
+{
+  <span class="s">"url"</span>: <span class="s">"https://your-site.com/new-page"</span>,
+  <span class="s">"type"</span>: <span class="s">"URL_UPDATED"</span>
+}</pre>
+      </div>
+
+      <p class="docs-p">Успішна відповідь:</p>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">JSON</span><button class="copy-btn" onclick="copyCode(this)">Копіювати</button></div>
+        <pre>{
+  <span class="s">"urlNotificationMetadata"</span>: {
+    <span class="s">"url"</span>: <span class="s">"https://your-site.com/new-page"</span>,
+    <span class="s">"latestUpdate"</span>: {
+      <span class="s">"url"</span>: <span class="s">"https://your-site.com/new-page"</span>,
+      <span class="s">"type"</span>: <span class="s">"URL_UPDATED"</span>,
+      <span class="s">"notifyTime"</span>: <span class="s">"2025-01-20T10:30:00Z"</span>
+    }
+  }
+}</pre>
+      </div>
+
+      <h3 class="docs-h3" id="api-status">Перевірка статусу URL</h3>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">HTTP</span><button class="copy-btn" onclick="copyCode(this)">Копіювати</button></div>
+        <pre><span class="k">GET</span> https://indexing.googleapis.com/v3/urlNotifications/metadata
+    ?url=https://your-site.com/page
+
+Authorization: Bearer <span class="v">{ACCESS_TOKEN}</span></pre>
+      </div>
+
+      <h3 class="docs-h3" id="api-errors">Коди помилок</h3>
+      <table class="docs-table">
+        <thead><tr><th>Код</th><th>Причина</th><th>Вирішення</th></tr></thead>
+        <tbody>
+          <tr><td><code>400</code></td><td>Невалідний URL або тип</td><td>Перевірте формат URL і значення <code>type</code></td></tr>
+          <tr><td><code>403</code></td><td>Немає прав або API не увімкнений</td><td>Додайте Service Account як власника в Search Console</td></tr>
+          <tr><td><code>429</code></td><td>Перевищено добовий ліміт</td><td>Зачекайте до наступного дня або зверніться до Google</td></tr>
+          <tr><td><code>500</code></td><td>Помилка на стороні Google</td><td>Повторіть запит через кілька хвилин</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <hr class="docs-hr">
+
+    <!-- ══════════════ FAQ ══════════════ -->
+    <section class="docs-section" id="faq">
+      <h2 class="docs-h2">❓ FAQ</h2>
+
+      <h3 class="docs-h3">Скільки часу займає індексація після відправки?</h3>
+      <p class="docs-p">Google зазвичай обробляє запити протягом <strong>24–48 годин</strong>. В більшості випадків сторінки з'являються в пошуку вже наступного ранку після відправки.</p>
+
+      <h3 class="docs-h3">Чи можна відправляти більше 200 URL на день?</h3>
+      <p class="docs-p">200 URL — стандартний безкоштовний ліміт Google. При потребі можна подати заявку на збільшення ліміту через Google Cloud Console. IndexFast автоматично зупиняється при досягненні ліміту і продовжує на наступний день.</p>
+
+      <h3 class="docs-h3">Чи безпечно для SEO використовувати Indexing API?</h3>
+      <p class="docs-p">Так, це <strong>офіційний</strong> метод, рекомендований самим Google. Жодних ризиків пенальті чи зниження позицій — навпаки, швидша індексація покращує конкурентоздатність.</p>
+
+      <h3 class="docs-h3">Sitemap Index чи звичайний sitemap?</h3>
+      <p class="docs-p">IndexFast підтримує обидва типи. Якщо передати посилання на <code>sitemap_index.xml</code> — скрипт автоматично обійде всі вкладені файли і зберезе всі URL.</p>
+    </section>
+
+    <hr class="docs-hr">
+
+    <!-- ══════════════ CHANGELOG ══════════════ -->
+    <section class="docs-section" id="changelog">
+      <h2 class="docs-h2">📋 Changelog</h2>
+
+      <h3 class="docs-h3">v2.1 — Січень 2025</h3>
+      <p class="docs-p">— Підтримка Sitemap Index (вкладені файли будь-якої глибини)<br>— Покращене логування з кольоровим виводом у термінал<br>— Автоматичне визначення шляху до <code>sitemap.xml</code> за доменом</p>
+
+      <h3 class="docs-h3">v2.0 — Грудень 2024</h3>
+      <p class="docs-p">— Повний рефакторинг скрипта<br>— Додана підтримка іменованих аргументів CLI<br>— Лічильник добового ліміту з автопаузою</p>
+
+      <h3 class="docs-h3">v1.0 — Вересень 2024</h3>
+      <p class="docs-p">— Перший публічний реліз<br>— Базова відправка URL через Google Indexing API</p>
+    </section>
+
+    <!-- PREV / NEXT -->
+    <div class="docs-nav-btns">
+      <a href="#overview" class="docs-nav-btn">
+        <span class="dnb-label">← Назад</span>
+        <span class="dnb-title">Огляд</span>
+      </a>
+      <a href="/blog/" class="docs-nav-btn next">
+        <span class="dnb-label">Далі →</span>
+        <span class="dnb-title">Блог</span>
+      </a>
+    </div>
+
+  </main>
+
+</div>
+
+<!-- FOOTER -->
+<footer class="docs-footer">
+  <a href="/" class="logo" style="font-family:var(--font-ui);font-size:1.1rem;font-weight:800;letter-spacing:-0.03em;color:var(--white);text-decoration:none;">Index<span style="color:var(--green)">Fast</span></a>
+  <div class="footer-links">
+    <a href="/">Головна</a>
+    <a href="/about.html">Про нас</a>
+    <a href="/blog/">Блог</a>
+    <a href="/docs/" class="active" style="color:var(--green)">Документація</a>
+    <a href="/privacy-policy.html">Конфіденційність</a>
+    <a href="/terms.html">Умови</a>
+    <a href="/status.html">Статус</a>
+  </div>
+  <p>© 2025 IndexFast</p>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  // ── Tabs
+  function switchTab(containerId, idx) {
+    const container = document.getElementById(containerId);
+    container.querySelectorAll('.tab-btn').forEach((b, i) => b.classList.toggle('active', i === idx));
+    container.querySelectorAll('.tab-pane').forEach((p, i) => p.classList.toggle('active', i === idx));
+  }
+
+  // ── Copy code
+  function copyCode(btn) {
+    const pre = btn.closest('.code-block').querySelector('pre');
+    const text = pre.innerText || pre.textContent;
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = 'Скопійовано!';
+      btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = 'Копіювати'; btn.classList.remove('copied'); }, 2000);
+    }).catch(() => {
+      const ta = document.createElement('textarea');
+      ta.value = text; document.body.appendChild(ta); ta.select();
+      document.execCommand('copy'); document.body.removeChild(ta);
+      btn.textContent = 'Скопійовано!';
+      setTimeout(() => { btn.textContent = 'Копіювати'; }, 2000);
+    });
+  }
+
+  // ── Active sidebar link on scroll
+  const sections = document.querySelectorAll('section[id], h2[id], h3[id]');
+  const sideLinks = document.querySelectorAll('.sidebar-link');
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        sideLinks.forEach(l => {
+          l.classList.toggle('active', l.getAttribute('href') === '#' + id);
+        });
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+
+  sections.forEach(s => observer.observe(s));
+
+  // ── Search filter (simple)
+  document.getElementById('docsSearch').addEventListener('input'

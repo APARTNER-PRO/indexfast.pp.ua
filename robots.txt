@@ -1,0 +1,14 @@
+# IndexFast — robots.txt
+# https://indexfast.pp.ua
+
+User-agent: *
+Allow: /
+
+# Закриваємо службові файли
+Disallow: /api/
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /*.json$
+
+# Sitemap
+Sitemap: https://indexfast.pp.ua/sitemap.xml
