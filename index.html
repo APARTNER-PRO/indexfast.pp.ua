@@ -1700,6 +1700,7 @@
 </footer>
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+document.addEventListener("DOMContentLoaded", function() {
   // ── Cursor
   const cursor = document.getElementById('cursor');
   const cursorRing = document.getElementById('cursorRing');
@@ -1970,4 +1971,12 @@
     tickerBase += Math.floor(Math.random() * 7) - 2;
     if (tickerBase < 80) tickerBase = 80;
     if (tickerBase > 900) tickerBase = 900;
-    
+  tickerEl.textContent = tickerBase.toLocaleString('uk-UA') + ' URL';
+  }
+  updateTicker();
+  setInterval(updateTicker, 3000);
+
+}); // DOMContentLoaded
+</script>
+</body>
+</html>
