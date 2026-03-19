@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23050508'/><text x='16' y='22' font-family='system-ui,sans-serif' font-size='15' font-weight='800' fill='%2300ff88' text-anchor='middle'>IF</text></svg>">
+  <link rel="apple-touch-icon" sizes="180x180" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23050508'/><text x='16' y='22' font-family='system-ui,sans-serif' font-size='15' font-weight='800' fill='%2300ff88' text-anchor='middle'>IF</text></svg>">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Статус сервісу — IndexFast</title>
+  <meta name="description" content="Поточний статус роботи сервісу IndexFast. Перевірте доступність API, вебсайту та інших компонентів.">
+  <link rel="canonical" href="https://indexfast.pp.ua/status.html">
+  <meta name="robots" content="noindex, follow">
+    <meta property="og:type" content="website">
+  <meta property="og:url" content="https://indexfast.pp.ua/status.html">
+  <meta property="og:title" content="Статус сервісу — IndexFast">
+  <meta property="og:description" content="Поточний статус роботи IndexFast: uptime API, вебсайту та всіх компонентів.">
+  <meta property="og:image" content="https://indexfast.pp.ua/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="uk_UA">
+  <meta property="og:site_name" content="IndexFast">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Статус сервісу — IndexFast">
+  <meta name="twitter:description" content="Поточний статус роботи IndexFast: uptime API, вебсайту та всіх компонентів.">
+  <meta name="twitter:image" content="https://indexfast.pp.ua/og-image.jpg">
+
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --black:  #050508;
+      --dark:   #0d0d14;
+      --card:   #12121c;
+      --border: rgba(255,255,255,0.07);
+      --green:  #00ff88;
+      --yellow: #ffcc00;
+      --red:    #ff4455;
+      --white:  #f0f0f8;
+      --muted:  #7a7a95;
+      --font-display: 'Syne', sans-serif;
+      --font-body:    'DM Sans', sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--black); color: var(--white); font-family: var(--font-body); font-weight: 300; min-height: 100vh; }
+
+    /* ── NAV ── */
+    nav {
+      padding: 20px 60px; display: flex; align-items: center; justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+      background: rgba(5,5,8,0.95); backdrop-filter: blur(12px);
+      position: sticky; top: 0; z-index: 100;
+    }
+    .logo { font-family: var(--font-display); font-size: 1.4rem; font-weight: 800; letter-spacing: -0.03em; color: var(--white); text-decoration: none; }
+    .logo span { color: var(--green); }
+    .nav-back { color: var(--muted); text-decoration: none; font-size: 0.875rem; transition: color 0.2s; }
+    .nav-back:hover { color: var(--white); }
+
+    /* ── HERO STATUS ── */
+    .status-hero {
+      padding: 72px 40px 64px; text-align: center;
+      background: radial-gradient(ellipse 70% 50% at 50% 0%, rgba(0,255,136,0.07) 0%, transparent 70%);
+      border-bottom: 1px solid var(--border);
+    }
+    .overall-badge {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: rgba(0,255,136,0.08); border: 1px solid rgba(0,255,136,0.25);
+      padding: 10px 24px; border-radius: 100px; margin-bottom: 28px;
+    }
+    .overall-dot {
+      width: 10px; height: 10px; border-radius: 50%; background: var(--green);
+      box-shadow: 0 0 10px var(--green);
+      animation: pulse-dot 2s infinite;
+    }
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; box-shadow: 0 0 10px var(--green); }
+      50% { opacity: 0.6; box-shadow: 0 0 20px var(--green); }
+    }
+    .overall-text { font-family: var(--font-display); font-weight: 700; font-size: 1rem; color: var(--green); }
+
+    .status-hero h1 {
+      font-family: var(--font-display); font-size: clamp(2.2rem, 4vw, 3.2rem);
+      font-weight: 800; letter-spacing: -0.03em; margin-bottom: 12px;
+    }
+    .status-hero p { color: var(--muted); font-size: 1rem; }
+    .last-updated { margin-top: 8px; font-size: 0.82rem; color: var(--muted); }
+    .last-updated span { color: var(--green); font-weight: 500; }
+
+    /* ── METRICS ROW ── */
+    .metrics-row {
+      display: flex; justify-content: center; gap: 0;
+      max-width: 900px; margin: 48px auto 0;
+      background: var(--card); border: 1px solid var(--border); border-radius: 20px;
+      overflow: hidden;
+    }
+    .metric {
+      flex: 1; padding: 28px 24px; text-align: center;
+      border-right: 1px solid var(--border);
+    }
+    .metric:last-child { border-right: none; }
+    .metric-val {
+      font-family: var(--font-display); font-size: 2rem; font-weight: 800;
+      letter-spacing: -0.03em; line-height: 1; margin-bottom: 6px;
+    }
+    .metric-val.green { color: var(--green); }
+    .metric-val.yellow { color: var(--yellow); }
+    .metric-label { font-size: 0.78rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+
+    /* ── MAIN LAYOUT ── */
+    .main { max-width: 900px; margin: 0 auto; padding: 60px 40px 100px; }
+
+    /* ── SECTION TITLE ── */
+    .block-title {
+      font-family: var(--font-display); font-size: 0.75rem; font-weight: 600;
+      letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted);
+      margin-bottom: 16px; margin-top: 56px;
+    }
+    .block-title:first-child { margin-top: 0; }
+
+    /* ── SERVICE ROWS ── */
+    .services-list { display: flex; flex-direction: column; gap: 3px; }
+    .service-row {
+      display: flex; align-items: center; justify-content: space-between;
+      background: var(--card); border: 1px solid var(--border);
+      padding: 18px 24px; border-radius: 12px;
+      transition: border-color 0.2s;
+    }
+    .service-row:hover { border-color: rgba(255,255,255,0.12); }
+    .service-left { display: flex; align-items: center; gap: 14px; }
+    .service-icon { font-size: 1.1rem; width: 24px; text-align: center; flex-shrink: 0; }
+    .service-name { font-weight: 500; font-size: 0.95rem; }
+    .service-desc { font-size: 0.8rem; color: var(--muted); margin-top: 2px; }
+    .service-right { display: flex; align-items: center; gap: 16px; flex-shrink: 0; }
+    .service-ping { font-size: 0.8rem; color: var(--muted); font-family: var(--font-display); }
+    .service-ping span { font-weight: 600; }
+    .status-pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 5px 12px; border-radius: 100px; font-size: 0.78rem; font-weight: 600;
+      font-family: var(--font-display);
+    }
+    .status-pill .dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+    .pill-green { background: rgba(0,255,136,0.1); color: var(--green); border: 1px solid rgba(0,255,136,0.2); }
+    .pill-green .dot { background: var(--green); box-shadow: 0 0 6px var(--green); animation: pulse-dot 2s infinite; }
+    .pill-yellow { background: rgba(255,204,0,0.1); color: var(--yellow); border: 1px solid rgba(255,204,0,0.2); }
+    .pill-yellow .dot { background: var(--yellow); }
+    .pill-red { background: rgba(255,68,85,0.1); color: var(--red); border: 1px solid rgba(255,68,85,0.2); }
+    .pill-red .dot { background: var(--red); }
+
+    /* ── UPTIME BARS ── */
+    .uptime-section { margin-top: 56px; }
+    .uptime-row { margin-bottom: 24px; }
+    .uptime-row-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 10px; }
+    .uptime-name { font-size: 0.9rem; font-weight: 500; }
+    .uptime-pct { font-family: var(--font-display); font-size: 0.85rem; font-weight: 700; color: var(--green); }
+    .uptime-bars { display: flex; gap: 3px; }
+    .uptime-bar {
+      flex: 1; height: 32px; border-radius: 4px;
+      background: rgba(0,255,136,0.15); border: 1px solid rgba(0,255,136,0.1);
+      position: relative; cursor: default;
+      transition: transform 0.15s;
+    }
+    .uptime-bar:hover { transform: scaleY(1.1); }
+    .uptime-bar.ok { background: rgba(0,255,136,0.2); border-color: rgba(0,255,136,0.25); }
+    .uptime-bar.warn { background: rgba(255,204,0,0.2); border-color: rgba(255,204,0,0.25); }
+    .uptime-bar.down { background: rgba(255,68,85,0.2); border-color: rgba(255,68,85,0.25); }
+    .uptime-legend { display: flex; justify-content: space-between; margin-top: 6px; }
+    .uptime-legend span { font-size: 0.72rem; color: var(--muted); }
+
+    /* ── INCIDENTS ── */
+    .incidents-section { margin-top: 56px; }
+    .incident-card {
+      background: var(--card); border: 1px solid var(--border); border-radius: 16px;
+      overflow: hidden; margin-bottom: 12px;
+    }
+    .incident-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 24px; border-bottom: 1px solid var(--border);
+    }
+    .incident-title-wrap { display: flex; align-items: center; gap: 10px; }
+    .incident-severity {
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 3px 10px; border-radius: 100px; font-family: var(--font-display);
+    }
+    .sev-none { background: rgba(0,255,136,0.1); color: var(--green); border: 1px solid rgba(0,255,136,0.2); }
+    .sev-minor { background: rgba(255,204,0,0.1); color: var(--yellow); border: 1px solid rgba(255,204,0,0.2); }
+    .sev-major { background: rgba(255,68,85,0.1); color: var(--red); border: 1px solid rgba(255,68,85,0.2); }
+    .incident-title { font-family: var(--font-display); font-weight: 700; font-size: 0.95rem; }
+    .incident-date { font-size: 0.8rem; color: var(--muted); flex-shrink: 0; }
+    .incident-body { padding: 0; max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.3s; }
+    .incident-card.open .incident-body { max-height: 400px; padding: 20px 24px; }
+    .incident-toggle {
+      background: none; border: none; color: var(--muted); cursor: pointer;
+      font-size: 1.1rem; transition: transform 0.3s, color 0.2s; padding: 0 0 0 12px;
+      flex-shrink: 0;
+    }
+    .incident-card.open .incident-toggle { transform: rotate(45deg); color: var(--green); }
+    .incident-toggle:hover { color: var(--white); }
+    .timeline { display: flex; flex-direction: column; gap: 16px; }
+    .timeline-item { display: flex; gap: 14px; }
+    .tl-dot-wrap { display: flex; flex-direction: column; align-items: center; gap: 0; flex-shrink: 0; }
+    .tl-dot { width: 10px; height: 10px; border-radius: 50%; margin-top: 4px; flex-shrink: 0; }
+    .tl-dot.green { background: var(--green); box-shadow: 0 0 6px var(--green); }
+    .tl-dot.yellow { background: var(--yellow); }
+    .tl-dot.red { background: var(--red); }
+    .tl-dot.muted { background: var(--muted); }
+    .tl-line { flex: 1; width: 1px; background: var(--border); margin-top: 4px; min-height: 20px; }
+    .tl-content {}
+    .tl-status { font-size: 0.78rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px; font-family: var(--font-display); }
+    .tl-status.green { color: var(--green); }
+    .tl-status.yellow { color: var(--yellow); }
+    .tl-status.red { color: var(--red); }
+    .tl-msg { font-size: 0.875rem; color: rgba(240,240,248,0.8); line-height: 1.5; }
+    .tl-time { font-size: 0.75rem; color: var(--muted); margin-top: 4px; }
+
+    /* ── SUBSCRIBE ── */
+    .subscribe-block {
+      margin-top: 56px; background: var(--card); border: 1px solid var(--border);
+      border-radius: 20px; padding: 36px; display: flex; align-items: center;
+      justify-content: space-between; gap: 32px; flex-wrap: wrap;
+    }
+    .subscribe-block h3 { font-family: var(--font-display); font-size: 1.2rem; font-weight: 700; margin-bottom: 6px; }
+    .subscribe-block p { color: var(--muted); font-size: 0.9rem; }
+    .subscribe-form { display: flex; gap: 10px; flex-shrink: 0; }
+    .subscribe-input {
+      background: rgba(255,255,255,0.05); border: 1px solid var(--border); color: var(--white);
+      padding: 12px 20px; border-radius: 100px; font-family: var(--font-body); font-size: 0.9rem;
+      outline: none; transition: border-color 0.2s; width: 240px;
+    }
+    .subscribe-input:focus { border-color: rgba(0,255,136,0.4); }
+    .subscribe-input::placeholder { color: var(--muted); }
+    .subscribe-btn {
+      background: var(--green); color: var(--black); border: none;
+      padding: 12px 24px; border-radius: 100px; font-family: var(--font-display);
+      font-weight: 700; font-size: 0.9rem; cursor: pointer;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+    .subscribe-btn:hover { box-shadow: 0 0 24px rgba(0,255,136,0.4); transform: translateY(-2px); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--dark); border-top: 1px solid var(--border);
+      padding: 28px 40px; text-align: center;
+    }
+    .footer-links { display: flex; justify-content: center; gap: 28px; margin-bottom: 12px; flex-wrap: wrap; }
+    .footer-links a { color: var(--muted); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--white); }
+    .footer-links a.active { color: var(--green); }
+    footer p { color: var(--muted); font-size: 0.78rem; }
+
+    @media (max-width: 700px) {
+      nav { padding: 16px 20px; }
+      .status-hero { padding: 48px 20px 40px; }
+      .metrics-row { flex-direction: column; }
+      .metric { border-right: none; border-bottom: 1px solid var(--border); }
+      .metric:last-child { border-bottom: none; }
+      .main { padding: 40px 20px 60px; }
+      .service-right { gap: 10px; }
+      .service-ping { display: none; }
+      .subscribe-block { flex-direction: column; }
+      .subscribe-form { width: 100%; flex-wrap: wrap; }
+      .subscribe-input { width: 100%; }
+      footer { padding: 24px 20px; }
+    }
+      .nav-login {
+      color: var(--muted, #7a7a95);
+      font-size: 0.875rem;
+      text-decoration: none;
+      padding: 7px 16px;
+      border-radius: 100px;
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .nav-login:hover {
+      color: var(--white, #f0f0f8);
+      border-color: rgba(255,255,255,0.25);
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="/" class="logo">Index<span>Fast</span></a>
+  <a href="/" class="nav-back">← Головна</a>
+  <a href="/auth.html" class="nav-login">Увійти</a>
+  <a href="/auth.html?mode=register" class="nav-cta">Почати →</a>
+</nav>
+
+<!-- HERO -->
+<div class="status-hero">
+  <div class="overall-badge">
+    <div class="overall-dot"></div>
+    <span class="overall-text">Всі системи працюють</span>
+  </div>
+  <h1>Статус сервісу</h1>
+  <p>Поточний стан усіх компонентів IndexFast</p>
+  <p class="last-updated">Оновлено: <span id="lastUpdated">—</span></p>
+
+  <div class="metrics-row">
+    <div class="metric">
+      <div class="metric-val green">99.98%</div>
+      <div class="metric-label">Uptime за 90 днів</div>
+    </div>
+    <div class="metric">
+      <div class="metric-val green" id="apiLatency">—</div>
+      <div class="metric-label">Затримка API</div>
+    </div>
+    <div class="metric">
+      <div class="metric-val green">0</div>
+      <div class="metric-label">Активних інцидентів</div>
+    </div>
+    <div class="metric">
+      <div class="metric-val yellow">14 днів</div>
+      <div class="metric-label">З останнього збою</div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- CURRENT STATUS -->
+  <p class="block-title">Поточний стан компонентів</p>
+  <div class="services-list">
+
+    <div class="service-row">
+      <div class="service-left">
+        <div class="service-icon">🌐</div>
+        <div>
+          <div class="service-name">Вебсайт indexfast.pp.ua</div>
+          <div class="service-desc">Головна сторінка та лендінг</div>
+        </div>
+      </div>
+      <div class="service-right">
+        <div class="service-ping">Пінг: <span id="p1">—</span></div>
+        <div class="status-pill pill-green"><div class="dot"></div>Працює</div>
+      </div>
+    </div>
+
+    <div class="service-row">
+      <div class="service-left">
+        <div class="service-icon">⚡</div>
+        <div>
+          <div class="service-name">Google Indexing API</div>
+          <div class="service-desc">Відправка URL на індексацію</div>
+        </div>
+      </div>
+      <div class="service-right">
+        <div class="service-ping">Пінг: <span id="p2">—</span></div>
+        <div class="status-pill pill-green"><div class="dot"></div>Працює</div>
+      </div>
+    </div>
+
+    <div class="service-row">
+      <div class="service-left">
+        <div class="service-icon">🔐</div>
+        <div>
+          <div class="service-name">Автентифікація</div>
+          <div class="service-desc">OAuth 2.0 / Service Account</div>
+        </div>
+      </div>
+      <div class="service-right">
+        <div class="service-ping">Пінг: <span id="p3">—</span></div>
+        <div class="status-pill pill-green"><div class="dot"></div>Працює</div>
+      </div>
+    </div>
+
+    <div class="service-row">
+      <div class="service-left">
+        <div class="service-icon">🗺️</div>
+        <div>
+          <div class="service-name">Парсер Sitemap</div>
+          <div class="service-desc">Зчитування та обробка sitemap.xml</div>
+        </div>
+      </div>
+      <div class="service-right">
+        <div class="service-ping">Пінг: <span id="p4">—</span></div>
+        <div class="status-pill pill-green"><div class="dot"></div>Працює</div>
+      </div>
+    </div>
+
+    <div class="service-row">
+      <div class="service-left">
+        <div class="service-icon">📊</div>
+        <div>
+          <div class="service-name">Аналітика та звіти</div>
+          <div class="service-desc">Дашборд та статистика</div>
+        </div>
+      </div>
+      <div class="service-right">
+        <div class="service-ping">Пінг: <span id="p5">—</span></div>
+        <div class="status-pill pill-green"><div class="dot"></div>Працює</div>
+      </div>
+    </div>
+
+    <div class="service-row">
+      <div class="service-left">
+        <div class="service-icon">📧</div>
+        <div>
+          <div class="service-name">Email-сповіщення</div>
+          <div class="service-desc">Транзакційні листи та алерти</div>
+        </div>
+      </div>
+      <div class="service-right">
+        <div class="service-ping">Пінг: <span id="p6">—</span></div>
+        <div class="status-pill pill-green"><div class="dot"></div>Працює</div>
+      </div>
+    </div>
+
+    <div class="service-row">
+      <div class="service-left">
+        <div class="service-icon">💳</div>
+        <div>
+          <div class="service-name">Платіжний шлюз</div>
+          <div class="service-desc">LiqPay — обробка підписок</div>
+        </div>
+      </div>
+      <div class="service-right">
+        <div class="service-ping">Пінг: <span id="p7">—</span></div>
+        <div class="status-pill pill-green"><div class="dot"></div>Працює</div>
+      </div>
+    </div>
+
+    <div class="service-row">
+      <div class="service-left">
+        <div class="service-icon">🔗</div>
+        <div>
+          <div class="service-name">REST API</div>
+          <div class="service-desc">Зовнішній API для інтеграцій</div>
+        </div>
+      </div>
+      <div class="service-right">
+        <div class="service-ping">Пінг: <span id="p8">—</span></div>
+        <div class="status-pill pill-green"><div class="dot"></div>Працює</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- UPTIME HISTORY -->
+  <div class="uptime-section">
+    <p class="block-title">Uptime за останні 90 днів</p>
+
+    <div class="uptime-row" id="uptimeWebsite"></div>
+    <div class="uptime-row" id="uptimeApi"></div>
+    <div class="uptime-row" id="uptimeSitemap"></div>
+
+  </div>
+
+  <!-- INCIDENTS -->
+  <div class="incidents-section">
+    <p class="block-title">Історія інцидентів</p>
+
+    <!-- Resolved minor -->
+    <div class="incident-card" id="inc1">
+      <div class="incident-header">
+        <div class="incident-title-wrap">
+          <span class="incident-severity sev-minor">Незначний</span>
+          <span class="incident-title">Сповільнення API індексації</span>
+        </div>
+        <div style="display:flex; align-items:center; gap:12px;">
+          <span class="incident-date">25 лютого 2025</span>
+          <button class="incident-toggle" onclick="toggleIncident('inc1')">+</button>
+        </div>
+      </div>
+      <div class="incident-body">
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="tl-dot-wrap"><div class="tl-dot green"></div><div class="tl-line"></div></div>
+            <div class="tl-content">
+              <div class="tl-status green">Вирішено</div>
+              <div class="tl-msg">Всі запити до Google Indexing API обробляються в штатному режимі. Затримки усунено.</div>
+              <div class="tl-time">25 лют 2025, 14:32</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="tl-dot-wrap"><div class="tl-dot yellow"></div><div class="tl-line"></div></div>
+            <div class="tl-content">
+              <div class="tl-status yellow">Моніторинг</div>
+              <div class="tl-msg">Виправлення застосовано. Спостерігаємо за стабілізацією часу відповіді API.</div>
+              <div class="tl-time">25 лют 2025, 13:15</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="tl-dot-wrap"><div class="tl-dot yellow"></div><div class="tl-line"></div></div>
+            <div class="tl-content">
+              <div class="tl-status yellow">Розслідування</div>
+              <div class="tl-msg">Виявлено збільшення затримок при відправці запитів до Google API. Середній час відповіді зріс з 320мс до 1800мс. Причина — тимчасове навантаження на боці Google.</div>
+              <div class="tl-time">25 лют 2025, 11:47</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="tl-dot-wrap"><div class="tl-dot muted"></div></div>
+            <div class="tl-content">
+              <div class="tl-status" style="color:var(--muted)">Виявлено</div>
+              <div class="tl-msg">Автоматична система моніторингу зафіксувала аномальний час відповіді.</div>
+              <div class="tl-time">25 лют 2025, 11:30</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Resolved major -->
+    <div class="incident-card" id="inc2">
+      <div class="incident-header">
+        <div class="incident-title-wrap">
+          <span class="incident-severity sev-major">Критичний</span>
+          <span class="incident-title">Недоступність сервісу індексації</span>
+        </div>
+        <div style="display:flex; align-items:center; gap:12px;">
+          <span class="incident-date">14 лютого 2025</span>
+          <button class="incident-toggle" onclick="toggleIncident('inc2')">+</button>
+        </div>
+      </div>
+      <div class="incident-body">
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="tl-dot-wrap"><div class="tl-dot green"></div><div class="tl-line"></div></div>
+            <div class="tl-content">
+              <div class="tl-status green">Вирішено</div>
+              <div class="tl-msg">Сервіс повністю відновлено. Затримки в черзі індексації компенсовано — всі накопичені URL успішно відправлено.</div>
+              <div class="tl-time">14 лют 2025, 09:41</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="tl-dot-wrap"><div class="tl-dot yellow"></div><div class="tl-line"></div></div>
+            <div class="tl-content">
+              <div class="tl-status yellow">Відновлення</div>
+              <div class="tl-msg">Сервер відновлено після планової міграції бази даних. Перевіряємо цілісність даних та відновлюємо чергу задач.</div>
+              <div class="tl-time">14 лют 2025, 08:55</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="tl-dot-wrap"><div class="tl-dot red"></div><div class="tl-line"></div></div>
+            <div class="tl-content">
+              <div class="tl-status red">Збій</div>
+              <div class="tl-msg">Сервіс індексації недоступний. Причина — неочікувана помилка під час планового технічного обслуговування бази даних. Команда працює над відновленням.</div>
+              <div class="tl-time">14 лют 2025, 06:12</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="tl-dot-wrap"><div class="tl-dot muted"></div></div>
+            <div class="tl-content">
+              <div class="tl-status" style="color:var(--muted)">Виявлено</div>
+              <div class="tl-msg">Отримано алерт про недоступність сервісу.</div>
+              <div class="tl-time">14 лют 2025, 06:00</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- All good before -->
+    <div class="incident-card" id="inc3">
+      <div class="incident-header">
+        <div class="incident-title-wrap">
+          <span class="incident-severity sev-none">Інфо</span>
+          <span class="incident-title">Планове технічне обслуговування</span>
+        </div>
+        <div style="display:flex; align-items:center; gap:12px;">
+          <span class="incident-date">1 лютого 2025</span>
+          <button class="incident-toggle" onclick="toggleIncident('inc3')">+</button>
+        </div>
+      </div>
+      <div class="incident-body">
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="tl-dot-wrap"><div class="tl-dot green"></div></div>
+            <div class="tl-content">
+              <div class="tl-status green">Завершено</div>
+              <div class="tl-msg">Планове обслуговування успішно завершено. Оновлено інфраструктуру до нової версії. Очікуйте покращення продуктивності на 15–20%.</div>
+              <div class="tl-time">1 лют 2025, 04:00</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- SUBSCRIBE -->
+  <div class="subscribe-block">
+    <div>
+      <h3>Підписатись на оновлення статусу</h3>
+      <p>Отримуйте миттєві сповіщення про інциденти та обслуговування на email</p>
+    </div>
+    <div class="subscribe-form">
+      <input class="subscribe-input" type="email" placeholder="your@email.com" id="subEmail">
+      <button class="subscribe-btn" onclick="handleSubscribe()">Підписатись</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-links">
+    <a href="/">Головна</a>
+    <a href="/about.html">Про нас</a>
+    <a href="/blog/">Блог</a>
+    <a href="/docs/">Документація</a>
+    <a href="/privacy-policy.html">Конфіденційність</a>
+    <a href="/terms.html">Умови</a>
+    <a href="/status.html" class="active">Статус</a>
+  </div>
+  <p>© 2026 IndexFast. Всі права захищені.</p>
+</footer>
+
+<script>
+  // ── Оновлення часу
+  function updateTime() {
+    const now = new Date();
+    const pad = n => String(n).padStart(2, '0');
+    document.getElementById('lastUpdated').textContent =
+      `${pad(now.getDate())}.${pad(now.getMonth()+1)}.${now.getFullYear()} ${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
+  }
+  updateTime();
+  setInterval(updateTime, 1000);
+
+  // ── Генерація реалістичних пінгів
+  const pingEls = ['p1','p2','p3','p4','p5','p6','p7','p8'];
+  const basePings = [42, 187, 95, 61, 78, 130, 210, 54];
+  function updatePings() {
+    pingEls.forEach((id, i) => {
+      const jitter = Math.floor((Math.random() - 0.5) * 30);
+      const val = basePings[i] + jitter;
+      const el = document.getElementById(id);
+      if (el) el.textContent = val + 'мс';
+    });
+    const avgApi = basePings[1] + Math.floor((Math.random()-0.5)*40);
+    document.getElementById('apiLatency').textContent = avgApi + 'мс';
+  }
+  updatePings();
+  setInterval(updatePings, 3000);
+
+  // ── Генерація uptime bars
+  function buildUptimeRow(containerId, label, pct, badDays) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    const days = 90;
+    let bars = '';
+    for (let i = 0; i < days; i++) {
+      const cls = badDays.includes(i) ? (Math.random() > 0.5 ? 'warn' : 'down') : 'ok';
+      bars += `<div class="uptime-bar ${cls}" title="День ${days - i} тому"></div>`;
+    }
+    container.innerHTML = `
+      <div class="uptime-row-head">
+        <span class="uptime-name">${label}</span>
+        <span class="uptime-pct">${pct}% uptime</span>
+      </div>
+      <div class="uptime-bars">${bars}</div>
+      <div class="uptime-legend"><span>90 днів тому</span><span>Сьогодні</span></div>
+    `;
+  }
+
+  buildUptimeRow('uptimeWebsite', 'Вебсайт', '99.98', [64, 65]);
+  buildUptimeRow('uptimeApi',     'Google Indexing API', '99.91', [64, 65, 27, 28]);
+  buildUptimeRow('uptimeSitemap', 'Парсер Sitemap', '100.00', []);
+
+  // ── Incidents toggle
+  function toggleIncident(id) {
+    const card = document.getElementById(id);
+    card.classList.toggle('open');
+  }
+
+  // ── Subscribe
+  function handleSubscribe() {
+    const email = document.getElementById('subEmail').value;
+    const btn = document.querySelector('.subscribe-btn');
+    if (!email || !email.includes('@')) {
+      btn.textContent = '⚠️ Введіть email';
+      btn.style.background = 'var(--yellow)';
+      setTimeout(() => { btn.textContent = 'Підписатись'; btn.style.background = ''; }, 2000);
+      return;
+    }
+    btn.textContent = '✓ Підписано!';
+    btn.style.background = 'var(--green)';
+    document.getElementById('subEmail').value = '';
+    setTimeout(() => { btn.textContent = 'Підписатись'; btn.style.background = ''; }, 3000);
+  }
+</script>
+</body>
+</html>

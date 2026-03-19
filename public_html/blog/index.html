@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23050508'/><text x='16' y='22' font-family='system-ui,sans-serif' font-size='15' font-weight='800' fill='%2300ff88' text-anchor='middle'>IF</text></svg>">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Блог — IndexFast</title>
+  <meta name="description" content="Корисні статті про SEO, індексацію сайтів у Google, sitemap.xml та інструменти для просування. Практичні поради від команди IndexFast.">
+  <link rel="canonical" href="https://indexfast.pp.ua/blog/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://indexfast.pp.ua/blog/">
+  <meta property="og:title" content="Блог IndexFast — SEO та індексація сайтів">
+  <meta property="og:description" content="Корисні статті про SEO, індексацію та просування сайтів у Google.">
+  <meta property="og:image" content="https://indexfast.pp.ua/og-image.jpg">
+  <meta property="og:locale" content="uk_UA">
+  <meta property="og:site_name" content="IndexFast">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Блог IndexFast — SEO та індексація сайтів">
+  <meta name="twitter:description" content="Корисні статті про SEO, індексацію та просування сайтів у Google.">
+  <meta name="twitter:image" content="https://indexfast.pp.ua/og-image.jpg">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    "name": "Блог IndexFast",
+    "description": "Статті про SEO, індексацію в Google та просування сайтів",
+    "url": "https://indexfast.pp.ua/blog/",
+    "publisher": {
+      "@type": "Organization",
+      "name": "IndexFast",
+      "url": "https://indexfast.pp.ua",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://indexfast.pp.ua/logo.png"
+      }
+    }
+  }
+  </script>
+
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --black:  #050508;
+      --dark:   #0d0d14;
+      --card:   #111119;
+      --border: rgba(255,255,255,0.07);
+      --green:  #00ff88;
+      --white:  #f0f0f8;
+      --muted:  #7a7a95;
+      --font-display: 'Syne', sans-serif;
+      --font-body:    'DM Sans', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { background: var(--black); color: var(--white); font-family: var(--font-body); font-weight: 300; overflow-x: hidden; }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      padding: 0 60px; height: 64px;
+      display: flex; align-items: center; justify-content: space-between;
+      background: rgba(5,5,8,0.96); backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+    .logo { font-family: var(--font-display); font-size: 1.35rem; font-weight: 800; letter-spacing: -0.03em; color: var(--white); text-decoration: none; }
+    .logo span { color: var(--green); }
+    .nav-right { display: flex; align-items: center; gap: 24px; }
+    .nav-link { color: var(--muted); text-decoration: none; font-size: 0.875rem; transition: color 0.2s; }
+    .nav-link:hover { color: var(--white); }
+    .nav-link.active { color: var(--green); }
+    .nav-cta { background: var(--green); color: var(--black); padding: 8px 20px; border-radius: 100px; font-family: var(--font-display); font-weight: 700; font-size: 0.82rem; text-decoration: none; transition: box-shadow 0.2s; }
+    .nav-cta:hover { box-shadow: 0 0 20px rgba(0,255,136,0.4); }
+
+    /* ── HERO ── */
+    .blog-hero {
+      padding: 80px 60px 60px;
+      max-width: 1200px; margin: 0 auto;
+      position: relative;
+    }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--green); font-weight: 600; font-family: var(--font-display);
+      margin-bottom: 20px;
+    }
+    .hero-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+    .blog-hero h1 {
+      font-family: var(--font-display); font-size: clamp(2.4rem, 5vw, 3.8rem);
+      font-weight: 800; letter-spacing: -0.04em; line-height: 1.05;
+      margin-bottom: 20px;
+    }
+    .blog-hero h1 em { font-style: normal; color: var(--green); }
+    .blog-hero p { color: var(--muted); font-size: 1.05rem; line-height: 1.7; max-width: 520px; }
+
+    /* ── FILTERS ── */
+    .filters-wrap {
+      padding: 0 60px 40px;
+      max-width: 1200px; margin: 0 auto;
+    }
+    .filters { display: flex; gap: 8px; flex-wrap: wrap; }
+    .filter-btn {
+      padding: 7px 18px; border-radius: 100px;
+      border: 1px solid var(--border); background: none;
+      color: var(--muted); font-family: var(--font-body); font-size: 0.83rem;
+      cursor: pointer; transition: all 0.2s;
+    }
+    .filter-btn:hover { border-color: rgba(0,255,136,0.3); color: var(--white); }
+    .filter-btn.active { background: rgba(0,255,136,0.1); border-color: rgba(0,255,136,0.3); color: var(--green); }
+
+    /* ── ARTICLES GRID ── */
+    .articles-wrap {
+      padding: 0 60px 100px;
+      max-width: 1200px; margin: 0 auto;
+    }
+    .articles-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    /* Featured article (spans 2 cols) */
+    .article-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 20px; overflow: hidden;
+      text-decoration: none; color: var(--white);
+      display: flex; flex-direction: column;
+      transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+      position: relative;
+    }
+    .article-card:hover { border-color: rgba(0,255,136,0.2); transform: translateY(-4px); box-shadow: 0 20px 60px rgba(0,0,0,0.4); }
+    .article-card.featured { grid-column: span 2; flex-direction: row; }
+
+    .card-visual {
+      background: linear-gradient(135deg, rgba(0,255,136,0.06) 0%, rgba(77,184,255,0.04) 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 36px 32px;
+      display: flex; align-items: center; justify-content: center;
+      min-height: 180px; position: relative; overflow: hidden; flex-shrink: 0;
+    }
+    .article-card.featured .card-visual { width: 300px; min-height: auto; border-bottom: none; border-right: 1px solid var(--border); flex-direction: column; gap: 16px; }
+    .card-visual::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 30% 50%, rgba(0,255,136,0.08) 0%, transparent 70%);
+    }
+    .card-icon { font-size: 3rem; position: relative; z-index: 1; }
+    .card-stats {
+      display: flex; flex-direction: column; gap: 8px; position: relative; z-index: 1;
+    }
+    .card-stat {
+      background: rgba(0,255,136,0.08); border: 1px solid rgba(0,255,136,0.15);
+      border-radius: 8px; padding: 6px 12px;
+      font-family: var(--font-display); font-size: 0.75rem; font-weight: 700;
+      color: var(--green);
+    }
+
+    .card-body { padding: 24px 28px; flex: 1; display: flex; flex-direction: column; gap: 12px; }
+    .article-card.featured .card-body { padding: 32px 36px; }
+
+    .card-meta { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .card-tag {
+      font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase;
+      font-weight: 700; font-family: var(--font-display);
+      padding: 3px 10px; border-radius: 100px;
+    }
+    .tag-seo { background: rgba(0,255,136,0.1); color: var(--green); }
+    .tag-tech { background: rgba(77,184,255,0.1); color: #4db8ff; }
+    .tag-guide { background: rgba(255,208,96,0.1); color: #ffd060; }
+    .card-date { font-size: 0.78rem; color: var(--muted); }
+    .card-read { font-size: 0.78rem; color: var(--muted); }
+    .card-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--border); }
+
+    .card-title { font-family: var(--font-display); font-weight: 700; line-height: 1.25; letter-spacing: -0.02em; margin: 0; padding: 0; border: none; }
+    h2.card-title { font-size: 1.4rem; }
+    h3.card-title { font-size: 1rem; }
+    .article-card.featured .card-title { font-size: 1.4rem; }
+    .card-title-sm { font-size: 1rem; }
+
+    .card-desc { color: var(--muted); font-size: 0.875rem; line-height: 1.65; flex: 1; }
+    .card-footer { display: flex; align-items: center; justify-content: space-between; margin-top: auto; padding-top: 16px; border-top: 1px solid var(--border); }
+    .card-author { display: flex; align-items: center; gap: 8px; }
+    .author-avatar {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--green), #00d4ff);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-display); font-size: 0.6rem; font-weight: 800; color: var(--black);
+    }
+    .author-name { font-size: 0.78rem; color: var(--muted); }
+    .card-arrow { color: var(--green); font-size: 1rem; transition: transform 0.2s; }
+    .article-card:hover .card-arrow { transform: translateX(4px); }
+
+    /* Featured badge */
+    .featured-badge {
+      position: absolute; top: 16px; right: 16px; z-index: 2;
+      background: var(--green); color: var(--black);
+      font-family: var(--font-display); font-size: 0.62rem; font-weight: 800;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 3px 10px; border-radius: 100px;
+    }
+
+    /* ── NEWSLETTER ── */
+    .newsletter {
+      max-width: 1200px; margin: 0 auto 80px;
+      padding: 0 60px;
+    }
+    .newsletter-inner {
+      background: linear-gradient(135deg, rgba(0,255,136,0.05) 0%, rgba(77,184,255,0.03) 100%);
+      border: 1px solid rgba(0,255,136,0.15);
+      border-radius: 24px; padding: 48px 56px;
+      display: flex; align-items: center; justify-content: space-between; gap: 40px;
+      position: relative; overflow: hidden;
+    }
+    .newsletter-inner::before {
+      content: ''; position: absolute; right: -60px; top: -60px;
+      width: 240px; height: 240px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(0,255,136,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .newsletter-text { flex: 1; }
+    .newsletter-text h3 { font-family: var(--font-display); font-size: 1.4rem; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 8px; }
+    .newsletter-text p { color: var(--muted); font-size: 0.9rem; line-height: 1.6; }
+    .newsletter-form { display: flex; gap: 10px; flex-shrink: 0; }
+    .newsletter-input {
+      background: rgba(5,5,8,0.6); border: 1px solid var(--border);
+      color: var(--white); border-radius: 100px; padding: 11px 20px;
+      font-family: var(--font-body); font-size: 0.875rem; outline: none;
+      transition: border-color 0.2s; width: 260px;
+    }
+    .newsletter-input::placeholder { color: var(--muted); }
+    .newsletter-input:focus { border-color: rgba(0,255,136,0.3); }
+    .newsletter-btn {
+      background: var(--green); color: var(--black);
+      border: none; border-radius: 100px; padding: 11px 24px;
+      font-family: var(--font-display); font-weight: 700; font-size: 0.875rem;
+      cursor: pointer; transition: box-shadow 0.2s; white-space: nowrap;
+    }
+    .newsletter-btn:hover { box-shadow: 0 0 20px rgba(0,255,136,0.4); }
+
+    /* ── FOOTER ── */
+    footer { background: var(--dark); border-top: 1px solid var(--border); padding: 28px 60px; text-align: center; }
+    .footer-links { display: flex; justify-content: center; gap: 28px; margin-bottom: 12px; flex-wrap: wrap; }
+    .footer-links a { color: var(--muted); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--white); }
+    .footer-links a.active { color: var(--green); }
+    footer p { color: var(--muted); font-size: 0.78rem; }
+
+    /* ── MOBILE ── */
+    @media (max-width: 900px) {
+      nav { padding: 0 20px; }
+      .blog-hero { padding: 48px 20px 36px; }
+      .filters-wrap { padding: 0 20px 28px; }
+      .articles-wrap { padding: 0 20px 60px; }
+      .articles-grid { grid-template-columns: 1fr; }
+      .article-card.featured { flex-direction: column; }
+      .article-card.featured .card-visual { width: 100%; min-height: 160px; border-right: none; border-bottom: 1px solid var(--border); }
+      .newsletter { padding: 0 20px; }
+      .newsletter-inner { flex-direction: column; padding: 32px 24px; gap: 24px; }
+      .newsletter-form { flex-direction: column; width: 100%; }
+      .newsletter-input { width: 100%; }
+      footer { padding: 24px 20px; }
+    }
+      .nav-login {
+      color: var(--muted, #7a7a95);
+      font-size: 0.875rem;
+      text-decoration: none;
+      padding: 7px 16px;
+      border-radius: 100px;
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .nav-login:hover {
+      color: var(--white, #f0f0f8);
+      border-color: rgba(255,255,255,0.25);
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+        {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Головна",
+            "item": "https://indexfast.pp.ua/"
+        },
+        {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Блог",
+            "item": "https://indexfast.pp.ua/blog/"
+        }
+    ]
+}
+  </script>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="logo">Index<span>Fast</span></a>
+  <div class="nav-right">
+    <a href="/" class="nav-link">Головна</a>
+    <a href="/docs/" class="nav-link">Документація</a>
+    <a href="/blog/" class="nav-link active">Блог</a>
+    <a href="/auth.html" class="nav-login">Увійти</a>
+    <a href="/auth.html?mode=register"" class="nav-cta">Спробувати безкоштовно</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="blog-hero">
+  <div class="hero-eyebrow"><span class="hero-dot"></span>Блог IndexFast</div>
+  <h1>SEO та індексація —<br><em>без води</em></h1>
+  <p>Практичні статті про прискорення індексації, налаштування Google Search Console та просування сайтів у пошуку.</p>
+</div>
+
+<!-- FILTERS -->
+<div class="filters-wrap">
+  <div class="filters">
+    <button class="filter-btn active" onclick="filterArticles('all', this)">Всі статті</button>
+    <button class="filter-btn" onclick="filterArticles('seo', this)">SEO</button>
+    <button class="filter-btn" onclick="filterArticles('tech', this)">Технічне</button>
+    <button class="filter-btn" onclick="filterArticles('guide', this)">Гайди</button>
+  </div>
+</div>
+
+<!-- ARTICLES -->
+<div class="articles-wrap">
+  <div class="articles-grid" id="articlesGrid">
+
+    <!-- Featured -->
+    <a href="/blog/yak-pryskoriti-indeksaciyu-saitu-v-google.html" class="article-card featured" data-tags="seo guide">
+      <span class="featured-badge">⭐ Популярне</span>
+      <div class="card-visual">
+        <div class="card-icon">🚀</div>
+        <div class="card-stats">
+          <div class="card-stat">7 методів</div>
+          <div class="card-stat">24г до індексації</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-meta">
+          <span class="card-tag tag-seo">SEO</span>
+          <span class="card-tag tag-guide">Гайд</span>
+          <span class="card-dot"></span>
+          <span class="card-date">15 січня 2025</span>
+          <span class="card-dot"></span>
+          <span class="card-read">8 хв читання</span>
+        </div>
+        <h2 class="card-title">Як прискорити індексацію сайту в Google у 2025 році</h2>
+        <p class="card-desc">7 перевірених способів — від Google Indexing API до правильного налаштування sitemap.xml. Практичні поради для власників сайтів будь-якого розміру.</p>
+        <div class="card-footer">
+          <div class="card-author">
+            <div class="author-avatar">ДК</div>
+            <span class="author-name">Дмитро Коваль</span>
+          </div>
+          <span class="card-arrow">→</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- Article 2 -->
+    <a href="/blog/shcho-take-sitemap-xml.html" class="article-card" data-tags="tech guide">
+      <div class="card-visual">
+        <div class="card-icon">🗺</div>
+      </div>
+      <div class="card-body">
+        <div class="card-meta">
+          <span class="card-tag tag-tech">Технічне</span>
+          <span class="card-tag tag-guide">Гайд</span>
+          <span class="card-dot"></span>
+          <span class="card-date">20 січня 2025</span>
+          <span class="card-dot"></span>
+          <span class="card-read">6 хв читання</span>
+        </div>
+        <h3 class="card-title card-title-sm">Що таке sitemap.xml і навіщо він потрібен</h3>
+        <p class="card-desc">Повний посібник по sitemap.xml: структура, типи, як створити і зареєструвати в Google Search Console.</p>
+        <div class="card-footer">
+          <div class="card-author">
+            <div class="author-avatar">ДК</div>
+            <span class="author-name">Дмитро Коваль</span>
+          </div>
+          <span class="card-arrow">→</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- Coming soon cards -->
+    <a href="/blog/google-search-console-posibnyk.html" class="article-card" data-tags="seo">
+      <div class="card-visual" style="min-height:140px;">
+        <div class="card-icon">🔍</div>
+      </div>
+      <div class="card-body">
+        <div class="card-meta">
+          <span class="card-tag tag-seo">SEO</span>
+          <span class="card-date">10 лютого 2025</span>
+          <span class="card-dot"></span>
+          <span class="card-read">12 хв</span>
+        </div>
+        <h3 class="card-title card-title-sm">Google Search Console: повний посібник 2025</h3>
+        <p class="card-desc">Як налаштувати, читати звіти та використовувати для прискорення індексації.</p>
+        <div class="card-footer">
+          <span class="card-arrow">→</span>
+        </div>
+      </div>
+    </a>
+
+    <a href="/blog/cron-jobs-dlya-seo.html" class="article-card" data-tags="tech">
+      <div class="card-visual" style="min-height:140px;">
+        <div class="card-icon">⚙️</div>
+      </div>
+      <div class="card-body">
+        <div class="card-meta">
+          <span class="card-tag tag-tech">Технічне</span>
+          <span class="card-date">5 березня 2025</span>
+          <span class="card-dot"></span>
+          <span class="card-read">9 хв</span>
+        </div>
+        <h3 class="card-title card-title-sm">Cron jobs для SEO: автоматизуємо рутину</h3>
+        <p class="card-desc">Як налаштувати автоматичний запуск скриптів на сервері — покрокова інструкція.</p>
+        <div class="card-footer">
+          <span class="card-arrow">→</span>
+        </div>
+      </div>
+    </a>
+
+    <a href="/blog/core-web-vitals-2025.html" class="article-card" data-tags="guide">
+      <div class="card-visual" style="min-height:140px;">
+        <div class="card-icon">📊</div>
+      </div>
+      <div class="card-body">
+        <div class="card-meta">
+          <span class="card-tag tag-guide">Гайд</span>
+          <span class="card-date">20 березня 2025</span>
+          <span class="card-dot"></span>
+          <span class="card-read">10 хв</span>
+        </div>
+        <h3 class="card-title card-title-sm">Core Web Vitals 2025: що важливо знати</h3>
+        <p class="card-desc">LCP, CLS, INP — як вони впливають на ранжування і що зробити щоб покращити.</p>
+        <div class="card-footer">
+          <span class="card-arrow">→</span>
+        </div>
+      </div>
+    </a>
+
+  </div>
+</div>
+
+<!-- NEWSLETTER -->
+<div class="newsletter">
+  <div class="newsletter-inner">
+    <div class="newsletter-text">
+      <h3>Нові статті — на пошту 📬</h3>
+      <p>Раз на тиждень — корисна стаття про SEO та індексацію. Без спаму.</p>
+    </div>
+    <div class="newsletter-form">
+      <input type="email" class="newsletter-input" placeholder="your@email.com">
+      <button class="newsletter-btn" onclick="subscribeNewsletter(this)">Підписатись</button>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-links">
+    <a href="/">Головна</a>
+    <a href="/about.html">Про нас</a>
+    <a href="/blog/" class="active">Блог</a>
+    <a href="/docs/">Документація</a>
+    <a href="/privacy-policy.html">Конфіденційність</a>
+    <a href="/terms.html">Умови</a>
+    <a href="/status.html">Статус</a>
+  </div>
+  <p>© 2026 IndexFast. Всі права захищені.</p>
+</footer>
+
+<script>
+  function filterArticles(tag, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('#articlesGrid .article-card').forEach(card => {
+      if (tag === 'all') {
+        card.style.display = '';
+      } else {
+        const tags = card.dataset.tags || '';
+        card.style.display = tags.includes(tag) ? '' : 'none';
+      }
+    });
+  }
+
+  function subscribeNewsletter(btn) {
+    const input = btn.previousElementSibling;
+    if (!input.value || !input.value.includes('@')) {
+      input.style.borderColor = 'rgba(255,107,107,0.5)';
+      setTimeout(() => input.style.borderColor = '', 1500);
+      return;
+    }
+    btn.textContent = '✓ Підписано!';
+    btn.style.background = '#00c96a';
+    btn.disabled = true;
+    input.disabled = true;
+  }
+</script>
+</body>
+</html>

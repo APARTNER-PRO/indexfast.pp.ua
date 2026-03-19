@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23050508'/><text x='16' y='22' font-family='system-ui,sans-serif' font-size='15' font-weight='800' fill='%2300ff88' text-anchor='middle'>IF</text></svg>">
+  <link rel="apple-touch-icon" sizes="180x180" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23050508'/><text x='16' y='22' font-family='system-ui,sans-serif' font-size='15' font-weight='800' fill='%2300ff88' text-anchor='middle'>IF</text></svg>">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Про нас — IndexFast | Команда та місія</title>
+  <meta name="description" content="IndexFast — українська команда, яка будує інструменти для швидкої індексації сайтів у Google. Дізнайтесь про нашу місію, цінності та людей за продуктом.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://indexfast.pp.ua/about.html">
+
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://indexfast.pp.ua/about.html">
+  <meta property="og:title" content="Про нас — IndexFast">
+  <meta property="og:description" content="Українська команда, яка будує інструменти для швидкої індексації сайтів у Google.">
+  <meta property="og:image" content="https://indexfast.pp.ua/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="uk_UA">
+
+    <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Про нас — IndexFast">
+  <meta name="twitter:description" content="Українська команда, яка будує інструменти для швидкої індексації сайтів у Google.">
+  <meta name="twitter:image" content="https://indexfast.pp.ua/og-image.jpg">
+
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --black:  #050508;
+      --dark:   #0d0d14;
+      --card:   #12121c;
+      --border: rgba(255,255,255,0.07);
+      --green:  #00ff88;
+      --green2: #00c96a;
+      --white:  #f0f0f8;
+      --muted:  #7a7a95;
+      --font-display: 'Syne', sans-serif;
+      --font-body:    'DM Sans', sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--black); color: var(--white); font-family: var(--font-body); font-weight: 300; overflow-x: hidden; }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 200;
+      padding: 20px 60px; display: flex; align-items: center; justify-content: space-between;
+      background: rgba(5,5,8,0.95); backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .logo { font-family: var(--font-display); font-size: 1.4rem; font-weight: 800; letter-spacing: -0.03em; color: var(--white); text-decoration: none; }
+    .logo span { color: var(--green); }
+    .nav-right { display: flex; align-items: center; gap: 28px; }
+    .nav-link { color: var(--muted); text-decoration: none; font-size: 0.875rem; letter-spacing: 0.04em; transition: color 0.2s; }
+    .nav-link:hover { color: var(--white); }
+    .nav-cta { background: var(--green); color: var(--black); padding: 10px 24px; border-radius: 100px; font-family: var(--font-display); font-weight: 700; font-size: 0.875rem; text-decoration: none; transition: box-shadow 0.2s, transform 0.2s; box-shadow: 0 0 20px rgba(0,255,136,0.25); }
+    .nav-cta:hover { box-shadow: 0 0 36px rgba(0,255,136,0.45); transform: translateY(-1px); }
+
+    /* ── HERO ── */
+    .about-hero {
+      position: relative; overflow: hidden;
+      padding: 120px 60px 100px; min-height: 60vh;
+      display: flex; align-items: center;
+    }
+    .hero-bg {
+      position: absolute; inset: 0; pointer-events: none;
+      background:
+        radial-gradient(ellipse 60% 80% at 80% 50%, rgba(0,255,136,0.07) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 60% at 10% 80%, rgba(0,212,255,0.04) 0%, transparent 50%);
+    }
+    .hero-grid-lines {
+      position: absolute; inset: 0; pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 100% 100% at 80% 50%, black 0%, transparent 70%);
+    }
+    .hero-content { position: relative; z-index: 1; max-width: 700px; }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(0,255,136,0.07); border: 1px solid rgba(0,255,136,0.2);
+      padding: 6px 16px; border-radius: 100px; margin-bottom: 32px;
+      font-size: 0.75rem; color: var(--green); letter-spacing: 0.12em; text-transform: uppercase; font-weight: 600;
+      animation: fadeUp 0.7s ease both;
+    }
+    .about-hero h1 {
+      font-family: var(--font-display); font-size: clamp(2.8rem, 6vw, 5rem);
+      font-weight: 800; letter-spacing: -0.04em; line-height: 1.0;
+      margin-bottom: 28px;
+      animation: fadeUp 0.7s 0.1s ease both;
+    }
+    .about-hero h1 em {
+      font-style: normal;
+      background: linear-gradient(135deg, var(--green) 0%, #00d4ff 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .hero-lead {
+      font-size: 1.15rem; color: rgba(240,240,248,0.75); line-height: 1.75; max-width: 560px;
+      animation: fadeUp 0.7s 0.2s ease both;
+    }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* ── MISSION ── */
+    .mission-section {
+      background: var(--dark); padding: 100px 60px;
+      border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+    }
+    .mission-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+    .mission-label { font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--green); margin-bottom: 20px; font-weight: 600; }
+    .mission-title { font-family: var(--font-display); font-size: clamp(2rem, 3.5vw, 2.8rem); font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 24px; }
+    .mission-text { color: rgba(240,240,248,0.75); line-height: 1.8; font-size: 1rem; margin-bottom: 16px; }
+
+    .mission-values { display: flex; flex-direction: column; gap: 2px; }
+    .value-row {
+      display: flex; align-items: flex-start; gap: 20px;
+      padding: 24px; background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+    .value-row:hover { border-color: rgba(0,255,136,0.25); transform: translateX(6px); }
+    .value-icon { font-size: 1.6rem; flex-shrink: 0; margin-top: 2px; }
+    .value-title { font-family: var(--font-display); font-weight: 700; font-size: 1rem; margin-bottom: 6px; }
+    .value-desc { color: var(--muted); font-size: 0.875rem; line-height: 1.6; }
+
+    /* ── STORY ── */
+    .story-section { padding: 100px 60px; max-width: 1200px; margin: 0 auto; }
+    .story-header { text-align: center; margin-bottom: 72px; }
+    .story-label { font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--green); margin-bottom: 16px; font-weight: 600; }
+    .story-title { font-family: var(--font-display); font-size: clamp(2rem, 3.5vw, 2.8rem); font-weight: 800; letter-spacing: -0.03em; }
+
+    .timeline { position: relative; max-width: 780px; margin: 0 auto; }
+    .timeline::before {
+      content: ''; position: absolute; left: 20px; top: 8px; bottom: 8px;
+      width: 1px;
+      background: linear-gradient(to bottom, transparent 0%, var(--green) 8%, var(--green) 92%, transparent 100%);
+    }
+    .tl-item {
+      display: flex; gap: 0; margin-bottom: 12px; align-items: stretch;
+      position: relative;
+    }
+    .tl-item:last-child { margin-bottom: 0; }
+
+    .tl-center {
+      display: flex; flex-direction: column; align-items: center;
+      flex-shrink: 0; width: 40px; padding-top: 22px; gap: 6px;
+    }
+    .tl-dot {
+      width: 14px; height: 14px; border-radius: 50%;
+      background: var(--black); border: 2px solid var(--green);
+      box-shadow: 0 0 10px rgba(0,255,136,0.5);
+      flex-shrink: 0; z-index: 1;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .tl-item:hover .tl-dot { transform: scale(1.4); box-shadow: 0 0 20px rgba(0,255,136,0.7); }
+    .tl-year {
+      font-family: var(--font-display); font-size: 0.65rem; font-weight: 700;
+      color: var(--green); letter-spacing: 0.06em; white-space: nowrap;
+      writing-mode: vertical-rl; transform: rotate(180deg);
+      opacity: 0.7;
+    }
+    .tl-content { flex: 1; padding: 0 0 0 20px; }
+    .tl-card {
+      background: var(--card); border: 1px solid var(--border); border-radius: 16px;
+      padding: 22px 26px; transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
+    }
+    .tl-item:hover .tl-card {
+      border-color: rgba(0,255,136,0.2);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+      transform: translateX(4px);
+    }
+    .tl-card-header { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+    .tl-card-tag {
+      font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--black); font-weight: 700;
+      background: var(--green); padding: 3px 10px; border-radius: 100px;
+      flex-shrink: 0;
+    }
+    .tl-card-date { font-size: 0.78rem; color: var(--muted); font-family: var(--font-display); font-weight: 600; }
+    .tl-card h3 { font-family: var(--font-display); font-size: 1rem; font-weight: 700; margin-bottom: 8px; line-height: 1.3; }
+    .tl-card p { color: var(--muted); font-size: 0.875rem; line-height: 1.65; margin: 0; }
+
+    /* ── TEAM ── */
+    .team-section { background: var(--dark); padding: 100px 60px; border-top: 1px solid var(--border); }
+    .team-header { text-align: center; margin-bottom: 64px; max-width: 1200px; margin-left: auto; margin-right: auto; }
+    .team-label { font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--green); margin-bottom: 16px; font-weight: 600; }
+    .team-title { font-family: var(--font-display); font-size: clamp(2rem, 3.5vw, 2.8rem); font-weight: 800; letter-spacing: -0.03em; margin-bottom: 16px; }
+    .team-sub { color: var(--muted); font-size: 1rem; line-height: 1.7; }
+
+    .team-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 1200px; margin: 0 auto; }
+    .team-card {
+      background: var(--card); border: 1px solid var(--border); border-radius: 24px;
+      padding: 36px 28px; text-align: center;
+      transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+      position: relative; overflow: hidden;
+    }
+    .team-card::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(0,255,136,0.04) 0%, transparent 60%);
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .team-card:hover { transform: translateY(-8px); border-color: rgba(0,255,136,0.2); box-shadow: 0 20px 60px rgba(0,0,0,0.4); }
+    .team-card:hover::before { opacity: 1; }
+
+    .team-avatar {
+      width: 88px; height: 88px; border-radius: 50%; margin: 0 auto 20px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-display); font-weight: 800; font-size: 1.8rem;
+      color: var(--black); position: relative;
+    }
+    .avatar-bg {
+      position: absolute; inset: 0; border-radius: 50%;
+      background: linear-gradient(135deg, var(--green) 0%, #00d4ff 100%);
+    }
+    .avatar-initials { position: relative; z-index: 1; }
+    .team-name { font-family: var(--font-display); font-size: 1.2rem; font-weight: 800; margin-bottom: 4px; letter-spacing: -0.02em; }
+    .team-role { color: var(--green); font-size: 0.8rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 16px; }
+    .team-bio { color: var(--muted); font-size: 0.875rem; line-height: 1.65; margin-bottom: 20px; }
+    .team-links { display: flex; justify-content: center; gap: 10px; }
+    .team-link {
+      width: 34px; height: 34px; border-radius: 50%;
+      background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--muted); text-decoration: none; font-size: 0.9rem;
+      transition: background 0.2s, border-color 0.2s, color 0.2s;
+    }
+    .team-link:hover { background: rgba(0,255,136,0.1); border-color: rgba(0,255,136,0.3); color: var(--green); }
+
+    /* ── NUMBERS ── */
+    .numbers-section { padding: 100px 60px; }
+    .numbers-inner { max-width: 1200px; margin: 0 auto; }
+    .numbers-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; margin-top: 56px; }
+    .number-card {
+      background: var(--card); border: 1px solid var(--border);
+      padding: 40px 28px; text-align: center;
+      transition: border-color 0.3s;
+    }
+    .number-card:first-child { border-radius: 20px 0 0 20px; }
+    .number-card:last-child  { border-radius: 0 20px 20px 0; }
+    .number-card:hover { border-color: rgba(0,255,136,0.2); }
+    .number-val {
+      font-family: var(--font-display); font-size: 3rem; font-weight: 800;
+      letter-spacing: -0.04em; line-height: 1; margin-bottom: 8px;
+      background: linear-gradient(135deg, var(--white) 0%, rgba(240,240,248,0.5) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .number-val.accent { -webkit-text-fill-color: unset; background: none; color: var(--green); }
+    .number-label { font-size: 0.82rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; line-height: 1.4; }
+
+    /* ── UKRAINE ── */
+    .ukraine-section {
+      background: var(--dark); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+      padding: 80px 60px;
+    }
+    .ukraine-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; gap: 60px; }
+    .ua-flag { font-size: 4rem; flex-shrink: 0; filter: drop-shadow(0 0 20px rgba(0,0,0,0.5)); }
+    .ua-content h2 { font-family: var(--font-display); font-size: 2rem; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 16px; }
+    .ua-content p { color: rgba(240,240,248,0.75); line-height: 1.75; font-size: 1rem; max-width: 640px; }
+    .ua-badge {
+      display: inline-flex; align-items: center; gap: 8px; margin-top: 24px;
+      background: rgba(0,255,136,0.07); border: 1px solid rgba(0,255,136,0.2);
+      padding: 8px 20px; border-radius: 100px;
+      font-size: 0.85rem; color: var(--green); font-weight: 500;
+    }
+
+    /* ── CTA ── */
+    .about-cta { padding: 100px 60px; text-align: center; position: relative; overflow: hidden; }
+    .about-cta::before {
+      content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+      width: 600px; height: 400px;
+      background: radial-gradient(ellipse, rgba(0,255,136,0.1) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .about-cta h2 { font-family: var(--font-display); font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 800; letter-spacing: -0.03em; margin-bottom: 16px; position: relative; }
+    .about-cta p { color: var(--muted); font-size: 1rem; margin-bottom: 40px; max-width: 440px; margin-left: auto; margin-right: auto; line-height: 1.7; position: relative; }
+    .cta-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; position: relative; }
+    .btn-green { display: inline-flex; align-items: center; gap: 8px; background: var(--green); color: var(--black); padding: 16px 36px; border-radius: 100px; font-family: var(--font-display); font-weight: 700; font-size: 1rem; text-decoration: none; transition: all 0.3s; box-shadow: 0 0 30px rgba(0,255,136,0.3); }
+    .btn-green:hover { transform: translateY(-2px); box-shadow: 0 0 50px rgba(0,255,136,0.5); }
+    .btn-ghost { display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--border); color: var(--white); padding: 16px 36px; border-radius: 100px; font-family: var(--font-display); font-weight: 600; font-size: 1rem; text-decoration: none; transition: all 0.3s; }
+    .btn-ghost:hover { border-color: rgba(255,255,255,0.3); transform: translateY(-2px); }
+
+    /* ── FOOTER ── */
+    footer { background: var(--dark); border-top: 1px solid var(--border); padding: 32px 60px; }
+    .footer-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+    .footer-links { display: flex; gap: 28px; flex-wrap: wrap; }
+    .footer-links a { color: var(--muted); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--white); }
+    .footer-links a.active { color: var(--green); }
+    footer p { color: var(--muted); font-size: 0.8rem; }
+
+    /* ── REVEAL ── */
+    .reveal { opacity: 0; transform: translateY(32px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; } }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 960px) {
+      nav { padding: 16px 24px; }
+      .about-hero { padding: 80px 24px 70px; }
+      .mission-section, .team-section, .numbers-section, .about-cta, .ukraine-section { padding: 70px 24px; }
+      .story-section { padding: 70px 24px; }
+      .mission-grid { grid-template-columns: 1fr; gap: 48px; }
+      .team-grid { grid-template-columns: 1fr; }
+      .numbers-grid { grid-template-columns: 1fr 1fr; }
+      .number-card { border-radius: 12px !important; }
+      .ukraine-inner { flex-direction: column; gap: 24px; text-align: center; }
+      .ua-content p { max-width: 100%; }
+      .footer-inner { flex-direction: column; text-align: center; }
+      .footer-links { justify-content: center; }
+    }
+      .nav-login {
+      color: var(--muted, #7a7a95);
+      font-size: 0.875rem;
+      text-decoration: none;
+      padding: 7px 16px;
+      border-radius: 100px;
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .nav-login:hover {
+      color: var(--white, #f0f0f8);
+      border-color: rgba(255,255,255,0.25);
+    }
+  </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "IndexFast",
+    "url": "https://indexfast.pp.ua",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://indexfast.pp.ua/logo.png",
+      "width": 200,
+      "height": 60
+    },
+    "description": "Сервіс автоматичної індексації сторінок сайту в Google через Google Indexing API. Допомагаємо власникам сайтів та SEO-фахівцям прискорити появу сторінок у пошуку.",
+    "foundingDate": "2024",
+    "address": {
+      "@type": "PostalAddress",
+      "addressCountry": "UA"
+    },
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "contactType": "customer support",
+      "email": "hello@indexfast.pp.ua",
+      "availableLanguage": ["Ukrainian", "Russian"]
+    },
+    "sameAs": [
+      "https://t.me/indexfastgoogle"
+    ],
+    "numberOfEmployees": {
+      "@type": "QuantitativeValue",
+      "value": 3
+    }
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+        {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Головна",
+            "item": "https://indexfast.pp.ua/"
+        },
+        {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Про нас",
+            "item": "https://indexfast.pp.ua/about.html"
+        }
+    ]
+}
+  </script>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="/" class="logo">Index<span>Fast</span></a>
+  <div class="nav-right">
+    <a href="/" class="nav-link">Головна</a>
+    <a href="/blog/" class="nav-link">Блог</a>
+    <a href="/auth.html" class="nav-login">Увійти</a>
+    <a href="/auth.html?mode=register"" class="nav-cta">Спробувати безкоштовно</a>
+  </div>
+</nav>
+
+<!-- ════════════════════ HERO ════════════════════ -->
+<section class="about-hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid-lines"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">🇺🇦 Зроблено в Україні</div>
+    <h1>
+      Ми робимо<br>
+      <em>індексацію</em><br>
+      простою
+    </h1>
+    <p class="hero-lead">
+      IndexFast — це невелика українська команда, яка втомилась дивитись як класний контент місяцями чекає поки Google його помітить. Ми вирішили це виправити.
+    </p>
+  </div>
+</section>
+
+<!-- ════════════════════ MISSION ════════════════════ -->
+<section class="mission-section">
+  <div class="mission-grid">
+    <div>
+      <p class="mission-label reveal">Наша місія</p>
+      <h2 class="mission-title reveal">Зробити кожну сторінку видимою в Google якнайшвидше</h2>
+      <p class="mission-text reveal">Ми віримо, що хороший контент заслуговує бути знайденим. Затримки індексації — не неминучість, а технічна проблема з технічним рішенням.</p>
+      <p class="mission-text reveal">IndexFast усуває бар'єр між «я опублікував» і «мене знайшли в Google» — для будь-якого бізнесу, незалежно від розміру.</p>
+    </div>
+    <div class="mission-values">
+      <div class="value-row reveal">
+        <div class="value-icon">⚡</div>
+        <div>
+          <div class="value-title">Швидкість перш за все</div>
+          <div class="value-desc">Кожна секунда затримки — це втрачений клієнт. Ми оптимізуємо кожен крок від публікації до індексації.</div>
+        </div>
+      </div>
+      <div class="value-row reveal reveal-delay-1">
+        <div class="value-icon">🔒</div>
+        <div>
+          <div class="value-title">Тільки офіційні методи</div>
+          <div class="value-desc">Ніяких сірих схем. Виключно офіційний Google Indexing API — безпечно, надійно, довгостроково.</div>
+        </div>
+      </div>
+      <div class="value-row reveal reveal-delay-2">
+        <div class="value-icon">🎯</div>
+        <div>
+          <div class="value-title">Простота для всіх</div>
+          <div class="value-desc">Від технічних SEO-спеціалістів до власників малого бізнесу — один інструмент, зрозумілий кожному.</div>
+        </div>
+      </div>
+      <div class="value-row reveal reveal-delay-3">
+        <div class="value-icon">🇺🇦</div>
+        <div>
+          <div class="value-title">Підтримка українського бізнесу</div>
+          <div class="value-desc">Ми будуємо продукт, який допомагає українським компаніям конкурувати у глобальному пошуку.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════ STORY ════════════════════ -->
+<section class="story-section">
+  <div class="story-header">
+    <p class="story-label reveal">Наша історія</p>
+    <h2 class="story-title reveal">Від болю — до продукту</h2>
+  </div>
+
+  <div class="timeline">
+
+    <div class="tl-item reveal">
+      <div class="tl-center">
+        <div class="tl-dot"></div>
+        <div class="tl-year">Лип 2024</div>
+      </div>
+      <div class="tl-content">
+        <div class="tl-card">
+          <div class="tl-card-header">
+            <span class="tl-card-tag">Початок</span>
+            <span class="tl-card-date">Липень 2024</span>
+          </div>
+          <h3>«Чому моя стаття не індексується вже 3 тижні?»</h3>
+          <p>Саме з цього питання все почалось. Засновник IndexFast вів SEO-блог і щоразу чекав тижнями, поки Google помітить нові матеріали.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item reveal">
+      <div class="tl-center">
+        <div class="tl-dot"></div>
+        <div class="tl-year">Вер 2024</div>
+      </div>
+      <div class="tl-content">
+        <div class="tl-card">
+          <div class="tl-card-header">
+            <span class="tl-card-tag">Прототип</span>
+            <span class="tl-card-date">Вересень 2024</span>
+          </div>
+          <h3>Перший PHP-скрипт для Google Indexing API</h3>
+          <p>Написали простий скрипт, який читає sitemap і відправляє URL через API. Результат — сторінки в Google вже наступного ранку. Магія.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item reveal">
+      <div class="tl-center">
+        <div class="tl-dot"></div>
+        <div class="tl-year">Лис 2024</div>
+      </div>
+      <div class="tl-content">
+        <div class="tl-card">
+          <div class="tl-card-header">
+            <span class="tl-card-tag">Перевірка</span>
+            <span class="tl-card-date">Листопад 2024</span>
+          </div>
+          <h3>Перші 10 клієнтів і перевірка гіпотези</h3>
+          <p>Поділились скриптом з друзями-підприємцями. Всі отримали результат. Зрозуміли що це потрібно набагато більшій кількості людей.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item reveal">
+      <div class="tl-center">
+        <div class="tl-dot"></div>
+        <div class="tl-year">Січ 2025</div>
+      </div>
+      <div class="tl-content">
+        <div class="tl-card">
+          <div class="tl-card-header">
+            <span class="tl-card-tag">Запуск</span>
+            <span class="tl-card-date">Січень 2025</span>
+          </div>
+          <h3>IndexFast відкривається публічно</h3>
+          <p>Офіційний запуск з трьома тарифними планами, веб-інтерфейсом та підтримкою. За перший тиждень — понад 50 реєстрацій.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item reveal">
+      <div class="tl-center">
+        <div class="tl-dot" style="background: var(--green); box-shadow: 0 0 20px var(--green);"></div>
+        <div class="tl-year">Зараз</div>
+      </div>
+      <div class="tl-content">
+        <div class="tl-card" style="border-color: rgba(0,255,136,0.2); background: rgba(0,255,136,0.04);">
+          <div class="tl-card-header">
+            <span class="tl-card-tag" style="background: var(--green); animation: pulse-glow 2s infinite;">Зараз</span>
+            <span class="tl-card-date">2025 — сьогодні</span>
+          </div>
+          <h3>247+ клієнтів та 1.2М+ проіндексованих сторінок</h3>
+          <p>Ростемо щодня. Додаємо нові функції, слухаємо клієнтів і продовжуємо будувати найкращий інструмент для індексації в Google.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ════════════════════ TEAM ════════════════════ -->
+<section class="team-section">
+  <div class="team-header">
+    <p class="team-label reveal">Команда</p>
+    <h2 class="team-title reveal">Люди за продуктом</h2>
+    <p class="team-sub reveal">Невелика, але сильна команда з великою любов'ю до SEO та чистого коду</p>
+  </div>
+
+  <div class="team-grid">
+
+    <div class="team-card reveal">
+      <div class="team-avatar">
+        <div class="avatar-bg" style="background: linear-gradient(135deg, #00ff88, #00d4ff);"></div>
+        <span class="avatar-initials">ДК</span>
+      </div>
+      <div class="team-name">Дмитро Коваль</div>
+      <div class="team-role">Засновник & CEO</div>
+      <p class="team-bio">7 років в SEO та веб-розробці. Побудував IndexFast з особистого болю — і перетворив його на продукт, яким користуються сотні бізнесів.</p>
+      <div class="team-links">
+        <a href="#" class="team-link" title="LinkedIn">in</a>
+        <a href="#" class="team-link" title="Telegram">✈</a>
+        <a href="#" class="team-link" title="Twitter">𝕏</a>
+      </div>
+    </div>
+
+    <div class="team-card reveal reveal-delay-1">
+      <div class="team-avatar">
+        <div class="avatar-bg" style="background: linear-gradient(135deg, #a855f7, #00d4ff);"></div>
+        <span class="avatar-initials">ОМ</span>
+      </div>
+      <div class="team-name">Олена Мороз</div>
+      <div class="team-role">Lead Developer</div>
+      <p class="team-bio">Full-stack розробник з фокусом на PHP та Node.js. Відповідає за надійність і швидкодію всього бекенду IndexFast.</p>
+      <div class="team-links">
+        <a href="#" class="team-link" title="GitHub">⌥</a>
+        <a href="#" class="team-link" title="LinkedIn">in</a>
+        <a href="#" class="team-link" title="Telegram">✈</a>
+      </div>
+    </div>
+
+    <div class="team-card reveal reveal-delay-2">
+      <div class="team-avatar">
+        <div class="avatar-bg" style="background: linear-gradient(135deg, #ffcc00, #ff6b35);"></div>
+        <span class="avatar-initials">АС</span>
+      </div>
+      <div class="team-name">Андрій Савченко</div>
+      <div class="team-role">SEO & Growth</div>
+      <p class="team-bio">Технічний SEO-спеціаліст з 5-річним досвідом. Слідкує за тим, щоб IndexFast завжди відповідав реальним потребам SEO-спеціалістів.</p>
+      <div class="team-links">
+        <a href="#" class="team-link" title="LinkedIn">in</a>
+        <a href="#" class="team-link" title="Telegram">✈</a>
+        <a href="#" class="team-link" title="Twitter">𝕏</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ════════════════════ NUMBERS ════════════════════ -->
+<section class="numbers-section">
+  <div class="numbers-inner">
+    <div style="text-align:center; margin-bottom: 0;">
+      <p class="story-label reveal">IndexFast в цифрах</p>
+      <h2 class="story-title reveal">Результати говорять самі</h2>
+    </div>
+    <div class="numbers-grid">
+      <div class="number-card reveal">
+        <div class="number-val accent">1.2М+</div>
+        <div class="number-label">URL відправлено<br>на індексацію</div>
+      </div>
+      <div class="number-card reveal reveal-delay-1">
+        <div class="number-val accent">247+</div>
+        <div class="number-label">Задоволених<br>клієнтів</div>
+      </div>
+      <div class="number-card reveal reveal-delay-2">
+        <div class="number-val accent">99.98%</div>
+        <div class="number-label">Uptime<br>за 90 днів</div>
+      </div>
+      <div class="number-card reveal reveal-delay-3">
+        <div class="number-val accent">24год</div>
+        <div class="number-label">Середній час<br>до індексації</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════ UKRAINE ════════════════════ -->
+<section class="ukraine-section">
+  <div class="ukraine-inner">
+    <div class="ua-flag">🇺🇦</div>
+    <div class="ua-content">
+      <h2 class="reveal">Зроблено в Україні</h2>
+      <p class="reveal">IndexFast — повністю українська команда і продукт. Ми працюємо, будуємо та розвиваємо бізнес попри все. Кожна підписка — це не просто оплата сервісу, це підтримка українського tech-продукту на глобальному ринку.</p>
+      <div class="ua-badge reveal">
+        💙💛 Частина доходу йде на підтримку ЗСУ
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════ CTA ════════════════════ -->
+<section class="about-cta">
+  <h2 class="reveal">Приєднуйтесь до IndexFast</h2>
+  <p class="reveal">Почніть безкоштовно і переконайтесь — ваші сторінки в Google вже завтра</p>
+  <div class="cta-btns reveal">
+    <a href="/#pricing" class="btn-green">🚀 Почати безкоштовно</a>
+    <a href="/blog/" class="btn-ghost">Читати блог →</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <a href="/" class="logo">Index<span>Fast</span></a>
+    <div class="footer-links">
+      <a href="/">Головна</a>
+      <a href="/about.html" class="active">Про нас</a>
+      <a href="/blog/">Блог</a>
+      <a href="/docs/">Документація</a>
+      <a href="/status.html">Статус</a>
+      <a href="/privacy-policy.html">Конфіденційність</a>
+      <a href="/terms.html">Умови</a>
+    </div>
+    <p>© 2026 IndexFast</p>
+  </div>
+</footer>
+
+<script>
+  // Reveal on scroll
+  const revealObserver = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revealObserver.unobserve(e.target); } });
+  }, { threshold: 0.05, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => {
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight && rect.bottom > 0) { el.classList.add('visible'); }
+    else { revealObserver.observe(el); }
+  });
+  setTimeout(() => { document.querySelectorAll('.reveal:not(.visible)').forEach(el => el.classList.add('visible')); }, 2000);
+</script>
+</body>
+</html>

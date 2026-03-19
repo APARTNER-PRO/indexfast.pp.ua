@@ -1,0 +1,59 @@
+Options -Indexes
+ServerSignature Off
+
+# ── XML sitemap — правильний Content-Type для Google Search Console
+AddType application/xml .xml
+<FilesMatch "sitemap.*\.xml$">
+    Header set Content-Type "application/xml; charset=UTF-8"
+</FilesMatch>
+
+# ── robots.txt
+<Files "robots.txt">
+    Header set Content-Type "text/plain; charset=UTF-8"
+</Files>
+
+# ── HTTPS redirect
+RewriteEngine On
+RewriteCond %{HTTPS} off
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# ── Захищаємо .env
+<Files ".env">
+    Order allow,deny
+    Deny from all
+</Files>
+
+# ── Захищаємо конфігураційні PHP файли
+<FilesMatch "^(config|db|helpers|middleware)\.php$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# ── Захищаємо sql директорію
+RewriteRule ^sql/ - [F,L]
+
+# ── 404 сторінка
+ErrorDocument 404 /404.html
+
+# ── Кешування статичних файлів
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType text/css                "access plus 1 month"
+    ExpiresByType application/javascript  "access plus 1 month"
+    ExpiresByType image/jpeg              "access plus 1 year"
+    ExpiresByType image/png               "access plus 1 year"
+    ExpiresByType image/svg+xml           "access plus 1 month"
+    ExpiresByType application/xml         "access plus 1 day"
+</IfModule>
+
+# ── Gzip
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/css application/javascript application/json application/xml
+</IfModule>
+
+# ── Security headers
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "SAMEORIGIN"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
