@@ -176,7 +176,9 @@
     .card-read { font-size: 0.78rem; color: var(--muted); }
     .card-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--border); }
 
-    .card-title { font-family: var(--font-display); font-weight: 700; line-height: 1.25; letter-spacing: -0.02em; }
+    .card-title { font-family: var(--font-display); font-weight: 700; line-height: 1.25; letter-spacing: -0.02em; margin: 0; padding: 0; border: none; }
+    h2.card-title { font-size: 1.4rem; }
+    h3.card-title { font-size: 1rem; }
     .article-card.featured .card-title { font-size: 1.4rem; }
     .card-title-sm { font-size: 1rem; }
 
@@ -263,6 +265,19 @@
       .newsletter-input { width: 100%; }
       footer { padding: 24px 20px; }
     }
+      .nav-login {
+      color: var(--muted, #7a7a95);
+      font-size: 0.875rem;
+      text-decoration: none;
+      padding: 7px 16px;
+      border-radius: 100px;
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .nav-login:hover {
+      color: var(--white, #f0f0f8);
+      border-color: rgba(255,255,255,0.25);
+    }
   </style>
 
   <script type="application/ld+json">
@@ -294,7 +309,8 @@
     <a href="/" class="nav-link">Головна</a>
     <a href="/docs/" class="nav-link">Документація</a>
     <a href="/blog/" class="nav-link active">Блог</a>
-    <a href="/#pricing" class="nav-cta">Спробувати →</a>
+    <a href="/auth.html" class="nav-login">Увійти</a>
+    <a href="/auth.html?mode=register"" class="nav-cta">Спробувати безкоштовно</a>
   </div>
 </nav>
 
@@ -338,7 +354,7 @@
           <span class="card-dot"></span>
           <span class="card-read">8 хв читання</span>
         </div>
-        <div class="card-title">Як прискорити індексацію сайту в Google у 2025 році</div>
+        <h2 class="card-title">Як прискорити індексацію сайту в Google у 2025 році</h2>
         <p class="card-desc">7 перевірених способів — від Google Indexing API до правильного налаштування sitemap.xml. Практичні поради для власників сайтів будь-якого розміру.</p>
         <div class="card-footer">
           <div class="card-author">
@@ -364,7 +380,7 @@
           <span class="card-dot"></span>
           <span class="card-read">6 хв читання</span>
         </div>
-        <div class="card-title card-title-sm">Що таке sitemap.xml і навіщо він потрібен</div>
+        <h3 class="card-title card-title-sm">Що таке sitemap.xml і навіщо він потрібен</h3>
         <p class="card-desc">Повний посібник по sitemap.xml: структура, типи, як створити і зареєструвати в Google Search Console.</p>
         <div class="card-footer">
           <div class="card-author">
@@ -376,74 +392,63 @@
       </div>
     </a>
 
-    <!-- Article 3 -->
-    <a href="/blog/seo-indeksaciya-saitiv.html" class="article-card" data-tags="seo guide">
-      <div class="card-visual">
-        <div class="card-icon">🔎</div>
+    <!-- Coming soon cards -->
+    <a href="/blog/google-search-console-posibnyk.html" class="article-card" data-tags="seo">
+      <div class="card-visual" style="min-height:140px;">
+        <div class="card-icon">🔍</div>
       </div>
       <div class="card-body">
         <div class="card-meta">
           <span class="card-tag tag-seo">SEO</span>
-          <span class="card-tag tag-guide">Гайд</span>
+          <span class="card-date">10 лютого 2025</span>
           <span class="card-dot"></span>
-          <span class="card-date">14 березня 2026</span>
-          <span class="card-dot"></span>
-          <span class="card-read">8 хв читання</span>
+          <span class="card-read">12 хв</span>
         </div>
-        <div class="card-title card-title-sm">SEO індексація сайтів: як швидко потрапити в Google</div>
-        <p class="card-desc">Чіткий план дій: як працює індексація, що перевірити технічно і як прискорити потрапляння сторінок у Google.</p>
+        <h3 class="card-title card-title-sm">Google Search Console: повний посібник 2025</h3>
+        <p class="card-desc">Як налаштувати, читати звіти та використовувати для прискорення індексації.</p>
         <div class="card-footer">
-          <div class="card-author">
-            <div class="author-avatar">ДК</div>
-            <span class="author-name">Дмитро Коваль</span>
-          </div>
           <span class="card-arrow">→</span>
         </div>
       </div>
     </a>
 
-    <!-- Coming soon cards -->
-    <div class="article-card" style="opacity:0.4; cursor:default; pointer-events:none;" data-tags="seo">
+    <a href="/blog/cron-jobs-dlya-seo.html" class="article-card" data-tags="tech">
       <div class="card-visual" style="min-height:140px;">
-        <div class="card-icon">⏳</div>
-      </div>
-      <div class="card-body">
-        <div class="card-meta">
-          <span class="card-tag tag-seo">SEO</span>
-          <span class="card-date">Незабаром</span>
-        </div>
-        <div class="card-title card-title-sm">Google Search Console: повний посібник 2025</div>
-        <p class="card-desc">Як налаштувати, читати звіти та використовувати для прискорення індексації.</p>
-      </div>
-    </div>
-
-    <div class="article-card" style="opacity:0.4; cursor:default; pointer-events:none;" data-tags="tech">
-      <div class="card-visual" style="min-height:140px;">
-        <div class="card-icon">⏳</div>
+        <div class="card-icon">⚙️</div>
       </div>
       <div class="card-body">
         <div class="card-meta">
           <span class="card-tag tag-tech">Технічне</span>
-          <span class="card-date">Незабаром</span>
+          <span class="card-date">5 березня 2025</span>
+          <span class="card-dot"></span>
+          <span class="card-read">9 хв</span>
         </div>
-        <div class="card-title card-title-sm">Cron jobs для SEO: автоматизуємо рутину</div>
+        <h3 class="card-title card-title-sm">Cron jobs для SEO: автоматизуємо рутину</h3>
         <p class="card-desc">Як налаштувати автоматичний запуск скриптів на сервері — покрокова інструкція.</p>
+        <div class="card-footer">
+          <span class="card-arrow">→</span>
+        </div>
       </div>
-    </div>
+    </a>
 
-    <div class="article-card" style="opacity:0.4; cursor:default; pointer-events:none;" data-tags="guide">
+    <a href="/blog/core-web-vitals-2025.html" class="article-card" data-tags="guide">
       <div class="card-visual" style="min-height:140px;">
-        <div class="card-icon">⏳</div>
+        <div class="card-icon">📊</div>
       </div>
       <div class="card-body">
         <div class="card-meta">
           <span class="card-tag tag-guide">Гайд</span>
-          <span class="card-date">Незабаром</span>
+          <span class="card-date">20 березня 2025</span>
+          <span class="card-dot"></span>
+          <span class="card-read">10 хв</span>
         </div>
-        <div class="card-title card-title-sm">Core Web Vitals 2025: що важливо знати</div>
+        <h3 class="card-title card-title-sm">Core Web Vitals 2025: що важливо знати</h3>
         <p class="card-desc">LCP, CLS, INP — як вони впливають на ранжування і що зробити щоб покращити.</p>
+        <div class="card-footer">
+          <span class="card-arrow">→</span>
+        </div>
       </div>
-    </div>
+    </a>
 
   </div>
 </div>
@@ -473,7 +478,7 @@
     <a href="/terms.html">Умови</a>
     <a href="/status.html">Статус</a>
   </div>
-  <p>© 2025 IndexFast. Всі права захищені.</p>
+  <p>© 2026 IndexFast. Всі права захищені.</p>
 </footer>
 
 <script>

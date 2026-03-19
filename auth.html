@@ -390,7 +390,7 @@
           <label>Email адреса</label>
           <div class="input-wrap">
             <span class="input-icon">✉</span>
-            <input type="email" id="login-email" placeholder="your@email.com" autocomplete="email">
+            <input type="email" id="login-email" placeholder="your@email.com" autocomplete="email" oninput="onEmailInput('login-email','login-email-err')">
           </div>
           <div class="field-error" id="login-email-err">Введіть коректний email</div>
         </div>
@@ -465,7 +465,7 @@
           <label>Email адреса</label>
           <div class="input-wrap">
             <span class="input-icon">✉</span>
-            <input type="email" id="reg-email" placeholder="your@email.com" autocomplete="email">
+            <input type="email" id="reg-email" placeholder="your@email.com" autocomplete="email" oninput="onEmailInput('reg-email','reg-email-err')">
           </div>
           <div class="field-error" id="reg-email-err">Введіть коректний email</div>
         </div>
@@ -582,102 +582,220 @@
 </div>
 
 <script>
-  // ── Поточний вид
+  // ══════════════════════════════════════════════
+  //  Конфіг
+  // ══════════════════════════════════════════════
+  const API_BASE = '/api';
+
+  // ── Якщо вже авторизований — відразу на дашборд
+  if (localStorage.getItem('access_token')) {
+    const redirect = new URLSearchParams(location.search).get('redirect') || '/dashboard/';
+    location.replace(redirect);
+  }
+
+  // ══════════════════════════════════════════════
+  //  AJAX запит з timeout і обробкою помилок
+  // ══════════════════════════════════════════════
+  async function apiPost(path, body) {
+    const ctrl = new AbortController();
+    const tid  = setTimeout(() => ctrl.abort(), 15000); // 15с timeout
+    try {
+      const res  = await fetch(API_BASE + path, {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify(body),
+        signal:  ctrl.signal,
+      });
+      clearTimeout(tid);
+      const data = await res.json().catch(() => ({}));
+      return { ok: res.ok, status: res.status, data };
+    } catch (e) {
+      clearTimeout(tid);
+      if (e.name === 'AbortError') throw new Error('Перевищено час очікування. Спробуйте ще раз.');
+      throw new Error('Помилка з’єднання. Перевірте інтернет і спробуйте ще раз.');
+    }
+  }
+
+  // ── Зберігаємо токени і редіректимо
+  function saveAndRedirect(data) {
+    localStorage.setItem('access_token',  data.access_token);
+    localStorage.setItem('refresh_token', data.refresh_token || '');
+    var remember = document.getElementById('remember');
+    if (remember && remember.checked) {
+      localStorage.setItem('saved_email', (document.getElementById('login-email') || {}).value || '');
+    } else {
+      localStorage.removeItem('saved_email');
+    }
+    var redirect = new URLSearchParams(location.search).get('redirect') || '/dashboard/';
+    location.href = redirect;
+  }
+
+  // ══════════════════════════════════════════════
+  //  Навігація між видами
+  // ══════════════════════════════════════════════
+  function goToLogin() { showView('login'); }
+
   function showView(name) {
     document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
     const el = document.getElementById('view-' + name);
     if (el) {
       el.classList.add('active');
-      // Оновлюємо title
-      const titles = { login: 'Вхід', register: 'Реєстрація', forgot: 'Відновлення пароля' };
-      document.title = (titles[name] || 'Auth') + ' — IndexFast';
+      const first = el.querySelector('input:not([type=checkbox]):not([type=hidden])');
+      if (first) setTimeout(() => first.focus(), 50);
     }
-    // Ховаємо alerts
     document.querySelectorAll('.alert').forEach(a => a.classList.remove('show'));
-    // Рестарт анімації картки
+    const titles = { login: 'Вхід', register: 'Реєстрація', forgot: 'Відновлення пароля' };
+    document.title = (titles[name] || 'Auth') + ' — IndexFast';
     const card = document.getElementById('authCard');
-    card.style.animation = 'none';
-    card.offsetHeight; // reflow
-    card.style.animation = '';
+    if (card) { card.style.animation = 'none'; card.offsetHeight; card.style.animation = ''; }
   }
 
-  // ── Перевірка форми логіна
-  function handleLogin() {
-    const email = document.getElementById('login-email');
-    const pass  = document.getElementById('login-pass');
-    let valid = true;
-
+  // ══════════════════════════════════════════════
+  //  ЛОГІН
+  // ══════════════════════════════════════════════
+  async function handleLogin() {
     clearErrors('login');
+    const emailEl = document.getElementById('login-email');
+    const passEl  = document.getElementById('login-pass');
+    const email   = emailEl.value.trim();
+    const pass    = passEl.value;
 
-    if (!isValidEmail(email.value)) {
-      showError('login-email', 'login-email-err'); valid = false;
-    }
-    if (!pass.value) {
-      showError('login-pass', 'login-pass-err'); valid = false;
-    }
+    let valid = true;
+    if (!isValidEmail(email)) { showError('login-email', 'login-email-err'); valid = false; }
+    if (!pass)                 { showError('login-pass',  'login-pass-err');  valid = false; }
     if (!valid) return;
 
     setLoading('login-btn', true);
-    // Імітація запиту
-    setTimeout(() => {
-      setLoading('login-btn', false);
-      // Demo: показуємо помилку якщо email не містить @indexfast
-      if (!email.value.includes('test')) {
-        showAlert('login-error', 'Невірний email або пароль. Спробуйте ще раз.');
-      } else {
-        window.location.href = '/dashboard/';
+    try {
+      const { ok, status, data } = await apiPost('/auth/login.php', { email, password: pass });
+      if (ok) {
+        saveAndRedirect(data);
+        return;
       }
-    }, 1500);
+      if (status === 401) {
+        showAlert('login-error', 'Невірний email або пароль');
+        passEl.value = '';
+        passEl.focus();
+      } else if (status === 429) {
+        showAlert('login-error', data.message || 'Забагато спроб. Зачекайте кілька хвилин.');
+      } else {
+        showAlert('login-error', data.message || 'Помилка входу. Спробуйте ще раз.');
+      }
+    } catch (e) {
+      showAlert('login-error', e.message);
+    } finally {
+      setLoading('login-btn', false);
+    }
   }
 
-  // ── Реєстрація
-  function handleRegister() {
+  // ══════════════════════════════════════════════
+  //  РЕЄСТРАЦІЯ
+  // ══════════════════════════════════════════════
+  async function handleRegister() {
     clearErrors('reg');
+    const nameEl    = document.getElementById('reg-name');
+    const surnameEl = document.getElementById('reg-surname');
+    const emailEl   = document.getElementById('reg-email');
+    const passEl    = document.getElementById('reg-pass');
+    const termsEl   = document.getElementById('agree-terms');
+
+    const name    = nameEl.value.trim();
+    const surname = surnameEl ? surnameEl.value.trim() : '';
+    const email   = emailEl.value.trim();
+    const pass    = passEl.value;
+
     let valid = true;
-
-    const name  = document.getElementById('reg-name');
-    const email = document.getElementById('reg-email');
-    const pass  = document.getElementById('reg-pass');
-    const terms = document.getElementById('agree-terms');
-
-    if (!name.value.trim()) { showError('reg-name', 'reg-name-err'); valid = false; }
-    if (!isValidEmail(email.value)) { showError('reg-email', 'reg-email-err'); valid = false; }
-    if (pass.value.length < 8) { showError('reg-pass', 'reg-pass-err'); valid = false; }
-    if (!terms.checked) {
-      document.getElementById('reg-terms-err').classList.add('show'); valid = false;
+    if (name.length < 2)      { showError('reg-name',  'reg-name-err');  valid = false; }
+    if (!isValidEmail(email))  { showError('reg-email', 'reg-email-err'); valid = false; }
+    if (pass.length < 8)       { showError('reg-pass',  'reg-pass-err');  valid = false; }
+    if (termsEl && !termsEl.checked) {
+      const termsErr = document.getElementById('reg-terms-err');
+      if (termsErr) termsErr.classList.add('show');
+      valid = false;
     }
     if (!valid) return;
 
     setLoading('reg-btn', true);
-    setTimeout(() => {
+    try {
+      const { ok, status, data } = await apiPost('/auth/register.php', {
+        name, surname, email, password: pass,
+      });
+      if (ok) {
+        saveAndRedirect(data);
+        return;
+      }
+      if (status === 409 || (data.message && data.message.includes('вже існує'))) {
+        showAlert('reg-error', 'Користувач з таким email вже існує. <a href="#" onclick="goToLogin()">Увійти →</a>');
+        emailEl.focus();
+      } else if (status === 422) {
+        showAlert('reg-error', data.message || 'Перевірте правильність заповнення полів.');
+      } else if (status === 429) {
+        showAlert('reg-error', 'Забагато спроб реєстрації. Зачекайте і спробуйте ще раз.');
+      } else {
+        showAlert('reg-error', data.message || 'Помилка реєстрації. Спробуйте ще раз.');
+      }
+    } catch (e) {
+      showAlert('reg-error', e.message);
+    } finally {
       setLoading('reg-btn', false);
-      document.getElementById('reg-sent-email').textContent = email.value;
-      showView('reg-success');
-    }, 1800);
+    }
   }
 
-  // ── Забутий пароль
-  function handleForgot() {
+  // ══════════════════════════════════════════════
+  //  ВІДНОВЛЕННЯ ПАРОЛЯ
+  // ══════════════════════════════════════════════
+  async function handleForgot() {
     clearErrors('forgot');
-    const email = document.getElementById('forgot-email');
-
-    if (!isValidEmail(email.value)) {
-      showError('forgot-email', 'forgot-email-err'); return;
-    }
+    const emailEl = document.getElementById('forgot-email');
+    const email   = emailEl.value.trim();
+    if (!isValidEmail(email)) { showError('forgot-email', 'forgot-email-err'); emailEl.focus(); return; }
 
     setLoading('forgot-btn', true);
-    setTimeout(() => {
-      setLoading('forgot-btn', false);
-      document.getElementById('forgot-sent-email').textContent = email.value;
+    try {
+      await apiPost('/auth/forgot.php', { email });
+      // Завжди success — не розкриваємо чи email існує в системі
+      const sentEl = document.getElementById('forgot-sent-email');
+      if (sentEl) sentEl.textContent = email;
       showView('forgot-success');
-    }, 1500);
+    } catch (e) {
+      showAlert('forgot-error', e.message);
+    } finally {
+      setLoading('forgot-btn', false);
+    }
   }
 
   // ── Google OAuth
   function handleGoogle() {
-    // Тут підключається реальний Google OAuth
-    alert('Google OAuth: підключіть свій Client ID у коді');
+    window.location.href = API_BASE + '/auth/google/redirect.php';
   }
+
+  // ══════════════════════════════════════════════
+  //  Real-time валідація email (debounce 600мс)
+  // ══════════════════════════════════════════════
+  let _emailTimer;
+  function onEmailInput(inputId, errId) {
+    clearTimeout(_emailTimer);
+    const input = document.getElementById(inputId);
+    if (input) input.classList.remove('error');
+    const err = document.getElementById(errId);
+    if (err) err.classList.remove('show');
+    _emailTimer = setTimeout(() => {
+      if (input && input.value && !isValidEmail(input.value)) {
+        showError(inputId, errId);
+      }
+    }, 600);
+  }
+
+  // ── Підставляємо збережений email
+  window.addEventListener('DOMContentLoaded', () => {
+    const saved = localStorage.getItem('saved_email');
+    if (saved) {
+      const emailEl   = document.getElementById('login-email');
+      const rememberEl = document.getElementById('remember');
+      if (emailEl) emailEl.value = saved;
+      if (rememberEl) rememberEl.checked = true;
+    }
+  });
 
   // ── Password strength
   function checkStrength(val) {
@@ -688,24 +806,25 @@
     if (/[A-Z]/.test(val)) score++;
     if (/[0-9]/.test(val)) score++;
     if (/[^A-Za-z0-9]/.test(val)) score++;
-
     const classes = ['', 'weak', 'medium', 'medium', 'strong'];
     const labels  = ['', 'Слабкий', 'Середній', 'Добрий', 'Надійний'];
     const colors  = ['', '#ff5f5f', '#ffd060', '#ffd060', '#00ff88'];
-
     segs.forEach((id, i) => {
       const el = document.getElementById(id);
+      if (!el) return;
       el.className = 'strength-seg';
       if (i < score) el.classList.add(score <= 1 ? 'weak' : score <= 2 ? 'medium' : 'strong');
     });
-
-    label.textContent = val.length ? labels[score] : '';
-    label.style.color = colors[score];
+    if (label) {
+      label.textContent = val.length ? labels[score] : '';
+      label.style.color = colors[score];
+    }
   }
 
   // ── Toggle пароль
   function togglePass(inputId, btn) {
     const input = document.getElementById(inputId);
+    if (!input) return;
     const show = input.type === 'password';
     input.type = show ? 'text' : 'password';
     btn.textContent = show ? '🙈' : '👁';
@@ -722,16 +841,16 @@
   }
 
   function clearErrors(prefix) {
-    document.querySelectorAll(`[id^="${prefix}"]`).forEach(el => {
+    document.querySelectorAll('[id^="' + prefix + '"]').forEach(el => {
       el.classList.remove('error', 'show');
     });
   }
 
   function showAlert(id, msg) {
-    const el = document.getElementById(id);
+    const el     = document.getElementById(id);
     const textEl = document.getElementById(id + '-text');
-    if (textEl && msg) textEl.textContent = msg;
-    if (el) el.classList.add('show');
+    if (textEl && msg) textEl.innerHTML = msg;
+    if (el) { el.classList.add('show'); el.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }
   }
 
   function setLoading(btnId, state) {
@@ -753,7 +872,7 @@
     const active = document.querySelector('.view.active');
     if (!active) return;
     const id = active.id;
-    if (id === 'view-login')    handleLogin();
+    if (id === 'view-login')         handleLogin();
     else if (id === 'view-register') handleRegister();
     else if (id === 'view-forgot')   handleForgot();
   });

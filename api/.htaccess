@@ -1,13 +1,89 @@
-Options -Indexes
+# ══════════════════════════════════════════════
+#  IndexFast — .htaccess (корінь /api/)
+#  Shared хостинг: Apache + PHP
+# ══════════════════════════════════════════════
 
-# Забороняємо прямий доступ до helper файлів
-<FilesMatch "^(config|db|helpers|middleware)\.php$">
-    Order allow,deny
+# ── PHP налаштування через .htaccess
+# (працює на більшості shared хостингів з mod_php або suPHP)
+
+# OPcache — кешує скомпільований PHP байткод в пам'яті
+# Без OPcache: кожен запит → парсинг PHP файлу → повільно
+# З OPcache:   кожен запит → вже скомпільований код → швидко
+php_flag  opcache.enable                 On
+php_value opcache.memory_consumption     64
+php_value opcache.max_accelerated_files  2000
+php_value opcache.revalidate_freq        60
+php_flag  opcache.save_comments          Off
+
+# Вимикаємо зайве
+php_flag  expose_php                     Off
+php_flag  display_errors                 On
+php_flag  log_errors                     On
+php_value error_reporting                 E_ALL
+php_value error_log                      /tmp/indexfast_errors.log
+
+# Таймаути
+php_value max_execution_time             30
+php_value max_input_time                 30
+
+# Пам'ять (shared хостинг зазвичай 128-256MB)
+php_value memory_limit                   128M
+
+# Розмір завантаження (для service_account JSON)
+php_value upload_max_filesize            10M
+php_value post_max_size                  16M
+
+
+# ── Передаємо Authorization заголовок в PHP
+# Apache за замовчуванням блокує його — ця директива виправляє
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{HTTP:Authorization} ^(.*)
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%1]
+</IfModule>
+
+# Для CGI/FastCGI (альтернативний спосіб)
+SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+
+# ── Безпека
+Options -Indexes
+ServerSignature Off
+
+# Забороняємо прямий доступ до чутливих файлів
+<FilesMatch "\.(env|log|sql|zip|bak|cnf|ini|sh)$">
+    Order Allow,Deny
     Deny from all
 </FilesMatch>
 
-# Дозволяємо тільки PHP файли в auth/
-<Files "*.php">
-    Order allow,deny
-    Allow from all
+# Забороняємо доступ до діагностичних файлів без токену
+# (db_check.php перевіряє токен сам, але це додатковий захист)
+<Files "db_check.php">
+    Order Allow,Deny
+    Deny from all
 </Files>
+
+# ── CORS для API (налаштовується в middleware.php, але дублюємо)
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "DENY"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# ── Gzip для JSON відповідей API
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE application/json
+    AddOutputFilterByType DEFLATE application/javascript
+    AddOutputFilterByType DEFLATE text/plain
+    AddOutputFilterByType DEFLATE text/html
+</IfModule>
+
+# ── Keep-Alive (зменшує кількість TCP handshakes)
+<IfModule mod_headers.c>
+    Header set Connection keep-alive
+</IfModule>
+
+# ── Кеш статичних ресурсів (якщо є)
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType application/json "access plus 0 seconds"
+</IfModule>

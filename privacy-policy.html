@@ -122,6 +122,19 @@
       .sidebar { position: static; }
       footer { padding: 24px 20px; }
     }
+      .nav-login {
+      color: var(--muted, #7a7a95);
+      font-size: 0.875rem;
+      text-decoration: none;
+      padding: 7px 16px;
+      border-radius: 100px;
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .nav-login:hover {
+      color: var(--white, #f0f0f8);
+      border-color: rgba(255,255,255,0.25);
+    }
   </style>
 
   <script type="application/ld+json">
@@ -150,6 +163,8 @@
 <nav>
   <a href="/" class="logo">Index<span>Fast</span></a>
   <a href="/" class="nav-back">← Повернутись на головну</a>
+  <a href="/auth.html" class="nav-login">Увійти</a>
+  <a href="/auth.html?mode=register" class="nav-cta">Почати →</a>
 </nav>
 
 <div class="page-hero">
@@ -297,7 +312,7 @@
     <a href="/terms.html">Умови</a>
     <a href="/status.html">Статус</a>
   </div>
-  <p>© 2025 IndexFast. Всі права захищені.</p>
+  <p>© 2026 IndexFast. Всі права захищені.</p>
 </footer>
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>

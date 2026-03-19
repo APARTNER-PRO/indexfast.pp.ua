@@ -87,6 +87,8 @@ define('TOKEN_PASSWORD_RESET_TTL', 60);           // 60 хвилин
 define('CORS_ORIGINS', [
     'https://indexfast.pp.ua',
     'https://indexedfast.vercel.app',
+    'https://indexfast.local',
+    'http://indexfast.local',
     // 'http://localhost:3000',  // розкоментуй для dev
 ]);
 
