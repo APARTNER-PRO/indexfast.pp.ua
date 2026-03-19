@@ -9,5 +9,5 @@ $id   = (int)($body['site_id'] ?? 0);
 if (!$id) respond(422, 'site_id обов\'язковий');
 $site = DB::row("SELECT domain FROM sites WHERE id=? AND user_id=?", [$id, $uid]);
 if (!$site) respond(404, 'Сайт не знайдено');
-DB::exec("DELETE FROM sites WHERE id=?", [$id]);
+DB::exec("DELETE FROM sites WHERE id=? AND user_id=?", [$id, $uid]);
 respondOk("Сайт {$site['domain']} видалено");

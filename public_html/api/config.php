@@ -40,6 +40,12 @@ define('DEBUG',       APP_ENV === 'development');
 //  JWT
 // ────────────────────────────────────────────
 define('JWT_SECRET',        env('JWT_SECRET', 'CHANGE_ME_USE_STRONG_RANDOM_STRING_32+'));
+// Захист від запуску з дефолтним секретом
+if (JWT_SECRET === 'CHANGE_ME_USE_STRONG_RANDOM_STRING_32+' && APP_ENV === 'production') {
+    http_response_code(500);
+    die(json_encode(['success' => false, 'message' => 'Сервер не налаштований: JWT_SECRET не змінено']));
+}
+
 define('JWT_ACCESS_TTL',    60 * 60);         // 1 година (секунди)
 define('JWT_REFRESH_TTL',   60 * 60 * 24 * 30); // 30 днів
 

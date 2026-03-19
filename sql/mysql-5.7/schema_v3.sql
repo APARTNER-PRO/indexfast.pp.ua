@@ -18,13 +18,31 @@ CREATE TABLE IF NOT EXISTS `site_credentials` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- Перенесемо існуючі credentials (якщо є)
-INSERT IGNORE INTO `site_credentials` (site_id, service_account)
-  SELECT id, service_account FROM `sites` WHERE service_account IS NOT NULL;
+-- Виконується тільки якщо колонка service_account ще існує в sites
+SET @migrate_sql = (
+  SELECT IF(
+    COUNT(*) > 0,
+    'INSERT IGNORE INTO `site_credentials` (site_id, service_account) SELECT id, service_account FROM `sites` WHERE service_account IS NOT NULL',
+    'SELECT 1'
+  )
+  FROM information_schema.COLUMNS
+  WHERE TABLE_SCHEMA = DATABASE()
+    AND TABLE_NAME   = 'sites'
+    AND COLUMN_NAME  = 'service_account'
+);
+PREPARE migrate_stmt FROM @migrate_sql;
+EXECUTE migrate_stmt;
+DEALLOCATE PREPARE migrate_stmt;
 
 -- Прибираємо service_account з sites (буде в окремій таблиці)
-ALTER TABLE `sites`
-  ADD COLUMN `sitemap_last_parsed` DATETIME DEFAULT NULL,
-  ADD COLUMN `sitemap_url_count`   INT UNSIGNED NOT NULL DEFAULT 0;
+-- Додаємо колонки тільки якщо їх немає (MySQL 5.7 не підтримує IF NOT EXISTS)
+SET @col1 = (SELECT COUNT(*) FROM information_schema.COLUMNS WHERE TABLE_SCHEMA=DATABASE() AND TABLE_NAME='sites' AND COLUMN_NAME='sitemap_last_parsed');
+SET @sql1 = IF(@col1=0, 'ALTER TABLE `sites` ADD COLUMN `sitemap_last_parsed` DATETIME DEFAULT NULL', 'SELECT 1');
+PREPARE s1 FROM @sql1; EXECUTE s1; DEALLOCATE PREPARE s1;
+
+SET @col2 = (SELECT COUNT(*) FROM information_schema.COLUMNS WHERE TABLE_SCHEMA=DATABASE() AND TABLE_NAME='sites' AND COLUMN_NAME='sitemap_url_count');
+SET @sql2 = IF(@col2=0, 'ALTER TABLE `sites` ADD COLUMN `sitemap_url_count` INT UNSIGNED NOT NULL DEFAULT 0', 'SELECT 1');
+PREPARE s2 FROM @sql2; EXECUTE s2; DEALLOCATE PREPARE s2;
 
 -- ── Черга завдань
 CREATE TABLE IF NOT EXISTS `jobs` (
@@ -71,16 +89,22 @@ CREATE TABLE IF NOT EXISTS `jobs` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ── Додаємо job_id до indexing_log (щоб знати з якого job прийшов запис)
-ALTER TABLE `indexing_log`
-  ADD COLUMN `job_id` BIGINT UNSIGNED DEFAULT NULL,
-  ADD INDEX `idx_job_id` (`job_id`);
+SET @c1=(SELECT COUNT(*) FROM information_schema.COLUMNS WHERE TABLE_SCHEMA=DATABASE() AND TABLE_NAME='indexing_log' AND COLUMN_NAME='job_id');
+SET @q1=IF(@c1=0,'ALTER TABLE `indexing_log` ADD COLUMN `job_id` BIGINT UNSIGNED DEFAULT NULL','SELECT 1');
+PREPARE p1 FROM @q1; EXECUTE p1; DEALLOCATE PREPARE p1;
+
+SET @i1=(SELECT COUNT(*) FROM information_schema.STATISTICS WHERE TABLE_SCHEMA=DATABASE() AND TABLE_NAME='indexing_log' AND INDEX_NAME='idx_job_id');
+SET @q2=IF(@i1=0,'ALTER TABLE `indexing_log` ADD INDEX `idx_job_id` (`job_id`)','SELECT 1');
+PREPARE p2 FROM @q2; EXECUTE p2; DEALLOCATE PREPARE p2;
 
 -- ── Індекси яких бракувало раніше
-ALTER TABLE `daily_usage`
-  ADD INDEX `idx_usage_date` (`usage_date`);
+SET @i2=(SELECT COUNT(*) FROM information_schema.STATISTICS WHERE TABLE_SCHEMA=DATABASE() AND TABLE_NAME='daily_usage' AND INDEX_NAME='idx_usage_date');
+SET @q3=IF(@i2=0,'ALTER TABLE `daily_usage` ADD INDEX `idx_usage_date` (`usage_date`)','SELECT 1');
+PREPARE p3 FROM @q3; EXECUTE p3; DEALLOCATE PREPARE p3;
 
-ALTER TABLE `indexing_log`
-  ADD INDEX `idx_created_at` (`created_at`);
+SET @i3=(SELECT COUNT(*) FROM information_schema.STATISTICS WHERE TABLE_SCHEMA=DATABASE() AND TABLE_NAME='indexing_log' AND INDEX_NAME='idx_created_at');
+SET @q4=IF(@i3=0,'ALTER TABLE `indexing_log` ADD INDEX `idx_created_at` (`created_at`)','SELECT 1');
+PREPARE p4 FROM @q4; EXECUTE p4; DEALLOCATE PREPARE p4;
 
 -- ── MySQL конфіг підказки (запустити вручну або через my.cnf)
 -- SET GLOBAL innodb_buffer_pool_size    = 512*1024*1024;  -- 512MB
