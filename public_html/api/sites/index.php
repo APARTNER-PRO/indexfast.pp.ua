@@ -148,11 +148,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 respond(405, 'Method Not Allowed');
 
+
+// ── SSRF захист: блокуємо приватні IP та небезпечні схеми
+function validatePublicUrl(string $url): bool {
+    $parsed = parse_url($url);
+    if (!$parsed || !isset($parsed['host'])) return false;
+    // Дозволяємо тільки http/https
+    if (!in_array($parsed['scheme'] ?? '', ['http', 'https'], true)) return false;
+    $host = strtolower($parsed['host']);
+    // Блокуємо localhost і приватні діапазони
+    $blocked = ['localhost', '127.', '0.', '10.', '192.168.', '172.16.', '172.17.',
+                '172.18.', '172.19.', '172.2', '169.254.', '::1', 'metadata.'];
+    foreach ($blocked as $b) {
+        if (str_starts_with($host, $b) || $host === rtrim($b, '.')) return false;
+    }
+    // Резолвимо IP і перевіряємо
+    $ip = gethostbyname($host);
+    if ($ip === $host) return false; // не резолвиться
+    foreach ($blocked as $b) {
+        if (str_starts_with($ip, $b)) return false;
+    }
+    return true;
+}
+
 // ── Парсинг sitemap
 function parseSitemapCount(string $url, int $depth = 0): int {
     if ($depth > 3) return 0;
     try {
         $ctx = stream_context_create(['http' => ['timeout' => 6, 'user_agent' => 'IndexFast/1.0']]);
+        if (!validatePublicUrl($url)) return 0;
         $xml = @file_get_contents($url, false, $ctx);
         if (!$xml) return 0;
         $doc = new SimpleXMLElement($xml);

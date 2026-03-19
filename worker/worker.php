@@ -18,7 +18,7 @@ define('JOB_LOCK_TIMEOUT', 300);         // секунд (5 хвилин) — в
 // ── Bootstrap
 $root = dirname(__DIR__) . '/api';
 require_once $root . '/config.php';
-require_once $root . '/db.php';
+require_once __DIR__ . '/db_worker.php';  // окремий db без HTTP exit
 require_once $root . '/plans.php';
 
 // ── Singleton lock: тільки один воркер одночасно
@@ -30,6 +30,12 @@ if (!flock($lock, LOCK_EX | LOCK_NB)) {
 }
 
 log_msg("Worker started.");
+log_msg("Root path: " . $root);
+log_msg("DB: " . DB_HOST . " / " . DB_NAME);
+
+// ── Перевіряємо pending jobs
+$pendingCount = DB::row("SELECT COUNT(*) AS cnt FROM jobs WHERE status='pending' AND available_at <= NOW()");
+log_msg("Pending jobs: " . ($pendingCount['cnt'] ?? 0));
 
 // ── Відмовляємось від зависших jobs (processing > LOCK_TIMEOUT секунд)
 DB::exec(
@@ -79,6 +85,11 @@ while (elapsed() < WORKER_MAX_TIME) {
     });
 
     if (!$job) {
+        // Перевіряємо чому немає job
+        $anyJob = DB::row("SELECT id, status, available_at, attempts, max_attempts FROM jobs WHERE status='pending' LIMIT 1");
+        if ($anyJob) {
+            log_msg("Job #{$anyJob['id']} exists but not picked up. available_at={$anyJob['available_at']} attempts={$anyJob['attempts']}/{$anyJob['max_attempts']}");
+        }
         log_msg("No pending jobs. Sleeping 5s.");
         sleep(5);
         // Якщо і після сну немає — виходимо
@@ -180,48 +191,45 @@ function processJob(array $job): void {
 
         $results = sendBatch($batch, $token);
 
-        // Один batch UPDATE через CASE замість N окремих UPDATE
-        // Використовує idx_job_url(job_id, url_hash) — без table lookup
         if (!empty($results)) {
-            $statusCases = [];
-            $codeCases   = [];
-            $statusParams = [];
-            $codeParams   = [];
-            $hashParams   = [];
-
-            foreach ($results as $url => $result) {
-                $statusCases[]  = "WHEN url_hash = SHA2(?,256) THEN ?";
-                $statusParams[] = $url;
-                $statusParams[] = $result['ok'] ? 'ok' : 'error';
-
-                $codeCases[]   = "WHEN url_hash = SHA2(?,256) THEN ?";
-                $codeParams[]  = $url;
-                $codeParams[]  = $result['code'];
-
-                $hashParams[] = $url;
+            // Перевіряємо чи існує колонка url_hash (schema_v4)
+            static $hasUrlHash = null;
+            if ($hasUrlHash === null) {
+                $hasUrlHash = (bool)(DB::row(
+                    "SELECT COUNT(*) AS cnt FROM information_schema.COLUMNS
+                     WHERE TABLE_SCHEMA = DATABASE()
+                       AND TABLE_NAME   = 'indexing_log'
+                       AND COLUMN_NAME  = 'url_hash'"
+                )['cnt'] ?? 0);
             }
 
-            $caseStatus  = implode(' ', $statusCases);
-            $caseCode    = implode(' ', $codeCases);
-            $urlHashes   = implode(',', array_fill(0, count($results), 'SHA2(?,256)'));
+            foreach ($results as $url => $result) {
+                $status  = $result['ok'] ? 'ok' : 'error';
+                $code    = $result['code'];
+                $errMsg  = $result['error'] ?? null;
 
-            $params = array_merge(
-                $statusParams,
-                $codeParams,
-                [$jobId],
-                $hashParams
-            );
+                try {
+                    if ($hasUrlHash) {
+                        // Швидкий UPDATE через url_hash індекс (schema_v4)
+                        DB::exec(
+                            "UPDATE indexing_log
+                             SET status=?, http_status=?, error_msg=?
+                             WHERE job_id=? AND url_hash=SHA2(?,256)",
+                            [$status, $code, $errMsg, $jobId, $url]
+                        );
+                    } else {
+                        // Fallback: звичайний WHERE url=? (schema_v2/v3)
+                        DB::exec(
+                            "UPDATE indexing_log
+                             SET status=?, http_status=?, error_msg=?
+                             WHERE job_id=? AND url=?",
+                            [$status, $code, $errMsg, $jobId, $url]
+                        );
+                    }
+                } catch (Throwable $e) {
+                    error_log("[worker] UPDATE indexing_log failed: " . $e->getMessage());
+                }
 
-            DB::exec(
-                "UPDATE indexing_log
-                 SET status      = CASE {$caseStatus} ELSE status END,
-                     http_status = CASE {$caseCode}   ELSE http_status END
-                 WHERE job_id = ?
-                   AND url_hash IN ({$urlHashes})",
-                $params
-            );
-
-            foreach ($results as $result) {
                 $result['ok'] ? $sent++ : $failed++;
             }
         }

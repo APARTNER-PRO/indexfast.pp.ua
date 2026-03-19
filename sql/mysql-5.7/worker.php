@@ -1,6 +1,5 @@
 #!/usr/bin/env php
 <?php
-// MySQL 5.7 сумісна версія (без SKIP LOCKED)
 // ══════════════════════════════════════════════
 //  IndexFast — Job Queue Worker
 //  Запускається через cron кожну хвилину:
@@ -65,7 +64,7 @@ while (elapsed() < WORKER_MAX_TIME) {
                AND j.attempts < j.max_attempts
              ORDER BY j.priority ASC, j.available_at ASC
              LIMIT 1
-             FOR UPDATE"               -- MySQL 5.7: без SKIP LOCKED
+             FOR UPDATE"
         );
         $stmt->execute();
         $job = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -111,8 +110,40 @@ function processJob(array $job): void {
     $siteId = (int)$job['site_id'];
     $plan   = $job['plan'] ?? 'start';
 
-    // ── Отримуємо credentials
+    // ── Отримуємо credentials (site_credentials або sites.service_account)
     $cred = DB::row("SELECT service_account FROM site_credentials WHERE site_id=?", [$siteId]);
+
+    if (!$cred) {
+        // Fallback: стара схема — credentials в sites.service_account
+        $hasCol = DB::row(
+            "SELECT COUNT(*) AS cnt FROM information_schema.COLUMNS
+             WHERE TABLE_SCHEMA = DATABASE()
+               AND TABLE_NAME   = 'sites'
+               AND COLUMN_NAME  = 'service_account'"
+        )['cnt'] > 0;
+
+        if ($hasCol) {
+            $sa = DB::row(
+                "SELECT service_account FROM sites WHERE id=? AND service_account IS NOT NULL",
+                [$siteId]
+            );
+            if ($sa) {
+                // Мігруємо автоматично
+                try {
+                    DB::exec(
+                        "INSERT INTO site_credentials (site_id, service_account)
+                         VALUES (?, ?)
+                         ON DUPLICATE KEY UPDATE service_account = VALUES(service_account)",
+                        [$siteId, $sa['service_account']]
+                    );
+                    $cred = ['service_account' => $sa['service_account']];
+                } catch (Throwable $e) {
+                    error_log('[worker] migrate credentials failed: ' . $e->getMessage());
+                }
+            }
+        }
+    }
+
     if (!$cred) {
         failJob($jobId, $userId, 0, 'Немає credentials для сайту');
         return;
@@ -149,48 +180,45 @@ function processJob(array $job): void {
 
         $results = sendBatch($batch, $token);
 
-        // Один batch UPDATE через CASE замість N окремих UPDATE
-        // Використовує idx_job_url(job_id, url_hash) — без table lookup
         if (!empty($results)) {
-            $statusCases = [];
-            $codeCases   = [];
-            $statusParams = [];
-            $codeParams   = [];
-            $hashParams   = [];
-
-            foreach ($results as $url => $result) {
-                $statusCases[]  = "WHEN url_hash = SHA2(?,256) THEN ?";
-                $statusParams[] = $url;
-                $statusParams[] = $result['ok'] ? 'ok' : 'error';
-
-                $codeCases[]   = "WHEN url_hash = SHA2(?,256) THEN ?";
-                $codeParams[]  = $url;
-                $codeParams[]  = $result['code'];
-
-                $hashParams[] = $url;
+            // Перевіряємо чи існує колонка url_hash (schema_v4)
+            static $hasUrlHash = null;
+            if ($hasUrlHash === null) {
+                $hasUrlHash = (bool)(DB::row(
+                    "SELECT COUNT(*) AS cnt FROM information_schema.COLUMNS
+                     WHERE TABLE_SCHEMA = DATABASE()
+                       AND TABLE_NAME   = 'indexing_log'
+                       AND COLUMN_NAME  = 'url_hash'"
+                )['cnt'] ?? 0);
             }
 
-            $caseStatus  = implode(' ', $statusCases);
-            $caseCode    = implode(' ', $codeCases);
-            $urlHashes   = implode(',', array_fill(0, count($results), 'SHA2(?,256)'));
+            foreach ($results as $url => $result) {
+                $status  = $result['ok'] ? 'ok' : 'error';
+                $code    = $result['code'];
+                $errMsg  = $result['error'] ?? null;
 
-            $params = array_merge(
-                $statusParams,
-                $codeParams,
-                [$jobId],
-                $hashParams
-            );
+                try {
+                    if ($hasUrlHash) {
+                        // Швидкий UPDATE через url_hash індекс (schema_v4)
+                        DB::exec(
+                            "UPDATE indexing_log
+                             SET status=?, http_status=?, error_msg=?
+                             WHERE job_id=? AND url_hash=SHA2(?,256)",
+                            [$status, $code, $errMsg, $jobId, $url]
+                        );
+                    } else {
+                        // Fallback: звичайний WHERE url=? (schema_v2/v3)
+                        DB::exec(
+                            "UPDATE indexing_log
+                             SET status=?, http_status=?, error_msg=?
+                             WHERE job_id=? AND url=?",
+                            [$status, $code, $errMsg, $jobId, $url]
+                        );
+                    }
+                } catch (Throwable $e) {
+                    error_log("[worker] UPDATE indexing_log failed: " . $e->getMessage());
+                }
 
-            DB::exec(
-                "UPDATE indexing_log
-                 SET status      = CASE {$caseStatus} ELSE status END,
-                     http_status = CASE {$caseCode}   ELSE http_status END
-                 WHERE job_id = ?
-                   AND url_hash IN ({$urlHashes})",
-                $params
-            );
-
-            foreach ($results as $result) {
                 $result['ok'] ? $sent++ : $failed++;
             }
         }

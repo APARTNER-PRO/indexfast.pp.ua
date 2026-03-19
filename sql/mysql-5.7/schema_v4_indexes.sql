@@ -11,6 +11,249 @@ SET NAMES utf8mb4;
 SET foreign_key_checks = 0;   -- вимикаємо на час міграції
 SET unique_checks      = 0;
 
+-- ══════════════════════════════════════════════
+-- Дропаємо ВСІ FK на початку — відновимо в кінці
+-- Це дозволяє видаляти/змінювати будь-які індекси
+-- ══════════════════════════════════════════════
+
+SET @x = (SELECT COUNT(*) FROM information_schema.TABLE_CONSTRAINTS
+  WHERE TABLE_SCHEMA=DATABASE() AND TABLE_NAME='sites'
+  AND CONSTRAINT_NAME='fk_sites_user' AND CONSTRAINT_TYPE='FOREIGN KEY');
+SET @sql = IF(@x>0,'ALTER TABLE `sites` DROP FOREIGN KEY `fk_sites_user`','SELECT 1');
+PREPARE stmt FROM @sql; EXECUTE stmt; DEALLOCATE PREPARE stmt;
+
+SET @x = (SELECT COUNT(*) FROM information_schema.TABLE_CONSTRAINTS
+  WHERE TABLE_SCHEMA=DATABASE() AND TABLE_NAME='indexing_log'
+  AND CONSTRAINT_NAME='fk_log_site' AND CONSTRAINT_TYPE='FOREIGN KEY');
+SET @sql = IF(@x>0,'ALTER TABLE `indexing_log` DROP FOREIGN KEY `fk_log_site`','SELECT 1');
+PREPARE stmt FROM @sql; EXECUTE stmt; DEALLOCATE PREPARE stmt;
+
+SET @x = (SELECT COUNT(*) FROM information_schema.TABLE_CONSTRAINTS
+  WHERE TABLE_SCHEMA=DATABASE() AND TABLE_NAME='indexing_log'
+  AND CONSTRAINT_NAME='fk_log_user' AND CONSTRAINT_TYPE='FOREIGN KEY');
+SET @sql = IF(@x>0,'ALTER TABLE `indexing_log` DROP FOREIGN KEY `fk_log_user`','SELECT 1');
+PREPARE stmt FROM @sql; EXECUTE stmt; DEALLOCATE PREPARE stmt;
+
+SET @x = (SELECT COUNT(*) FROM information_schema.TABLE_CONSTRAINTS
+  WHERE TABLE_SCHEMA=DATABASE() AND TABLE_NAME='daily_usage'
+  AND CONSTRAINT_NAME='fk_daily_user' AND CONSTRAINT_TYPE='FOREIGN KEY');
+SET @sql = IF(@x>0,'ALTER TABLE `daily_usage` DROP FOREIGN KEY `fk_daily_user`','SELECT 1');
+PREPARE stmt FROM @sql; EXECUTE stmt; DEALLOCATE PREPARE stmt;
+
+SET @x = (SELECT COUNT(*) FROM information_schema.TABLE_CONSTRAINTS
+  WHERE TABLE_SCHEMA=DATABASE() AND TABLE_NAME='site_credentials'
+  AND CONSTRAINT_NAME='fk_cred_site' AND CONSTRAINT_TYPE='FOREIGN KEY');
+SET @sql = IF(@x>0,'ALTER TABLE `site_credentials` DROP FOREIGN KEY `fk_cred_site`','SELECT 1');
+PREPARE stmt FROM @sql; EXECUTE stmt; DEALLOCATE PREPARE stmt;
+
+SET @x = (SELECT COUNT(*) FROM information_schema.TABLE_CONSTRAINTS
+  WHERE TABLE_SCHEMA=DATABASE() AND TABLE_NAME='jobs'
+  AND CONSTRAINT_NAME='fk_jobs_user' AND CONSTRAINT_TYPE='FOREIGN KEY');
+SET @sql = IF(@x>0,'ALTER TABLE `jobs` DROP FOREIGN KEY `fk_jobs_user`','SELECT 1');
+PREPARE stmt FROM @sql; EXECUTE stmt; DEALLOCATE PREPARE stmt;
+
+SET @x = (SELECT COUNT(*) FROM information_schema.TABLE_CONSTRAINTS
+  WHERE TABLE_SCHEMA=DATABASE() AND TABLE_NAME='jobs'
+  AND CONSTRAINT_NAME='fk_jobs_site' AND CONSTRAINT_TYPE='FOREIGN KEY');
+SET @sql = IF(@x>0,'ALTER TABLE `jobs` DROP FOREIGN KEY `fk_jobs_site`','SELECT 1');
+PREPARE stmt FROM @sql; EXECUTE stmt; DEALLOCATE PREPARE stmt;
+
+
+-- ══════════════════════════════════════════════
+-- Безпечне видалення індексів (якщо існують)
+-- Дозволяє перезапускати міграцію без помилок
+-- ══════════════════════════════════════════════
+
+SET @idx_exists = (
+  SELECT COUNT(*) FROM information_schema.STATISTICS
+  WHERE TABLE_SCHEMA = DATABASE()
+    AND TABLE_NAME   = 'users'
+    AND INDEX_NAME   = 'idx_plan_active'
+);
+SET @sql = IF(@idx_exists > 0, 'ALTER TABLE `users` DROP INDEX `idx_plan_active`', 'SELECT 1');
+PREPARE stmt FROM @sql; EXECUTE stmt; DEALLOCATE PREPARE stmt;
+
+SET @idx_exists = (
+  SELECT COUNT(*) FROM information_schema.STATISTICS
+  WHERE TABLE_SCHEMA = DATABASE()
+    AND TABLE_NAME   = 'users'
+    AND INDEX_NAME   = 'idx_created_at'
+);
+SET @sql = IF(@idx_exists > 0, 'ALTER TABLE `users` DROP INDEX `idx_created_at`', 'SELECT 1');
+PREPARE stmt FROM @sql; EXECUTE stmt; DEALLOCATE PREPARE stmt;
+
+SET @idx_exists = (
+  SELECT COUNT(*) FROM information_schema.STATISTICS
+  WHERE TABLE_SCHEMA = DATABASE()
+    AND TABLE_NAME   = 'users'
+    AND INDEX_NAME   = 'idx_last_login'
+);
+SET @sql = IF(@idx_exists > 0, 'ALTER TABLE `users` DROP INDEX `idx_last_login`', 'SELECT 1');
+PREPARE stmt FROM @sql; EXECUTE stmt; DEALLOCATE PREPARE stmt;
+
+SET @idx_exists = (
+  SELECT COUNT(*) FROM information_schema.STATISTICS
+  WHERE TABLE_SCHEMA = DATABASE()
+    AND TABLE_NAME   = 'tokens'
+    AND INDEX_NAME   = 'idx_cleanup'
+);
+SET @sql = IF(@idx_exists > 0, 'ALTER TABLE `tokens` DROP INDEX `idx_cleanup`', 'SELECT 1');
+PREPARE stmt FROM @sql; EXECUTE stmt; DEALLOCATE PREPARE stmt;
+
+SET @idx_exists = (
+  SELECT COUNT(*) FROM information_schema.STATISTICS
+  WHERE TABLE_SCHEMA = DATABASE()
+    AND TABLE_NAME   = 'tokens'
+    AND INDEX_NAME   = 'idx_user_type_expires'
+);
+SET @sql = IF(@idx_exists > 0, 'ALTER TABLE `tokens` DROP INDEX `idx_user_type_expires`', 'SELECT 1');
+PREPARE stmt FROM @sql; EXECUTE stmt; DEALLOCATE PREPARE stmt;
+
+SET @idx_exists = (
+  SELECT COUNT(*) FROM information_schema.STATISTICS
+  WHERE TABLE_SCHEMA = DATABASE()
+    AND TABLE_NAME   = 'rate_limits'
+    AND INDEX_NAME   = 'idx_last_attempt'
+);
+SET @sql = IF(@idx_exists > 0, 'ALTER TABLE `rate_limits` DROP INDEX `idx_last_attempt`', 'SELECT 1');
+PREPARE stmt FROM @sql; EXECUTE stmt; DEALLOCATE PREPARE stmt;
+
+SET @idx_exists = (
+  SELECT COUNT(*) FROM information_schema.STATISTICS
+  WHERE TABLE_SCHEMA = DATABASE()
+    AND TABLE_NAME   = 'sites'
+    AND INDEX_NAME   = 'idx_user_dashboard'
+);
+SET @sql = IF(@idx_exists > 0, 'ALTER TABLE `sites` DROP INDEX `idx_user_dashboard`', 'SELECT 1');
+PREPARE stmt FROM @sql; EXECUTE stmt; DEALLOCATE PREPARE stmt;
+
+SET @idx_exists = (
+  SELECT COUNT(*) FROM information_schema.STATISTICS
+  WHERE TABLE_SCHEMA = DATABASE()
+    AND TABLE_NAME   = 'sites'
+    AND INDEX_NAME   = 'idx_status_updated'
+);
+SET @sql = IF(@idx_exists > 0, 'ALTER TABLE `sites` DROP INDEX `idx_status_updated`', 'SELECT 1');
+PREPARE stmt FROM @sql; EXECUTE stmt; DEALLOCATE PREPARE stmt;
+
+SET @idx_exists = (
+  SELECT COUNT(*) FROM information_schema.STATISTICS
+  WHERE TABLE_SCHEMA = DATABASE()
+    AND TABLE_NAME   = 'sites'
+    AND INDEX_NAME   = 'uq_user_domain'
+);
+SET @fk_exists = (
+  SELECT COUNT(*) FROM information_schema.TABLE_CONSTRAINTS
+  WHERE TABLE_SCHEMA = DATABASE()
+    AND TABLE_NAME   = 'sites'
+    AND CONSTRAINT_NAME = 'fk_sites_user'
+    AND CONSTRAINT_TYPE = 'FOREIGN KEY'
+);
+SET @sql = IF(@fk_exists > 0, 'ALTER TABLE `sites` DROP FOREIGN KEY `fk_sites_user`', 'SELECT 1');
+PREPARE stmt FROM @sql; EXECUTE stmt; DEALLOCATE PREPARE stmt;
+SET @sql = IF(@idx_exists > 0, 'ALTER TABLE `sites` DROP INDEX `uq_user_domain`', 'SELECT 1');
+PREPARE stmt FROM @sql; EXECUTE stmt; DEALLOCATE PREPARE stmt;
+
+SET @idx_exists = (
+  SELECT COUNT(*) FROM information_schema.STATISTICS
+  WHERE TABLE_SCHEMA = DATABASE()
+    AND TABLE_NAME   = 'daily_usage'
+    AND INDEX_NAME   = 'idx_user_date_sent'
+);
+SET @sql = IF(@idx_exists > 0, 'ALTER TABLE `daily_usage` DROP INDEX `idx_user_date_sent`', 'SELECT 1');
+PREPARE stmt FROM @sql; EXECUTE stmt; DEALLOCATE PREPARE stmt;
+
+SET @idx_exists = (
+  SELECT COUNT(*) FROM information_schema.STATISTICS
+  WHERE TABLE_SCHEMA = DATABASE()
+    AND TABLE_NAME   = 'daily_usage'
+    AND INDEX_NAME   = 'idx_usage_date'
+);
+SET @sql = IF(@idx_exists > 0, 'ALTER TABLE `daily_usage` DROP INDEX `idx_usage_date`', 'SELECT 1');
+PREPARE stmt FROM @sql; EXECUTE stmt; DEALLOCATE PREPARE stmt;
+
+SET @idx_exists = (
+  SELECT COUNT(*) FROM information_schema.STATISTICS
+  WHERE TABLE_SCHEMA = DATABASE()
+    AND TABLE_NAME   = 'indexing_log'
+    AND INDEX_NAME   = 'idx_url_hash'
+);
+SET @sql = IF(@idx_exists > 0, 'ALTER TABLE `indexing_log` DROP INDEX `idx_url_hash`', 'SELECT 1');
+PREPARE stmt FROM @sql; EXECUTE stmt; DEALLOCATE PREPARE stmt;
+
+SET @idx_exists = (
+  SELECT COUNT(*) FROM information_schema.STATISTICS
+  WHERE TABLE_SCHEMA = DATABASE()
+    AND TABLE_NAME   = 'indexing_log'
+    AND INDEX_NAME   = 'idx_job_url'
+);
+SET @sql = IF(@idx_exists > 0, 'ALTER TABLE `indexing_log` DROP INDEX `idx_job_url`', 'SELECT 1');
+PREPARE stmt FROM @sql; EXECUTE stmt; DEALLOCATE PREPARE stmt;
+
+SET @idx_exists = (
+  SELECT COUNT(*) FROM information_schema.STATISTICS
+  WHERE TABLE_SCHEMA = DATABASE()
+    AND TABLE_NAME   = 'indexing_log'
+    AND INDEX_NAME   = 'idx_job_status'
+);
+SET @sql = IF(@idx_exists > 0, 'ALTER TABLE `indexing_log` DROP INDEX `idx_job_status`', 'SELECT 1');
+PREPARE stmt FROM @sql; EXECUTE stmt; DEALLOCATE PREPARE stmt;
+
+SET @idx_exists = (
+  SELECT COUNT(*) FROM information_schema.STATISTICS
+  WHERE TABLE_SCHEMA = DATABASE()
+    AND TABLE_NAME   = 'indexing_log'
+    AND INDEX_NAME   = 'idx_site_log'
+);
+SET @sql = IF(@idx_exists > 0, 'ALTER TABLE `indexing_log` DROP INDEX `idx_site_log`', 'SELECT 1');
+PREPARE stmt FROM @sql; EXECUTE stmt; DEALLOCATE PREPARE stmt;
+
+SET @idx_exists = (
+  SELECT COUNT(*) FROM information_schema.STATISTICS
+  WHERE TABLE_SCHEMA = DATABASE()
+    AND TABLE_NAME   = 'indexing_log'
+    AND INDEX_NAME   = 'idx_user_log'
+);
+SET @sql = IF(@idx_exists > 0, 'ALTER TABLE `indexing_log` DROP INDEX `idx_user_log`', 'SELECT 1');
+PREPARE stmt FROM @sql; EXECUTE stmt; DEALLOCATE PREPARE stmt;
+
+SET @idx_exists = (
+  SELECT COUNT(*) FROM information_schema.STATISTICS
+  WHERE TABLE_SCHEMA = DATABASE()
+    AND TABLE_NAME   = 'jobs'
+    AND INDEX_NAME   = 'idx_id_user'
+);
+SET @sql = IF(@idx_exists > 0, 'ALTER TABLE `jobs` DROP INDEX `idx_id_user`', 'SELECT 1');
+PREPARE stmt FROM @sql; EXECUTE stmt; DEALLOCATE PREPARE stmt;
+
+SET @idx_exists = (
+  SELECT COUNT(*) FROM information_schema.STATISTICS
+  WHERE TABLE_SCHEMA = DATABASE()
+    AND TABLE_NAME   = 'jobs'
+    AND INDEX_NAME   = 'idx_site_user_status'
+);
+SET @sql = IF(@idx_exists > 0, 'ALTER TABLE `jobs` DROP INDEX `idx_site_user_status`', 'SELECT 1');
+PREPARE stmt FROM @sql; EXECUTE stmt; DEALLOCATE PREPARE stmt;
+
+SET @idx_exists = (
+  SELECT COUNT(*) FROM information_schema.STATISTICS
+  WHERE TABLE_SCHEMA = DATABASE()
+    AND TABLE_NAME   = 'jobs'
+    AND INDEX_NAME   = 'idx_user_status_cover'
+);
+SET @sql = IF(@idx_exists > 0, 'ALTER TABLE `jobs` DROP INDEX `idx_user_status_cover`', 'SELECT 1');
+PREPARE stmt FROM @sql; EXECUTE stmt; DEALLOCATE PREPARE stmt;
+
+SET @idx_exists = (
+  SELECT COUNT(*) FROM information_schema.STATISTICS
+  WHERE TABLE_SCHEMA = DATABASE()
+    AND TABLE_NAME   = 'sessions'
+    AND INDEX_NAME   = 'idx_user_expires'
+);
+SET @sql = IF(@idx_exists > 0, 'ALTER TABLE `sessions` DROP INDEX `idx_user_expires`', 'SELECT 1');
+PREPARE stmt FROM @sql; EXECUTE stmt; DEALLOCATE PREPARE stmt;
+
+
 
 -- ════════════════════════════════════════════════════════
 --  АНАЛІЗ ПРОБЛЕМ (коментар для розуміння рішень)
@@ -113,11 +356,17 @@ ALTER TABLE `rate_limits`
 --
 -- Поточний idx_user_id(user_id) — не covering, MySQL читає дані з таблиці
 -- Covering index включає всі поля запиту → zero table lookups
-ALTER TABLE `sites`
-  DROP FOREIGN KEY `fk_sites_user`;
+SET @fk_exists = (
+  SELECT COUNT(*) FROM information_schema.TABLE_CONSTRAINTS
+  WHERE TABLE_SCHEMA = DATABASE()
+    AND TABLE_NAME   = 'sites'
+    AND CONSTRAINT_NAME = 'fk_sites_user'
+    AND CONSTRAINT_TYPE = 'FOREIGN KEY'
+);
+SET @sql = IF(@fk_exists > 0, 'ALTER TABLE `sites` DROP FOREIGN KEY `fk_sites_user`', 'SELECT 1');
+PREPARE stmt FROM @sql; EXECUTE stmt; DEALLOCATE PREPARE stmt;
 
-ALTER TABLE `sites`
-  DROP INDEX `idx_user_id`;   -- замінюємо на covering
+-- idx_user_id вже задропано умовно вище
 
 ALTER TABLE `sites`
   -- Covering index для dashboard query
@@ -137,11 +386,6 @@ ALTER TABLE `sites`
 
   -- Пошук дублікату при додаванні сайту: WHERE user_id=? AND domain=?
   ADD UNIQUE KEY `uq_user_domain` (`user_id`, `domain`);
-
--- Повертаємо FK після перебудови індексу
-ALTER TABLE `sites`
-  ADD CONSTRAINT `fk_sites_user` FOREIGN KEY (`user_id`)
-    REFERENCES `users`(`id`) ON DELETE CASCADE;
 
 -- Видаляємо service_account з sites (тепер у site_credentials)
 -- (зробимо тільки якщо ще не видалено)
@@ -183,57 +427,73 @@ ALTER TABLE `daily_usage`
 -- Ця таблиця росте найшвидше — потенційно мільйони рядків
 -- Поточна проблема: url VARCHAR(2048) — величезний рядок, не індексується добре
 
--- Додаємо url_hash для точного пошуку по URL
-ALTER TABLE `indexing_log`
-  ADD COLUMN `url_hash` CHAR(64) GENERATED ALWAYS AS (SHA2(`url`, 256)) STORED,
-  ADD INDEX `idx_url_hash` (`url_hash`);
+-- Додаємо url_hash для точного пошуку по URL (умовно)
+SET @col = (SELECT COUNT(*) FROM information_schema.COLUMNS
+  WHERE TABLE_SCHEMA=DATABASE() AND TABLE_NAME='indexing_log' AND COLUMN_NAME='url_hash');
+SET @sql = IF(@col=0,
+  'ALTER TABLE `indexing_log` ADD COLUMN `url_hash` CHAR(64) GENERATED ALWAYS AS (SHA2(`url`, 256)) STORED',
+  'SELECT 1');
+PREPARE stmt FROM @sql; EXECUTE stmt; DEALLOCATE PREPARE stmt;
+
+SET @d = (SELECT COUNT(*) FROM information_schema.STATISTICS
+  WHERE TABLE_SCHEMA=DATABASE() AND TABLE_NAME='indexing_log' AND INDEX_NAME='idx_url_hash');
+SET @sql = IF(@d=0, 'ALTER TABLE `indexing_log` ADD INDEX `idx_url_hash` (`url_hash`)', 'SELECT 1');
+PREPARE stmt FROM @sql; EXECUTE stmt; DEALLOCATE PREPARE stmt;
 
 -- Воркер виконує: UPDATE ... WHERE job_id=? AND url=?
 -- Замінюємо на: UPDATE ... WHERE job_id=? AND url_hash=SHA2(?,256)
 -- Composite для воркера
+SET @d = (SELECT COUNT(*) FROM information_schema.STATISTICS WHERE TABLE_SCHEMA=DATABASE() AND TABLE_NAME='indexing_log' AND INDEX_NAME='idx_job_id');
+SET @sql = IF(@d>0,'ALTER TABLE `indexing_log` DROP INDEX `idx_job_id`','SELECT 1');
+PREPARE stmt FROM @sql; EXECUTE stmt; DEALLOCATE PREPARE stmt;
+
 ALTER TABLE `indexing_log`
-  DROP INDEX `idx_job_id`,                        -- замінюємо
-  ADD INDEX `idx_job_url`    (`job_id`, `url_hash`),   -- воркер UPDATE
-  ADD INDEX `idx_job_status` (`job_id`, `status`);     -- прогрес job
+  ADD INDEX `idx_job_url`    (`job_id`, `url_hash`),
+  ADD INDEX `idx_job_status` (`job_id`, `status`);
 
 -- Covering index для logs.php (GET логи по сайту):
 -- SELECT id,url,status,http_status,error_msg,created_at
 -- WHERE site_id=? ORDER BY created_at DESC LIMIT 50
 
--- Дропаємо FK перед заміною індексів (MySQL вимагає)
-ALTER TABLE `indexing_log`
-  DROP FOREIGN KEY `fk_log_site`,
-  DROP FOREIGN KEY `fk_log_user`;
+SET @fk1 = (SELECT COUNT(*) FROM information_schema.TABLE_CONSTRAINTS
+  WHERE TABLE_SCHEMA=DATABASE() AND TABLE_NAME='indexing_log'
+    AND CONSTRAINT_NAME='fk_log_site' AND CONSTRAINT_TYPE='FOREIGN KEY');
+SET @sql = IF(@fk1>0,'ALTER TABLE `indexing_log` DROP FOREIGN KEY `fk_log_site`','SELECT 1');
+PREPARE stmt FROM @sql; EXECUTE stmt; DEALLOCATE PREPARE stmt;
+
+SET @fk2 = (SELECT COUNT(*) FROM information_schema.TABLE_CONSTRAINTS
+  WHERE TABLE_SCHEMA=DATABASE() AND TABLE_NAME='indexing_log'
+    AND CONSTRAINT_NAME='fk_log_user' AND CONSTRAINT_TYPE='FOREIGN KEY');
+SET @sql = IF(@fk2>0,'ALTER TABLE `indexing_log` DROP FOREIGN KEY `fk_log_user`','SELECT 1');
+PREPARE stmt FROM @sql; EXECUTE stmt; DEALLOCATE PREPARE stmt;
+
+SET @d = (SELECT COUNT(*) FROM information_schema.STATISTICS WHERE TABLE_SCHEMA=DATABASE() AND TABLE_NAME='indexing_log' AND INDEX_NAME='idx_site_id');
+SET @sql = IF(@d>0,'ALTER TABLE `indexing_log` DROP INDEX `idx_site_id`','SELECT 1');
+PREPARE stmt FROM @sql; EXECUTE stmt; DEALLOCATE PREPARE stmt;
 
 ALTER TABLE `indexing_log`
-  DROP INDEX `idx_site_id`,                       -- замінюємо
   ADD INDEX `idx_site_log` (
     `site_id`,
-    `created_at`,    -- ORDER BY DESC
-    `status`,        -- SELECT
-    `http_status`    -- SELECT
+    `created_at`,
+    `status`,
+    `http_status`
   );
 
 -- Covering index для логів юзера (без фільтру по сайту):
 -- SELECT url,status,http_status,error_msg,created_at FROM indexing_log
 -- JOIN sites ON ... WHERE user_id=? ORDER BY created_at DESC LIMIT 20
+SET @d = (SELECT COUNT(*) FROM information_schema.STATISTICS WHERE TABLE_SCHEMA=DATABASE() AND TABLE_NAME='indexing_log' AND INDEX_NAME='idx_user_date');
+SET @sql = IF(@d>0,'ALTER TABLE `indexing_log` DROP INDEX `idx_user_date`','SELECT 1');
+PREPARE stmt FROM @sql; EXECUTE stmt; DEALLOCATE PREPARE stmt;
+
 ALTER TABLE `indexing_log`
-  DROP INDEX `idx_user_date`,                     -- замінюємо
   ADD INDEX `idx_user_log` (
     `user_id`,
     `created_at`,
     `status`,
     `http_status`,
-    `site_id`        -- для JOIN без table lookup на sites
+    `site_id`
   );
-
--- Повертаємо FK для indexing_log
-ALTER TABLE `indexing_log`
-  ADD CONSTRAINT `fk_log_site` FOREIGN KEY (`site_id`)
-    REFERENCES `sites`(`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `fk_log_user` FOREIGN KEY (`user_id`)
-    REFERENCES `users`(`id`) ON DELETE CASCADE;
-
 
 -- ── PARTITIONING indexing_log по місяцях
 -- При > 1M рядків партиціонування дає 10-100x приріст на range запитах по created_at
@@ -280,15 +540,21 @@ ALTER TABLE `jobs`
 
 -- Covering для dashboard (активний job для сайту):
 -- SELECT id FROM jobs WHERE site_id=? AND user_id=? AND status IN ('pending','processing')
+SET @d = (SELECT COUNT(*) FROM information_schema.STATISTICS WHERE TABLE_SCHEMA=DATABASE() AND TABLE_NAME='jobs' AND INDEX_NAME='idx_site_status');
+SET @sql = IF(@d>0,'ALTER TABLE `jobs` DROP INDEX `idx_site_status`','SELECT 1');
+PREPARE stmt FROM @sql; EXECUTE stmt; DEALLOCATE PREPARE stmt;
+
 ALTER TABLE `jobs`
-  DROP INDEX `idx_site_status`,
   ADD INDEX `idx_site_user_status` (`site_id`, `user_id`, `status`);
 
 -- Covering для user dashboard (список jobs):
 -- SELECT id,status,total,sent,failed,created_at,finished_at FROM jobs
 -- WHERE user_id=? AND status=? ORDER BY created_at DESC
+SET @d = (SELECT COUNT(*) FROM information_schema.STATISTICS WHERE TABLE_SCHEMA=DATABASE() AND TABLE_NAME='jobs' AND INDEX_NAME='idx_user_status');
+SET @sql = IF(@d>0,'ALTER TABLE `jobs` DROP INDEX `idx_user_status`','SELECT 1');
+PREPARE stmt FROM @sql; EXECUTE stmt; DEALLOCATE PREPARE stmt;
+
 ALTER TABLE `jobs`
-  DROP INDEX `idx_user_status`,
   ADD INDEX `idx_user_status_cover` (
     `user_id`,
     `status`,
@@ -370,6 +636,53 @@ ALTER TABLE `sessions`
 -- [SHARED-HOSTING: не підтримується] -- SET PERSIST slow_query_log_file             = '/var/log/mysql/slow.log';
 -- [SHARED-HOSTING: не підтримується] -- SET PERSIST log_queries_not_using_indexes   = 1;
 
+
+
+-- ══════════════════════════════════════════════
+-- Повертаємо ВСІ FK
+-- ══════════════════════════════════════════════
+
+SET @x = (SELECT COUNT(*) FROM information_schema.TABLE_CONSTRAINTS
+  WHERE TABLE_SCHEMA=DATABASE() AND TABLE_NAME='sites'
+  AND CONSTRAINT_NAME='fk_sites_user' AND CONSTRAINT_TYPE='FOREIGN KEY');
+SET @sql = IF(@x=0, 'ALTER TABLE `sites` ADD CONSTRAINT `fk_sites_user` FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE', 'SELECT 1');
+PREPARE stmt FROM @sql; EXECUTE stmt; DEALLOCATE PREPARE stmt;
+
+SET @x = (SELECT COUNT(*) FROM information_schema.TABLE_CONSTRAINTS
+  WHERE TABLE_SCHEMA=DATABASE() AND TABLE_NAME='indexing_log'
+  AND CONSTRAINT_NAME='fk_log_site' AND CONSTRAINT_TYPE='FOREIGN KEY');
+SET @sql = IF(@x=0, 'ALTER TABLE `indexing_log` ADD CONSTRAINT `fk_log_site` FOREIGN KEY (`site_id`) REFERENCES `sites`(`id`) ON DELETE CASCADE', 'SELECT 1');
+PREPARE stmt FROM @sql; EXECUTE stmt; DEALLOCATE PREPARE stmt;
+
+SET @x = (SELECT COUNT(*) FROM information_schema.TABLE_CONSTRAINTS
+  WHERE TABLE_SCHEMA=DATABASE() AND TABLE_NAME='indexing_log'
+  AND CONSTRAINT_NAME='fk_log_user' AND CONSTRAINT_TYPE='FOREIGN KEY');
+SET @sql = IF(@x=0, 'ALTER TABLE `indexing_log` ADD CONSTRAINT `fk_log_user` FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE', 'SELECT 1');
+PREPARE stmt FROM @sql; EXECUTE stmt; DEALLOCATE PREPARE stmt;
+
+SET @x = (SELECT COUNT(*) FROM information_schema.TABLE_CONSTRAINTS
+  WHERE TABLE_SCHEMA=DATABASE() AND TABLE_NAME='daily_usage'
+  AND CONSTRAINT_NAME='fk_daily_user' AND CONSTRAINT_TYPE='FOREIGN KEY');
+SET @sql = IF(@x=0, 'ALTER TABLE `daily_usage` ADD CONSTRAINT `fk_daily_user` FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE', 'SELECT 1');
+PREPARE stmt FROM @sql; EXECUTE stmt; DEALLOCATE PREPARE stmt;
+
+SET @x = (SELECT COUNT(*) FROM information_schema.TABLE_CONSTRAINTS
+  WHERE TABLE_SCHEMA=DATABASE() AND TABLE_NAME='site_credentials'
+  AND CONSTRAINT_NAME='fk_cred_site' AND CONSTRAINT_TYPE='FOREIGN KEY');
+SET @sql = IF(@x=0, 'ALTER TABLE `site_credentials` ADD CONSTRAINT `fk_cred_site` FOREIGN KEY (`site_id`) REFERENCES `sites`(`id`) ON DELETE CASCADE', 'SELECT 1');
+PREPARE stmt FROM @sql; EXECUTE stmt; DEALLOCATE PREPARE stmt;
+
+SET @x = (SELECT COUNT(*) FROM information_schema.TABLE_CONSTRAINTS
+  WHERE TABLE_SCHEMA=DATABASE() AND TABLE_NAME='jobs'
+  AND CONSTRAINT_NAME='fk_jobs_user' AND CONSTRAINT_TYPE='FOREIGN KEY');
+SET @sql = IF(@x=0, 'ALTER TABLE `jobs` ADD CONSTRAINT `fk_jobs_user` FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE', 'SELECT 1');
+PREPARE stmt FROM @sql; EXECUTE stmt; DEALLOCATE PREPARE stmt;
+
+SET @x = (SELECT COUNT(*) FROM information_schema.TABLE_CONSTRAINTS
+  WHERE TABLE_SCHEMA=DATABASE() AND TABLE_NAME='jobs'
+  AND CONSTRAINT_NAME='fk_jobs_site' AND CONSTRAINT_TYPE='FOREIGN KEY');
+SET @sql = IF(@x=0, 'ALTER TABLE `jobs` ADD CONSTRAINT `fk_jobs_site` FOREIGN KEY (`site_id`) REFERENCES `sites`(`id`) ON DELETE CASCADE', 'SELECT 1');
+PREPARE stmt FROM @sql; EXECUTE stmt; DEALLOCATE PREPARE stmt;
 
 SET foreign_key_checks = 1;
 SET unique_checks      = 1;

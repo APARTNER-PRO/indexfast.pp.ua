@@ -117,6 +117,29 @@ respondOk('Завдання додано в чергу', [
     'status'    => 'pending',
 ]);
 
+
+// ── SSRF захист: блокуємо приватні IP та небезпечні схеми
+function validatePublicUrl(string $url): bool {
+    $parsed = parse_url($url);
+    if (!$parsed || !isset($parsed['host'])) return false;
+    // Дозволяємо тільки http/https
+    if (!in_array($parsed['scheme'] ?? '', ['http', 'https'], true)) return false;
+    $host = strtolower($parsed['host']);
+    // Блокуємо localhost і приватні діапазони
+    $blocked = ['localhost', '127.', '0.', '10.', '192.168.', '172.16.', '172.17.',
+                '172.18.', '172.19.', '172.2', '169.254.', '::1', 'metadata.'];
+    foreach ($blocked as $b) {
+        if (str_starts_with($host, $b) || $host === rtrim($b, '.')) return false;
+    }
+    // Резолвимо IP і перевіряємо
+    $ip = gethostbyname($host);
+    if ($ip === $host) return false; // не резолвиться
+    foreach ($blocked as $b) {
+        if (str_starts_with($ip, $b)) return false;
+    }
+    return true;
+}
+
 // ══════════════════════════════════════════════
 //  Парсер sitemap — читає URL, без Google API
 // ══════════════════════════════════════════════
@@ -129,6 +152,7 @@ class SitemapParser {
                 'user_agent' => 'IndexFast-Bot/1.0',
                 'header'     => 'Accept-Encoding: gzip',
             ]]);
+            if (!validatePublicUrl($url)) return [];
             $raw = @file_get_contents($url, false, $ctx);
             if (!$raw) return [];
             if (substr($raw, 0, 2) === "\x1f\x8b") $raw = gzdecode($raw);
