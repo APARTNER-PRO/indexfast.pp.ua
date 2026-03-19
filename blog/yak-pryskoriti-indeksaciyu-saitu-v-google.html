@@ -156,6 +156,19 @@
       .page-wrap { grid-template-columns: 1fr; padding: 40px 20px 60px; gap: 40px; }
       .sidebar { position: static; }
     }
+      .nav-login {
+      color: var(--muted, #7a7a95);
+      font-size: 0.875rem;
+      text-decoration: none;
+      padding: 7px 16px;
+      border-radius: 100px;
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .nav-login:hover {
+      color: var(--white, #f0f0f8);
+      border-color: rgba(255,255,255,0.25);
+    }
   </style>
 
   <script type="application/ld+json">
@@ -191,7 +204,8 @@
   <a href="/" class="logo">Index<span>Fast</span></a>
   <div class="nav-right">
     <a href="/blog/" class="nav-link">← Блог</a>
-    <a href="/#pricing" class="nav-cta">Спробувати безкоштовно</a>
+    <a href="/auth.html" class="nav-login">Увійти</a>
+    <a href="/auth.html?mode=register"" class="nav-cta">Спробувати безкоштовно</a>
   </div>
 </nav>
 

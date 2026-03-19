@@ -170,6 +170,26 @@
       .sidebar { position: static; }
       .compare-table { font-size: 0.8rem; }
     }
+      .nav-login {
+      color: var(--muted, #7a7a95);
+      font-size: 0.875rem;
+      text-decoration: none;
+      padding: 7px 16px;
+      border-radius: 100px;
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .nav-login:hover {
+      color: var(--white, #f0f0f8);
+      border-color: rgba(255,255,255,0.25);
+    }
+  
+    .article-nav { display: flex; gap: 16px; margin-top: 60px; padding-top: 40px; border-top: 1px solid var(--border); }
+    .article-nav a { flex: 1; background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 20px; transition: border-color 0.2s; font-size: 0.875rem; color: var(--muted); text-decoration: none; }
+    .article-nav a:hover { border-color: rgba(0,255,136,0.2); color: var(--white); }
+    .article-nav-label { font-size: 0.72rem; color: var(--muted); font-family: var(--font-display); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 6px; }
+    .article-nav-title { color: var(--white); font-weight: 500; line-height: 1.4; }
+    @media (max-width: 640px) { .article-nav { flex-direction: column; } }
   </style>
 
   <script type="application/ld+json">
@@ -205,7 +225,8 @@
   <a href="/" class="logo">Index<span>Fast</span></a>
   <div class="nav-right">
     <a href="/blog/" class="nav-link">← Блог</a>
-    <a href="/#pricing" class="nav-cta">Спробувати безкоштовно</a>
+    <a href="/auth.html" class="nav-login">Увійти</a>
+    <a href="/auth.html?mode=register"" class="nav-cta">Спробувати безкоштовно</a>
   </div>
 </nav>
 
@@ -376,6 +397,17 @@ Sitemap: https://your-site.com/sitemap.xml</div>
       </div>
 
     </div>
+
+      <div class="article-nav">
+        <a href="/blog/yak-pryskoriti-indeksaciyu-saitu-v-google.html">
+          <div class="article-nav-label">← Попередня стаття</div>
+          <div class="article-nav-title">Як прискорити індексацію сайту в Google</div>
+        </a>
+        <a href="/blog/google-search-console-posibnyk.html" style="text-align:right;">
+          <div class="article-nav-label">Наступна стаття →</div>
+          <div class="article-nav-title">Google Search Console: повний посібник 2025</div>
+        </a>
+      </div>
   </article>
 
   <aside class="sidebar">
@@ -417,7 +449,7 @@ Sitemap: https://your-site.com/sitemap.xml</div>
     <a href="/terms.html">Умови</a>
     <a href="/status.html">Статус</a>
   </div>
-  <p>© 2025 IndexFast. Всі права захищені.</p>
+  <p>© 2026 IndexFast. Всі права захищені.</p>
 </footer>
 
 </body>

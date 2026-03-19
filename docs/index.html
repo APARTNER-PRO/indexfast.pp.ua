@@ -339,6 +339,19 @@
       .top-nav { padding: 0 16px; }
       .docs-footer { padding: 20px; margin-left: 0; }
     }
+      .nav-login {
+      color: var(--muted, #7a7a95);
+      font-size: 0.875rem;
+      text-decoration: none;
+      padding: 7px 16px;
+      border-radius: 100px;
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .nav-login:hover {
+      color: var(--white, #f0f0f8);
+      border-color: rgba(255,255,255,0.25);
+    }
   </style>
 
   <script type="application/ld+json">
@@ -375,7 +388,8 @@
   <div class="nav-right">
     <a href="/" class="nav-link">Головна</a>
     <a href="/blog/" class="nav-link">Блог</a>
-    <a href="/#pricing" class="nav-cta">Спробувати →</a>
+    <a href="/auth.html" class="nav-login">Увійти</a>
+    <a href="/auth.html?mode=register"" class="nav-cta">Спробувати безкоштовно</a>
   </div>
 </nav>
 
@@ -410,9 +424,9 @@
 
     <div class="sidebar-group">
       <div class="sidebar-group-title">Використання</div>
-      <a href="#php-script" class="sidebar-link">🐘 PHP скрипт</a>
+      <a href="#php-script" class="sidebar-link">⚙️ Як працює сервіс</a>
       <a href="#manual" class="sidebar-link">🖱 Ручна індексація</a>
-      <a href="#automation" class="sidebar-link">🤖 Автоматизація</a>
+      <a href="#automation" class="sidebar-link">🤖 Автоматичний розклад</a>
       <a href="#limits" class="sidebar-link">📊 Ліміти API</a>
     </div>
 
@@ -492,52 +506,32 @@
     <!-- ══════════════ QUICKSTART ══════════════ -->
     <section class="docs-section" id="quickstart">
       <h2 class="docs-h2">⚡ Швидкий старт</h2>
-      <p class="docs-p">Щоб почати роботу з IndexFast вам потрібно виконати 5 кроків. Весь процес займає близько 10–15 хвилин.</p>
+      <p class="docs-p">Щоб почати роботу з IndexFast вам потрібно виконати 3 кроки. Весь процес займає близько 10–15 хвилин.</p>
 
       <div class="steps">
         <div class="step">
           <div class="step-num">1</div>
           <div class="step-body">
-            <strong>Створіть проєкт у Google Cloud Console</strong>
-            <p>Перейдіть на <a href="https://console.cloud.google.com" target="_blank">console.cloud.google.com</a>, створіть новий проєкт (або оберіть існуючий) та увімкніть <strong>Web Search Indexing API</strong>.</p>
+            <strong>Створіть Service Account у Google Cloud</strong>
+            <p>Перейдіть на <a href="https://console.cloud.google.com" target="_blank" rel="noreferrer">console.cloud.google.com</a>, створіть новий проєкт (або оберіть існуючий) та увімкніть <code>Web Search Indexing API</code>. Створіть Service Account і завантажте JSON-ключ.</p>
+            <p>Детальна інструкція — у розділі <a href="#service-account">🔑 Service Account</a>.</p>
           </div>
         </div>
         <div class="step">
           <div class="step-num">2</div>
           <div class="step-body">
-            <strong>Створіть Service Account і завантажте JSON-ключ</strong>
-            <p>У розділі <em>IAM & Admin → Service Accounts</em> створіть акаунт з роллю <code>Owner</code>. Згенеруйте ключ формату <strong>JSON</strong> і збережіть файл.</p>
+            <strong>Додайте Service Account до Search Console</strong>
+            <p>У <a href="https://search.google.com/search-console" target="_blank" rel="noreferrer">Google Search Console</a> додайте email вашого Service Account як делегованого <strong>власника</strong> сайту.</p>
+            <p>Детальна інструкція — у розділі <a href="#search-console">🔗 Search Console</a>.</p>
           </div>
         </div>
         <div class="step">
           <div class="step-num">3</div>
           <div class="step-body">
-            <strong>Додайте Service Account до Google Search Console</strong>
-            <p>Скопіюйте email вашого service account (вигляд: <code><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e789868a82a79795888d828493c98e868ac980948295918e848286848488928993c984888a">[email&#160;protected]</a></code>). У Search Console → Налаштування → Користувачі додайте його як <strong>власника</strong>.</p>
+            <strong>Підключіть сайт в особистому кабінеті</strong>
+            <p>Зареєструйтесь або увійдіть у <a href="/dashboard/">кабінет IndexFast</a>. Додайте сайт, вставте JSON-ключ Service Account — і індексація запуститься автоматично.</p>
           </div>
         </div>
-        <div class="step">
-          <div class="step-num">4</div>
-          <div class="step-body">
-            <strong>Завантажте PHP скрипт IndexFast</strong>
-            <p>Скачайте <code>google_indexing.php</code> з вашого особистого кабінету. Помістіть поруч JSON-ключ.</p>
-          </div>
-        </div>
-        <div class="step">
-          <div class="step-num">5</div>
-          <div class="step-body">
-            <strong>Запустіть скрипт</strong>
-            <p>Виконайте команду в терміналі — і ваші сторінки вже в черзі на індексацію.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="code-block">
-        <div class="code-header">
-          <span class="code-lang">BASH</span>
-          <button class="copy-btn" onclick="copyCode(this)">Копіювати</button>
-        </div>
-        <pre>php google_indexing.php https://your-site.com/sitemap.xml</pre>
       </div>
     </section>
 
@@ -559,28 +553,35 @@
       </div>
 
       <h3 class="docs-h3" id="service-account">Створення Service Account</h3>
-      <p class="docs-p">Service Account — це технічний обліковий запис без пароля, який ваш скрипт використовує для авторизації в Google API.</p>
+      <p class="docs-p">Service Account — це технічний обліковий запис без пароля, який IndexFast використовує для авторизації в Google API. Щоб його створити, потрібен проєкт у Google Cloud.</p>
+
+      <div class="callout tip">
+        <span class="callout-icon">🛠</span>
+        <div class="callout-body">Перед початком увімкніть Indexing API у вашому проєкті через <a href="https://console.developers.google.com/apis/library/indexing.googleapis.com" target="_blank" rel="noreferrer">інструмент налаштування</a>. Без цього кроку ви отримаєте помилку <code>403 accessNotConfigured</code>.</div>
+      </div>
 
       <div class="steps">
         <div class="step">
           <div class="step-num">1</div>
           <div class="step-body">
-            <strong>IAM & Admin → Service Accounts → Create Service Account</strong>
-            <p>Дайте назву, наприклад <code>indexfast-bot</code>. Роль — <code>Owner</code> або <code>Service Account Token Creator</code>.</p>
+            <strong>Відкрийте розділ Service Accounts</strong>
+            <p>Перейдіть у <a href="https://console.cloud.google.com/iam-admin/serviceaccounts" target="_blank" rel="noreferrer">Google Cloud Console → IAM &amp; Admin → Service Accounts</a>. При необхідності оберіть потрібний проєкт.</p>
           </div>
         </div>
         <div class="step">
           <div class="step-num">2</div>
           <div class="step-body">
-            <strong>Створіть JSON ключ</strong>
-            <p>Відкрийте акаунт → вкладка <em>Keys</em> → <em>Add Key → Create new key → JSON</em>. Файл завантажиться автоматично.</p>
+            <strong>Натисніть «Створити сервісний акаунт»</strong>
+            <p>Введіть назву, наприклад <code>indexfast-bot</code>, та опис. Ідентифікатор можна залишити автоматичним. Натисніть <em>«Створити та продовжити»</em>.</p>
+            <p>Розділ <em>«Права доступу»</em> заповнювати не обов'язково — натисніть <em>«Продовжити»</em>, потім <em>«Готово»</em>.</p>
           </div>
         </div>
         <div class="step">
           <div class="step-num">3</div>
           <div class="step-body">
-            <strong>Збережіть ключ безпечно</strong>
-            <p>Назвіть файл <code>service-account.json</code>. Ніколи не публікуйте його в Git або публічних місцях.</p>
+            <strong>Створіть JSON-ключ</strong>
+            <p>Відкрийте щойно створений акаунт → вкладка <em>Keys</em> → <em>Add Key → Create new key</em>. Оберіть формат <strong>JSON</strong> та натисніть <em>«Створити»</em>.</p>
+            <p>Файл автоматично завантажиться на ваш комп'ютер — це єдина копія ключа. Збережіть його в безпечному місці і ніколи не публікуйте в Git або публічних репозиторіях.</p>
           </div>
         </div>
       </div>
@@ -614,28 +615,41 @@
     <!-- ══════════════ SEARCH CONSOLE ══════════════ -->
     <section class="docs-section" id="search-console">
       <h2 class="docs-h2">🔗 Підключення Search Console</h2>
-      <p class="docs-p">Без цього кроку API буде повертати помилку <code>403 Forbidden</code> навіть при правильному ключі. Service Account має бути власником сайту в Search Console.</p>
+      <p class="docs-p">Без цього кроку API буде повертати помилку <code>403 Forbidden</code> навіть при правильному ключі. Service Account має отримати статус власника сайту в Google Search Console.</p>
 
       <div class="steps">
         <div class="step">
           <div class="step-num">1</div>
           <div class="step-body">
-            <strong>Скопіюйте email Service Account</strong>
-            <p>Він виглядає так: <code><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="d4bdbab0b1acb2b5a7a0f9b6bba094adbba1a6f9a4a6bbbeb1b7a0fabdb5b9fab3a7b1a6a2bdb7b1b5b7b7bba1baa0fab7bbb9">[email&#160;protected]</a></code> — знаходиться у JSON-файлі в полі <code>client_email</code>.</p>
+            <strong>Підтвердіть право власності на сайт</strong>
+            <p>Перейдіть у <a href="https://search.google.com/search-console" target="_blank" rel="noreferrer">Google Search Console</a> і підтвердіть, що сайт належить вам — будь-яким доступним способом (DNS-запис, HTML-файл тощо).</p>
           </div>
         </div>
         <div class="step">
           <div class="step-num">2</div>
           <div class="step-body">
-            <strong>Search Console → Налаштування → Користувачі та дозволи</strong>
-            <p>Натисніть <em>«Додати користувача»</em>, вставте email, встановіть роль <strong>Власник</strong> (не «Повний доступ» — саме Власник).</p>
+            <strong>Скопіюйте email Service Account</strong>
+            <p>Відкрийте завантажений JSON-файл і знайдіть поле <code>client_email</code>. Email має вигляд:</p>
+            <p><code>назва-акаунту@назва-проєкту.iam.gserviceaccount.com</code></p>
+            <p>Наприклад: <code><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="c5acaba1a0bda3a4b6b1e8a7aab185a8bce8b5b7aaafa0a6b1e8f4f7f6ebaca4a8eba2b6a0b7b3aca6a0a4a6a6aab0abb1eba6aaa8">[email&#160;protected]</a></code></p>
           </div>
         </div>
         <div class="step">
           <div class="step-num">3</div>
           <div class="step-body">
+            <strong>Додайте Service Account як делегованого власника</strong>
+            <p>У Search Console оберіть ваш сайт → <em>Налаштування → Підтверджені власники → Додати власника</em>. Вставте email Service Account і підтвердіть.</p>
+            <div class="callout warning" style="margin-top:12px;">
+              <span class="callout-icon">⚠️</span>
+              <div class="callout-body">Потрібна роль саме <strong>Власник</strong> (не «Повний доступ»). Без цього API повертатиме <code>403 Forbidden</code>.</div>
+            </div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-body">
             <strong>Зачекайте 1–2 хвилини</strong>
-            <p>Права застосовуються не миттєво. Після цього скрипт зможе відправляти URL на індексацію.</p>
+            <p>Права застосовуються не миттєво. Після цього IndexFast зможе відправляти URL на індексацію через ваш сайт.</p>
           </div>
         </div>
       </div>
@@ -645,69 +659,36 @@
 
     <!-- ══════════════ PHP SCRIPT ══════════════ -->
     <section class="docs-section" id="php-script">
-      <h2 class="docs-h2">🐘 PHP скрипт</h2>
-      <p class="docs-p">Основний інструмент IndexFast — PHP скрипт, який автоматично зчитує ваш <code>sitemap.xml</code> і відправляє всі URL через Google Indexing API.</p>
+      <h2 class="docs-h2">⚙️ Як працює сервіс</h2>
+      <p class="docs-p">IndexFast автоматично зчитує ваш <code>sitemap.xml</code> і відправляє URL через Google Indexing API. Ніякого скрипта встановлювати не потрібно — всі операції виконуються на серверах IndexFast.</p>
 
-      <h3 class="docs-h3">Параметри запуску</h3>
-      <p class="docs-p">Скрипт підтримує кілька способів вказати sitemap:</p>
-
-      <div class="tabs" id="tabs1">
-        <div class="tab-nav">
-          <button class="tab-btn active" onclick="switchTab('tabs1', 0)">Позиційний аргумент</button>
-          <button class="tab-btn" onclick="switchTab('tabs1', 1)">Іменований параметр</button>
-          <button class="tab-btn" onclick="switchTab('tabs1', 2)">Тільки домен</button>
-          <button class="tab-btn" onclick="switchTab('tabs1', 3)">Інтерактивний</button>
-        </div>
-        <div class="tab-pane active">
-          <div class="code-block">
-            <div class="code-header"><span class="code-lang">BASH</span><button class="copy-btn" onclick="copyCode(this)">Копіювати</button></div>
-            <pre>php google_indexing.php https://your-site.com/sitemap.xml</pre>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <strong>Ви додаєте сайт у кабінеті</strong>
+            <p>Вказуєте домен, URL sitemap.xml та вставляєте JSON-ключ Service Account. IndexFast перевіряє доступність sitemap і зберігає налаштування.</p>
           </div>
         </div>
-        <div class="tab-pane">
-          <div class="code-block">
-            <div class="code-header"><span class="code-lang">BASH</span><button class="copy-btn" onclick="copyCode(this)">Копіювати</button></div>
-            <pre>php google_indexing.php <span class="n">--sitemap</span>=https://your-site.com/sitemap.xml</pre>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <strong>IndexFast зчитує sitemap</strong>
+            <p>Сервіс підтримує звичайні sitemap і <strong>Sitemap Index</strong> (вкладені файли будь-якої глибини). URL автоматично ставляться в чергу відповідно до денного ліміту вашого плану.</p>
           </div>
         </div>
-        <div class="tab-pane">
-          <div class="code-block">
-            <div class="code-header"><span class="code-lang">BASH</span><button class="copy-btn" onclick="copyCode(this)">Копіювати</button></div>
-            <pre><span class="c"># /sitemap.xml додається автоматично</span>
-php google_indexing.php https://your-site.com</pre>
-          </div>
-        </div>
-        <div class="tab-pane">
-          <div class="code-block">
-            <div class="code-header"><span class="code-lang">BASH</span><button class="copy-btn" onclick="copyCode(this)">Копіювати</button></div>
-            <pre><span class="c"># Скрипт запитає URL інтерактивно</span>
-php google_indexing.php</pre>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <strong>URL відправляються в Google</strong>
+            <p>Сервіс використовує ваш Service Account для авторизації і відправляє URL через офіційний Google Indexing API. Ви бачите результат у реальному часі в особистому кабінеті.</p>
           </div>
         </div>
       </div>
 
-      <h3 class="docs-h3">Конфігурація скрипта</h3>
-      <p class="docs-p">На початку файлу <code>google_indexing.php</code> є розділ з налаштуваннями:</p>
-
-      <div class="code-block">
-        <div class="code-header">
-          <span class="code-lang">PHP</span>
-          <span class="code-filename">google_indexing.php</span>
-          <button class="copy-btn" onclick="copyCode(this)">Копіювати</button>
-        </div>
-        <pre><span class="c">// ── Конфігурація ──────────────────────────────────</span>
-
-<span class="c">// Шлях до JSON-ключа Service Account</span>
-<span class="k">define</span>(<span class="s">'SERVICE_ACCOUNT_FILE'</span>, <span class="k">__DIR__</span> . <span class="s">'/service-account.json'</span>);
-
-<span class="c">// Ліміт URL на добу (безкоштовно — 200)</span>
-<span class="k">define</span>(<span class="s">'DAILY_QUOTA'</span>, <span class="v">200</span>);
-
-<span class="c">// Файл для логування результатів</span>
-<span class="k">define</span>(<span class="s">'LOG_FILE'</span>, <span class="k">__DIR__</span> . <span class="s">'/indexing.log'</span>);
-
-<span class="c">// URL sitemap за замовчуванням (якщо не передано аргумент)</span>
-<span class="k">define</span>(<span class="s">'DEFAULT_SITEMAP_URL'</span>, <span class="s">''</span>);</pre>
+      <div class="callout tip">
+        <span class="callout-icon">📊</span>
+        <div class="callout-body">Ліміти залежать від плану: Старт — 20 URL/день, PRO — 100 URL/день, Агенція — без обмежень. Ліміт оновлюється щодня о 00:00.</div>
       </div>
     </section>
 
@@ -715,45 +696,38 @@ php google_indexing.php</pre>
 
     <!-- ══════════════ AUTOMATION ══════════════ -->
     <section class="docs-section" id="automation">
-      <h2 class="docs-h2">🤖 Автоматизація (Cron)</h2>
-      <p class="docs-p">Щоб скрипт запускався автоматично щодня — налаштуйте задачу через <strong>crontab</strong> на вашому сервері.</p>
-
-      <h3 class="docs-h3">Щоденний запуск о 9:00</h3>
-
-      <div class="code-block">
-        <div class="code-header">
-          <span class="code-lang">BASH</span>
-          <button class="copy-btn" onclick="copyCode(this)">Копіювати</button>
-        </div>
-        <pre><span class="c"># Відкрийте редактор cron</span>
-crontab -e
-
-<span class="c"># Додайте рядок (запуск щодня о 09:00)</span>
-<span class="g">0 9 * * * /usr/bin/php /var/www/your-site/google_indexing.php https://your-site.com/sitemap.xml >> /var/log/indexing.log 2>&1</span></pre>
-      </div>
+      <h2 class="docs-h2">🤖 Автоматичний розклад</h2>
+      <p class="docs-p">IndexFast запускає індексацію автоматично — налаштовувати cron або тримати сервер не потрібно. Сервіс працює цілодобово на стороні IndexFast.</p>
 
       <div class="callout tip">
         <span class="callout-icon">💡</span>
-        <div class="callout-body">
-          <strong>Порада</strong>
-          Скрипт автоматично відслідковує добовий ліміт у 200 URL і зупиняється при досягненні. Якщо у вас більше сторінок — скрипт продовжить з того місця наступного дня.
-        </div>
+        <div class="callout-body">Щоб запустити індексацію вручну — натисніть <strong>«▶ Запуск»</strong> в особистому кабінеті поруч із потрібним сайтом. Результат з'явиться в логах протягом хвилини.</div>
       </div>
 
-      <h3 class="docs-h3" id="limits">Ліміти Google Indexing API</h3>
-
-      <table class="docs-table">
-        <thead>
-          <tr><th>Параметр</th><th>Значення</th><th>Примітка</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>URL на добу</td><td><strong>200</strong></td><td>Безкоштовний ліміт</td></tr>
-          <tr><td>Запитів на секунду</td><td><strong>600</strong></td><td>Пакетні запити</td></tr>
-          <tr><td>Час обробки</td><td><strong>24–48 год</strong></td><td>Зазвичай швидше</td></tr>
-          <tr><td>Підтримувані типи</td><td><code>URL_UPDATED</code>, <code>URL_DELETED</code></td><td>—</td></tr>
-          <tr><td>Форматsitemap</td><td>XML, Sitemap Index</td><td>Підтримка вкладеності</td></tr>
-        </tbody>
-      </table>
+      <h3 class="docs-h3">Як керувати індексацією</h3>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <strong>Активний режим</strong>
+            <p>Сайт зі статусом <em>Активний</em> автоматично відправляє URL у межах денного ліміту. Ліміт ділиться рівномірно між усіма активними сайтами акаунту.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <strong>Пауза</strong>
+            <p>Якщо потрібно тимчасово зупинити індексацію для сайту — натисніть <strong>«⏸»</strong> в кабінеті. Денний ліміт не витрачається. Відновити можна у будь-який момент.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <strong>Ручний запуск</strong>
+            <p>Натисніть <strong>«▶ Запуск»</strong> — і IndexFast негайно відправить URL з sitemap в межах залишку денного ліміту. Зручно після публікації нових сторінок.</p>
+          </div>
+        </div>
+      </div>
     </section>
 
     <hr class="docs-hr">
@@ -769,16 +743,16 @@ crontab -e
         <span class="ptag"><span class="ptag-dot" style="background:#f72a2a"></span>Rank Math → <code>/sitemap_index.xml</code></span>
         <span class="ptag"><span class="ptag-dot" style="background:#1e7c42"></span>All in One SEO → <code>/sitemap.xml</code></span>
       </div>
-      <div class="code-block">
-        <div class="code-header"><span class="code-lang">BASH</span><button class="copy-btn" onclick="copyCode(this)">Копіювати</button></div>
-        <pre>php google_indexing.php https://your-wordpress-site.com/sitemap_index.xml</pre>
+      <div class="callout tip">
+        <span class="callout-icon">✅</span>
+        <div class="callout-body">В особистому кабінеті IndexFast вкажіть URL вашого sitemap: <code>https://your-site.com/sitemap_index.xml</code> — сервіс автоматично розпакує всі вкладені файли.</div>
       </div>
 
       <h3 class="docs-h3" id="shopify">Shopify</h3>
       <p class="docs-p">Shopify автоматично генерує sitemap за адресою <code>/sitemap.xml</code>. Він включає сторінки, товари, колекції та блог-пости.</p>
-      <div class="code-block">
-        <div class="code-header"><span class="code-lang">BASH</span><button class="copy-btn" onclick="copyCode(this)">Копіювати</button></div>
-        <pre>php google_indexing.php https://your-store.myshopify.com/sitemap.xml</pre>
+      <div class="callout tip">
+        <span class="callout-icon">✅</span>
+        <div class="callout-body">В особистому кабінеті IndexFast вкажіть URL вашого sitemap: <code>https://your-store.myshopify.com/sitemap.xml</code> — і індексація запуститься автоматично.</div>
       </div>
 
       <h3 class="docs-h3" id="laravel">Laravel</h3>
@@ -952,10 +926,10 @@ Authorization: Bearer <span class="v">{ACCESS_TOKEN}</span></pre>
     <a href="/terms.html">Умови</a>
     <a href="/status.html">Статус</a>
   </div>
-  <p>© 2025 IndexFast</p>
+  <p>© 2026 IndexFast</p>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   // ── Tabs
   function switchTab(containerId, idx) {
     const container = document.getElementById(containerId);
@@ -989,13 +963,4 @@ Authorization: Bearer <span class="v">{ACCESS_TOKEN}</span></pre>
       if (entry.isIntersecting) {
         const id = entry.target.id;
         sideLinks.forEach(l => {
-          l.classList.toggle('active', l.getAttribute('href') === '#' + id);
-        });
-      }
-    });
-  }, { rootMargin: '-20% 0px -70% 0px' });
-
-  sections.forEach(s => observer.observe(s));
-
-  // ── Search filter (simple)
-  document.getElementById('docsSearch').addEventListener('input'
+          l.classList.toggle('ac
