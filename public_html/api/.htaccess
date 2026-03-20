@@ -17,7 +17,7 @@ php_flag  opcache.save_comments          Off
 
 # Вимикаємо зайве
 php_flag  expose_php                     Off
-php_flag  display_errors                 Off
+php_flag  display_errors                 On
 php_flag  log_errors                     On
 php_value error_reporting                 E_ALL
 php_value error_log                      /tmp/indexfast_errors.log
