@@ -23,17 +23,23 @@ const Billing   = lazy(() => import("./pages/Billing.jsx"));
 // ── Fallback для Suspense
 function PageLoader() {
   return (
+    <>
+    <style>{`
+      .hamburger-btn { display: none; }
+      @media (max-width: 768px) { .hamburger-btn { display: flex !important; } }
+    `}</style>
     <div style={{ display: "flex", alignItems: "center", justifyContent: "center",
       minHeight: 300 }}>
       <Spinner size={28}/>
     </div>
+  </>
   );
 }
 
 // ══════════════════════════════════════════════
 //  Sidebar
 // ══════════════════════════════════════════════
-const Sidebar = memo(function Sidebar({ activePage, setPage, user, sideOpen, setSideOpen }) {
+const Sidebar = memo(function Sidebar({ activePage, setPage, user, sideOpen, setSideOpen, onLogout }) {
   if (!user) return null;
   const plan = user.plan;
 
@@ -113,7 +119,8 @@ const Sidebar = memo(function Sidebar({ activePage, setPage, user, sideOpen, set
           onClick={() => {
             if (window.confirm("Вийти з акаунту?")) {
               localStorage.removeItem("access_token");
-              navigate("/app/login");
+              localStorage.removeItem("refresh_token");
+              onLogout?.();
             }
           }}
           onMouseEnter={e => e.currentTarget.style.background = "rgba(255,255,255,0.04)"}
@@ -156,9 +163,9 @@ const Topbar = memo(function Topbar({ activePage, onRefresh, onAddSite, onToggle
       <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
         {/* Hamburger — мобільне */}
         <button onClick={onToggleSide}
-          style={{ display: "none", flexDirection: "column", gap: 4,
-            background: "none", border: "none", cursor: "pointer", padding: 4,
-            "@media(max-width:768px)": { display: "flex" } }}>
+          className="hamburger-btn"
+          style={{ flexDirection: "column", gap: 4,
+            background: "none", border: "none", cursor: "pointer", padding: 4 }}>
           {[0,1,2].map(i => (
             <span key={i} style={{ width: 18, height: 2, background: C.white,
               display: "block", borderRadius: 1 }}/>
@@ -394,6 +401,7 @@ export default function App() {
           user={user}
           sideOpen={sideOpen}
           setSideOpen={setSideOpen}
+          onLogout={() => navigate("/app/login")}
         />
 
         {/* Main */}
