@@ -90,13 +90,11 @@ define('TOKEN_PASSWORD_RESET_TTL', 60);           // 60 хвилин
 // ────────────────────────────────────────────
 //  CORS — дозволені origin
 // ────────────────────────────────────────────
-define('CORS_ORIGINS', [
-    'https://indexfast.pp.ua',
-    'https://indexedfast.vercel.app',
-    'https://indexfast.local',
-    'http://indexfast.local',
-    // 'http://localhost:3000',  // розкоментуй для dev
-]);
+// FRONTEND_URL — домен де розміщений frontend (може відрізнятись від бекенду)
+// Можна вказати кілька через кому: https://indexfast.pp.ua,https://app.indexfast.com
+define('FRONTEND_URLS', env('FRONTEND_URL', 'https://indexfast.pp.ua'));
+
+define('CORS_ORIGINS', array_filter(array_map('trim', explode(',', FRONTEND_URLS))));
 
 // ────────────────────────────────────────────
 //  БЕЗПЕКА

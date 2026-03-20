@@ -14,10 +14,12 @@ export function useJobPoller(jobId, { onFinished } = {}) {
 
   const query = useQuery({
     queryKey:        KEYS.job(jobId),
-    queryFn:         () => apiClient.jobStatus(jobId).then(r => r.data?.job),
+    queryFn:         () => apiClient.jobStatus(jobId).then(r => r.job),
     enabled:         !!jobId,
     staleTime:       0,                // завжди вважати застарілим
-    refetchInterval: (data) => {
+    refetchInterval: (query) => {
+      // В react-query v5 refetchInterval отримує QueryObserverResult
+      const data = query?.state?.data;
       // Зупиняємо polling коли job завершено
       if (!data || TERMINAL.has(data.status)) return false;
       // Частіше на початку, рідше якщо довго висить

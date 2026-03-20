@@ -224,10 +224,19 @@ npm install
 npm run build
 ```
 
-Результат з'явиться у `frontend/../dist/dashboard/`
+Результат з'явиться у `frontend/../public_html/app/` — **одразу в правильному місці**.
 
-### 6.3 Завантаж білд на хостинг
-Вміст папки `dist/dashboard/` → `/home/USERNAME/public_html/dashboard/`
+### 6.3 Завантаж на хостинг
+Вміст папки `public_html/app/` вже готовий — завантаж разом з рештою `public_html/`.
+
+### 6.4 URL після білду
+
+| URL | Що |
+|-----|-----|
+| `/app/login` | Вхід |
+| `/app/register` | Реєстрація |
+| `/app/forgot` | Відновлення пароля |
+| `/app/dashboard` | Особистий кабінет |
 
 > Якщо немає Node.js локально — напиши, зберемо білд окремо.
 
@@ -304,3 +313,51 @@ https://indexfast.pp.ua/
 | `https://indexfast.pp.ua/api/sites/index.php` | API: сайти |
 | `https://indexfast.pp.ua/api/indexing/run.php` | API: запуск індексації |
 | `https://indexfast.pp.ua/blog/` | Блог |
+
+---
+
+## Розділення Frontend і Backend на різні хостинги
+
+### Backend (API) — окремий хостинг/домен
+
+1. Завантаж тільки папку `public_html/api/` на бекенд хостинг
+2. У `.env` бекенду вкажи:
+   ```env
+   APP_URL=https://api.indexfast.pp.ua
+   FRONTEND_URL=https://indexfast.pp.ua
+   ```
+   `FRONTEND_URL` — домен(и) де розміщений frontend (для CORS).
+   Кілька доменів через кому:
+   ```env
+   FRONTEND_URL=https://indexfast.pp.ua,https://app.indexfast.com
+   ```
+
+### Frontend — окремий хостинг (Vercel, Netlify, GitHub Pages)
+
+1. Створи файл `frontend/.env.local`:
+   ```env
+   VITE_API_URL=https://api.indexfast.pp.ua/api
+   ```
+2. Збери React:
+   ```bash
+   cd frontend
+   npm install
+   npm run build
+   ```
+3. Завантаж `dist/dashboard/` на frontend хостинг
+
+### auth.html — вказати API домен
+
+Якщо `auth.html` на іншому домені ніж API, додай атрибут до `<body>`:
+```html
+<body data-api-url="https://api.indexfast.pp.ua/api">
+```
+
+### Лендінг + Auth (статичний хостинг)
+
+Можна розмістити на Vercel/Netlify:
+- `public_html/*.html` (крім `api/`)
+- `public_html/blog/`
+- `public_html/dashboard/` (після npm run build)
+
+`vercel.json` вже є в архіві з правильними redirects.

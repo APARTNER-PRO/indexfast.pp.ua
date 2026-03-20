@@ -18,7 +18,7 @@ export default memo(function Logs({ sites }) {
   const [status, setStatus] = useState("");
   const [page,   setPage]   = useState(0);
 
-  const { data, isLoading, isFetching } = useLogs({
+  const { data, isLoading, isFetching, isError, refetch } = useLogs({
     siteId: siteId || undefined,
     status: status || undefined,
     limit:  PAGE_SIZE,
@@ -46,7 +46,13 @@ export default memo(function Logs({ sites }) {
         <h2 style={{ fontFamily: "Syne,sans-serif", fontWeight: 800, fontSize: 20 }}>
           Логи індексації
         </h2>
-        {isFetching && !isLoading && <Spinner size={16}/>}
+        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+          {isFetching && !isLoading && <Spinner size={16}/>}
+          <Btn variant="ghost" onClick={refetch}
+            style={{ padding: "6px 12px", fontSize: 12 }}>
+            ↻ Оновити
+          </Btn>
+        </div>
       </div>
 
       {/* Фільтри */}
@@ -91,10 +97,21 @@ export default memo(function Logs({ sites }) {
           <div style={{ display: "flex", justifyContent: "center", padding: 48 }}>
             <Spinner size={28}/>
           </div>
+        ) : isError ? (
+          <div style={{ textAlign: "center", padding: "48px 20px", color: C.muted }}>
+            <div style={{ fontSize: 36, marginBottom: 12 }}>⚠️</div>
+            <p style={{ marginBottom: 16 }}>Помилка завантаження логів</p>
+            <Btn variant="outline" onClick={refetch}>Повторити</Btn>
+          </div>
         ) : logs.length === 0 ? (
           <div style={{ textAlign: "center", padding: "48px 20px", color: C.muted }}>
             <div style={{ fontSize: 36, marginBottom: 12, opacity: 0.4 }}>📋</div>
-            <p>Логів не знайдено</p>
+            <p style={{ marginBottom: 8 }}>
+              {status || siteId ? "Нічого не знайдено за фільтром" : "Логів ще немає"}
+            </p>
+            {!status && !siteId && (
+              <p style={{ fontSize: 12 }}>Запустіть індексацію щоб побачити логи</p>
+            )}
           </div>
         ) : (
           <div style={{ maxHeight: "calc(100vh - 320px)", overflowY: "auto" }}>

@@ -17,7 +17,7 @@ if (!$token) {
 $tokenRow = Token::verify($token, 'email_verify');
 if (!$tokenRow) {
     // Редіректимо на фронтенд з помилкою
-    header('Location: ' . APP_URL . '/auth.html?verified=error');
+    header('Location: ' . APP_URL . '//app/login?error=verification_failed');
     exit;
 }
 
@@ -26,5 +26,5 @@ DB::exec("UPDATE users SET email_verified = 1 WHERE id = ?", [$tokenRow['user_id
 Token::consume($token);
 
 // ── Редіректимо на кабінет
-header('Location: ' . APP_URL . '/dashboard/?verified=1');
+header('Location: ' . APP_URL . '/app/dashboard?verified=1');
 exit;

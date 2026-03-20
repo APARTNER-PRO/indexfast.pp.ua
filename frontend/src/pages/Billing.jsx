@@ -9,22 +9,62 @@ const PLANS = [
     name:     "Старт",
     price:    "₴0",
     desc:     "Безкоштовно назавжди",
-    features: ["20 URL/день", "1 сайт", "Базова підтримка", "Лог індексації 30 днів"],
+    features: [
+      "20 URL/день",
+      "1 сайт",
+      "Sitemap Index підтримка",
+      "Базова підтримка",
+      "Стандартна швидкість обробки",
+    ],
   },
   {
     id:       "pro",
     name:     "PRO",
-    price:    "₴999",
+    price:    "₴990",
     desc:     "/місяць",
     popular:  true,
-    features: ["100 URL/день", "До 10 сайтів", "Пріоритетна підтримка", "Розклад індексації", "Лог 90 днів"],
+    features: [
+      "500 URL/день",
+      "До 5 сайтів",
+      "Sitemap Index підтримка",
+      "Швидша індексація та обробка",
+      "Web інтерфейс",
+      "Розклад індексації",
+      "Лог індексації",
+    ],
   },
   {
     id:       "agency",
     name:     "Агенція",
     price:    "₴3 999",
     desc:     "/місяць",
-    features: ["Необмежено URL/день", "Необмежено сайтів", "Виділена підтримка", "API доступ", "Лог необмежено"],
+    features: [
+      "5 000 URL/день",
+      "До 25 сайтів",
+      "Sitemap Index підтримка",
+      "Web + Webhooks",
+      "White-label звіти",
+      "Авто-запуск за розкладом",
+      "Повний API доступ",
+      "Пріоритетна підтримка 24/7",
+    ],
+  },
+  {
+    id:          "enterprise",
+    name:        "Enterprise",
+    price:       "Індивідуально",
+    desc:        "під ваші потреби",
+    enterprise:  true,
+    features:    [
+      "Необмежено URL/день",
+      "Необмежено сайтів",
+      "Кілька Service Account",
+      "Виділений воркер",
+      "Інтеграція під ключ",
+      "SLA та гарантії uptime",
+      "Персональний менеджер",
+      "Кастомні звіти",
+    ],
   },
 ];
 
@@ -61,15 +101,24 @@ export default memo(function Billing({ currentPlan }) {
 });
 
 const PlanCard = memo(function PlanCard({ plan: p, isCurrent }) {
+  const isEnterprise = p.enterprise;
+  const purple = "#9370db";
   return (
-    <div style={{ background: p.popular ? "rgba(0,255,136,0.05)" : C.card,
-      border: `1px solid ${p.popular ? "rgba(0,255,136,0.2)" : C.border}`,
+    <div style={{
+      background: p.popular ? "rgba(0,255,136,0.05)" : isEnterprise ? "rgba(147,112,219,0.04)" : C.card,
+      border: `1px solid ${p.popular ? "rgba(0,255,136,0.2)" : isEnterprise ? "rgba(147,112,219,0.3)" : C.border}`,
       borderRadius: 20, padding: 24, position: "relative" }}>
 
       {p.popular && (
         <div style={{ fontSize: 10, fontWeight: 800, color: C.green,
           letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 8 }}>
           ✦ ПОПУЛЯРНИЙ
+        </div>
+      )}
+      {isEnterprise && (
+        <div style={{ fontSize: 10, fontWeight: 800, color: purple,
+          letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 8 }}>
+          ◈ CUSTOM
         </div>
       )}
       {isCurrent && (
@@ -84,7 +133,9 @@ const PlanCard = memo(function PlanCard({ plan: p, isCurrent }) {
         {p.name}
       </div>
       <div style={{ marginBottom: 20 }}>
-        <span style={{ fontFamily: "Syne,sans-serif", fontSize: 28, fontWeight: 800 }}>{p.price}</span>
+        <span style={{ fontFamily: "Syne,sans-serif",
+          fontSize: isEnterprise ? 20 : 28, fontWeight: 800,
+          color: isEnterprise ? purple : C.white }}>{p.price}</span>
         <span style={{ color: C.muted, fontSize: 13, marginLeft: 4 }}>{p.desc}</span>
       </div>
 
@@ -98,10 +149,20 @@ const PlanCard = memo(function PlanCard({ plan: p, isCurrent }) {
       </ul>
 
       {isCurrent ? (
-        <div style={{ textAlign: "center", fontSize: 13, color: C.green, fontWeight: 700,
-          padding: 11, borderRadius: 12, background: "rgba(0,255,136,0.06)" }}>
+        <div style={{ textAlign: "center", fontSize: 13, color: isEnterprise ? purple : C.green,
+          fontWeight: 700, padding: 11, borderRadius: 12,
+          background: isEnterprise ? "rgba(147,112,219,0.08)" : "rgba(0,255,136,0.06)" }}>
           Поточний план
         </div>
+      ) : isEnterprise ? (
+        <button onClick={() => window.open("https://t.me/indexfastgoogle?text=Хочу%20дізнатись%20про%20Enterprise%20план", "_blank")}
+          style={{ width: "100%", background: "rgba(147,112,219,0.1)",
+            border: "2px solid rgba(147,112,219,0.4)", borderRadius: 12,
+            padding: "12px 20px", color: purple, fontFamily: "Syne,sans-serif",
+            fontWeight: 700, fontSize: 14, cursor: "pointer",
+            transition: "all 0.2s" }}>
+          Зв'язатись →
+        </button>
       ) : (
         <Btn variant={p.popular ? "primary" : "outline"} style={{ width: "100%" }}
           onClick={() => window.open("https://t.me/indexfastgoogle", "_blank")}>
