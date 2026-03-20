@@ -50,7 +50,11 @@ export default defineConfig({
   server: {
     port: 3000,
     proxy: {
-      "/api": { target: "http://localhost:8000", changeOrigin: true },
+      // Змін target на адресу свого локального бекенду:
+      // OpenServer: "http://indexfast.local"
+      // або WAMP/XAMPP: "http://localhost"
+      // або з портом: "http://localhost:80"
+      "/api": { target: "http://indexfast.local", changeOrigin: true },
     },
   },
 

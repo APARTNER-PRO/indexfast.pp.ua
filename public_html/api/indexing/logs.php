@@ -9,6 +9,12 @@ require_once dirname(__DIR__) . '/db.php';
 requireMethod('GET');
 
 $uid    = (int)requireAuth()['sub'];
+
+// Ініціалізуємо змінні (захист від undefined variable якщо try кидає виняток)
+$logs   = [];
+$total  = 0;
+
+try {
 $siteId = (int)($_GET['site_id'] ?? 0);
 $limit  = min((int)($_GET['limit']  ?? 50), 200);
 $offset = max((int)($_GET['offset'] ?? 0), 0);
@@ -82,7 +88,7 @@ if ($siteId) {
     }
 
     // Підтягуємо domain одним запитом замість JOIN (менше locks)
-    $siteIds = array_unique(array_column($logs, 'site_id'));
+    $siteIds = array_values(array_unique(array_filter(array_column($logs, 'site_id'))));
     $domains = [];
     if ($siteIds) {
         $in     = implode(',', array_fill(0, count($siteIds), '?'));
@@ -94,6 +100,11 @@ if ($siteId) {
         unset($log['site_id']);
     }
     unset($log);
+}
+
+} catch (Throwable $e) {
+    error_log('[logs.php] Error: ' . $e->getMessage() . ' in ' . $e->getFile() . ':' . $e->getLine());
+    respond(500, 'Помилка запиту логів: ' . (DEBUG ? $e->getMessage() : 'внутрішня помилка сервера'));
 }
 
 respondOk('OK', [

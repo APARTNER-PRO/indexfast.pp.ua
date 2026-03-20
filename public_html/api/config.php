@@ -36,6 +36,16 @@ define('APP_URL',     env('APP_URL',   'https://indexfast.pp.ua'));
 define('APP_ENV',     env('APP_ENV',   'production')); // development | production
 define('DEBUG',       APP_ENV === 'development');
 
+// ── PHP error reporting — вмикаємо тільки в development
+if (DEBUG) {
+    ini_set('display_errors', '1');
+    ini_set('display_startup_errors', '1');
+    error_reporting(E_ALL);
+} else {
+    ini_set('display_errors', '0');
+    error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED);
+}
+
 // ────────────────────────────────────────────
 //  JWT
 // ────────────────────────────────────────────
