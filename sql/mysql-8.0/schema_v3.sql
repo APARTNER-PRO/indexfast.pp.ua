@@ -15,8 +15,21 @@ CREATE TABLE IF NOT EXISTS `site_credentials` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- Перенесемо існуючі credentials (якщо є)
-INSERT IGNORE INTO `site_credentials` (site_id, service_account)
-  SELECT id, service_account FROM `sites` WHERE service_account IS NOT NULL;
+-- Виконується тільки якщо колонка service_account ще існує в sites
+SET @migrate_sql = (
+  SELECT IF(
+    COUNT(*) > 0,
+    'INSERT IGNORE INTO `site_credentials` (site_id, service_account) SELECT id, service_account FROM `sites` WHERE service_account IS NOT NULL',
+    'SELECT 1'
+  )
+  FROM information_schema.COLUMNS
+  WHERE TABLE_SCHEMA = DATABASE()
+    AND TABLE_NAME   = 'sites'
+    AND COLUMN_NAME  = 'service_account'
+);
+PREPARE migrate_stmt FROM @migrate_sql;
+EXECUTE migrate_stmt;
+DEALLOCATE PREPARE migrate_stmt;
 
 -- Прибираємо service_account з sites (буде в окремій таблиці)
 ALTER TABLE `sites`

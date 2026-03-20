@@ -1,0 +1,27 @@
+# ── React Router SPA — всі маршрути /app/* → index.html
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /app/
+
+    # Статичні файли — віддаємо напряму
+    RewriteRule ^index\.html$ - [L]
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+
+    # Все інше → index.html (React Router розбере)
+    RewriteRule . /app/index.html [L]
+</IfModule>
+# ── Security headers для React SPA
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "DENY"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+    Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+
+    # ── Строгий CSP для React SPA
+    # Після npm run build — немає inline scripts, тільки /app/assets/
+    # 'self' дозволяє /app/assets/[name]-[hash].js
+    Header always set Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://indexfast.pp.ua https://*.indexfast.pp.ua; frame-ancestors 'none'; form-action 'self'; base-uri 'self'; object-src 'none'"
+</IfModule>
+

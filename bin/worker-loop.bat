@@ -5,15 +5,15 @@
 ::  Ctrl+C — зупинити
 :: ══════════════════════════════════════════════
 
-set PHP=D:\OSPanelNew\modules\php\PHP-8.1\PHP\php.exe
-set WORKER=D:\OSPanelNew\home\indexfast.local
+set PHP=C:\OpenServer\modules\php\PHP-8.1\php.exe
+set WORKER=C:\OpenServer\domains\indexfast.local\worker\worker.php
 
-echo IndexFast Worker - run. Ctrl+C for stop.
+echo IndexFast Worker — запущено. Ctrl+C для зупинки.
 echo.
 
 :loop
-echo [%DATE% %TIME%] Queue processing...
+echo [%DATE% %TIME%] Обробка черги...
 "%PHP%" "%WORKER%"
-echo [%DATE% %TIME%] Waiting 60 seconds...
+echo [%DATE% %TIME%] Очікування 60 секунд...
 timeout /t 60 /nobreak >nul
 goto loop

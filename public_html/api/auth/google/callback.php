@@ -91,7 +91,9 @@ $refreshToken = JWT::refresh($user);
 
 // ── 8. Редіректимо на фронтенд з токенами в URL fragment (#)
 //      Fragment не надсилається на сервер — більш безпечно ніж query string
-$frontendUrl = APP_URL . '/dashboard/#token=' . urlencode($accessToken)
+// Редіректимо на /app/dashboard з токенами у fragment (#)
+// Fragment не надсилається на сервер — токени не потрапляють в логи
+$frontendUrl = APP_URL . '/app/dashboard#token=' . urlencode($accessToken)
              . '&refresh=' . urlencode($refreshToken);
 
 header('Location: ' . $frontendUrl);
@@ -129,6 +131,6 @@ function googleGet(string $url, string $accessToken): array {
 }
 
 function redirectWithError(string $error): never {
-    header('Location: ' . APP_URL . '/auth.html?error=' . urlencode($error));
+    header('Location: ' . APP_URL . '/app/login?error=' . urlencode($error));
     exit;
 }

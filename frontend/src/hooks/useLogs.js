@@ -14,7 +14,7 @@ export function useLogs({ siteId, status, limit = 50, offset = 0 } = {}) {
 
   return useQuery({
     queryKey:          KEYS.logs(params),
-    queryFn:           () => apiClient.logs(params).then(r => r.data),
+    queryFn:           () => apiClient.logs(params),
     staleTime:         15_000,
     placeholderData:   (prev) => prev,   // keepPreviousData аналог в v5
     refetchInterval:   30_000,

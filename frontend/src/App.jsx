@@ -1,8 +1,9 @@
 // src/App.jsx
 import {
-  useState, useCallback,
+  useState, useCallback, useEffect,
   lazy, Suspense, memo,
 } from "react";
+import { useNavigate } from "react-router-dom";
 import { useQueryClient }              from "@tanstack/react-query";
 import { useStats, useDeleteSite, useToggleSite } from "./hooks/useStats.js";
 import { useToast }          from "./hooks/useToast.js";
@@ -112,7 +113,7 @@ const Sidebar = memo(function Sidebar({ activePage, setPage, user, sideOpen, set
           onClick={() => {
             if (window.confirm("Вийти з акаунту?")) {
               localStorage.removeItem("access_token");
-              window.location.href = "/auth.html";
+              navigate("/app/login");
             }
           }}
           onMouseEnter={e => e.currentTarget.style.background = "rgba(255,255,255,0.04)"}
@@ -184,6 +185,23 @@ const Topbar = memo(function Topbar({ activePage, onRefresh, onAddSite, onToggle
 //  Головний App
 // ══════════════════════════════════════════════
 export default function App() {
+  const navigate = useNavigate();
+
+  // ── Google OAuth: якщо прийшли на /app/dashboard з #token= у fragment
+  // (токени вже збережені в Auth.jsx, але на випадок прямого переходу)
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (hash && hash.includes("token=")) {
+      const params = new URLSearchParams(hash.slice(1));
+      const accessToken  = params.get("token");
+      const refreshToken = params.get("refresh");
+      if (accessToken) {
+        localStorage.setItem("access_token",  accessToken);
+        if (refreshToken) localStorage.setItem("refresh_token", refreshToken);
+        window.history.replaceState(null, "", window.location.pathname);
+      }
+    }
+  }, []);
   const [activePage, setActivePage] = useState("overview");
   const [addOpen,    setAddOpen]    = useState(false);
   const [runSite,    setRunSite]    = useState(null);

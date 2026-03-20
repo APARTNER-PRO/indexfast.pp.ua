@@ -56,4 +56,11 @@ ErrorDocument 404 /404.html
     Header always set X-Content-Type-Options "nosniff"
     Header always set X-Frame-Options "SAMEORIGIN"
     Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+    Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+
+    # ── Content Security Policy для лендінгу
+    # unsafe-inline потрібен для inline <script> в статичних HTML сторінках
+    # unsafe-eval потрібен для деяких аналітичних скриптів
+    Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://indexfast.pp.ua; frame-ancestors 'none'; form-action 'self' https://t.me; base-uri 'self'"
 </IfModule>

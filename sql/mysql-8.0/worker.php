@@ -18,7 +18,7 @@ define('JOB_LOCK_TIMEOUT', 300);         // секунд (5 хвилин) — в
 // ── Bootstrap
 $root = dirname(__DIR__) . '/api';
 require_once $root . '/config.php';
-require_once $root . '/db.php';
+require_once __DIR__ . '/db_worker.php';  // окремий db без HTTP exit
 require_once $root . '/plans.php';
 
 // ── Singleton lock: тільки один воркер одночасно
@@ -30,6 +30,12 @@ if (!flock($lock, LOCK_EX | LOCK_NB)) {
 }
 
 log_msg("Worker started.");
+log_msg("Root path: " . $root);
+log_msg("DB: " . DB_HOST . " / " . DB_NAME);
+
+// ── Перевіряємо pending jobs
+$pendingCount = DB::row("SELECT COUNT(*) AS cnt FROM jobs WHERE status='pending' AND available_at <= NOW()");
+log_msg("Pending jobs: " . ($pendingCount['cnt'] ?? 0));
 
 // ── Відмовляємось від зависших jobs (processing > LOCK_TIMEOUT секунд)
 DB::exec(
@@ -64,7 +70,7 @@ while (elapsed() < WORKER_MAX_TIME) {
                AND j.attempts < j.max_attempts
              ORDER BY j.priority ASC, j.available_at ASC
              LIMIT 1
-             FOR UPDATE SKIP LOCKED"   -- MySQL 8.0+ / MariaDB 10.6+: пропускаємо заблоковані рядки
+             FOR UPDATE"
         );
         $stmt->execute();
         $job = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -79,6 +85,11 @@ while (elapsed() < WORKER_MAX_TIME) {
     });
 
     if (!$job) {
+        // Перевіряємо чому немає job
+        $anyJob = DB::row("SELECT id, status, available_at, attempts, max_attempts FROM jobs WHERE status='pending' LIMIT 1");
+        if ($anyJob) {
+            log_msg("Job #{$anyJob['id']} exists but not picked up. available_at={$anyJob['available_at']} attempts={$anyJob['attempts']}/{$anyJob['max_attempts']}");
+        }
         log_msg("No pending jobs. Sleeping 5s.");
         sleep(5);
         // Якщо і після сну немає — виходимо
@@ -110,8 +121,40 @@ function processJob(array $job): void {
     $siteId = (int)$job['site_id'];
     $plan   = $job['plan'] ?? 'start';
 
-    // ── Отримуємо credentials
+    // ── Отримуємо credentials (site_credentials або sites.service_account)
     $cred = DB::row("SELECT service_account FROM site_credentials WHERE site_id=?", [$siteId]);
+
+    if (!$cred) {
+        // Fallback: стара схема — credentials в sites.service_account
+        $hasCol = DB::row(
+            "SELECT COUNT(*) AS cnt FROM information_schema.COLUMNS
+             WHERE TABLE_SCHEMA = DATABASE()
+               AND TABLE_NAME   = 'sites'
+               AND COLUMN_NAME  = 'service_account'"
+        )['cnt'] > 0;
+
+        if ($hasCol) {
+            $sa = DB::row(
+                "SELECT service_account FROM sites WHERE id=? AND service_account IS NOT NULL",
+                [$siteId]
+            );
+            if ($sa) {
+                // Мігруємо автоматично
+                try {
+                    DB::exec(
+                        "INSERT INTO site_credentials (site_id, service_account)
+                         VALUES (?, ?)
+                         ON DUPLICATE KEY UPDATE service_account = VALUES(service_account)",
+                        [$siteId, $sa['service_account']]
+                    );
+                    $cred = ['service_account' => $sa['service_account']];
+                } catch (Throwable $e) {
+                    error_log('[worker] migrate credentials failed: ' . $e->getMessage());
+                }
+            }
+        }
+    }
+
     if (!$cred) {
         failJob($jobId, $userId, 0, 'Немає credentials для сайту');
         return;
@@ -148,49 +191,102 @@ function processJob(array $job): void {
 
         $results = sendBatch($batch, $token);
 
-        // Один batch UPDATE через CASE замість N окремих UPDATE
-        // Використовує idx_job_url(job_id, url_hash) — без table lookup
         if (!empty($results)) {
-            $statusCases = [];
-            $codeCases   = [];
-            $statusParams = [];
-            $codeParams   = [];
-            $hashParams   = [];
-
-            foreach ($results as $url => $result) {
-                $statusCases[]  = "WHEN url_hash = SHA2(?,256) THEN ?";
-                $statusParams[] = $url;
-                $statusParams[] = $result['ok'] ? 'ok' : 'error';
-
-                $codeCases[]   = "WHEN url_hash = SHA2(?,256) THEN ?";
-                $codeParams[]  = $url;
-                $codeParams[]  = $result['code'];
-
-                $hashParams[] = $url;
+            // Перевіряємо чи існує колонка url_hash (schema_v4)
+            static $hasUrlHash = null;
+            if ($hasUrlHash === null) {
+                $hasUrlHash = (bool)(DB::row(
+                    "SELECT COUNT(*) AS cnt FROM information_schema.COLUMNS
+                     WHERE TABLE_SCHEMA = DATABASE()
+                       AND TABLE_NAME   = 'indexing_log'
+                       AND COLUMN_NAME  = 'url_hash'"
+                )['cnt'] ?? 0);
             }
 
-            $caseStatus  = implode(' ', $statusCases);
-            $caseCode    = implode(' ', $codeCases);
-            $urlHashes   = implode(',', array_fill(0, count($results), 'SHA2(?,256)'));
+            // Перевіряємо чи є 429 в цьому батчі
+            $quotaHit     = false;
+            $retryDelay   = 60;
+            $quotaUrls    = [];  // URL що отримали 429 — треба відправити пізніше
 
-            $params = array_merge(
-                $statusParams,
-                $codeParams,
-                [$jobId],
-                $hashParams
-            );
+            foreach ($results as $url => $result) {
+                // ── Google 429: Rate limit — НЕ позначаємо як error
+                if ($result['quota']) {
+                    $quotaHit   = true;
+                    $retryDelay = max($retryDelay, (int)($result['retry_after'] ?? 60));
+                    $quotaUrls[] = $url;
+                    // Лишаємо статус 'pending' — не оновлюємо в БД
+                    continue;
+                }
 
-            DB::exec(
-                "UPDATE indexing_log
-                 SET status      = CASE {$caseStatus} ELSE status END,
-                     http_status = CASE {$caseCode}   ELSE http_status END
-                 WHERE job_id = ?
-                   AND url_hash IN ({$urlHashes})",
-                $params
-            );
+                $status  = $result['ok'] ? 'ok' : 'error';
+                $code    = $result['code'];
+                $errMsg  = $result['error'] ?? null;
 
-            foreach ($results as $result) {
+                try {
+                    if ($hasUrlHash) {
+                        DB::exec(
+                            "UPDATE indexing_log
+                             SET status=?, http_status=?, error_msg=?
+                             WHERE job_id=? AND url_hash=SHA2(?,256)",
+                            [$status, $code, $errMsg, $jobId, $url]
+                        );
+                    } else {
+                        DB::exec(
+                            "UPDATE indexing_log
+                             SET status=?, http_status=?, error_msg=?
+                             WHERE job_id=? AND url=?",
+                            [$status, $code, $errMsg, $jobId, $url]
+                        );
+                    }
+                } catch (Throwable $e) {
+                    error_log("[worker] UPDATE indexing_log failed: " . $e->getMessage());
+                }
+
                 $result['ok'] ? $sent++ : $failed++;
+            }
+
+            // ── Якщо 429 — переносимо залишок URLs в новий job з затримкою
+            if ($quotaHit) {
+                // Збираємо всі URL що ще не оброблені (quota + ще не відправлені)
+                $processedUrls  = array_keys($results);
+                $allRemaining   = array_values(array_diff($urls, array_keys(
+                    array_filter($results, fn($r) => $r['ok'] || (!$r['ok'] && !$r['quota']))
+                )));
+
+                if (!empty($allRemaining)) {
+                    log_msg("Job #{$jobId}: Google 429 — rescheduling " . count($allRemaining) . " URLs in {$retryDelay}s");
+
+                    // Новий job з затримкою
+                    $newJobId = DB::exec(
+                        "INSERT INTO jobs (user_id, site_id, type, payload, status, total, priority, available_at)
+                         VALUES (?,?,'index_urls',?,'pending',?,?,DATE_ADD(NOW(), INTERVAL ? SECOND))",
+                        [$userId, $siteId, json_encode(['urls' => $allRemaining]),
+                         count($allRemaining), Plans::jobPriority($plan), $retryDelay]
+                    );
+
+                    // Переприв'язуємо pending логи до нового job
+                    if ($hasUrlHash) {
+                        $hashPlaceholders = implode(',', array_fill(0, count($allRemaining), 'SHA2(?,256)'));
+                        DB::exec(
+                            "UPDATE indexing_log SET job_id=? WHERE job_id=? AND status='pending'
+                             AND url_hash IN ({$hashPlaceholders})",
+                            array_merge([$newJobId, $jobId], $allRemaining)
+                        );
+                    } else {
+                        $placeholders = implode(',', array_fill(0, count($allRemaining), '?'));
+                        DB::exec(
+                            "UPDATE indexing_log SET job_id=? WHERE job_id=? AND status='pending'
+                             AND url IN ({$placeholders})",
+                            array_merge([$newJobId, $jobId], $allRemaining)
+                        );
+                    }
+
+                    // Повертаємо ліміт для непроведених URL
+                    Plans::release($userId, count($allRemaining));
+                }
+
+                // Завершуємо поточний job як done (що відправили — відправили)
+                break;
             }
         }
 
@@ -242,6 +338,7 @@ function sendBatch(array $urls, string $token): array {
         $ch = curl_init('https://indexing.googleapis.com/v3/urlNotifications:publish');
         curl_setopt_array($ch, [
             CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_HEADER         => true,   // отримуємо заголовки для Retry-After
             CURLOPT_POST           => true,
             CURLOPT_POSTFIELDS     => json_encode(['url' => $url, 'type' => 'URL_UPDATED']),
             CURLOPT_HTTPHEADER     => [
@@ -264,19 +361,28 @@ function sendBatch(array $urls, string $token): array {
     // Збираємо результати
     $results = [];
     foreach ($handles as $url => $ch) {
-        $body = curl_multi_getcontent($ch);
-        $code = (int)curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        $ok   = $code === 200;
-        $err  = null;
+        $raw        = curl_multi_getcontent($ch);
+        $headerSize = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
+        $headers    = substr($raw, 0, $headerSize);
+        $body       = substr($raw, $headerSize);
+        $code       = (int)curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        $ok         = $code === 200;
+        $err        = null;
+        $retryAfter = 60;  // default
 
         if (!$ok) {
             $resp = json_decode($body, true);
             $err  = $resp['error']['message'] ?? "HTTP {$code}";
-            // Якщо 429 (quota Google) — логуємо окремо
-            if ($code === 429) log_msg("WARN: Google quota hit for URL: {$url}");
+            if ($code === 429) {
+                // Читаємо Retry-After заголовок якщо є
+                if (preg_match('/Retry-After:\s*(\d+)/i', $headers, $m)) {
+                    $retryAfter = (int)$m[1];
+                }
+                log_msg("WARN: Google quota (429) for URL: {$url}, retry-after: {$retryAfter}s");
+            }
         }
 
-        $results[$url] = ['ok' => $ok, 'code' => $code, 'error' => $err];
+        $results[$url] = ['ok' => $ok, 'code' => $code, 'error' => $err, 'quota' => ($code === 429), 'retry_after' => $retryAfter];
         curl_multi_remove_handle($mh, $ch);
         curl_close($ch);
     }

@@ -203,14 +203,27 @@ function processJob(array $job): void {
                 )['cnt'] ?? 0);
             }
 
+            // Перевіряємо чи є 429 в цьому батчі
+            $quotaHit     = false;
+            $retryDelay   = 60;
+            $quotaUrls    = [];  // URL що отримали 429 — треба відправити пізніше
+
             foreach ($results as $url => $result) {
+                // ── Google 429: Rate limit — НЕ позначаємо як error
+                if ($result['quota']) {
+                    $quotaHit   = true;
+                    $retryDelay = max($retryDelay, (int)($result['retry_after'] ?? 60));
+                    $quotaUrls[] = $url;
+                    // Лишаємо статус 'pending' — не оновлюємо в БД
+                    continue;
+                }
+
                 $status  = $result['ok'] ? 'ok' : 'error';
                 $code    = $result['code'];
                 $errMsg  = $result['error'] ?? null;
 
                 try {
                     if ($hasUrlHash) {
-                        // Швидкий UPDATE через url_hash індекс (schema_v4)
                         DB::exec(
                             "UPDATE indexing_log
                              SET status=?, http_status=?, error_msg=?
@@ -218,7 +231,6 @@ function processJob(array $job): void {
                             [$status, $code, $errMsg, $jobId, $url]
                         );
                     } else {
-                        // Fallback: звичайний WHERE url=? (schema_v2/v3)
                         DB::exec(
                             "UPDATE indexing_log
                              SET status=?, http_status=?, error_msg=?
@@ -231,6 +243,50 @@ function processJob(array $job): void {
                 }
 
                 $result['ok'] ? $sent++ : $failed++;
+            }
+
+            // ── Якщо 429 — переносимо залишок URLs в новий job з затримкою
+            if ($quotaHit) {
+                // Збираємо всі URL що ще не оброблені (quota + ще не відправлені)
+                $processedUrls  = array_keys($results);
+                $allRemaining   = array_values(array_diff($urls, array_keys(
+                    array_filter($results, fn($r) => $r['ok'] || (!$r['ok'] && !$r['quota']))
+                )));
+
+                if (!empty($allRemaining)) {
+                    log_msg("Job #{$jobId}: Google 429 — rescheduling " . count($allRemaining) . " URLs in {$retryDelay}s");
+
+                    // Новий job з затримкою
+                    $newJobId = DB::exec(
+                        "INSERT INTO jobs (user_id, site_id, type, payload, status, total, priority, available_at)
+                         VALUES (?,?,'index_urls',?,'pending',?,?,DATE_ADD(NOW(), INTERVAL ? SECOND))",
+                        [$userId, $siteId, json_encode(['urls' => $allRemaining]),
+                         count($allRemaining), Plans::jobPriority($plan), $retryDelay]
+                    );
+
+                    // Переприв'язуємо pending логи до нового job
+                    if ($hasUrlHash) {
+                        $hashPlaceholders = implode(',', array_fill(0, count($allRemaining), 'SHA2(?,256)'));
+                        DB::exec(
+                            "UPDATE indexing_log SET job_id=? WHERE job_id=? AND status='pending'
+                             AND url_hash IN ({$hashPlaceholders})",
+                            array_merge([$newJobId, $jobId], $allRemaining)
+                        );
+                    } else {
+                        $placeholders = implode(',', array_fill(0, count($allRemaining), '?'));
+                        DB::exec(
+                            "UPDATE indexing_log SET job_id=? WHERE job_id=? AND status='pending'
+                             AND url IN ({$placeholders})",
+                            array_merge([$newJobId, $jobId], $allRemaining)
+                        );
+                    }
+
+                    // Повертаємо ліміт для непроведених URL
+                    Plans::release($userId, count($allRemaining));
+                }
+
+                // Завершуємо поточний job як done (що відправили — відправили)
+                break;
             }
         }
 
@@ -282,6 +338,7 @@ function sendBatch(array $urls, string $token): array {
         $ch = curl_init('https://indexing.googleapis.com/v3/urlNotifications:publish');
         curl_setopt_array($ch, [
             CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_HEADER         => true,   // отримуємо заголовки для Retry-After
             CURLOPT_POST           => true,
             CURLOPT_POSTFIELDS     => json_encode(['url' => $url, 'type' => 'URL_UPDATED']),
             CURLOPT_HTTPHEADER     => [
@@ -304,19 +361,28 @@ function sendBatch(array $urls, string $token): array {
     // Збираємо результати
     $results = [];
     foreach ($handles as $url => $ch) {
-        $body = curl_multi_getcontent($ch);
-        $code = (int)curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        $ok   = $code === 200;
-        $err  = null;
+        $raw        = curl_multi_getcontent($ch);
+        $headerSize = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
+        $headers    = substr($raw, 0, $headerSize);
+        $body       = substr($raw, $headerSize);
+        $code       = (int)curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        $ok         = $code === 200;
+        $err        = null;
+        $retryAfter = 60;  // default
 
         if (!$ok) {
             $resp = json_decode($body, true);
             $err  = $resp['error']['message'] ?? "HTTP {$code}";
-            // Якщо 429 (quota Google) — логуємо окремо
-            if ($code === 429) log_msg("WARN: Google quota hit for URL: {$url}");
+            if ($code === 429) {
+                // Читаємо Retry-After заголовок якщо є
+                if (preg_match('/Retry-After:\s*(\d+)/i', $headers, $m)) {
+                    $retryAfter = (int)$m[1];
+                }
+                log_msg("WARN: Google quota (429) for URL: {$url}, retry-after: {$retryAfter}s");
+            }
         }
 
-        $results[$url] = ['ok' => $ok, 'code' => $code, 'error' => $err];
+        $results[$url] = ['ok' => $ok, 'code' => $code, 'error' => $err, 'quota' => ($code === 429), 'retry_after' => $retryAfter];
         curl_multi_remove_handle($mh, $ch);
         curl_close($ch);
     }

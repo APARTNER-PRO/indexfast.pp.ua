@@ -239,7 +239,7 @@ class Mailer {
     }
 
     public static function resetPassword(string $to, string $name, string $token): bool {
-        $link = APP_URL . '/auth.html?mode=reset&token=' . urlencode($token);
+        $link = APP_URL . '/app/reset-password?token=' . urlencode($token);
         $html = self::template('Скидання пароля', "
             <p>Привіт, <strong>{$name}</strong>!</p>
             <p>Ми отримали запит на скидання пароля для вашого акаунту IndexFast.</p>

@@ -24,6 +24,9 @@ header('X-Frame-Options: DENY');
 header('Referrer-Policy: strict-origin-when-cross-origin');
 header('Strict-Transport-Security: max-age=31536000; includeSubDomains');
 header('X-Permitted-Cross-Domain-Policies: none');
+// CSP для API — JSON відповіді не рендеряться, але блокуємо на випадок
+// якщо хтось відкриє API URL напряму в браузері
+header("Content-Security-Policy: default-src 'none'; frame-ancestors 'none'; object-src 'none'; base-uri 'none'");
 header('Permissions-Policy: geolocation=(), microphone=(), camera=()');
 
 // Preflight

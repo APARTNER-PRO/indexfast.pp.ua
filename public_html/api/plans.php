@@ -5,9 +5,10 @@
 class Plans {
 
     const CONFIG = [
-        'start'  => ['label' => 'Старт',   'urls_per_day' => 20,    'max_sites' => 1],
-        'pro'    => ['label' => 'PRO',     'urls_per_day' => 100,   'max_sites' => 10],
-        'agency' => ['label' => 'Агенція', 'urls_per_day' => 99999, 'max_sites' => 9999],
+        'start'      => ['label' => 'Старт',      'urls_per_day' => 20,    'max_sites' => 1],
+        'pro'        => ['label' => 'PRO',        'urls_per_day' => 500,   'max_sites' => 5],
+        'agency'     => ['label' => 'Агенція',    'urls_per_day' => 5000,  'max_sites' => 25],
+        'enterprise' => ['label' => 'Enterprise', 'urls_per_day' => 99999, 'max_sites' => 9999],
     ];
 
     public static function get(string $plan): array {
@@ -17,9 +18,10 @@ class Plans {
     // ── Пріоритет job у черзі: менше = вищий пріоритет
     public static function jobPriority(string $plan): int {
         return match($plan) {
-            'agency' => 1,
-            'pro'    => 3,
-            default  => 5,   // start
+            'enterprise' => 0,   // найвищий пріоритет
+            'agency'     => 1,
+            'pro'        => 3,
+            default      => 5,   // start
         };
     }
 
