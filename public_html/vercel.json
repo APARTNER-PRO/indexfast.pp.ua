@@ -97,6 +97,10 @@
   ],
   "rewrites": [
     {
+      "source": "/api/:path*",
+      "destination": "https://test.developer.pp.ua/api/:path*"
+    },
+    {
       "source": "/docs",
       "destination": "/docs/"
     },
