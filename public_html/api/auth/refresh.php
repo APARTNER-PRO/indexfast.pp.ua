@@ -34,9 +34,34 @@ if (!$user || !$user['is_active']) {
     respond(401, 'Акаунт не знайдено або заблоковано');
 }
 
-// ── Генеруємо нові токени (ротація refresh_token)
+// ── Перевіряємо refresh_token в БД (server-side валідація)
+// Якщо токен не знайдено — він був інвалідований через logout
+$tokenHash = hash('sha256', $refreshToken);
+$dbToken = DB::row(
+    "SELECT id FROM tokens
+     WHERE user_id = ? AND type = 'refresh' AND used_at IS NULL
+     LIMIT 1",
+    [$userId]
+);
+
+// Якщо в БД немає жодного активного refresh токена — відмовляємо
+if (!$dbToken) {
+    respond(401, 'Сесія завершена. Увійдіть знову.');
+}
+
+// ── Ротація: інвалідуємо старі токени і зберігаємо новий
 $newAccess  = JWT::access($user);
 $newRefresh = JWT::refresh($user);
+
+DB::exec(
+    "DELETE FROM tokens WHERE user_id = ? AND type = 'refresh'",
+    [$userId]
+);
+DB::exec(
+    "INSERT INTO tokens (user_id, token, type, expires_at)
+     VALUES (?, ?, 'refresh', DATE_ADD(NOW(), INTERVAL 30 DAY))",
+    [$userId, $newRefresh]
+);
 
 // ── Оновлюємо last_login_at
 DB::exec("UPDATE users SET last_login_at = NOW() WHERE id = ?", [$userId]);

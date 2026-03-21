@@ -1,42 +1,86 @@
 // src/pages/Logs.jsx  ← окремий chunk (lazy)
-import { useState, memo } from "react";
-import { useLogs }   from "../hooks/useLogs.js";
-import { Spinner, Btn } from "../components/ui/index.jsx";
-import { C } from "../constants.js";
+import { useState, memo, useCallback } from "react";
+import { useLogs }                     from "../hooks/useLogs.js";
+import { Spinner, Btn }                from "../components/ui/index.jsx";
+import { C }                           from "../constants.js";
 
 const STATUS_FILTERS = [
-  { value: "",       label: "Всі"     },
-  { value: "ok",     label: "✓ OK"    },
-  { value: "error",  label: "✕ Помилки" },
+  { value: "",        label: "Всі"        },
+  { value: "ok",      label: "✓ OK"       },
+  { value: "error",   label: "✕ Помилки"  },
   { value: "pending", label: "⏳ В черзі" },
 ];
 
 const PAGE_SIZE = 50;
 
+// ── Швидкі date-range пресети
+const DATE_PRESETS = [
+  { label: "Сьогодні",   days: 0  },
+  { label: "7 днів",     days: 7  },
+  { label: "30 днів",    days: 30 },
+  { label: "Все",        days: -1 },
+];
+
+function toDateStr(d) {
+  return d.toISOString().slice(0, 10);
+}
+
+function todayStr()    { return toDateStr(new Date()); }
+function daysAgoStr(n) {
+  const d = new Date();
+  d.setDate(d.getDate() - n);
+  return toDateStr(d);
+}
+
 export default memo(function Logs({ sites }) {
-  const [siteId, setSiteId] = useState("");
-  const [status, setStatus] = useState("");
-  const [page,   setPage]   = useState(0);
+  const [siteId,   setSiteId]   = useState("");
+  const [status,   setStatus]   = useState("");
+  const [page,     setPage]     = useState(0);
+  const [dateFrom, setDateFrom] = useState("");
+  const [dateTo,   setDateTo]   = useState("");
+  const [preset,   setPreset]   = useState(-1); // індекс активного пресету
 
   const { data, isLoading, isFetching, isError, refetch } = useLogs({
-    siteId: siteId || undefined,
-    status: status || undefined,
-    limit:  PAGE_SIZE,
-    offset: page * PAGE_SIZE,
+    siteId:    siteId  || undefined,
+    status:    status  || undefined,
+    dateFrom:  dateFrom || undefined,
+    dateTo:    dateTo   || undefined,
+    limit:     PAGE_SIZE,
+    offset:    page * PAGE_SIZE,
   });
 
   const logs  = data?.logs  ?? [];
   const total = data?.total ?? 0;
   const pages = Math.ceil(total / PAGE_SIZE);
 
-  // Скидаємо сторінку при зміні фільтрів
-  function handleFilter(fn) {
-    fn();
+  function resetPage(fn) { fn(); setPage(0); }
+
+  // Застосовуємо пресет
+  const applyPreset = useCallback((idx) => {
+    setPreset(idx);
+    const { days } = DATE_PRESETS[idx];
+    if (days === -1) {
+      setDateFrom(""); setDateTo("");
+    } else if (days === 0) {
+      setDateFrom(todayStr()); setDateTo(todayStr());
+    } else {
+      setDateFrom(daysAgoStr(days)); setDateTo(todayStr());
+    }
     setPage(0);
-  }
+  }, []);
+
+  // При ручній зміні дат — знімаємо пресет
+  function onDateFromChange(v) { setDateFrom(v); setPreset(-1); setPage(0); }
+  function onDateToChange(v)   { setDateTo(v);   setPreset(-1); setPage(0); }
 
   const icons  = { ok: "✓", error: "✕", pending: "⏳" };
   const colors = { ok: C.green, error: C.red, pending: C.gold };
+
+  const inputStyle = {
+    background: C.card, border: `1px solid ${C.border2}`, borderRadius: 10,
+    padding: "7px 10px", color: C.white, fontSize: 12,
+    outline: "none", fontFamily: "inherit", cursor: "pointer",
+  };
 
   return (
     <div>
@@ -55,38 +99,82 @@ export default memo(function Logs({ sites }) {
         </div>
       </div>
 
-      {/* Фільтри */}
-      <div style={{ display: "flex", gap: 10, marginBottom: 16, flexWrap: "wrap", alignItems: "center" }}>
-        {/* Фільтр по сайту */}
-        {sites?.length > 1 && (
-          <select value={siteId}
-            onChange={e => handleFilter(() => setSiteId(e.target.value))}
-            style={{ background: C.card, border: `1px solid ${C.border2}`, borderRadius: 10,
-              padding: "7px 12px", color: C.white, fontSize: 13, outline: "none", cursor: "pointer" }}>
-            <option value="">Всі сайти</option>
-            {sites.map(s => (
-              <option key={s.id} value={s.id}>{s.domain}</option>
-            ))}
-          </select>
-        )}
+      {/* ── Фільтри */}
+      <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 16 }}>
 
-        {/* Фільтр по статусу */}
-        <div style={{ display: "flex", gap: 4 }}>
-          {STATUS_FILTERS.map(f => (
-            <button key={f.value}
-              onClick={() => handleFilter(() => setStatus(f.value))}
-              style={{ padding: "6px 14px", borderRadius: 10, border: "none", cursor: "pointer",
-                fontSize: 12, fontFamily: "Syne,sans-serif", fontWeight: 700,
-                background: status === f.value ? "rgba(0,255,136,0.1)" : "rgba(255,255,255,0.04)",
-                color: status === f.value ? C.green : C.muted, transition: "all 0.15s" }}>
-              {f.label}
-            </button>
-          ))}
+        {/* Рядок 1: сайт + статус + лічильник */}
+        <div style={{ display: "flex", gap: 10, flexWrap: "wrap", alignItems: "center" }}>
+          {sites?.length > 1 && (
+            <select value={siteId}
+              onChange={e => resetPage(() => setSiteId(e.target.value))}
+              style={inputStyle}>
+              <option value="">Всі сайти</option>
+              {sites.map(s => (
+                <option key={s.id} value={s.id}>{s.domain}</option>
+              ))}
+            </select>
+          )}
+
+          <div style={{ display: "flex", gap: 4 }}>
+            {STATUS_FILTERS.map(f => (
+              <button key={f.value}
+                onClick={() => resetPage(() => setStatus(f.value))}
+                style={{ padding: "6px 14px", borderRadius: 10, border: "none",
+                  cursor: "pointer", fontSize: 12,
+                  fontFamily: "Syne,sans-serif", fontWeight: 700,
+                  background: status === f.value
+                    ? "rgba(0,255,136,0.1)" : "rgba(255,255,255,0.04)",
+                  color: status === f.value ? C.green : C.muted,
+                  transition: "all 0.15s" }}>
+                {f.label}
+              </button>
+            ))}
+          </div>
+
+          <span style={{ fontSize: 12, color: C.muted, marginLeft: "auto" }}>
+            {total.toLocaleString("uk-UA")} записів
+          </span>
         </div>
 
-        <span style={{ fontSize: 12, color: C.muted, marginLeft: "auto" }}>
-          {total.toLocaleString("uk-UA")} записів
-        </span>
+        {/* Рядок 2: фільтр за датою */}
+        <div style={{ display: "flex", gap: 8, flexWrap: "wrap", alignItems: "center" }}>
+          {/* Пресети */}
+          {DATE_PRESETS.map((p, i) => (
+            <button key={i} onClick={() => applyPreset(i)}
+              style={{ padding: "5px 12px", borderRadius: 8, border: "none",
+                cursor: "pointer", fontSize: 12,
+                fontFamily: "Syne,sans-serif", fontWeight: 600,
+                background: preset === i
+                  ? "rgba(0,255,136,0.1)" : "rgba(255,255,255,0.04)",
+                color: preset === i ? C.green : C.muted,
+                transition: "all 0.15s" }}>
+              {p.label}
+            </button>
+          ))}
+
+          <div style={{ display: "flex", alignItems: "center", gap: 6, marginLeft: 4 }}>
+            <span style={{ fontSize: 11, color: C.muted }}>від</span>
+            <input type="date" value={dateFrom}
+              onChange={e => onDateFromChange(e.target.value)}
+              max={dateTo || todayStr()}
+              style={inputStyle}/>
+            <span style={{ fontSize: 11, color: C.muted }}>до</span>
+            <input type="date" value={dateTo}
+              onChange={e => onDateToChange(e.target.value)}
+              min={dateFrom} max={todayStr()}
+              style={inputStyle}/>
+          </div>
+
+          {/* Скидання дат */}
+          {(dateFrom || dateTo) && (
+            <button onClick={() => { setDateFrom(""); setDateTo(""); setPreset(-1); setPage(0); }}
+              style={{ padding: "5px 10px", borderRadius: 8, border: "none",
+                cursor: "pointer", fontSize: 11, color: C.muted,
+                background: "rgba(255,255,255,0.04)" }}>
+              ✕ Скинути дати
+            </button>
+          )}
+        </div>
       </div>
 
       {/* Таблиця */}
@@ -107,14 +195,16 @@ export default memo(function Logs({ sites }) {
           <div style={{ textAlign: "center", padding: "48px 20px", color: C.muted }}>
             <div style={{ fontSize: 36, marginBottom: 12, opacity: 0.4 }}>📋</div>
             <p style={{ marginBottom: 8 }}>
-              {status || siteId ? "Нічого не знайдено за фільтром" : "Логів ще немає"}
+              {status || siteId || dateFrom || dateTo
+                ? "Нічого не знайдено за фільтром"
+                : "Логів ще немає"}
             </p>
-            {!status && !siteId && (
+            {!status && !siteId && !dateFrom && (
               <p style={{ fontSize: 12 }}>Запустіть індексацію щоб побачити логи</p>
             )}
           </div>
         ) : (
-          <div style={{ maxHeight: "calc(100vh - 320px)", overflowY: "auto" }}>
+          <div style={{ maxHeight: "calc(100vh - 360px)", overflowY: "auto" }}>
             {logs.map((l, i) => (
               <LogRow key={l.id ?? i} log={l} icons={icons} colors={colors}/>
             ))}
@@ -130,14 +220,14 @@ export default memo(function Logs({ sites }) {
             style={{ padding: "7px 16px", fontSize: 13 }}>← Попередня</Btn>
 
           {Array.from({ length: Math.min(pages, 7) }, (_, i) => {
-            // показуємо кнопки навколо поточної сторінки
             const p = page < 3 ? i : page > pages - 4 ? pages - 7 + i : page - 3 + i;
             if (p < 0 || p >= pages) return null;
             return (
               <button key={p} onClick={() => setPage(p)}
                 style={{ width: 36, height: 36, borderRadius: 10, border: "none",
                   cursor: "pointer", fontFamily: "Syne,sans-serif", fontWeight: 700,
-                  fontSize: 13, background: p === page ? "rgba(0,255,136,0.1)" : "rgba(255,255,255,0.04)",
+                  fontSize: 13,
+                  background: p === page ? "rgba(0,255,136,0.1)" : "rgba(255,255,255,0.04)",
                   color: p === page ? C.green : C.muted }}>
                 {p + 1}
               </button>
@@ -154,34 +244,65 @@ export default memo(function Logs({ sites }) {
 });
 
 const LogRow = memo(function LogRow({ log: l, icons, colors }) {
+  const [copied, setCopied] = useState(false);
+
+  function copyUrl() {
+    navigator.clipboard.writeText(l.url).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1500);
+    });
+  }
+
   return (
-    <div style={{ display: "flex", alignItems: "center", gap: 12, padding: "10px 20px",
+    <div style={{ display: "flex", alignItems: "center", gap: 10, padding: "10px 16px",
       borderBottom: `1px solid ${C.border}`, fontSize: 12 }}
       onMouseEnter={e => e.currentTarget.style.background = "rgba(255,255,255,0.015)"}
       onMouseLeave={e => e.currentTarget.style.background = "transparent"}>
-      <span style={{ color: colors[l.status], fontWeight: 800, width: 16, textAlign: "center", flexShrink: 0 }}>
+
+      {/* Статус */}
+      <span style={{ color: colors[l.status], fontWeight: 800,
+        width: 16, textAlign: "center", flexShrink: 0 }}>
         {icons[l.status] ?? "?"}
       </span>
+
+      {/* URL + кнопка копіювання */}
       <span style={{ flex: 1, fontFamily: "ui-monospace,monospace", fontSize: 11,
-        color: C.white, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+        color: C.white, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap",
+        minWidth: 0 }}>
         {l.url}
       </span>
+      <button onClick={copyUrl} title="Копіювати URL"
+        style={{ flexShrink: 0, background: "none", border: "none",
+          cursor: "pointer", fontSize: 12, color: copied ? C.green : C.muted,
+          padding: "2px 6px", borderRadius: 6,
+          transition: "color 0.2s" }}>
+        {copied ? "✓" : "⎘"}
+      </button>
+
+      {/* Домен */}
       {l.domain && (
         <span style={{ fontSize: 11, color: C.muted, flexShrink: 0,
           background: "rgba(255,255,255,0.04)", padding: "2px 8px", borderRadius: 6 }}>
           {l.domain}
         </span>
       )}
+
+      {/* HTTP код */}
       <span style={{ fontWeight: 700, fontSize: 10, flexShrink: 0,
-        fontFamily: "Syne,sans-serif", letterSpacing: "0.05em", color: colors[l.status] }}>
-        {l.status === "ok" ? "OK 200" : l.http_status ? `ERR ${l.http_status}` : l.status?.toUpperCase()}
+        fontFamily: "Syne,sans-serif", letterSpacing: "0.05em",
+        color: colors[l.status] }}>
+        {l.status === "ok" ? "200" : l.http_status ? `${l.http_status}` : l.status?.toUpperCase()}
       </span>
+
+      {/* Помилка */}
       {l.error_msg && (
         <span title={l.error_msg} style={{ fontSize: 10, color: C.red, flexShrink: 0,
-          maxWidth: 140, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+          maxWidth: 120, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
           {l.error_msg}
         </span>
       )}
+
+      {/* Дата */}
       <span style={{ color: C.muted, fontSize: 10, whiteSpace: "nowrap", flexShrink: 0 }}>
         {new Date(l.created_at).toLocaleString("uk-UA", {
           day: "2-digit", month: "2-digit",

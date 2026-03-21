@@ -223,7 +223,7 @@ class Mailer {
 
     // ── Шаблони листів
     public static function verifyEmail(string $to, string $name, string $token): bool {
-        $link = APP_URL . '/api/auth/verify-email.php?token=' . urlencode($token);
+        $link = APP_URL . '/app/verify-email?token=' . urlencode($token);
         $html = self::template('Підтвердіть email', "
             <p>Привіт, <strong>{$name}</strong>!</p>
             <p>Дякуємо за реєстрацію в IndexFast. Натисніть кнопку нижче щоб підтвердити вашу email адресу:</p>

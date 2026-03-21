@@ -18,76 +18,58 @@ try {
 $siteId = (int)($_GET['site_id'] ?? 0);
 $limit  = min((int)($_GET['limit']  ?? 50), 200);
 $offset = max((int)($_GET['offset'] ?? 0), 0);
-$status = $_GET['status'] ?? '';  // optional filter
+$status   = $_GET['status']    ?? '';
+$dateFrom = $_GET['date_from'] ?? '';
+$dateTo   = $_GET['date_to']   ?? '';
 
-// Дозволені значення status
+// Валідація status
 $allowedStatus = ['ok', 'error', 'pending', ''];
 if (!in_array($status, $allowedStatus, true)) $status = '';
 
+// Валідація дат (YYYY-MM-DD)
+$dateRegex = '/^\d{4}-\d{2}-\d{2}$/';
+if ($dateFrom && !preg_match($dateRegex, $dateFrom)) $dateFrom = '';
+if ($dateTo   && !preg_match($dateRegex, $dateTo))   $dateTo   = '';
+
+// ── Будуємо динамічний WHERE з усіма фільтрами
+$where  = [];
+$params = [];
+
 if ($siteId) {
-    // Перевіряємо доступ — covering index idx_user_dashboard(user_id, ...)
     if (!DB::row("SELECT id FROM sites WHERE id=? AND user_id=?", [$siteId, $uid]))
         respond(404, 'Сайт не знайдено');
-
-    // Запит використовує covering index idx_site_log(site_id, created_at, status, http_status)
-    if ($status) {
-        $logs  = DB::all(
-            "SELECT id, url, status, http_status, error_msg, created_at
-             FROM indexing_log
-             WHERE site_id=? AND status=?
-             ORDER BY created_at DESC LIMIT ? OFFSET ?",
-            [$siteId, $status, $limit, $offset]
-        );
-        $total = (int)DB::row(
-            "SELECT COUNT(*) c FROM indexing_log WHERE site_id=? AND status=?",
-            [$siteId, $status]
-        )['c'];
-    } else {
-        $logs  = DB::all(
-            "SELECT id, url, status, http_status, error_msg, created_at
-             FROM indexing_log
-             WHERE site_id=?
-             ORDER BY created_at DESC LIMIT ? OFFSET ?",
-            [$siteId, $limit, $offset]
-        );
-        // COUNT(*) за site_id — використовує idx_site_log prefix
-        $total = (int)DB::row(
-            "SELECT COUNT(*) c FROM indexing_log WHERE site_id=?",
-            [$siteId]
-        )['c'];
-    }
+    $where[]  = "site_id=?";
+    $params[] = $siteId;
 } else {
-    // Всі логи юзера — idx_user_log(user_id, created_at, status, http_status, site_id)
-    // JOIN sites потрібен тільки для domain — використовуємо site_id з індексу
-    // і окремо підтягуємо domain через IN (уникаємо nested loop join)
+    $where[]  = "user_id=?";
+    $params[] = $uid;
+}
 
-    if ($status) {
-        $logs = DB::all(
-            "SELECT l.id, l.url, l.status, l.http_status, l.error_msg, l.created_at, l.site_id
-             FROM indexing_log l
-             WHERE l.user_id=? AND l.status=?
-             ORDER BY l.created_at DESC LIMIT ? OFFSET ?",
-            [$uid, $status, $limit, $offset]
-        );
-        $total = (int)DB::row(
-            "SELECT COUNT(*) c FROM indexing_log WHERE user_id=? AND status=?",
-            [$uid, $status]
-        )['c'];
-    } else {
-        $logs = DB::all(
-            "SELECT l.id, l.url, l.status, l.http_status, l.error_msg, l.created_at, l.site_id
-             FROM indexing_log l
-             WHERE l.user_id=?
-             ORDER BY l.created_at DESC LIMIT ? OFFSET ?",
-            [$uid, $limit, $offset]
-        );
-        $total = (int)DB::row(
-            "SELECT COUNT(*) c FROM indexing_log WHERE user_id=?",
-            [$uid]
-        )['c'];
-    }
+if ($status)   { $where[] = "status=?";                 $params[] = $status;         }
+if ($dateFrom) { $where[] = "DATE(created_at) >= ?";    $params[] = $dateFrom;       }
+if ($dateTo)   { $where[] = "DATE(created_at) <= ?";    $params[] = $dateTo;         }
 
-    // Підтягуємо domain одним запитом замість JOIN (менше locks)
+$whereSQL = implode(' AND ', $where);
+
+// Поля — для запиту з siteId не потрібен site_id, для загального — потрібен
+$fields = $siteId
+    ? "id, url, status, http_status, error_msg, created_at"
+    : "id, url, status, http_status, error_msg, created_at, site_id";
+
+$logs  = DB::all(
+    "SELECT {$fields} FROM indexing_log
+     WHERE {$whereSQL}
+     ORDER BY created_at DESC LIMIT ? OFFSET ?",
+    array_merge($params, [$limit, $offset])
+);
+$total = (int)DB::row(
+    "SELECT COUNT(*) c FROM indexing_log WHERE {$whereSQL}",
+    $params
+)['c'];
+
+if (!$siteId) {
+
+    // Підтягуємо domain одним запитом
     $siteIds = array_values(array_unique(array_filter(array_column($logs, 'site_id'))));
     $domains = [];
     if ($siteIds) {

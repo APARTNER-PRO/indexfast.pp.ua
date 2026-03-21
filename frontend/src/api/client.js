@@ -113,10 +113,22 @@ export const apiClient = {
   // Auth
   login:      (body) => apiFetch("/auth/login.php",    { method: "POST", body }),
   register:   (body) => apiFetch("/auth/register.php", { method: "POST", body }),
-  forgot:     (body) => apiFetch("/auth/forgot.php",   { method: "POST", body }),
+  forgot:       (body) => apiFetch("/auth/forgot.php",        { method: "POST", body }),
+  verifyEmail:  (body) => apiFetch("/auth/verify-email.php", { method: "POST", body }),
+  resendVerify:  ()     => apiFetch("/auth/resend-verify.php",  { method: "POST" }),
+  updateProfile: (body) => apiFetch("/user/profile.php",       { method: "PATCH", body }),
   reset:      (body) => apiFetch("/auth/reset.php",    { method: "POST", body }),
   refresh:    ()     => apiFetch("/auth/refresh.php",  { method: "POST",
                           body: { refresh_token: getRefresh() } }),
+  logout:     ()     => {
+    const rt = getRefresh();
+    // fire-and-forget — не чекаємо відповіді
+    fetch(`${BASE}/auth/logout.php`, {
+      method:  "POST",
+      headers: { "Content-Type": "application/json" },
+      body:    JSON.stringify({ refresh_token: rt }),
+    }).catch(() => {});
+  },
   // Dashboard
   stats:      ()     => apiFetch("/dashboard/stats.php"),
   // Sites

@@ -26,4 +26,5 @@ export const NAV_ITEMS = [
   { id: "sites",    icon: "⊞", label: "Мої сайти" },
   { id: "logs",     icon: "≡", label: "Логи"       },
   { id: "billing",  icon: "◇", label: "Підписка"  },
+  { id: "profile",  icon: "◉", label: "Профіль"   },
 ];

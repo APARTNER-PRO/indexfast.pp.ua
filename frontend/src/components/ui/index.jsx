@@ -94,6 +94,50 @@ export function Modal({ open, onClose, title, subtitle, children }) {
   );
 }
 
+// ── Modal підтвердження (замість window.confirm)
+export function ConfirmModal({ open, onClose, onConfirm, title, message, confirmLabel = "Видалити", loading }) {
+  useEffect(() => {
+    const h = (e) => { if (e.key === "Escape") onClose(); };
+    if (open) document.addEventListener("keydown", h);
+    return () => document.removeEventListener("keydown", h);
+  }, [open, onClose]);
+
+  if (!open) return null;
+  return (
+    <div onClick={e => e.target === e.currentTarget && onClose()}
+      style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.75)",
+        backdropFilter: "blur(8px)", zIndex: 200,
+        display: "flex", alignItems: "center", justifyContent: "center", padding: 20 }}>
+      <div style={{ background: C.card2, border: `1px solid ${C.border2}`,
+        borderRadius: 20, padding: 28, width: 400, maxWidth: "100%",
+        animation: "slideUp 0.2s ease" }}>
+
+        {/* Іконка */}
+        <div style={{ width: 44, height: 44, borderRadius: 12, marginBottom: 16,
+          background: "rgba(255,77,109,0.1)", border: "1px solid rgba(255,77,109,0.2)",
+          display: "flex", alignItems: "center", justifyContent: "center",
+          fontSize: 20 }}>🗑</div>
+
+        <h2 style={{ fontFamily: "Syne,sans-serif", fontWeight: 800,
+          fontSize: 18, marginBottom: 8 }}>{title}</h2>
+        <p style={{ color: C.muted, fontSize: 14, lineHeight: 1.6,
+          marginBottom: 24 }}>{message}</p>
+
+        <div style={{ display: "flex", gap: 10 }}>
+          <Btn variant="ghost" onClick={onClose} disabled={loading}
+            style={{ flex: 1 }}>
+            Скасувати
+          </Btn>
+          <Btn variant="danger" onClick={onConfirm} loading={loading}
+            style={{ flex: 1 }}>
+            {confirmLabel}
+          </Btn>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // ── Поле форми
 export const Field = memo(function Field({ label, hint, children }) {
   return (
