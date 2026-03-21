@@ -89,6 +89,17 @@ DB::exec("UPDATE users SET last_login_at = NOW() WHERE id = ?", [$user['id']]);
 $accessToken  = JWT::access($user);
 $refreshToken = JWT::refresh($user);
 
+// ── 7.1. Зберігаємо refresh_token в БД (для server-side logout)
+DB::exec(
+    "DELETE FROM tokens WHERE user_id = ? AND type = 'refresh'",
+    [$user['id']]
+);
+DB::exec(
+    "INSERT INTO tokens (user_id, token, type, expires_at)
+     VALUES (?, ?, 'refresh', DATE_ADD(NOW(), INTERVAL 30 DAY))",
+    [$user['id'], $refreshToken]
+);
+
 // ── 8. Редіректимо на фронтенд з токенами в URL fragment (#)
 //      Fragment не надсилається на сервер — більш безпечно ніж query string
 // Редіректимо на /app/dashboard з токенами у fragment (#)

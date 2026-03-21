@@ -1,5 +1,5 @@
 // src/components/SitesTable.jsx
-import { memo, useCallback } from "react";
+import { memo } from "react";
 import { StatusDot, Btn, ProgressBar } from "./ui/index.jsx";
 import { C } from "../constants.js";
 
@@ -45,9 +45,10 @@ export const SitesTable = memo(function SitesTable({
 });
 
 const SiteRow = memo(function SiteRow({ site: s, remaining, onRun, onDelete, onToggle }) {
-  const handleRun    = useCallback(() => onRun(s),       [s, onRun]);
-  const handleDelete = useCallback(() => onDelete(s),    [s, onDelete]);
-  const handleToggle = useCallback(() => onToggle(s.id), [s.id, onToggle]);
+  // Прямі виклики замість useCallback — уникаємо stale closure
+  const handleRun    = () => onRun(s);
+  const handleDelete = () => onDelete(s);
+  const handleToggle = () => onToggle(s.id);
 
   const isActive     = s.status === "active";
   const isPaused     = s.status === "paused";

@@ -6,16 +6,18 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useQueryClient }              from "@tanstack/react-query";
 import { useStats, useDeleteSite, useToggleSite } from "./hooks/useStats.js";
+import { apiClient } from "./api/client.js";
 import { useToast }          from "./hooks/useToast.js";
 import { AddSiteModal }      from "./components/AddSiteModal.jsx";
 import { RunModal }          from "./components/RunModal.jsx";
 import {
-  Toast, Spinner, Btn, Badge,
+  Toast, Spinner, Btn, Badge, ConfirmModal,
 } from "./components/ui/index.jsx";
 import { C, NAV_ITEMS }      from "./constants.js";
 
 // ── Lazy сторінки — окремі JS chunks
 const Overview = lazy(() => import("./pages/Overview.jsx"));
+const Profile   = lazy(() => import("./pages/Profile.jsx"));
 const Sites     = lazy(() => import("./pages/Sites.jsx"));
 const Logs      = lazy(() => import("./pages/Logs.jsx"));
 const Billing   = lazy(() => import("./pages/Billing.jsx"));
@@ -118,8 +120,6 @@ const Sidebar = memo(function Sidebar({ activePage, setPage, user, sideOpen, set
           borderRadius: 12, cursor: "pointer", transition: "background 0.15s" }}
           onClick={() => {
             if (window.confirm("Вийти з акаунту?")) {
-              localStorage.removeItem("access_token");
-              localStorage.removeItem("refresh_token");
               onLogout?.();
             }
           }}
@@ -194,6 +194,15 @@ const Topbar = memo(function Topbar({ activePage, onRefresh, onAddSite, onToggle
 export default function App() {
   const navigate = useNavigate();
 
+  // ── Email verified: показуємо toast при ?verified=1
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("verified") === "1") {
+      showToast("✓ Email успішно підтверджено!");
+      window.history.replaceState(null, "", window.location.pathname);
+    }
+  }, []);
+
   // ── Google OAuth: якщо прийшли на /app/dashboard з #token= у fragment
   // (токени вже збережені в Auth.jsx, але на випадок прямого переходу)
   useEffect(() => {
@@ -220,6 +229,8 @@ export default function App() {
   // ── Дані через react-query
   const { data, isLoading, isError, error, isRefetching } = useStats();
   const deleteSite   = useDeleteSite();
+  const [confirmSite, setConfirmSite] = useState(null); // сайт для підтвердження видалення
+  const [deleteLoading, setDeleteLoading] = useState(false);
   const toggleSite   = useToggleSite();
 
   // ── Callback-и (memo щоб не перерендерювати дочірні)
@@ -227,15 +238,23 @@ export default function App() {
     qc.invalidateQueries({ queryKey: ["stats"] });
   }, [qc]);
 
-  const handleDelete = useCallback(async (site) => {
-    if (!window.confirm(`Видалити сайт ${site.domain}?`)) return;
+  const handleDelete = useCallback((site) => {
+    setConfirmSite(site); // відкриваємо Modal замість window.confirm
+  }, []);
+
+  const handleDeleteConfirm = useCallback(async () => {
+    if (!confirmSite) return;
+    setDeleteLoading(true);
     try {
-      await deleteSite.mutateAsync(site.id);
-      showToast(`Сайт ${site.domain} видалено`);
+      await deleteSite.mutateAsync(confirmSite.id);
+      showToast(`Сайт ${confirmSite.domain} видалено`);
+      setConfirmSite(null);
     } catch (e) {
       showToast(e.message, "error");
+    } finally {
+      setDeleteLoading(false);
     }
-  }, [deleteSite, showToast]);
+  }, [confirmSite, deleteSite, showToast]);
 
   const handleToggle = useCallback(async (siteId) => {
     try {
@@ -358,6 +377,18 @@ export default function App() {
             <Billing currentPlan={plan}/>
           </Suspense>
         );
+      case "profile":
+        return (
+          <Suspense fallback={<PageLoader/>}>
+            <Profile
+              user={user}
+              showToast={showToast}
+              onUpdate={(updatedUser) => {
+                qc.invalidateQueries({ queryKey: ["stats"] });
+              }}
+            />
+          </Suspense>
+        );
       default:
         return null;
     }
@@ -401,7 +432,12 @@ export default function App() {
           user={user}
           sideOpen={sideOpen}
           setSideOpen={setSideOpen}
-          onLogout={() => navigate("/app/login")}
+          onLogout={() => {
+                  apiClient.logout();
+                  localStorage.removeItem("access_token");
+                  localStorage.removeItem("refresh_token");
+                  navigate("/app/login");
+                }}
         />
 
         {/* Main */}
@@ -438,6 +474,17 @@ export default function App() {
         onFinished={handleRunFinished}
         site={runSite}
         remaining={remaining}
+      />
+
+      {/* Modal підтвердження видалення */}
+      <ConfirmModal
+        open={!!confirmSite}
+        onClose={() => setConfirmSite(null)}
+        onConfirm={handleDeleteConfirm}
+        loading={deleteLoading}
+        title="Видалити сайт?"
+        message={`Сайт ${confirmSite?.domain ?? ""} та всі його логи будуть видалені безповоротно.`}
+        confirmLabel="Так, видалити"
       />
 
       <Toast {...toast}/>

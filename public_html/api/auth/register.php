@@ -43,7 +43,13 @@ Mailer::verifyEmail($email, $name, $verifyToken);
 $user         = DB::row("SELECT * FROM users WHERE id=?", [$userId]);
 $accessToken  = JWT::access($user);
 $refreshToken = JWT::refresh($user);
-Token::create((int)$userId, 'refresh');
+
+// Зберігаємо refresh_token в БД
+DB::exec(
+    "INSERT INTO tokens (user_id, token, type, expires_at)
+     VALUES (?, ?, 'refresh', DATE_ADD(NOW(), INTERVAL 30 DAY))",
+    [(int)\$userId, \$refreshToken]
+);
 
 RateLimit::reset(RateLimit::getIP(), 'register');
 

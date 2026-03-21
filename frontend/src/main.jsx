@@ -13,6 +13,7 @@ import { C } from "./constants.js";
 // ── Lazy chunks
 const Auth          = lazy(() => import("./pages/Auth.jsx"));
 const ResetPassword = lazy(() => import("./pages/ResetPassword.jsx"));
+const VerifyEmail   = lazy(() => import("./pages/VerifyEmail.jsx"));
 const AppShell = lazy(() => import("./App.jsx"));
 
 function Loader() {
@@ -57,13 +58,20 @@ const router = createBrowserRouter([
   { path: "/app/login",    element: <RequireGuest/> },
   { path: "/app/register", element: <RequireGuest/> },
   { path: "/app/forgot",         element: <RequireGuest/> },
-  // Reset password — доступний без токена (і без перевірки авторизації)
-  // Юзер міг розлогінитись перш ніж натиснув посилання
+  // Reset password і Verify email — доступні без авторизації
   {
     path: "/app/reset-password",
     element: (
       <Suspense fallback={<Loader/>}>
         <ResetPassword/>
+      </Suspense>
+    ),
+  },
+  {
+    path: "/app/verify-email",
+    element: (
+      <Suspense fallback={<Loader/>}>
+        <VerifyEmail/>
       </Suspense>
     ),
   },
