@@ -61,7 +61,7 @@
         },
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://indexfast.pp.ua; frame-ancestors 'none'; form-action 'self' https://t.me; base-uri 'self'"
+          "value": "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://indexfast.pp.ua https://test.developer.pp.ua; frame-ancestors 'none'; form-action 'self' https://t.me; base-uri 'self'"
         }
       ]
     },
@@ -90,7 +90,7 @@
         },
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://indexfast.pp.ua https://*.indexfast.pp.ua; frame-ancestors 'none'; form-action 'self'; base-uri 'self'; object-src 'none'"
+          "value": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://indexfast.pp.ua https://*.indexfast.pp.ua https://test.developer.pp.ua; frame-ancestors 'none'; form-action 'self'; base-uri 'self'; object-src 'none'"
         }
       ]
     }
