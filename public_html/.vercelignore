@@ -1,0 +1,7 @@
+# Vercel — ці файли/директорії НЕ потрапляють в деплой
+# PHP-бекенд хоститься окремо на test.developer.pp.ua
+# Тут тільки статичний фронтенд + vercel.json rewrites проксіюють /api/* туди
+
+api/
+worker/
+sql/
