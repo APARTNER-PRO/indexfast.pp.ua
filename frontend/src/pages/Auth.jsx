@@ -217,18 +217,34 @@ export default function Auth() {
   const strengthLabel = ["", "Слабкий", "Середній", "Добрий", "Надійний"][strength];
 
   return (
-    <div style={{ minHeight: "100vh", background: C.black,
+    <div className="auth-wrapper" style={{ minHeight: "100vh", background: C.black,
       display: "flex", alignItems: "center", justifyContent: "center",
       fontFamily: "'DM Sans', sans-serif", color: C.white,
       padding: "40px 16px" }}>
+      <style>{`
+        .auth-mobile-logo { display: none; }
+        .auth-container { }
+        @media (max-width: 700px) {
+          .auth-mobile-logo { display: block !important; }
+          .auth-container { justify-content: center; border: none !important; border-radius: 0 !important; min-height: 100vh !important; }
+          .auth-left  { display: none !important; }
+          .auth-card  { width: 100% !important; max-width: 100% !important; border-radius: 16px !important; }
+          .auth-inner { padding: 28px 20px !important; }
+          .auth-wrapper { padding: 0 !important; align-items: flex-start !important; }
+        }
+        @media (max-width: 900px) and (min-width: 641px) {
+          .auth-left { padding: 32px 24px !important; }
+          .auth-left h2 { font-size: 20px !important; }
+        }
+      `}</style>
 
       {/* ── Контейнер по центру */}
-      <div style={{ width: "100%", maxWidth: 900, display: "flex",
+      <div className="auth-container" style={{ width: "100%", maxWidth: 900, display: "flex",
         borderRadius: 20, overflow: "hidden",
         border: `1px solid ${C.border}`, minHeight: 600 }}>
 
         {/* ── Ліва панель — переваги */}
-        <div style={{ flex: 1, background: C.dark,
+        <div className="auth-left" style={{ flex: 1, background: C.dark,
           borderRight: `1px solid ${C.border}`,
           display: "flex", flexDirection: "column", justifyContent: "center",
           padding: "48px 40px" }}>
@@ -259,14 +275,14 @@ export default function Auth() {
         </div>
 
         {/* ── Права панель — форми */}
-        <div style={{ width: 420, display: "flex", alignItems: "center",
+        <div className="auth-inner" style={{ width: 420, display: "flex", alignItems: "center",
           justifyContent: "center", padding: "40px 32px",
           background: C.black }}>
-          <div style={{ width: "100%", maxWidth: 360 }}>
+          <div className="auth-card" style={{ width: "100%", maxWidth: 360 }}>
 
-          {/* Логотип на мобільному */}
+          {/* Логотип — тільки на мобільному (коли ліва панель прихована) */}
           <a href="/" style={{ textDecoration: "none", display: "block", marginBottom: 32,
-            textAlign: "center" }}>
+            textAlign: "center" }} className="auth-mobile-logo">
             <span style={{ fontFamily: "Syne,sans-serif", fontWeight: 800, fontSize: 20,
               letterSpacing: "-0.04em", color: C.white }}>
               Index<span style={{ color: C.green }}>Fast</span>
