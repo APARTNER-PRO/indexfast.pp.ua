@@ -15,7 +15,7 @@ export const SitesTable = memo(function SitesTable({
   );
 
   return (
-    <div style={{ overflowX: "auto" }}>
+    <div className="sites-table-wrap" style={{ overflowX: "auto" }}>
       <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
         <thead>
           <tr style={{ borderBottom: `1px solid ${C.border}` }}>

@@ -52,8 +52,7 @@ const Sidebar = memo(function Sidebar({ activePage, setPage, user, sideOpen, set
       display: "flex", flexDirection: "column",
       position: "fixed", top: 0, left: 0, bottom: 0, zIndex: 50,
       transition: "transform 0.25s",
-      transform: sideOpen ? "none" : undefined,
-    }}>
+    }} className={sideOpen ? "sidebar sidebar--open" : "sidebar"}>
       {/* Logo */}
       <div style={{ padding: "20px 16px 16px", borderBottom: `1px solid ${C.border}`,
         display: "flex", alignItems: "center", gap: 10 }}>
@@ -153,7 +152,7 @@ const Sidebar = memo(function Sidebar({ activePage, setPage, user, sideOpen, set
 const Topbar = memo(function Topbar({ activePage, onRefresh, onAddSite, onToggleSide, isRefetching }) {
   const label = NAV_ITEMS.find(n => n.id === activePage)?.label ?? "Кабінет";
   return (
-    <header style={{
+    <header className="topbar-header" style={{
       height: 58, padding: "0 28px",
       display: "flex", alignItems: "center", justifyContent: "space-between",
       borderBottom: `1px solid ${C.border}`,
@@ -177,7 +176,8 @@ const Topbar = memo(function Topbar({ activePage, onRefresh, onAddSite, onToggle
         {isRefetching && <Spinner size={13}/>}
       </div>
       <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-        <Btn variant="ghost" onClick={onRefresh} style={{ padding: "6px 14px", fontSize: 13 }}>
+        <Btn variant="ghost" onClick={onRefresh} className="btn-refresh"
+          style={{ padding: "6px 14px", fontSize: 13 }}>
           ↻ Оновити
         </Btn>
         <Btn variant="primary" onClick={onAddSite} style={{ padding: "7px 16px", fontSize: 13 }}>
@@ -414,6 +414,22 @@ export default function App() {
         a { color: ${C.green}; }
         @media (max-width: 768px) {
           .main-content { margin-left: 0 !important; }
+          .sidebar { transform: translateX(-100%); }
+          .sidebar--open { transform: translateX(0); }
+
+          /* Topbar */
+          .topbar-actions .btn-refresh { display: none; }
+          .topbar-header { padding: 0 16px !important; }
+
+          /* Main content */
+          .main-padding { padding: 16px !important; }
+
+          /* Таблиця сайтів */
+          .sites-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+          /* Логи */
+          .logs-filters { flex-direction: column !important; }
+          .logs-date-row { flex-wrap: wrap !important; gap: 6px !important; }
         }
       `}</style>
 
@@ -452,7 +468,7 @@ export default function App() {
             isRefetching={isRefetching}
           />
 
-          <main style={{ padding: 28, flex: 1 }}>
+          <main className="main-padding" style={{ padding: 28, flex: 1 }}>
             {renderPage()}
           </main>
         </div>

@@ -211,7 +211,7 @@ export default function Profile({ user, onUpdate, showToast }) {
       {/* ── Ім'я і прізвище */}
       <Section title="Основна інформація">
         <form onSubmit={saveInfo}>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: 12 }}>
             <Field label="Ім'я">
               <Input value={name} onChange={e => setName(e.target.value)}
                 placeholder="Іван" autoComplete="given-name"/>
