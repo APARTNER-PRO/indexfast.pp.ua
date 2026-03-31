@@ -103,7 +103,7 @@ export default memo(function Logs({ sites }) {
       <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 16 }}>
 
         {/* Рядок 1: сайт + статус + лічильник */}
-        <div style={{ display: "flex", gap: 10, flexWrap: "wrap", alignItems: "center" }}>
+        <div className="logs-filters" style={{ display: "flex", gap: 10, flexWrap: "wrap", alignItems: "center" }}>
           {sites?.length > 1 && (
             <select value={siteId}
               onChange={e => resetPage(() => setSiteId(e.target.value))}
@@ -137,7 +137,7 @@ export default memo(function Logs({ sites }) {
         </div>
 
         {/* Рядок 2: фільтр за датою */}
-        <div style={{ display: "flex", gap: 8, flexWrap: "wrap", alignItems: "center" }}>
+        <div className="logs-date-row" style={{ display: "flex", gap: 8, flexWrap: "wrap", alignItems: "center" }}>
           {/* Пресети */}
           {DATE_PRESETS.map((p, i) => (
             <button key={i} onClick={() => applyPreset(i)}
@@ -204,7 +204,7 @@ export default memo(function Logs({ sites }) {
             )}
           </div>
         ) : (
-          <div style={{ maxHeight: "calc(100vh - 360px)", overflowY: "auto" }}>
+          <div style={{ maxHeight: "calc(100vh - 280px)", overflowY: "auto" }}>
             {logs.map((l, i) => (
               <LogRow key={l.id ?? i} log={l} icons={icons} colors={colors}/>
             ))}

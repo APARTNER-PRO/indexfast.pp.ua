@@ -65,17 +65,17 @@ export default function Auth() {
     }
   }, []);
 
-  // ── Повідомлення з redirectToLogin (msg=) і Google OAuth error (?error=)
+  // ── Повідомлення: sessionStorage (від auto-refresh) і ?error= (Google OAuth)
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-
-    // msg= — від auto-refresh redirectToLogin
-    const msg = params.get("msg");
-    if (msg) {
-      setError(decodeURIComponent(msg));
+    // msg від redirectToLogin — зберігається в sessionStorage
+    const sessionMsg = sessionStorage.getItem("auth_msg");
+    if (sessionMsg) {
+      setError(sessionMsg);
+      sessionStorage.removeItem("auth_msg"); // одноразове
     }
 
-    // error= — від Google OAuth і verify-email
+    // error= — від Google OAuth і verify-email (залишається в URL)
+    const params = new URLSearchParams(window.location.search);
     const oauthError = params.get("error");
     if (oauthError) {
       const messages = {
@@ -86,10 +86,6 @@ export default function Auth() {
         verification_failed:  "Посилання для підтвердження недійсне або застаріле.",
       };
       setError(messages[oauthError] || "Помилка входу через Google.");
-    }
-
-    // Прибираємо параметри з URL
-    if (msg || oauthError) {
       window.history.replaceState(null, "", window.location.pathname);
     }
   }, []);
@@ -232,7 +228,7 @@ export default function Auth() {
           .auth-inner { padding: 28px 20px !important; }
           .auth-wrapper { padding: 0 !important; align-items: flex-start !important; }
         }
-        @media (max-width: 900px) and (min-width: 641px) {
+        @media (max-width: 900px) and (min-width: 701px) {
           .auth-left { padding: 32px 24px !important; }
           .auth-left h2 { font-size: 20px !important; }
         }

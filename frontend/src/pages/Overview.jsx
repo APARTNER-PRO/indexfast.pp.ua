@@ -61,7 +61,7 @@ export default memo(function Overview({
       </div>
 
       {/* Графік + Ліміти */}
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 340px", gap: 16 }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 16 }}>
         <div style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 16, padding: 24 }}>
           <div style={{ fontFamily: "Syne,sans-serif", fontWeight: 700, marginBottom: 4 }}>Активність за 30 днів</div>
           <div style={{ fontSize: 12, color: C.muted, marginBottom: 16 }}>
