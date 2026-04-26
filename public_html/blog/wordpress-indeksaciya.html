@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23050508'/><text x='16' y='22' font-family='system-ui,sans-serif' font-size='15' font-weight='800' fill='%2300ff88' text-anchor='middle'>IF</text></svg>">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Індексація WordPress сайту: налаштування Yoast SEO і типові помилки 2025 — IndexFast</title>
+  <meta name="description" content="Як правильно налаштувати індексацію WordPress: Yoast SEO, теги, категорії, attachment pages, sitemap і прискорення через Google Indexing API.">
+  <meta name="keywords" content="wordpress індексація, yoast seo налаштування, wordpress google індексація, attachment pages wordpress, теги wordpress seo">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+  <link rel="canonical" href="https://indexfast.pp.ua/blog/wordpress-indeksaciya.html">
+  <meta property="og:type" content="article"><meta property="og:url" content="https://indexfast.pp.ua/blog/wordpress-indeksaciya.html">
+  <meta property="og:title" content="Індексація WordPress сайту: налаштування Yoast SEO і типові помилки 2025"><meta property="og:description" content="Як правильно налаштувати індексацію WordPress: Yoast SEO, теги, категорії, attachment pages, sitemap і прискорення через Google Indexing API.">
+  <meta property="og:image" content="https://indexfast.pp.ua/og-image.jpg">
+  <meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+  <meta property="og:locale" content="uk_UA">
+  <meta property="article:published_time" content="2025-07-15T10:00:00+02:00">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Індексація WordPress сайту: налаштування Yoast SEO і типові помилки 2025"><meta name="twitter:description" content="Як правильно налаштувати індексацію WordPress: Yoast SEO, теги, категорії, attachment pages, sitemap і прискорення через Google Indexing API.">
+  <meta name="twitter:image" content="https://indexfast.pp.ua/og-image.jpg">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Індексація WordPress сайту: налаштування Yoast SEO і типові помилки 2025","description":"Як правильно налаштувати індексацію WordPress: Yoast SEO, теги, категорії, attachment pages, sitemap і прискорення через Google Indexing API.","inLanguage":"uk","author":{"@type":"Organization","name":"IndexFast","url":"https://indexfast.pp.ua"},"publisher":{"@type":"Organization","name":"IndexFast","url":"https://indexfast.pp.ua"},"datePublished":"2025-07-15","dateModified":"2025-07-15","url":"https://indexfast.pp.ua/blog/wordpress-indeksaciya.html"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Головна","item":"https://indexfast.pp.ua/"},{"@type":"ListItem","position":2,"name":"Блог","item":"https://indexfast.pp.ua/blog/"},{"@type":"ListItem","position":3,"name":"Індексація WordPress сайту: налаштування Yoast SEO і типові помилки 2025","item":"https://indexfast.pp.ua/blog/wordpress-indeksaciya.html"}]}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --black: #050508; --dark: #0d0d14; --card: #12121c; --border: rgba(255,255,255,0.07); --green: #00ff88; --white: #f0f0f8; --muted: #7a7a95; --font-display: 'Syne', sans-serif; --font-body: 'DM Sans', sans-serif; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--black); color: var(--white); font-family: var(--font-body); font-weight: 300; }
+    nav { position: sticky; top: 0; z-index: 100; padding: 18px 60px; display: flex; align-items: center; justify-content: space-between; background: rgba(5,5,8,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+    .logo { font-family: var(--font-display); font-size: 1.4rem; font-weight: 800; letter-spacing: -0.03em; color: var(--white); text-decoration: none; }
+    .logo span { color: var(--green); }
+    .nav-right { display: flex; align-items: center; gap: 24px; }
+    .nav-link { color: var(--muted); text-decoration: none; font-size: 0.875rem; transition: color 0.2s; }
+    .nav-cta { background: var(--green); color: var(--black); padding: 8px 20px; border-radius: 100px; font-family: var(--font-display); font-weight: 700; font-size: 0.85rem; text-decoration: none; }
+    .page-wrap { max-width: 1160px; margin: 0 auto; padding: 60px 40px 100px; display: grid; grid-template-columns: 1fr 300px; gap: 60px; align-items: start; }
+    article { min-width: 0; }
+    .article-meta { display: flex; align-items: center; gap: 16px; margin-bottom: 28px; flex-wrap: wrap; }
+    .meta-tag { background: rgba(0,255,136,0.08); border: 1px solid rgba(0,255,136,0.2); color: var(--green); padding: 4px 12px; border-radius: 100px; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
+    .meta-date, .meta-read { color: var(--muted); font-size: 0.85rem; }
+    h1 { font-family: var(--font-display); font-size: clamp(1.9rem, 3.5vw, 2.8rem); font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 24px; }
+    .article-lead { font-size: 1.1rem; color: rgba(240,240,248,0.85); line-height: 1.75; margin-bottom: 40px; border-left: 3px solid var(--green); padding-left: 20px; }
+    .article-body h2 { font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; margin: 48px 0 16px; letter-spacing: -0.02em; scroll-margin-top: 80px; }
+    .article-body h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; margin: 24px 0 10px; }
+    .article-body p { color: rgba(240,240,248,0.8); line-height: 1.8; margin-bottom: 18px; font-size: 1rem; }
+    .article-body ul, .article-body ol { margin: 16px 0 20px 0; display: flex; flex-direction: column; gap: 10px; }
+    .article-body ul li, .article-body ol li { color: rgba(240,240,248,0.8); line-height: 1.65; padding-left: 22px; position: relative; font-size: 0.975rem; }
+    .article-body ul li::before { content: '→'; position: absolute; left: 0; color: var(--green); font-weight: 700; }
+    .article-body ol { counter-reset: ol; }
+    .article-body ol li { counter-increment: ol; }
+    .article-body ol li::before { content: counter(ol)'.'; position: absolute; left: 0; color: var(--green); font-family: var(--font-display); font-weight: 700; }
+    .tip-box { background: rgba(0,255,136,0.05); border: 1px solid rgba(0,255,136,0.18); border-radius: 14px; padding: 20px 24px; margin: 24px 0; }
+    .tip-box strong { color: var(--green); font-family: var(--font-display); display: block; margin-bottom: 8px; font-size: 0.9rem; letter-spacing: 0.05em; text-transform: uppercase; }
+    .tip-box p { color: rgba(240,240,248,0.8); font-size: 0.9rem; margin: 0; line-height: 1.65; }
+    .warn-box { background: rgba(255,208,96,0.05); border: 1px solid rgba(255,208,96,0.2); border-radius: 14px; padding: 20px 24px; margin: 24px 0; }
+    .warn-box strong { color: #ffd060; font-family: var(--font-display); display: block; margin-bottom: 8px; font-size: 0.9rem; letter-spacing: 0.05em; text-transform: uppercase; }
+    .warn-box p { color: rgba(240,240,248,0.8); font-size: 0.9rem; margin: 0; line-height: 1.65; }
+    .err-box { background: rgba(255,77,109,0.05); border: 1px solid rgba(255,77,109,0.2); border-radius: 14px; padding: 20px 24px; margin: 24px 0; }
+    .err-box strong { color: #ff4d6d; font-family: var(--font-display); display: block; margin-bottom: 8px; font-size: 0.9rem; letter-spacing: 0.05em; text-transform: uppercase; }
+    .err-box p { color: rgba(240,240,248,0.8); font-size: 0.9rem; margin: 0; line-height: 1.65; }
+    .code-block { background: var(--dark); border: 1px solid var(--border); border-radius: 12px; padding: 20px 24px; margin: 20px 0; font-family: 'Courier New', monospace; font-size: 0.85rem; color: var(--green); overflow-x: auto; line-height: 1.7; }
+    /* Нумеровані причини */
+    .reason { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 28px; margin: 28px 0; position: relative; }
+    .reason-num { position: absolute; top: -14px; left: 24px; background: var(--black); border: 1px solid var(--border); color: var(--green); font-family: var(--font-display); font-weight: 800; font-size: 0.8rem; padding: 3px 12px; border-radius: 100px; letter-spacing: 0.05em; }
+    .reason h3 { font-family: var(--font-display); font-size: 1.15rem; font-weight: 700; margin: 0 0 12px; }
+    .reason p { color: rgba(240,240,248,0.75); font-size: 0.9rem; line-height: 1.7; margin-bottom: 10px; }
+    .reason p:last-child { margin-bottom: 0; }
+    .reason .fix { margin-top: 14px; padding-top: 14px; border-top: 1px solid rgba(255,255,255,0.05); }
+    .reason .fix strong { color: var(--green); font-size: 0.8rem; letter-spacing: 0.06em; text-transform: uppercase; display: block; margin-bottom: 6px; }
+    .cta-block { background: var(--card); border: 1px solid rgba(0,255,136,0.2); border-radius: 20px; padding: 32px; margin: 48px 0; text-align: center; }
+    .cta-block h3 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 800; margin-bottom: 10px; }
+    .cta-block p { color: var(--muted); margin-bottom: 24px; font-size: 0.95rem; }
+    .cta-block a { display: inline-flex; background: var(--green); color: var(--black); padding: 14px 32px; border-radius: 100px; font-family: var(--font-display); font-weight: 700; text-decoration: none; }
+    .divider { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
+    .sidebar { position: sticky; top: 100px; }
+    .sidebar-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 24px; margin-bottom: 20px; }
+    .sidebar-card h4 { font-family: var(--font-display); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 16px; }
+    .toc-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+    .toc-list a { color: var(--muted); text-decoration: none; font-size: 0.85rem; line-height: 1.5; transition: color 0.2s; display: block; padding: 4px 0 4px 10px; border-left: 2px solid transparent; }
+    .toc-list a:hover { color: var(--white); border-left-color: var(--green); }
+    .related-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .related-list a { color: rgba(240,240,248,0.75); text-decoration: none; font-size: 0.875rem; line-height: 1.4; transition: color 0.2s; }
+    .related-list a:hover { color: var(--green); }
+    .related-list a::before { content: '→ '; color: var(--green); font-size: 0.75rem; }
+    footer { background: var(--dark); border-top: 1px solid var(--border); padding: 28px 40px; text-align: center; }
+    .footer-links { display: flex; justify-content: center; gap: 28px; margin-bottom: 12px; flex-wrap: wrap; }
+    .footer-links a { color: var(--muted); text-decoration: none; font-size: 0.85rem; }
+    footer p { color: var(--muted); font-size: 0.78rem; }
+    @media (max-width: 860px) {
+      nav { padding: 16px 20px; }
+      .page-wrap { grid-template-columns: 1fr; padding: 40px 20px 60px; gap: 40px; }
+      .sidebar { position: static; }
+    }
+  </style>
+</head>
+<body>
+<nav>
+  <a href="/" class="logo">Index<span>Fast</span></a>
+  <div class="nav-right">
+    <a href="/blog/" class="nav-link">← Блог</a>
+    <a href="/app/login" class="nav-link">Увійти</a>
+    <a href="/app/register" class="nav-cta">Спробувати безкоштовно</a>
+  </div>
+</nav>
+<div class="page-wrap">
+  <article>
+    <div class="article-meta">
+      <span class="meta-tag">WordPress</span>
+      <span class="meta-date">15 липня 2025</span>
+      <span class="meta-read">⏱ 9 хвилин читання</span>
+    </div>
+    <h1>Індексація WordPress сайту: налаштування Yoast SEO і типові помилки у 2025 році</h1>
+    <p class="article-lead">WordPress — найпопулярніша CMS, але її стандартні налаштування не оптимізовані для SEO. Тисячі attachment pages, теги що дублюють контент, архіви авторів — все це шкодить індексації. Розбираємо як виправити за 30 хвилин.</p>
+    <div class="article-body">
+      <h2 id="why-wp">Чому WordPress сайти часто мають проблеми з індексацією</h2>
+      <p>WordPress — найпопулярніша CMS у світі, але її стандартні налаштування не оптимізовані для SEO. Сотні тисяч WordPress сайтів мають однакові типові помилки: сторінки тегів дублюють контент, архіви авторів виводять ті самі статті, пагінація не налаштована.</p>
+      <p>Хороша новина: більшість проблем вирішуються за 15–30 хвилин через плагіни Yoast SEO або RankMath.</p>
+
+      <h2 id="yoast">Yoast SEO: базові налаштування для індексації</h2>
+      <p>Yoast SEO → Зовнішній вигляд → Типи контенту:</p>
+      <ul>
+        <li><strong>Статті (Posts)</strong> — index: Так, Show in results: Так</li>
+        <li><strong>Сторінки (Pages)</strong> — index: Так</li>
+        <li><strong>Медіа (Attachments)</strong> — index: Ні (вимкнути обов'язково)</li>
+        <li><strong>Теги (Tags)</strong> — index: Ні якщо менше 5 статей на тег</li>
+        <li><strong>Архіви авторів</strong> — index: Ні якщо один автор</li>
+      </ul>
+
+      <div class="warn-box">
+        <strong>⚠ Медіа-сторінки — прихований дублювач</strong>
+        <p>WordPress за замовчуванням створює окрему сторінку для кожного завантаженого зображення (attachment page). Ці сторінки — майже порожній контент і серйозно витрачають crawl budget. Вимкніть їх в Yoast SEO → Зовнішній вигляд → Медіа → вимкнути attachment pages.</p>
+      </div>
+
+      <h2 id="tags-categories">Теги і категорії</h2>
+      <p>WordPress теги — одна з найбільших SEO-пасток. Кожен тег створює окрему сторінку-архів, яка виводить ті самі статті що і категорія. Результат: дублі контенту і розмивання crawl budget.</p>
+      <ul>
+        <li>Якщо тег використовується менше ніж на 5 статтях → noindex або видаліть</li>
+        <li>Якщо категорія і тег виводять однаковий контент → видаліть теги взагалі</li>
+        <li>Для активних тегів: додайте унікальний опис через Yoast (мінімум 100 слів)</li>
+      </ul>
+
+      <h2 id="sitemap-wp">XML Sitemap в WordPress</h2>
+      <p>WordPress 5.5+ має вбудований sitemap (/wp-sitemap.xml), але він включає все підряд: attachment pages, порожні архіви, сторінки авторів. Краще використовувати Yoast SEO sitemap:</p>
+      <ul>
+        <li>Yoast SEO автоматично виключає сторінки з noindex</li>
+        <li>Дозволяє окремо налаштувати що включати</li>
+        <li>Автоматично оновлюється при публікації нових матеріалів</li>
+      </ul>
+
+      <div class="code-block">https://yoursite.com/sitemap_index.xml  ← Yoast sitemap index
+https://yoursite.com/post-sitemap.xml   ← статті
+https://yoursite.com/page-sitemap.xml   ← сторінки
+https://yoursite.com/category-sitemap.xml ← категорії</div>
+
+      <div class="tip-box">
+        <strong>💡 Підключіть до IndexFast</strong>
+        <p>Скопіюйте URL вашого sitemap в IndexFast — і нові статті автоматично відправлятимуться через Google Indexing API одразу після публікації. Без ручної роботи.</p>
+      </div>
+
+      <h2 id="speed-wp">Швидкість WordPress і SEO</h2>
+      <p>Повільний WordPress сайт отримує менший crawl budget і гірше ранжується. Основні причини повільної роботи:</p>
+      <ul>
+        <li>Занадто багато плагінів (особливо візуальних конструкторів)</li>
+        <li>Неоптимізовані зображення без WebP</li>
+        <li>Відсутність кешування (WP Super Cache, W3 Total Cache)</li>
+        <li>Повільний хостинг або спільний сервер</li>
+      </ul>
+
+      <h2 id="common-errors">Типові помилки WordPress в Search Console</h2>
+      <ul>
+        <li><strong>«Виявлено, але не проіндексовано»</strong> — зазвичай низькоякісні сторінки або crawl budget проблема</li>
+        <li><strong>«Дублювана без канонічного тегу»</strong> — www і non-www версії, або параметри URL</li>
+        <li><strong>«Crawler anomaly»</strong> — плагін або тема генерує помилкові URL</li>
+        <li><strong>«Soft 404»</strong> — сторінка виглядає порожньою але повертає код 200</li>
+      </ul>
+
+      <div class="cta-block">
+        <h3>Прискорте індексацію WordPress сайту</h3>
+        <p>IndexFast автоматично читає Yoast sitemap і відправляє нові статті через Google Indexing API. Налаштування займає 5 хвилин.</p>
+        <a href="/app/register">Спробувати безкоштовно →</a>
+      </div>
+
+      <h2 id="checklist-wp">Чеклист WordPress SEO для індексації</h2>
+      <ul>
+        <li>Встановлено Yoast SEO або RankMath</li>
+        <li>Attachment pages вимкнено</li>
+        <li>Теги без контенту закриті через noindex</li>
+        <li>Архіви авторів вимкнено (для однорівневого блогу)</li>
+        <li>Yoast XML sitemap зареєстровано в Search Console</li>
+        <li>Швидкість сайту перевірено через PageSpeed Insights</li>
+        <li>Кешування налаштовано</li>
+        <li>Google Indexing API підключено через IndexFast</li>
+      </ul>
+    </div>
+  </article>
+  <aside class="sidebar">
+    <div class="sidebar-card">
+      <h4>Зміст статті</h4>
+      <ul class="toc-list">
+        <li><a href="#why-wp">Проблеми WordPress з індексацією</a></li>
+        <li><a href="#yoast">Yoast SEO: базові налаштування</a></li>
+        <li><a href="#tags-categories">Теги і категорії</a></li>
+        <li><a href="#sitemap-wp">XML Sitemap</a></li>
+        <li><a href="#speed-wp">Швидкість і SEO</a></li>
+        <li><a href="#common-errors">Типові помилки в Search Console</a></li>
+        <li><a href="#checklist-wp">Чеклист</a></li>
+      </ul>
+    </div>
+    <div class="sidebar-card">
+      <h4>Читайте також</h4>
+      <ul class="related-list">
+        <li><a href="/blog/yak-pryskoriti-indeksaciyu-saitu-v-google.html">Як прискорити індексацію</a></li>
+        <li><a href="/blog/chomu-sait-ne-indeksuyetsya.html">Чому сайт не індексується</a></li>
+        <li><a href="/blog/shcho-take-sitemap-xml.html">Що таке sitemap.xml</a></li>
+        <li><a href="/blog/google-search-console-posibnyk.html">Google Search Console: посібник</a></li>
+      </ul>
+    </div>
+    <div class="sidebar-card" style="background:rgba(0,255,136,0.05);border-color:rgba(0,255,136,0.2)">
+      <h4 style="color:var(--green)">Спробуйте IndexFast</h4>
+      <p style="font-size:.85rem;color:var(--muted);margin-bottom:16px;line-height:1.5">Автоматична індексація через Google Indexing API — безкоштовний старт</p>
+      <a href="/app/register" style="display:block;background:var(--green);color:var(--black);text-align:center;padding:10px;border-radius:100px;font-family:var(--font-display);font-weight:700;font-size:.85rem;text-decoration:none">Безкоштовно →</a>
+    </div>
+  </aside>
+</div>
+<footer>
+  <div class="footer-links"><a href="/">Головна</a><a href="/blog/">Блог</a><a href="/docs/">Документація</a></div>
+  <p>© 2025 IndexFast. Всі права захищені.</p>
+</footer>
+</body>
+</html>

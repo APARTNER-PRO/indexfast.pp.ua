@@ -4,7 +4,7 @@ import { StatusDot, Btn, ProgressBar } from "./ui/index.jsx";
 import { C } from "../constants.js";
 
 export const SitesTable = memo(function SitesTable({
-  sites, remaining, onRun, onDelete, onToggle,
+  sites, remaining, onRun, onDelete, onToggle, onEdit,
 }) {
   if (!sites.length) return (
     <div style={{ textAlign: "center", padding: "60px 20px", color: C.muted }}>
@@ -36,6 +36,7 @@ export const SitesTable = memo(function SitesTable({
               onRun={onRun}
               onDelete={onDelete}
               onToggle={onToggle}
+              onEdit={onEdit}
             />
           ))}
         </tbody>
@@ -44,11 +45,12 @@ export const SitesTable = memo(function SitesTable({
   );
 });
 
-const SiteRow = memo(function SiteRow({ site: s, remaining, onRun, onDelete, onToggle }) {
+const SiteRow = memo(function SiteRow({ site: s, remaining, onRun, onDelete, onToggle, onEdit }) {
   // Прямі виклики замість useCallback — уникаємо stale closure
   const handleRun    = () => onRun(s);
   const handleDelete = () => onDelete(s);
   const handleToggle = () => onToggle(s.id);
+  const handleEdit   = () => onEdit?.(s);
 
   const isActive     = s.status === "active";
   const isPaused     = s.status === "paused";
@@ -71,8 +73,19 @@ const SiteRow = memo(function SiteRow({ site: s, remaining, onRun, onDelete, onT
             {isPaused ? "⏸" : isError ? "⚠️" : "🌐"}
           </div>
           <div>
-            <div style={{ fontWeight: 600, color: isPaused ? C.muted : C.white,
-              transition: "color 0.2s" }}>{s.domain}</div>
+            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+              <span style={{ fontWeight: 600, color: isPaused ? C.muted : C.white,
+                transition: "color 0.2s" }}>{s.domain}</span>
+              {s.has_sa === false && (
+                <span title="Немає Service Account — натисніть ✏ щоб додати"
+                  style={{ fontSize: 10, background: "rgba(255,208,96,0.12)",
+                    color: "#ffd060", border: "1px solid rgba(255,208,96,0.25)",
+                    borderRadius: 4, padding: "1px 5px", cursor: "pointer" }}
+                  onClick={handleEdit}>
+                  ⚠ SA
+                </span>
+              )}
+            </div>
             <div style={{ fontSize: 11, color: C.muted, marginTop: 2,
               maxWidth: 220, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
               {s.sitemap_url}
@@ -146,6 +159,12 @@ const SiteRow = memo(function SiteRow({ site: s, remaining, onRun, onDelete, onT
               ...(isPaused ? { color: C.green, borderColor: "rgba(0,255,136,0.3)" } : {}),
             }}>
             {isPaused ? "▶ Активувати" : "⏸"}
+          </Btn>
+
+          {/* Редагувати */}
+          <Btn variant="ghost" onClick={handleEdit} title="Редагувати сайт"
+            style={{ padding: "6px 12px", fontSize: 12 }}>
+            ✏
           </Btn>
 
           {/* Видалити */}

@@ -27,16 +27,36 @@ function clearTokens() {
 
 // ── Оновлюємо access_token через refresh_token
 // Повертає новий access_token або null якщо не вдалось
+// ── Таймаути для різних типів запитів (мс)
+const TIMEOUTS = {
+  default:  20_000,  // 20с — стандартні запити
+  slow:     45_000,  // 45с — run indexing (парсинг sitemap + запис в БД)
+  fast:     10_000,  // 10с — refresh token (критичний)
+};
+
+// ── Створює fetch з AbortController таймаутом
+function fetchWithTimeout(url, opts = {}, timeoutMs = TIMEOUTS.default) {
+  const ctrl = new AbortController();
+  const tid  = setTimeout(() => ctrl.abort(), timeoutMs);
+
+  return fetch(url, { ...opts, signal: ctrl.signal })
+    .finally(() => clearTimeout(tid));
+}
+
 async function refreshAccessToken() {
   const refreshToken = getRefresh();
   if (!refreshToken) return null;
 
   try {
-    const res  = await fetch(`${BASE}/auth/refresh.php`, {
-      method:  "POST",
-      headers: { "Content-Type": "application/json" },
-      body:    JSON.stringify({ refresh_token: refreshToken }),
-    });
+    const res = await fetchWithTimeout(
+      `${BASE}/auth/refresh.php`,
+      {
+        method:  "POST",
+        headers: { "Content-Type": "application/json" },
+        body:    JSON.stringify({ refresh_token: refreshToken }),
+      },
+      TIMEOUTS.fast
+    );
     if (!res.ok) return null;
 
     const data = await res.json().catch(() => null);
@@ -52,25 +72,40 @@ async function refreshAccessToken() {
 // ── Редіректимо на login з повідомленням
 function redirectToLogin(reason = "") {
   clearTokens();
+  // Зберігаємо повідомлення в sessionStorage (не в URL — щоб не показувалось при прямому переході)
+  if (reason) sessionStorage.setItem("auth_msg", reason);
   // Зберігаємо поточний URL щоб повернутись після логіну
   const returnTo = encodeURIComponent(window.location.pathname + window.location.search);
-  const msg      = reason ? `&msg=${encodeURIComponent(reason)}` : "";
-  window.location.href = `/app/login?redirect=${returnTo}${msg}`;
+  window.location.href = `/app/login?redirect=${returnTo}`;
 }
 
 // ── Головна функція запиту
 export async function apiFetch(path, opts = {}, _isRetry = false) {
   const token = getToken();
 
-  const res = await fetch(`${BASE}${path}`, {
-    ...opts,
-    headers: {
-      "Content-Type": "application/json",
-      ...(token ? { Authorization: `Bearer ${token}` } : {}),
-      ...(opts.headers ?? {}),
-    },
-    body: opts.body !== undefined ? JSON.stringify(opts.body) : undefined,
-  });
+  // Повільні ендпоінти отримують більший таймаут
+  const isSlow = path.includes("/indexing/run") || path.includes("/gsc/");
+  const timeout = opts._timeout ?? (isSlow ? TIMEOUTS.slow : TIMEOUTS.default);
+
+  let res;
+  try {
+    res = await fetchWithTimeout(`${BASE}${path}`, {
+      ...opts,
+      headers: {
+        "Content-Type": "application/json",
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        ...(opts.headers ?? {}),
+      },
+      body: opts.body !== undefined ? JSON.stringify(opts.body) : undefined,
+    }, timeout);
+  } catch (e) {
+    // AbortError — таймаут
+    if (e.name === "AbortError") {
+      throw new ApiError("Сервер не відповідає. Перевірте з'єднання.", 0);
+    }
+    // Мережева помилка
+    throw new ApiError("Помилка мережі. Перевірте з'єднання.", 0);
+  }
 
   // ── 401: спробуємо оновити токен один раз
   if (res.status === 401 && !_isRetry) {
@@ -129,12 +164,16 @@ export const apiClient = {
       body:    JSON.stringify({ refresh_token: rt }),
     }).catch(() => {});
   },
+  // GSC Import
+  gscRedirect: ()     => { window.location.href = (import.meta?.env?.VITE_API_URL ?? "/api") + "/gsc/redirect.php"; },
+  gscSites:    ()     => apiFetch("/gsc/sites.php"),
   // Dashboard
   stats:      ()     => apiFetch("/dashboard/stats.php"),
   // Sites
   sites:      ()     => apiFetch("/sites/index.php"),
   addSite:    (body) => apiFetch("/sites/index.php",   { method: "POST",   body }),
-  deleteSite: (id)   => apiFetch("/sites/delete.php",  { method: "DELETE", body: { site_id: id } }),
+  deleteSite:  (id)   => apiFetch("/sites/delete.php",  { method: "DELETE", body: { site_id: id } }),
+  updateSite:  (body) => apiFetch("/sites/update.php",  { method: "PATCH",  body }),
   toggleSite: (id)   => apiFetch("/sites/toggle.php",  { method: "PATCH",  body: { site_id: id } }),
   // Indexing
   runIndex:   (body) => apiFetch("/indexing/run.php",   { method: "POST", body }),

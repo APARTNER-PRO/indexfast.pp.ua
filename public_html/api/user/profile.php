@@ -72,6 +72,12 @@ if (isset($body['new_password'])) {
     $passwordChanged = true;
 }
 
+// ── Marketing consent
+if (isset($body['marketing_consent'])) {
+    $updates[] = "marketing_consent = ?";
+    $params[]  = $body['marketing_consent'] ? 1 : 0;
+}
+
 if (empty($updates)) respond(422, 'Немає полів для оновлення');
 
 // ── Застосовуємо зміни
@@ -97,7 +103,7 @@ if ($emailChanged) {
 
 // ── Повертаємо оновлений профіль
 $updated = DB::row(
-    "SELECT id, name, surname, email, email_verified, plan, avatar_url FROM users WHERE id = ?",
+    "SELECT id, name, surname, email, email_verified, marketing_consent, plan, avatar_url FROM users WHERE id = ?",
     [$uid]
 );
 

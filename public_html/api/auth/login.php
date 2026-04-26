@@ -33,16 +33,16 @@ DB::exec("UPDATE users SET last_login_at = NOW() WHERE id = ?", [$user['id']]);
 $accessToken  = JWT::access($user);
 $refreshToken = JWT::refresh($user);
 
-// // ── Зберігаємо refresh_token в БД (для server-side logout)
-// DB::exec(
-//     "DELETE FROM tokens WHERE user_id = ? AND type = 'refresh'",
-//     [$user['id']]
-// );
-// DB::exec(
-//     "INSERT INTO tokens (user_id, token, type, expires_at)
-//      VALUES (?, ?, 'refresh', DATE_ADD(NOW(), INTERVAL 30 DAY))",
-//     [$user['id'], $refreshToken]
-// );
+// ── Зберігаємо refresh_token в БД (для server-side logout)
+DB::exec(
+    "DELETE FROM tokens WHERE user_id = ? AND type = 'refresh'",
+    [$user['id']]
+);
+DB::exec(
+    "INSERT INTO tokens (user_id, token, type, expires_at)
+     VALUES (?, ?, 'refresh', DATE_ADD(NOW(), INTERVAL 30 DAY))",
+    [$user['id'], $refreshToken]
+);
 
 // ── Скидаємо rate limit після успішного входу
 RateLimit::reset(RateLimit::getIP(), 'login');

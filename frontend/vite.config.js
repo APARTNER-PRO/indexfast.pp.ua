@@ -43,6 +43,7 @@ export default defineConfig({
     },
     chunkSizeWarningLimit: 500,
     minify:    "esbuild",
+    esbuild:   { drop: ["console", "debugger"] },
     target:    "es2020",
     sourcemap: false,
   },
