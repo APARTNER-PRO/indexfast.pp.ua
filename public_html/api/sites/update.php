@@ -88,14 +88,6 @@ if (isset($body['service_account']) && trim($body['service_account']) !== '') {
         error_log('[sites/update] site_credentials: ' . $e->getMessage());
     }
 
-    // Також в sites.service_account якщо колонка є (сумісність)
-    $hasCol = (bool)(DB::row(
-        "SELECT COUNT(*) cnt FROM information_schema.COLUMNS
-         WHERE TABLE_SCHEMA=DATABASE() AND TABLE_NAME='sites' AND COLUMN_NAME='service_account'"
-    )['cnt'] ?? 0);
-    if ($hasCol) {
-        DB::exec("UPDATE sites SET service_account=? WHERE id=?", [$encKey, $siteId]);
-    }
 
     // Скидаємо помилку сайту якщо була
     DB::exec(
@@ -123,7 +115,7 @@ $updated = DB::row(
 
 // Перевіряємо чи є SA
 $hasSa = (bool)DB::row(
-    "SELECT id FROM site_credentials WHERE site_id=?", [$siteId]
+    "SELECT site_id FROM site_credentials WHERE site_id=?", [$siteId]
 );
 
 respondOk('Сайт оновлено', [
