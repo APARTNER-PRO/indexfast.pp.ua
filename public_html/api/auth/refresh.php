@@ -36,15 +36,14 @@ if (!$user || !$user['is_active']) {
 
 // ── Перевіряємо refresh_token в БД (server-side валідація)
 // Якщо токен не знайдено — він був інвалідований через logout
-$tokenHash = hash('sha256', $refreshToken);
 $dbToken = DB::row(
     "SELECT id FROM tokens
-     WHERE user_id = ? AND type = 'refresh' AND used_at IS NULL
+     WHERE user_id = ? AND type = 'refresh' AND token = ? AND used_at IS NULL
      LIMIT 1",
-    [$userId]
+    [$userId, $refreshToken]
 );
 
-// Якщо в БД немає жодного активного refresh токена — відмовляємо
+// Якщо в БД немає цього конкретного refresh токена — відмовляємо
 if (!$dbToken) {
     respond(401, 'Сесія завершена. Увійдіть знову.');
 }

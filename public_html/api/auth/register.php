@@ -50,7 +50,7 @@ $refreshToken = JWT::refresh($user);
 DB::exec(
     "INSERT INTO tokens (user_id, token, type, expires_at)
      VALUES (?, ?, 'refresh', DATE_ADD(NOW(), INTERVAL 30 DAY))",
-    [(int)\$userId, \$refreshToken]
+    [(int)$userId, $refreshToken]
 );
 
 RateLimit::reset(RateLimit::getIP(), 'register');

@@ -3,35 +3,27 @@
 #  Shared хостинг: Apache + PHP
 # ══════════════════════════════════════════════
 
-# ── PHP налаштування через .htaccess
-# (працює на більшості shared хостингів з mod_php або suPHP)
-
-# OPcache — кешує скомпільований PHP байткод в пам'яті
-# Без OPcache: кожен запит → парсинг PHP файлу → повільно
-# З OPcache:   кожен запит → вже скомпільований код → швидко
-php_flag  opcache.enable                 On
-php_value opcache.memory_consumption     64
-php_value opcache.max_accelerated_files  2000
-php_value opcache.revalidate_freq        60
-php_flag  opcache.save_comments          Off
-
-# Вимикаємо зайве
-php_flag  expose_php                     Off
-php_flag  display_errors                 On
-php_flag  log_errors                     On
-php_value error_reporting                 E_ALL
-php_value error_log                      /tmp/indexfast_errors.log
-
-# Таймаути
-php_value max_execution_time             30
-php_value max_input_time                 30
-
-# Пам'ять (shared хостинг зазвичай 128-256MB)
-php_value memory_limit                   128M
-
-# Розмір завантаження (для service_account JSON)
-php_value upload_max_filesize            10M
-php_value post_max_size                  16M
+# ── PHP налаштування
+# УВАГА: php_flag/php_value працюють ТІЛЬКИ з mod_php (Apache module).
+# На PHP-FPM/FastCGI (OSPanel, Nginx, більшість VPS) вони спричиняють 500 error.
+# Ці налаштування перенесені в config.php через ini_set().
+# Для production (shared hosting з mod_php) — розкоментуй нижче:
+#
+# php_flag  opcache.enable                 On
+# php_value opcache.memory_consumption     64
+# php_value opcache.max_accelerated_files  2000
+# php_value opcache.revalidate_freq        60
+# php_flag  opcache.save_comments          Off
+# php_flag  expose_php                     Off
+# php_flag  display_errors                 On
+# php_flag  log_errors                     On
+# php_value error_reporting                 E_ALL
+# php_value error_log                      /tmp/indexfast_errors.log
+# php_value max_execution_time             30
+# php_value max_input_time                 30
+# php_value memory_limit                   128M
+# php_value upload_max_filesize            10M
+# php_value post_max_size                  16M
 
 
 # ── Передаємо Authorization заголовок в PHP
