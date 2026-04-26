@@ -12,6 +12,16 @@ if (!GOOGLE_CLIENT_ID) {
 
 // CSRF state токен
 $state = bin2hex(random_bytes(16));
+
+// Налаштовуємо куки для роботи через проксі
+session_set_cookie_params([
+    'lifetime' => 0,
+    'path'     => '/',
+    'domain'   => '',
+    'secure'   => true,
+    'httponly' => true,
+    'samesite' => 'Lax'
+]);
 session_start();
 $_SESSION['oauth_state'] = $state;
 

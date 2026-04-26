@@ -66,13 +66,25 @@ define('JWT_ACCESS_TTL',    60 * 60);         // 1 година (секунди)
 define('JWT_REFRESH_TTL',   60 * 60 * 24 * 30); // 30 днів
 
 // ────────────────────────────────────────────
+//  CORS — дозволені origin
+// ────────────────────────────────────────────
+// FRONTEND_URL — домен де розміщений frontend (може відрізнятись від бекенду)
+// Можна вказати кілька через кому: https://indexfast.pp.ua,https://app.indexfast.com
+define('FRONTEND_URLS', env('FRONTEND_URL', 'https://indexfast.pp.ua'));
+define('CORS_ORIGINS', array_filter(array_map('trim', explode(',', FRONTEND_URLS))));
+
+// Основний фронтенд URL — для лінків в email (verify, reset password тощо)
+// Береться перший URL зі списку FRONTEND_URL
+define('FRONTEND_URL', CORS_ORIGINS[0] ?? 'https://indexfast.pp.ua');
+
+// ────────────────────────────────────────────
 //  GOOGLE OAUTH 2.0
 //  Налаштуй на: https://console.cloud.google.com/
-//  Authorized redirect URI: APP_URL/api/auth/google/callback.php
+//  Authorized redirect URI: FRONTEND_URL/api/auth/google/callback.php
 // ────────────────────────────────────────────
 define('GOOGLE_CLIENT_ID',     env('GOOGLE_CLIENT_ID',     ''));
 define('GOOGLE_CLIENT_SECRET', env('GOOGLE_CLIENT_SECRET', ''));
-define('GOOGLE_REDIRECT_URI',  APP_URL . '/api/auth/google/callback.php');
+define('GOOGLE_REDIRECT_URI',  FRONTEND_URL . '/api/auth/google/callback.php');
 define('GOOGLE_SCOPES',        'openid email profile');
 
 // ────────────────────────────────────────────
@@ -102,19 +114,6 @@ define('RATE_FORGOT_WINDOW',60);
 // ────────────────────────────────────────────
 define('TOKEN_EMAIL_VERIFY_TTL',  60 * 24);      // 24 год (хвилини)
 define('TOKEN_PASSWORD_RESET_TTL', 60);           // 60 хвилин
-
-// ────────────────────────────────────────────
-//  CORS — дозволені origin
-// ────────────────────────────────────────────
-// FRONTEND_URL — домен де розміщений frontend (може відрізнятись від бекенду)
-// Можна вказати кілька через кому: https://indexfast.pp.ua,https://app.indexfast.com
-define('FRONTEND_URLS', env('FRONTEND_URL', 'https://indexfast.pp.ua'));
-
-define('CORS_ORIGINS', array_filter(array_map('trim', explode(',', FRONTEND_URLS))));
-
-// Основний фронтенд URL — для лінків в email (verify, reset password тощо)
-// Береться перший URL зі списку FRONTEND_URL
-define('FRONTEND_URL', CORS_ORIGINS[0] ?? 'https://indexfast.pp.ua');
 
 // ────────────────────────────────────────────
 //  БЕЗПЕКА

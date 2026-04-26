@@ -4,14 +4,25 @@
 //  Обробляє callback від Google після авторизації
 // ══════════════════════════════════════════════
 
+// Налаштовуємо куки для роботи через проксі
+session_set_cookie_params([
+    'lifetime' => 0,
+    'path'     => '/',
+    'domain'   => '',
+    'secure'   => true,
+    'httponly' => true,
+    'samesite' => 'Lax'
+]);
+session_start();
+
 require_once dirname(dirname(__DIR__)) . '/middleware.php';
 require_once dirname(dirname(__DIR__)) . '/db.php';
 
-session_start();
-
+try {
 // ── 1. Перевіряємо state (CSRF захист)
 $state = $_GET['state'] ?? '';
 if (!$state || $state !== ($_SESSION['oauth_state'] ?? '')) {
+    error_log('[Google OAuth] State mismatch. Expected: ' . ($_SESSION['oauth_state'] ?? 'null') . ', Got: ' . $state);
     redirectWithError('invalid_state');
 }
 unset($_SESSION['oauth_state']);
@@ -100,15 +111,17 @@ DB::exec(
     [$user['id'], $refreshToken]
 );
 
-// ── 8. Редіректимо на фронтенд з токенами в URL fragment (#)
-//      Fragment не надсилається на сервер — більш безпечно ніж query string
-// Редіректимо на /app/dashboard з токенами у fragment (#)
-// Fragment не надсилається на сервер — токени не потрапляють в логи
-$frontendUrl = APP_URL . '/app/dashboard#token=' . urlencode($accessToken)
-             . '&refresh=' . urlencode($refreshToken);
+// Редіректимо на фронтенд з токенами в Query Parameters
+$frontendUrl = FRONTEND_URL . '/app/dashboard?token=' . $accessToken
+             . '&refresh=' . $refreshToken;
 
 header('Location: ' . $frontendUrl);
 exit;
+
+} catch (Throwable $e) {
+    error_log('[Google OAuth] Fatal Error: ' . $e->getMessage());
+    redirectWithError('server_error');
+}
 
 
 // ── Helpers ──────────────────────────────────
@@ -142,6 +155,6 @@ function googleGet(string $url, string $accessToken): array {
 }
 
 function redirectWithError(string $error): never {
-    header('Location: ' . APP_URL . '/app/login?error=' . urlencode($error));
+    header('Location: ' . FRONTEND_URL . '/app/login?error=' . urlencode($error));
     exit;
 }
