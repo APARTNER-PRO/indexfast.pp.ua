@@ -20,6 +20,7 @@ $root = dirname(__DIR__) . '/api';
 require_once $root . '/config.php';
 require_once __DIR__ . '/db_worker.php';  // окремий db без HTTP exit
 require_once $root . '/plans.php';
+require_once $root . '/helpers.php';      // Mailer для email сповіщень
 
 // ── Singleton lock: тільки один воркер одночасно
 $lockFile = sys_get_temp_dir() . '/indexfast_worker.lock';
@@ -60,7 +61,7 @@ $processed = 0;
 while (elapsed() < WORKER_MAX_TIME) {
 
     // Беремо наступний доступний job (SELECT FOR UPDATE — атомарно)
-    $job = DB::pdo()->transaction(function(PDO $pdo) {
+    $job = DB::transaction(function(PDO $pdo) {
         $stmt = $pdo->prepare(
             "SELECT j.*, u.plan
              FROM jobs j
@@ -324,6 +325,17 @@ function processJob(array $job): void {
     }
 
     log_msg("Job #{$jobId} done: sent={$sent} failed={$failed}");
+
+    // ── Email сповіщення юзеру
+    try {
+        $u = DB::row("SELECT email, name FROM users WHERE id=?", [$userId]);
+        $domain = DB::row("SELECT domain FROM sites WHERE id=?", [$siteId])['domain'] ?? '';
+        if ($u) {
+            Mailer::jobFinished($u['email'], $u['name'], $domain, $sent, $failed, $status, $userId);
+        }
+    } catch (Throwable $e) {
+        error_log('[worker] email notification failed: ' . $e->getMessage());
+    }
 }
 
 
@@ -464,7 +476,6 @@ function rescheduleRemaining(int $jobId, int $userId, int $siteId, array $remain
          count($remainingUrls), Plans::jobPriority($plan)]
     );
     // Логи переприв'язуємо до нового job
-    $pdo = DB::pdo();
     $ids = implode(',', array_fill(0, count($remainingUrls), '?'));
     $params = array_merge($remainingUrls, [$jobId]);
     DB::exec(
@@ -491,27 +502,4 @@ function b64u(string $d): string {
     return rtrim(strtr(base64_encode($d), '+/', '-_'), '=');
 }
 
-// ── PDO transaction helper (якщо немає в DB class)
-if (!method_exists('DB', 'transaction')) {
-    // Fallback: додаємо через closure
-    DB::pdo()->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-}
-
-// Розширюємо DB::pdo() методом transaction якщо його немає
-class WorkerPDO {
-    public static function transaction(callable $fn) {
-        $pdo = DB::pdo();
-        $pdo->beginTransaction();
-        try {
-            $result = $fn($pdo);
-            $pdo->commit();
-            return $result;
-        } catch (Throwable $e) {
-            $pdo->rollBack();
-            throw $e;
-        }
-    }
-}
-
-// Патчимо виклик вище
-// (у продакшн краще додати transaction() прямо в клас DB)
+// DB::transaction() визначено в db_worker.php

@@ -1,0 +1,13 @@
+# Забороняємо прямий доступ до PHP підфайлів (тільки через index.php)
+<Files "auth.php">
+    Order Allow,Deny
+    Deny from all
+</Files>
+<Files "shared.css">
+    Order Allow,Deny
+    Allow from all
+</Files>
+# Забороняємо перегляд директорії
+Options -Indexes
+
+Header always set Content-Security-Policy "frame-ancestors 'self' https://indexfast.local"
