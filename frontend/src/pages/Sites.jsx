@@ -20,8 +20,6 @@ export default memo(function Sites({
     if (params.get("gsc")) setGscOpen(true);
   }, []);
 
-  const [filter, setFilter] = useState("all");  // all | active | paused | error
-
   const filtered = filter === "all"
     ? sitesList
     : sitesList.filter(s => s.status === filter);
@@ -37,8 +35,9 @@ export default memo(function Sites({
   const canAdd    = sitesList.length < sitesLimit;
 
   return (
-    <div>
-      {/* Заголовок */}
+    <>
+      <div>
+        {/* Заголовок */}
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between",
         marginBottom: 24, flexWrap: "wrap", gap: 12 }}>
         <div>
@@ -142,20 +141,20 @@ export default memo(function Sites({
       </div>
     </div>
 
-      <EditSiteModal
-        open={!!editSite}
-        onClose={() => setEditSite(null)}
-        site={editSite}
-        showToast={showToast}
-      />
+    <EditSiteModal
+      open={!!editSite}
+      onClose={() => setEditSite(null)}
+      site={editSite}
+    />
 
-      <GscImportModal
-        open={gscOpen}
-        onClose={() => setGscOpen(false)}
-        onImported={() => setGscOpen(false)}
-        plan={plan}
-        sitesCount={sitesList.length}
-        sitesLimit={sitesLimit}
-      />
+    <GscImportModal
+      open={gscOpen}
+      onClose={() => setGscOpen(false)}
+      onImported={() => setGscOpen(false)}
+      plan={plan}
+      sitesCount={sitesList.length}
+      sitesLimit={sitesLimit}
+    />
+    </>
   );
 });
