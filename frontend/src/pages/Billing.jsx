@@ -13,9 +13,9 @@ const PLANS = [
     features: [
       "20 URL/день",
       "1 сайт",
+      "Web інтерфейс",
       "Sitemap Index підтримка",
       "Базова підтримка",
-      "Стандартна швидкість обробки",
     ],
   },
   {
@@ -36,11 +36,10 @@ const PLANS = [
     features: [
       "500 URL/день",
       "До 5 сайтів",
-      "Sitemap Index підтримка",
-      "Швидша індексація та обробка",
       "Web інтерфейс",
-      "Розклад індексації",
+      "Sitemap Index підтримка",
       "Лог індексації",
+      { text: "Авто-запуск за розкладом", disabled: true },
     ],
   },
   {
@@ -60,10 +59,10 @@ const PLANS = [
     features: [
       "5 000 URL/день",
       "До 25 сайтів",
+      "Web інтерфейс",
       "Sitemap Index підтримка",
-      "Web + Webhooks",
-      "White-label звіти",
       "Авто-запуск за розкладом",
+      "White-label звіти",
       "Повний API доступ",
       "Пріоритетна підтримка 24/7",
     ],
@@ -77,9 +76,9 @@ const PLANS = [
     features:    [
       "Необмежено URL/день",
       "Необмежено сайтів",
+      "Web інтерфейс",
       "Кілька Service Account",
       "Виділений воркер",
-      "Інтеграція під ключ",
       "SLA та гарантії uptime",
       "Персональний менеджер",
       "Кастомні звіти",
@@ -317,12 +316,22 @@ const PlanCard = memo(function PlanCard({ plan: p, isCurrent }) {
       </div>
 
       <ul style={{ listStyle: "none", padding: 0, marginBottom: 24 }}>
-        {p.features.map(f => (
-          <li key={f} style={{ fontSize: 13, color: C.muted, padding: "6px 0",
-            borderBottom: `1px solid ${C.border}`, display: "flex", alignItems: "center", gap: 8 }}>
-            <span style={{ color: C.green }}>✓</span>{f}
-          </li>
-        ))}
+        {p.features.map(f => {
+          const isObj = typeof f === "object";
+          const text = isObj ? f.text : f;
+          const disabled = isObj ? f.disabled : false;
+          return (
+            <li key={text} style={{
+              fontSize: 13, color: disabled ? "rgba(122,122,149,0.5)" : C.muted,
+              padding: "6px 0", borderBottom: `1px solid ${C.border}`,
+              display: "flex", alignItems: "center", gap: 8,
+              textDecoration: disabled ? "line-through" : "none"
+            }}>
+              <span style={{ color: disabled ? C.red : C.green }}>{disabled ? "✕" : "✓"}</span>
+              {text}
+            </li>
+          );
+        })}
       </ul>
 
       {isCurrent ? (

@@ -9,6 +9,7 @@ import { useStats, useDeleteSite, useToggleSite } from "./hooks/useStats.js";
 import { apiClient } from "./api/client.js";
 import { useToast }          from "./hooks/useToast.js";
 import { AddSiteModal }      from "./components/AddSiteModal.jsx";
+import { GscImportModal }  from "./components/GscImportModal.jsx";
 import { RunModal }          from "./components/RunModal.jsx";
 import {
   Toast, Spinner, Btn, Badge, ConfirmModal,
@@ -198,7 +199,7 @@ const Sidebar = memo(function Sidebar({ activePage, setPage, user, sideOpen, set
 // ══════════════════════════════════════════════
 //  Topbar
 // ══════════════════════════════════════════════
-const Topbar = memo(function Topbar({ activePage, onRefresh, onAddSite, onToggleSide, isRefetching }) {
+const Topbar = memo(function Topbar({ activePage, onRefresh, onAddSite, onImportGsc, onToggleSide, isRefetching }) {
   const label = NAV_ITEMS.find(n => n.id === activePage)?.label ?? "Кабінет";
   return (
     <header className="topbar-header" style={{
@@ -250,6 +251,9 @@ export default function App() {
       showToast("✓ Email успішно підтверджено!");
       window.history.replaceState(null, "", window.location.pathname);
     }
+    if (params.get("gsc")) {
+      setGscOpen(true);
+    }
   }, []);
 
   // ── Google OAuth: якщо прийшли на /app/dashboard з token у fragment або query
@@ -270,6 +274,7 @@ export default function App() {
   }, []);
   const [activePage, setActivePage] = useState("overview");
   const [addOpen,    setAddOpen]    = useState(false);
+  const [gscOpen,    setGscOpen]    = useState(false);
   const [runSite,    setRunSite]    = useState(null);
   const [sideOpen,   setSideOpen]   = useState(false);
 
@@ -515,6 +520,7 @@ export default function App() {
             activePage={activePage}
             onRefresh={handleRefresh}
             onAddSite={handleAddSite}
+            onImportGsc={() => setGscOpen(true)}
             onToggleSide={() => setSideOpen(s => !s)}
             isRefetching={isRefetching}
           />
@@ -534,6 +540,19 @@ export default function App() {
         open={addOpen}
         onClose={() => setAddOpen(false)}
         onSuccess={handleAddSuccess}
+        plan={plan}
+        sitesCount={sites.length}
+        sitesLimit={sites_limit}
+        onOpenGsc={() => setGscOpen(true)}
+      />
+
+      <GscImportModal
+        open={gscOpen}
+        onClose={() => setGscOpen(false)}
+        onImported={() => {
+          setGscOpen(false);
+          handleRefresh();
+        }}
         plan={plan}
         sitesCount={sites.length}
         sitesLimit={sites_limit}

@@ -8,6 +8,7 @@ export const KEYS = {
   sites:  ["sites"],
   logs:   (params) => ["logs", params],
   job:    (id)     => ["job",  id],
+  gsc:    ["gsc-sites"],
 };
 
 // ── Головні дані дашборду
@@ -22,6 +23,17 @@ export function useStats() {
     refetchOnWindowFocus: true,
     retry:              2,
     retryDelay:         (attempt) => Math.min(1000 * 2 ** attempt, 10_000),
+  });
+}
+
+// ── Отримання сайтів з Google Search Console
+export function useGscSites(enabled = false) {
+  return useQuery({
+    queryKey: KEYS.gsc,
+    queryFn:  () => apiClient.gscSites(),
+    enabled:  enabled,
+    staleTime: 60_000,
+    retry: false, // не ретраїмо якщо 403
   });
 }
 
