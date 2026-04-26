@@ -10,6 +10,12 @@ if (file_exists($envFile)) {
     foreach (file($envFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) as $line) {
         if (str_starts_with(trim($line), '#') || !str_contains($line, '=')) continue;
         [$key, $val] = explode('=', $line, 2);
+        $val = trim($val);
+        // Видаляємо inline-коментарі: APP_URL=https://example.com # коментар
+        // Але не чіпаємо # всередині лапок
+        if (!str_starts_with($val, '"') && !str_starts_with($val, "'")) {
+            $val = preg_replace('/\s+#.*$/', '', $val);
+        }
         $_ENV[trim($key)] = trim($val, " \t\n\r\0\x0B\"'");
     }
 }
