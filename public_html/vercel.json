@@ -37,7 +37,7 @@
       ]
     },
     {
-      "source": "/((?!app/).*)",
+      "source": "/((?!app/|api/|admin/).*)",
       "headers": [
         {
           "key": "X-Content-Type-Options",
