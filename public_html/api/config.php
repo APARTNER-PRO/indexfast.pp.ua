@@ -112,6 +112,10 @@ define('FRONTEND_URLS', env('FRONTEND_URL', 'https://indexfast.pp.ua'));
 
 define('CORS_ORIGINS', array_filter(array_map('trim', explode(',', FRONTEND_URLS))));
 
+// Основний фронтенд URL — для лінків в email (verify, reset password тощо)
+// Береться перший URL зі списку FRONTEND_URL
+define('FRONTEND_URL', CORS_ORIGINS[0] ?? 'https://indexfast.pp.ua');
+
 // ────────────────────────────────────────────
 //  БЕЗПЕКА
 // ────────────────────────────────────────────

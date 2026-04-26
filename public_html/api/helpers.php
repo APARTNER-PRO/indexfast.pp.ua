@@ -246,7 +246,7 @@ class Mailer {
 
     // ── Шаблони листів
     public static function verifyEmail(string $to, string $name, string $token): bool {
-        $link = APP_URL . '/app/verify-email?token=' . urlencode($token);
+        $link = FRONTEND_URL . '/app/verify-email?token=' . urlencode($token);
         $html = self::template('Підтвердіть email', "
             <p>Привіт, <strong>{$name}</strong>!</p>
             <p>Дякуємо за реєстрацію в IndexFast. Натисніть кнопку нижче щоб підтвердити вашу email адресу:</p>
@@ -262,7 +262,7 @@ class Mailer {
     }
 
     public static function resetPassword(string $to, string $name, string $token): bool {
-        $link = APP_URL . '/app/reset-password?token=' . urlencode($token);
+        $link = FRONTEND_URL . '/app/reset-password?token=' . urlencode($token);
         $html = self::template('Скидання пароля', "
             <p>Привіт, <strong>{$name}</strong>!</p>
             <p>Ми отримали запит на скидання пароля для вашого акаунту IndexFast.</p>
@@ -306,14 +306,14 @@ class Mailer {
 
         $unsubUrl = $userId
             ? Token::unsubscribeUrl($userId)
-            : APP_URL . '/app/profile';
+            : FRONTEND_URL . '/app/profile';
         $html = self::template($title, "
             <p>Привіт, <strong>{$name}</strong>!</p>
             <p>{$icon} Індексацію сайту <strong style='color:#eeeef6'>{$domain}</strong> завершено.</p>
             {$statsRow}
             " . ($failed > 0 ? "<p style='color:#ffd060;font-size:13px'>⚠ {$failed} URL повернули помилку від Google. Перевірте логи в кабінеті.</p>" : "") . "
             <p style='text-align:center;margin:28px 0'>
-              <a href='" . APP_URL . "/app/dashboard' style='background:#00ff88;color:#050508;padding:13px 28px;border-radius:100px;text-decoration:none;font-weight:700;font-family:sans-serif'>
+              <a href='" . FRONTEND_URL . "/app/dashboard' style='background:#00ff88;color:#050508;padding:13px 28px;border-radius:100px;text-decoration:none;font-weight:700;font-family:sans-serif'>
                 Переглянути логи →
               </a>
             </p>
