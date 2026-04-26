@@ -122,6 +122,7 @@ define('FRONTEND_URL', CORS_ORIGINS[0] ?? 'https://indexfast.pp.ua');
 define('PASSWORD_MIN_LENGTH', 8);
 define('BCRYPT_COST',         12);
 define('SESSION_LIFETIME',    60 * 60 * 24 * 30); // 30 днів
+define('WORKER_KEY',          env('WORKER_KEY', 'indexfast_secret_key_2024'));
 
 // Повідомлення про помилки тільки в dev
 if (!DEBUG) {
