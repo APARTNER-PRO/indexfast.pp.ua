@@ -7,23 +7,21 @@
 require_once dirname(dirname(__DIR__)) . '/api/middleware.php';
 require_once dirname(dirname(__DIR__)) . '/api/db.php';
 
-session_start();
+$stateRaw = $_GET['state'] ?? '';
+$payload  = JWT::decode($stateRaw);
 
-$state = $_GET['state'] ?? '';
-if (!$state || $state !== ($_SESSION['gsc_state'] ?? '')) {
-    header('Location: ' . APP_URL . '/app/dashboard?gsc=error&msg=invalid_state');
+if (!$payload || ($payload['type'] ?? '') !== 'gsc_state') {
+    header('Location: ' . FRONTEND_URL . '/app/dashboard?gsc=error&msg=invalid_state');
     exit;
 }
 
-$uid  = (int)($_SESSION['gsc_uid'] ?? 0);
+$uid  = (int)($payload['uid'] ?? 0);
 $code = $_GET['code'] ?? '';
 
 if (!$code || !$uid) {
-    header('Location: ' . APP_URL . '/app/dashboard?gsc=error&msg=no_code');
+    header('Location: ' . FRONTEND_URL . '/app/dashboard?gsc=error&msg=no_code');
     exit;
 }
-
-unset($_SESSION['gsc_state'], $_SESSION['gsc_uid']);
 
 // ── Обмінюємо code на tokens
 $ch = curl_init('https://oauth2.googleapis.com/token');
@@ -44,19 +42,20 @@ $tokenResp = json_decode(curl_exec($ch), true) ?? [];
 curl_close($ch);
 
 if (empty($tokenResp['access_token'])) {
-    header('Location: ' . APP_URL . '/app/dashboard?gsc=error&msg=token_failed');
+    $err = $tokenResp['error_description'] ?? $tokenResp['error'] ?? 'token_failed';
+    header('Location: ' . FRONTEND_URL . '/app/dashboard?gsc=error&msg=' . urlencode($err));
     exit;
 }
 
 // ── Зберігаємо GSC access_token (короткоживучий, але для імпорту достатньо)
 $gscToken = $tokenResp['access_token'];
 
-// Зберігаємо в БД для подальшого використання через API
+// Зберігаємо в БД для подальшого використання через API (на 1 годину)
+$expires = date('Y-m-d H:i:s', time() + 3600);
 DB::exec(
-    "UPDATE users SET gsc_access_token=?, gsc_token_expires=DATE_ADD(NOW(), INTERVAL 3600 SECOND)
-     WHERE id=?",
-    [$gscToken, $uid]
+    "UPDATE users SET gsc_access_token=?, gsc_token_expires=? WHERE id=?",
+    [$gscToken, $expires, $uid]
 );
 
-header('Location: ' . APP_URL . '/app/dashboard?gsc=ready');
+header('Location: ' . FRONTEND_URL . '/app/dashboard?gsc=ready');
 exit;

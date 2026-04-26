@@ -11,10 +11,12 @@ $uid = (int)requireAuth()['sub'];
 
 if (!GOOGLE_CLIENT_ID) respond(503, 'Google OAuth не налаштовано');
 
-$state = bin2hex(random_bytes(16));
-session_start();
-$_SESSION['gsc_state'] = $state;
-$_SESSION['gsc_uid']   = $uid;
+// Створюємо тимчасовий токен для state (живе 15 хв)
+$state = JWT::encode([
+    'uid'  => $uid,
+    'type' => 'gsc_state',
+    'exp'  => time() + 900
+]);
 
 $params = http_build_query([
     'client_id'     => GOOGLE_CLIENT_ID,
