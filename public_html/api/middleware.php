@@ -42,7 +42,7 @@ function requireMethod(string ...$methods): void {
     }
 }
 
-// ── Вимагати авторизацію (Bearer JWT)
+// ── Вимагати авторизацію (Bearer JWT або ?token=)
 function requireAuth(): array {
     // Apache може передавати Authorization різними способами
     $header = $_SERVER['HTTP_AUTHORIZATION']
@@ -51,10 +51,16 @@ function requireAuth(): array {
            ?? getallheaders()['authorization']
            ?? '';
 
-    if (!str_starts_with($header, 'Bearer ')) {
+    $token = '';
+    if (str_starts_with($header, 'Bearer ')) {
+        $token = substr($header, 7);
+    } elseif (!empty($_GET['token'])) {
+        $token = $_GET['token'];
+    }
+
+    if (!$token) {
         respond(401, 'Unauthorized: відсутній токен');
     }
-    $token = substr($header, 7);
     $payload = JWT::decode($token);
 
     if (!$payload || ($payload['type'] ?? '') !== 'access') {
