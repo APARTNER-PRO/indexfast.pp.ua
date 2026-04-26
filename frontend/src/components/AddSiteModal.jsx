@@ -5,18 +5,20 @@ import { useAddSite } from "../hooks/useStats.js";
 import { C } from "../constants.js";
 
 export const AddSiteModal = memo(function AddSiteModal({
-  open, onClose, onSuccess, plan, sitesCount, sitesLimit,
+  open, onClose, onSuccess, plan, sitesCount, sitesLimit, onOpenGsc
 }) {
-  const [domain,  setDomain]  = useState("");
-  const [sitemap, setSitemap] = useState("");
-  const [sa,      setSa]      = useState("");
-  const [error,   setError]   = useState("");
+  const [domain,   setDomain]  = useState("");
+  const [sitemap,  setSitemap] = useState("");
+  const [sa,       setSa]      = useState("");
+  const [error,    setError]   = useState("");
 
   const addSite = useAddSite();
 
   // Скидаємо форму при відкритті
   useEffect(() => {
-    if (open) { setDomain(""); setSitemap(""); setSa(""); setError(""); }
+    if (open) {
+      setDomain(""); setSitemap(""); setSa(""); setError("");
+    }
   }, [open]);
 
   const canAdd = sitesCount < sitesLimit;
@@ -57,12 +59,20 @@ export const AddSiteModal = memo(function AddSiteModal({
             План «{plan}» дозволяє максимум {sitesLimit} сайт(ів).<br/>
             Оновіть план для підключення більшої кількості сайтів.
           </p>
-          <Btn variant="primary" onClick={() => { onClose(); window.location.href = "/#pricing"; }}>
+          <Btn variant="primary" onClick={() => { onClose(); window.location.href = "/app/dashboard"; }}>
             Переглянути плани →
           </Btn>
         </div>
       ) : (
         <>
+          <div style={{ marginBottom: 20, textAlign: "center", padding: "10px", background: "rgba(0,255,136,0.03)", borderRadius: 12, border: `1px dashed ${C.border}` }}>
+            <p style={{ fontSize: 13, color: C.muted, marginBottom: 8 }}>Маєте багато сайтів у Search Console?</p>
+            <button onClick={() => { onClose(); onOpenGsc?.(); }} 
+              style={{ background: "none", border: "none", color: C.green, fontWeight: 700, cursor: "pointer", fontSize: 13 }}>
+              🚀 Виконати масовий імпорт з GSC →
+            </button>
+          </div>
+
           <Field label="Домен сайту" hint="Наприклад: myshop.ua (без https://)">
             <Input
               value={domain}
@@ -82,11 +92,12 @@ export const AddSiteModal = memo(function AddSiteModal({
 
           <Field label="Google Service Account JSON"
             hint={<>Потрібен для Google Indexing API.{" "}
-              <a href="/docs/" style={{ color: C.green }}>Як отримати →</a></>}>
+              <a href="/docs/" target="_blank" style={{ color: C.green }}>Як отримати →</a></>}>
             <Textarea
               value={sa}
               onChange={e => setSa(e.target.value)}
               placeholder={'{\n  "type": "service_account",\n  "client_email": "...",\n  "private_key": "-----BEGIN RSA PRIVATE KEY-----\\n..."\n}'}
+              style={{ height: 100 }}
             />
           </Field>
 

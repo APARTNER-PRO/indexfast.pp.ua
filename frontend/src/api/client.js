@@ -165,8 +165,12 @@ export const apiClient = {
     }).catch(() => {});
   },
   // GSC Import
-  gscRedirect: ()     => { window.location.href = (import.meta?.env?.VITE_API_URL ?? "/api") + "/gsc/redirect.php"; },
+  gscRedirect: ()     => {
+    const token = getToken();
+    window.location.href = (import.meta?.env?.VITE_API_URL ?? "/api") + "/gsc/redirect.php?token=" + token;
+  },
   gscSites:    ()     => apiFetch("/gsc/sites.php"),
+  gscSitemaps: (url)   => apiFetch(`/gsc/sitemaps.php?url=${encodeURIComponent(url)}`),
   // Dashboard
   stats:      ()     => apiFetch("/dashboard/stats.php"),
   // Sites
