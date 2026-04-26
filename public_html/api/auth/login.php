@@ -39,12 +39,11 @@ DB::exec(
     [$user['id']]
 );
 
-// тут відбувається помилка з token
-// DB::exec(
-//     "INSERT INTO tokens (user_id, token, type, expires_at)
-//      VALUES (?, ?, 'refresh', DATE_ADD(NOW(), INTERVAL 30 DAY))",
-//     [$user['id'], $refreshToken]
-// );
+DB::exec(
+    "INSERT INTO tokens (user_id, token, type, expires_at)
+     VALUES (?, ?, 'refresh', DATE_ADD(NOW(), INTERVAL 30 DAY))",
+    [$user['id'], $refreshToken]
+);
 
 // ── Скидаємо rate limit після успішного входу
 RateLimit::reset(RateLimit::getIP(), 'login');
