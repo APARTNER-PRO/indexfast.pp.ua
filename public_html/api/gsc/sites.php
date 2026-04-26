@@ -49,6 +49,9 @@ $data  = json_decode($body, true) ?? [];
 $items = $data['siteEntry'] ?? [];
 
 if (empty($items)) {
+    // Тимчасово для дебагу: якщо порожньо, можемо глянути структуру
+    // error_log("GSC Sites empty. Raw body: " . $body);
+    // respondOk('Немає сайтів у Search Console', ['sites' => [], 'debug_raw' => $data]);
     respondOk('Немає сайтів у Search Console', ['sites' => []]);
 }
 
@@ -66,6 +69,9 @@ foreach ($items as $item) {
 
     // Тільки сайти з правом FULL або OWNER (не READ_ONLY для індексації)
     // Але для імпорту показуємо всі — SA додається окремо
+    // if ($permission !== 'siteOwner') continue;
+    if ($permission === 'siteUnverifiedUser') continue;
+
     $domain = preg_replace('#^(sc-domain:|https?://|http?://)#', '', rtrim($url, '/'));
     $domain = preg_replace('#/.*$#', '', $domain); // прибираємо path
 
