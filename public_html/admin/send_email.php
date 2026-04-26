@@ -272,10 +272,9 @@ h2 { font-size: .8rem; font-weight: 700; letter-spacing: .08em; text-transform: 
         ['➖ Роздільник',       '<hr style="border:none;border-top:1px solid rgba(255,255,255,0.08);margin:24px 0">'],
       ];
       foreach ($blocks as [$label, $html]):
-        $escaped = htmlspecialchars($html, ENT_QUOTES);
       ?>
       <button type="button" class="block-btn"
-        onclick="insertBlock(<?= json_encode($html) ?>)">
+        onclick="insertBlock(<?= htmlspecialchars(json_encode($html), ENT_QUOTES, 'UTF-8') ?>)">
         <?= $label ?>
       </button>
       <?php endforeach; ?>
@@ -330,59 +329,7 @@ function insertVar(v) {
 }
 
 // ── Preview
-const templateBase = `<?php
-$tpl = addslashes(preg_replace('/\s+/', ' ', Mailer::send('preview@preview.com', 'PREVIEW', '{{BODY}}') ? '' : ''));
-
-phpinfo();
-// Просто передаємо template HTML структуру для preview
-$html = <<<HTML
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<style>
-body { margin:0; padding:20px; background:#0a0a10; font-family:Arial,sans-serif; }
-</style>
-</head>
-<body style="background:#0a0a10">
-
-<table width="100%" cellpadding="0" cellspacing="0" style="background:#0a0a10">
-<tr>
-<td align="center">
-<table width="520" cellpadding="0" cellspacing="0"
-style="background:#111119;border-radius:16px;border:1px solid rgba(255,255,255,0.08);overflow:hidden;max-width:520px;width:100%">
-
-<tr>
-<td style="background:#050508;padding:20px 32px;border-bottom:1px solid rgba(255,255,255,0.06)">
-<span style="font-size:20px;font-weight:800;color:#eeeef6">
-Index<span style="color:#00ff88">Fast</span>
-</span>
-</td>
-</tr>
-
-<tr>
-<td style="padding:32px;font-size:15px;line-height:1.7;color:#c8c8d8">
-{{BODY}}
-</td>
-</tr>
-
-<tr>
-<td style="padding:16px 32px;border-top:1px solid rgba(255,255,255,0.06);font-size:12px;color:#555570;text-align:center">
-© IndexFast · <a href="https://indexfast.pp.ua" style="color:#555570">indexfast.pp.ua</a>
-</td>
-</tr>
-
-</table>
-</td>
-</tr>
-</table>
-
-</body>
-</html>
-HTML;
-
-echo json_encode($html);
-?>`; // не використовується — inline нижче
+// ── Preview
 
 const previewTemplate = `<!DOCTYPE html><html><head><meta charset="UTF-8"><style>body{margin:0;padding:12px;background:#0a0a10}</style></head><body style="background:#0a0a10"><table width="100%" cellpadding="0" cellspacing="0"><tr><td align="center"><table width="100%" cellpadding="0" cellspacing="0" style="background:#111119;border-radius:12px;border:1px solid rgba(255,255,255,0.08);overflow:hidden;max-width:480px"><tr><td style="background:#050508;padding:16px 24px;border-bottom:1px solid rgba(255,255,255,0.06)"><span style="font-size:18px;font-weight:800;color:#eeeef6">Index<span style="color:#00ff88">Fast</span></span></td></tr><tr><td style="padding:24px;font-size:14px;line-height:1.7;color:#c8c8d8">BODY_PLACEHOLDER</td></tr><tr><td style="padding:12px 24px;border-top:1px solid rgba(255,255,255,0.06);font-size:11px;color:#555570;text-align:center">© IndexFast</td></tr></table></td></tr></table></body></html>`;
 
