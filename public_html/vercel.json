@@ -98,7 +98,11 @@
   "rewrites": [
     {
       "source": "/api/:match*",
-      "destination": "https://dev.developer.pp.ua/api/:match*"
+      "destination": "https://test.developer.pp.ua/api/:match*"
+    },
+    {
+      "source": "/admin/:match*",
+      "destination": "https://test.developer.pp.ua/admin/:match*"
     },
     {
       "source": "/docs",
