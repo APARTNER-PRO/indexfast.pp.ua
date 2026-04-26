@@ -53,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 // ════════════════════════════════
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $body = getBody();
-    requireField($body, 'domain', 'sitemap_url', 'service_account');
+    requireField($body, 'domain', 'sitemap_url');
 
     // Нормалізуємо домен
     $domain = sanitize(preg_replace('#^https?://#', '', trim($body['domain'])));
@@ -64,13 +64,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!filter_var($sitemap, FILTER_VALIDATE_URL))
         respond(422, 'Невалідний URL sitemap.xml');
 
-    // Валідація Google Service Account JSON
-    $saRaw = trim($body['service_account']);
-    $sa    = json_decode($saRaw, true);
-    if (!$sa || ($sa['type'] ?? '') !== 'service_account')
-        respond(422, 'Невалідний Google Service Account JSON (type має бути "service_account")');
-    if (!isset($sa['client_email'], $sa['private_key']))
-        respond(422, 'Файл не містить полів client_email або private_key');
+    // Валідація Google Service Account JSON (необов'язковий — можна додати пізніше)
+    $saRaw = trim($body['service_account'] ?? '');
+    $sa    = null;
+    if ($saRaw) {
+        $sa = json_decode($saRaw, true);
+        if (!$sa || ($sa['type'] ?? '') !== 'service_account')
+            respond(422, 'Невалідний Google Service Account JSON (type має бути "service_account")');
+        if (!isset($sa['client_email'], $sa['private_key']))
+            respond(422, 'Файл не містить полів client_email або private_key');
+    }
 
     // Перевірка ліміту сайтів
     $maxSites = Plans::get($plan)['max_sites'];
@@ -82,7 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (DB::row("SELECT id FROM sites WHERE user_id=? AND domain=?", [$uid, $domain]))
         respond(409, "Сайт {$domain} вже підключено");
 
-    $encKey = base64_encode($saRaw);
+    $encKey = $saRaw ? base64_encode($saRaw) : null;
 
     // ── Визначаємо чи існує колонка service_account в sites
     $hasCol = DB::row(
@@ -95,7 +98,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // ── INSERT в sites
     if ($hasCol) {
-        // Стара схема (schema_v2 без v3) — колонка ще є в sites
+        // Стара схема
         $siteId = DB::exec(
             "INSERT INTO sites (user_id, domain, sitemap_url, service_account, status)
              VALUES (?, ?, ?, ?, 'active')",
@@ -110,8 +113,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         );
     }
 
-    // ── Зберігаємо credentials в site_credentials (якщо таблиця є)
-    try {
+    // ── Зберігаємо credentials в site_credentials (тільки якщо є SA)
+    if ($encKey) try {
         DB::exec(
             "INSERT INTO site_credentials (site_id, service_account)
              VALUES (?, ?)

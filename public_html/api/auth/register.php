@@ -30,10 +30,12 @@ if (DB::row("SELECT id FROM users WHERE email=?", [$email]))
 $hash   = password_hash($password, PASSWORD_BCRYPT, ['cost' => BCRYPT_COST]);
 
 // ── план 'start' виставляється за замовчуванням (DEFAULT у БД)
+$marketing = (bool)($body['marketing'] ?? false);
+
 $userId = DB::exec(
-    "INSERT INTO users (email, password_hash, name, surname, plan)
-     VALUES (?,?,?,?,'start')",
-    [$email, $hash, $name, $surname]
+    "INSERT INTO users (email, password_hash, name, surname, plan, marketing_consent)
+     VALUES (?,?,?,?,'start',?)",
+    [$email, $hash, $name, $surname, $marketing ? 1 : 0]
 );
 
 // Підтвердження email

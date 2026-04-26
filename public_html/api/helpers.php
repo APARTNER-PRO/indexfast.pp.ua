@@ -164,6 +164,29 @@ class Token {
     public static function consume(string $token): void {
         DB::exec("UPDATE tokens SET used_at = NOW() WHERE token = ?", [$token]);
     }
+
+    // ── Unsubscribe токен — довгоживучий (1 рік), не інвалідується при повторному створенні
+    public static function unsubscribeUrl(int $userId): string {
+        // Перевіряємо чи є вже активний unsubscribe токен
+        $existing = DB::row(
+            "SELECT token FROM tokens
+             WHERE user_id = ? AND type = 'unsubscribe'
+               AND used_at IS NULL AND expires_at > DATE_ADD(NOW(), INTERVAL 30 DAY)",
+            [$userId]
+        );
+        if ($existing) {
+            return APP_URL . '/api/user/unsubscribe.php?token=' . urlencode($existing['token']);
+        }
+
+        // Створюємо новий
+        $token   = bin2hex(random_bytes(32));
+        $expires = date('Y-m-d H:i:s', strtotime('+365 days'));
+        DB::exec(
+            "INSERT INTO tokens (user_id, token, type, expires_at) VALUES (?, ?, 'unsubscribe', ?)",
+            [$userId, $token, $expires]
+        );
+        return APP_URL . '/api/user/unsubscribe.php?token=' . urlencode($token);
+    }
 }
 
 // ════════════════════════════════════════
@@ -254,7 +277,55 @@ class Mailer {
         return self::send($to, 'Скидання пароля — IndexFast', $html);
     }
 
-    private static function template(string $title, string $body): string {
+    public static function jobFinished(
+        string $to, string $name, string $domain,
+        int $sent, int $failed, string $status,
+        int $userId = 0
+    ): bool {
+        $isDone = $status === 'done';
+        $icon   = $isDone ? '✅' : '⚠️';
+        $color  = $isDone ? '#00ff88' : '#ffd060';
+        $title  = $isDone
+            ? "Індексацію завершено — {$domain}"
+            : "Індексацію завершено з помилками — {$domain}";
+
+        $statsRow = "
+            <table width='100%' cellpadding='0' cellspacing='0' style='margin:24px 0'>
+              <tr>
+                <td align='center' style='padding:16px;background:rgba(0,255,136,0.06);border-radius:12px;border:1px solid rgba(0,255,136,0.15)'>
+                  <div style='font-size:28px;font-weight:800;color:#00ff88'>{$sent}</div>
+                  <div style='font-size:12px;color:#888;margin-top:4px'>URL відправлено</div>
+                </td>
+                <td width='16'></td>
+                <td align='center' style='padding:16px;background:rgba(255,255,255,0.03);border-radius:12px;border:1px solid rgba(255,255,255,0.08)'>
+                  <div style='font-size:28px;font-weight:800;color:" . ($failed > 0 ? '#ff4d6d' : '#6a6a85') . "'>{$failed}</div>
+                  <div style='font-size:12px;color:#888;margin-top:4px'>Помилок</div>
+                </td>
+              </tr>
+            </table>";
+
+        $unsubUrl = $userId
+            ? Token::unsubscribeUrl($userId)
+            : APP_URL . '/app/profile';
+        $html = self::template($title, "
+            <p>Привіт, <strong>{$name}</strong>!</p>
+            <p>{$icon} Індексацію сайту <strong style='color:#eeeef6'>{$domain}</strong> завершено.</p>
+            {$statsRow}
+            " . ($failed > 0 ? "<p style='color:#ffd060;font-size:13px'>⚠ {$failed} URL повернули помилку від Google. Перевірте логи в кабінеті.</p>" : "") . "
+            <p style='text-align:center;margin:28px 0'>
+              <a href='" . APP_URL . "/app/dashboard' style='background:#00ff88;color:#050508;padding:13px 28px;border-radius:100px;text-decoration:none;font-weight:700;font-family:sans-serif'>
+                Переглянути логи →
+              </a>
+            </p>
+            <p style='color:#555570;font-size:12px;margin-top:24px'>
+              Не хочете отримувати ці сповіщення?
+              <a href='{$unsubUrl}' style='color:#555570'>Налаштування акаунту</a>
+            </p>
+        ", $unsubUrl);
+        return self::send($to, "{$icon} {$title}", $html);
+    }
+
+        private static function template(string $title, string $body, string $unsubUrl = ''): string {
         return <<<HTML
         <!DOCTYPE html>
         <html lang="uk">
@@ -280,6 +351,7 @@ class Mailer {
                 <tr>
                   <td style="padding:20px 36px;border-top:1px solid rgba(255,255,255,0.06);font-size:12px;color:#555570;text-align:center">
                     © IndexFast · <a href="https://indexfast.pp.ua" style="color:#555570">indexfast.pp.ua</a>
+                    {UNSUB_FOOTER}
                   </td>
                 </tr>
               </table>
@@ -288,6 +360,11 @@ class Mailer {
         </body>
         </html>
         HTML;
+        // Підставляємо footer відписки якщо є URL
+        $unsubFooter = $unsubUrl
+            ? " · <a href=\"{\$unsubUrl}\" style=\"color:#555570\">Відписатись</a>"
+            : '';
+        return str_replace('{UNSUB_FOOTER}', $unsubFooter, $html);
     }
 }
 

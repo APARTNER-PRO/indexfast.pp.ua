@@ -1,0 +1,55 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --black:#050508; --dark:#0a0a10; --card:#0f0f18; --card2:#141420;
+  --border:rgba(255,255,255,0.07); --border2:rgba(255,255,255,0.12);
+  --green:#00ff88; --red:#ff4d6d; --gold:#ffd060; --purple:#9370db;
+  --white:#f0f0f8; --muted:#6a6a85;
+}
+html { font-size: 14px; }
+body.sub { background: var(--black); color: var(--white); font-family: system-ui, sans-serif; padding: 20px; }
+
+/* ── Alerts */
+.alert { padding:10px 16px; border-radius:10px; font-size:.8rem; margin-bottom:16px; }
+.alert-ok  { background:rgba(0,255,136,.08);  border:1px solid rgba(0,255,136,.2);  color:var(--green); }
+.alert-err { background:rgba(255,77,109,.08); border:1px solid rgba(255,77,109,.2); color:var(--red); }
+.alert-warn { background:rgba(255,208,96,.08); border:1px solid rgba(255,208,96,.2); color:var(--gold); }
+
+/* ── Filters */
+.filters { display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin-bottom:16px; }
+.f-input  { background:var(--dark); border:1px solid var(--border2); border-radius:10px; padding:8px 14px; color:var(--white); font-size:.8rem; outline:none; min-width:220px; }
+.f-select { background:var(--dark); border:1px solid var(--border2); border-radius:10px; padding:8px 12px; color:var(--white); font-size:.8rem; outline:none; cursor:pointer; }
+.f-btn    { background:var(--green); color:var(--black); border:none; border-radius:10px; padding:8px 18px; font-weight:700; font-size:.8rem; cursor:pointer; }
+.f-clear  { color:var(--muted); font-size:.8rem; text-decoration:none; }
+.f-total  { margin-left:auto; font-size:.75rem; color:var(--muted); }
+
+/* ── Table */
+.table-wrap { background:var(--card); border:1px solid var(--border); border-radius:14px; overflow-x:auto; margin-bottom:20px; }
+table { width:100%; border-collapse:collapse; font-size:.8rem; }
+th { padding:9px 14px; text-align:left; color:var(--muted); font-size:.65rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; background:rgba(255,255,255,.02); white-space:nowrap; }
+td { padding:10px 14px; border-top:1px solid var(--border); vertical-align:middle; }
+tr:hover td { background:rgba(255,255,255,.015); }
+
+/* ── Badges */
+.badge { display:inline-block; font-size:.65rem; font-weight:800; letter-spacing:.08em; text-transform:uppercase; padding:2px 7px; border-radius:100px; white-space:nowrap; }
+.badge-green  { background:rgba(0,255,136,.1);   color:var(--green);  border:1px solid rgba(0,255,136,.25); }
+.badge-red    { background:rgba(255,77,109,.1);  color:var(--red);    border:1px solid rgba(255,77,109,.25); }
+.badge-gold   { background:rgba(255,208,96,.1);  color:var(--gold);   border:1px solid rgba(255,208,96,.25); }
+.badge-purple { background:rgba(147,112,219,.1); color:var(--purple); border:1px solid rgba(147,112,219,.25); }
+.badge-muted  { background:rgba(255,255,255,.06); color:var(--muted); border:1px solid rgba(255,255,255,.1); }
+
+/* ── Mini controls */
+.mini-select { background:var(--dark); border:1px solid var(--border2); color:var(--white); border-radius:6px; padding:2px 6px; font-size:.7rem; cursor:pointer; outline:none; }
+.mini-btn { background:rgba(0,255,136,.08); border:1px solid rgba(0,255,136,.2); color:var(--green); border-radius:6px; padding:2px 8px; font-size:.7rem; cursor:pointer; white-space:nowrap; }
+.action-btn { border:none; border-radius:6px; padding:4px 10px; font-size:.7rem; font-weight:700; cursor:pointer; }
+.action-btn.danger { background:rgba(255,77,109,.1); color:var(--red); border:1px solid rgba(255,77,109,.2); }
+.action-btn.ok     { background:rgba(0,255,136,.1); color:var(--green); border:1px solid rgba(0,255,136,.2); }
+.action-btn.warn   { background:rgba(255,208,96,.1); color:var(--gold); border:1px solid rgba(255,208,96,.2); }
+
+/* ── Pagination */
+.pagination { display:flex; gap:6px; flex-wrap:wrap; padding:8px 0; }
+.pag-btn { background:rgba(255,255,255,.04); border:1px solid var(--border); color:var(--muted); border-radius:8px; padding:5px 12px; text-decoration:none; font-size:.8rem; }
+.pag-btn.active { background:rgba(0,255,136,.1); color:var(--green); border-color:rgba(0,255,136,.3); }
+.pag-btn:hover { color:var(--white); }
+
+/* ── Sections */
+.section-title { font-size:.8rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); margin-bottom:12px; }

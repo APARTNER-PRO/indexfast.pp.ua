@@ -32,6 +32,7 @@ export default function Auth() {
   const [regEmail,      setRegEmail]      = useState("");
   const [regPass,       setRegPass]       = useState("");
   const [agreeTerms,    setAgreeTerms]    = useState(false);
+  const [agreeMarketing, setAgreeMarketing] = useState(false);
   const [forgotEmail,   setForgotEmail]   = useState("");
 
   // Password strength
@@ -167,6 +168,7 @@ export default function Auth() {
       const res = await apiClient.register({
         name: regName.trim(), surname: regSurname.trim(),
         email: regEmail.trim(), password: regPass,
+        marketing: agreeMarketing,
       });
       saveAndRedirect(res);
     } catch (e) {
@@ -396,7 +398,7 @@ export default function Auth() {
               </Field>
 
               <label style={{ display: "flex", alignItems: "flex-start", gap: 10,
-                fontSize: 13, color: C.muted, cursor: "pointer", marginBottom: 24 }}>
+                fontSize: 13, color: C.muted, cursor: "pointer", marginBottom: 12 }}>
                 <input type="checkbox" checked={agreeTerms}
                   onChange={e => setAgreeTerms(e.target.checked)}
                   style={{ marginTop: 2, flexShrink: 0 }}/>
@@ -404,6 +406,17 @@ export default function Auth() {
                   <a href="/terms.html" target="_blank" style={{ color: C.green }}>умовами використання</a>
                   {" "}та{" "}
                   <a href="/privacy-policy.html" target="_blank" style={{ color: C.green }}>політикою конфіденційності</a>
+                </span>
+              </label>
+
+              <label style={{ display: "flex", alignItems: "flex-start", gap: 10,
+                fontSize: 13, color: C.muted, cursor: "pointer", marginBottom: 24 }}>
+                <input type="checkbox" checked={agreeMarketing}
+                  onChange={e => setAgreeMarketing(e.target.checked)}
+                  style={{ marginTop: 2, flexShrink: 0 }}/>
+                <span>
+                  Погоджуюсь отримувати корисні матеріали, оновлення продукту та спеціальні пропозиції на email.
+                  {" "}<span style={{ fontSize: 11, opacity: 0.6 }}>(необов'язково)</span>
                 </span>
               </label>
 

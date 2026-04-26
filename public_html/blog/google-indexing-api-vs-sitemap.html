@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23050508'/><text x='16' y='22' font-family='system-ui,sans-serif' font-size='15' font-weight='800' fill='%2300ff88' text-anchor='middle'>IF</text></svg>">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Google Indexing API vs Sitemap — що ефективніше для індексації у 2025 році</title>
+  <meta name="description" content="Порівняння Google Indexing API і sitemap.xml для індексації сайту. Що швидше, дешевше і ефективніше — детальний аналіз з реальними прикладами.">
+  <meta name="keywords" content="google indexing api, sitemap xml, google indexing api vs sitemap, прискорити індексацію, indexing api переваги, sitemap vs api">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+  <link rel="canonical" href="https://indexfast.pp.ua/blog/google-indexing-api-vs-sitemap.html">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://indexfast.pp.ua/blog/google-indexing-api-vs-sitemap.html">
+  <meta property="og:title" content="Google Indexing API vs Sitemap — що ефективніше для індексації">
+  <meta property="og:description" content="Детальне порівняння двох підходів до індексації: Google Indexing API та sitemap.xml. Переваги, обмеження, коли що використовувати.">
+  <meta property="og:image" content="https://indexfast.pp.ua/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="uk_UA">
+  <meta property="article:published_time" content="2025-04-05T10:00:00+02:00">
+  <meta property="article:modified_time" content="2025-04-05T10:00:00+02:00">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Google Indexing API vs Sitemap — що ефективніше">
+  <meta name="twitter:description" content="Детальне порівняння двох підходів до індексації сайту в Google.">
+  <meta name="twitter:image" content="https://indexfast.pp.ua/og-image.jpg">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Google Indexing API vs Sitemap — що ефективніше для індексації у 2025 році",
+    "description": "Порівняння Google Indexing API і sitemap.xml для індексації сайту.",
+    "inLanguage": "uk",
+    "author": {"@type": "Organization", "name": "IndexFast", "url": "https://indexfast.pp.ua"},
+    "publisher": {"@type": "Organization", "name": "IndexFast", "url": "https://indexfast.pp.ua"},
+    "datePublished": "2025-04-05",
+    "dateModified": "2025-04-05",
+    "url": "https://indexfast.pp.ua/blog/google-indexing-api-vs-sitemap.html"
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {"@type": "ListItem", "position": 1, "name": "Головна", "item": "https://indexfast.pp.ua/"},
+      {"@type": "ListItem", "position": 2, "name": "Блог", "item": "https://indexfast.pp.ua/blog/"},
+      {"@type": "ListItem", "position": 3, "name": "Google Indexing API vs Sitemap", "item": "https://indexfast.pp.ua/blog/google-indexing-api-vs-sitemap.html"}
+    ]
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --black: #050508; --dark: #0d0d14; --card: #12121c; --border: rgba(255,255,255,0.07); --green: #00ff88; --white: #f0f0f8; --muted: #7a7a95; --font-display: 'Syne', sans-serif; --font-body: 'DM Sans', sans-serif; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--black); color: var(--white); font-family: var(--font-body); font-weight: 300; }
+    nav { position: sticky; top: 0; z-index: 100; padding: 18px 60px; display: flex; align-items: center; justify-content: space-between; background: rgba(5,5,8,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+    .logo { font-family: var(--font-display); font-size: 1.4rem; font-weight: 800; letter-spacing: -0.03em; color: var(--white); text-decoration: none; }
+    .logo span { color: var(--green); }
+    .nav-right { display: flex; align-items: center; gap: 24px; }
+    .nav-link { color: var(--muted); text-decoration: none; font-size: 0.875rem; transition: color 0.2s; }
+    .nav-cta { background: var(--green); color: var(--black); padding: 8px 20px; border-radius: 100px; font-family: var(--font-display); font-weight: 700; font-size: 0.85rem; text-decoration: none; }
+    .page-wrap { max-width: 1160px; margin: 0 auto; padding: 60px 40px 100px; display: grid; grid-template-columns: 1fr 300px; gap: 60px; align-items: start; }
+    article { min-width: 0; }
+    .article-meta { display: flex; align-items: center; gap: 16px; margin-bottom: 28px; flex-wrap: wrap; }
+    .meta-tag { background: rgba(0,255,136,0.08); border: 1px solid rgba(0,255,136,0.2); color: var(--green); padding: 4px 12px; border-radius: 100px; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
+    .meta-date, .meta-read { color: var(--muted); font-size: 0.85rem; }
+    h1 { font-family: var(--font-display); font-size: clamp(1.9rem, 3.5vw, 2.8rem); font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 24px; }
+    .article-lead { font-size: 1.1rem; color: rgba(240,240,248,0.85); line-height: 1.75; margin-bottom: 40px; border-left: 3px solid var(--green); padding-left: 20px; }
+    .article-body h2 { font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; margin: 48px 0 16px; letter-spacing: -0.02em; scroll-margin-top: 80px; }
+    .article-body h3 { font-family: var(--font-display); font-size: 1.15rem; font-weight: 700; margin: 28px 0 12px; }
+    .article-body p { color: rgba(240,240,248,0.8); line-height: 1.8; margin-bottom: 18px; font-size: 1rem; }
+    .article-body ul, .article-body ol { margin: 16px 0 20px 0; display: flex; flex-direction: column; gap: 10px; }
+    .article-body ul li, .article-body ol li { color: rgba(240,240,248,0.8); line-height: 1.65; padding-left: 22px; position: relative; font-size: 0.975rem; }
+    .article-body ul li::before { content: '→'; position: absolute; left: 0; color: var(--green); font-weight: 700; }
+    .article-body ol { counter-reset: ol; }
+    .article-body ol li { counter-increment: ol; }
+    .article-body ol li::before { content: counter(ol)'.'; position: absolute; left: 0; color: var(--green); font-family: var(--font-display); font-weight: 700; }
+    .tip-box { background: rgba(0,255,136,0.05); border: 1px solid rgba(0,255,136,0.18); border-radius: 14px; padding: 20px 24px; margin: 24px 0; }
+    .tip-box strong { color: var(--green); font-family: var(--font-display); display: block; margin-bottom: 8px; font-size: 0.9rem; letter-spacing: 0.05em; text-transform: uppercase; }
+    .tip-box p { color: rgba(240,240,248,0.8); font-size: 0.9rem; margin: 0; line-height: 1.65; }
+    .warn-box { background: rgba(255,208,96,0.05); border: 1px solid rgba(255,208,96,0.2); border-radius: 14px; padding: 20px 24px; margin: 24px 0; }
+    .warn-box strong { color: #ffd060; font-family: var(--font-display); display: block; margin-bottom: 8px; font-size: 0.9rem; letter-spacing: 0.05em; text-transform: uppercase; }
+    .warn-box p { color: rgba(240,240,248,0.8); font-size: 0.9rem; margin: 0; line-height: 1.65; }
+    /* Таблиця порівняння */
+    .compare-table { width: 100%; border-collapse: collapse; margin: 28px 0; font-size: 0.9rem; }
+    .compare-table th { padding: 14px 16px; text-align: left; font-family: var(--font-display); font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; background: rgba(255,255,255,0.03); border-bottom: 1px solid var(--border); }
+    .compare-table th:nth-child(2) { color: var(--muted); }
+    .compare-table th:nth-child(3) { color: var(--green); }
+    .compare-table td { padding: 13px 16px; border-bottom: 1px solid rgba(255,255,255,0.04); color: rgba(240,240,248,0.8); vertical-align: top; line-height: 1.5; }
+    .compare-table td:first-child { font-weight: 600; color: var(--white); width: 30%; }
+    .compare-table tr:hover td { background: rgba(255,255,255,0.01); }
+    .badge-good { color: var(--green); font-weight: 600; }
+    .badge-bad { color: #ff4d6d; font-weight: 600; }
+    .badge-mid { color: #ffd060; font-weight: 600; }
+    .cta-block { background: var(--card); border: 1px solid rgba(0,255,136,0.2); border-radius: 20px; padding: 32px; margin: 48px 0; text-align: center; }
+    .cta-block h3 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 800; margin-bottom: 10px; }
+    .cta-block p { color: var(--muted); margin-bottom: 24px; font-size: 0.95rem; }
+    .cta-block a { display: inline-flex; background: var(--green); color: var(--black); padding: 14px 32px; border-radius: 100px; font-family: var(--font-display); font-weight: 700; text-decoration: none; }
+    .divider { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
+    .sidebar { position: sticky; top: 100px; }
+    .sidebar-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 24px; margin-bottom: 20px; }
+    .sidebar-card h4 { font-family: var(--font-display); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 16px; }
+    .toc-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+    .toc-list a { color: var(--muted); text-decoration: none; font-size: 0.85rem; line-height: 1.5; transition: color 0.2s; display: block; padding: 4px 0 4px 10px; border-left: 2px solid transparent; }
+    .toc-list a:hover { color: var(--white); border-left-color: var(--green); }
+    .related-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .related-list a { color: rgba(240,240,248,0.75); text-decoration: none; font-size: 0.875rem; line-height: 1.4; transition: color 0.2s; }
+    .related-list a:hover { color: var(--green); }
+    .related-list a::before { content: '→ '; color: var(--green); font-size: 0.75rem; }
+    footer { background: var(--dark); border-top: 1px solid var(--border); padding: 28px 40px; text-align: center; }
+    .footer-links { display: flex; justify-content: center; gap: 28px; margin-bottom: 12px; flex-wrap: wrap; }
+    .footer-links a { color: var(--muted); text-decoration: none; font-size: 0.85rem; }
+    footer p { color: var(--muted); font-size: 0.78rem; }
+    @media (max-width: 860px) {
+      nav { padding: 16px 20px; }
+      .page-wrap { grid-template-columns: 1fr; padding: 40px 20px 60px; gap: 40px; }
+      .sidebar { position: static; }
+      .compare-table { font-size: 0.8rem; }
+      .compare-table td, .compare-table th { padding: 10px 10px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="logo">Index<span>Fast</span></a>
+  <div class="nav-right">
+    <a href="/blog/" class="nav-link">← Блог</a>
+    <a href="/app/login" class="nav-link">Увійти</a>
+    <a href="/app/register" class="nav-cta">Спробувати безкоштовно</a>
+  </div>
+</nav>
+
+<div class="page-wrap">
+  <article>
+    <div class="article-meta">
+      <span class="meta-tag">Порівняння</span>
+      <span class="meta-date">5 квітня 2025</span>
+      <span class="meta-read">⏱ 9 хвилин читання</span>
+    </div>
+
+    <h1>Google Indexing API vs Sitemap — що ефективніше для індексації у 2025 році</h1>
+
+    <p class="article-lead">
+      Існує два принципово різні підходи до того, щоб Google проіндексував ваш сайт: традиційний sitemap.xml і сучасний Google Indexing API. Один чекає на Googlebot, інший — сам повідомляє Google. Розбираємо коли що використовувати і чи можна поєднати обидва методи.
+    </p>
+
+    <div class="article-body">
+
+      <h2 id="how-sitemap-works">Як працює sitemap.xml</h2>
+
+      <p>Sitemap.xml — це XML-файл зі списком URL вашого сайту. Ви розміщуєте його на сервері, повідомляєте Google через Search Console або robots.txt — і чекаєте. Googlebot сам вирішує коли і що сканувати, спираючись на свій crawl budget.</p>
+
+      <p>Процес виглядає так:</p>
+      <ol>
+        <li>Ви публікуєте сторінку і оновлюєте sitemap</li>
+        <li>Googlebot планово перевіряє sitemap (раз на кілька днів або тижнів)</li>
+        <li>Googlebot ставить нові URL у чергу сканування</li>
+        <li>Через деякий час (від годин до місяців) сканує сторінки</li>
+        <li>Після сканування — вирішує чи додавати до індексу</li>
+      </ol>
+
+      <p>Ключове слово тут — <strong>«вирішує»</strong>. Googlebot має повну свободу ігнорувати sitemap або відкладати сканування. Ваш sitemap — це лише підказка, не команда.</p>
+
+      <h2 id="how-api-works">Як працює Google Indexing API</h2>
+
+      <p>Google Indexing API — це офіційний API Google, який дозволяє безпосередньо повідомляти пошукову систему про нові або оновлені сторінки. Замість чекання Googlebot ви самі ініціюєте сканування.</p>
+
+      <p>Процес виглядає так:</p>
+      <ol>
+        <li>Ви публікуєте сторінку</li>
+        <li>Відправляєте POST-запит до API з URL сторінки</li>
+        <li>Google ставить URL у пріоритетну чергу сканування</li>
+        <li>Googlebot сканує сторінку протягом кількох хвилин або годин</li>
+        <li>Сторінка з'являється в індексі — зазвичай за кілька годин</li>
+      </ol>
+
+      <div class="tip-box">
+        <strong>📊 Реальні цифри</strong>
+        <p>За даними SEO-спеціалістів, які використовують Indexing API: 80–95% URL індексуються протягом 24 годин після відправки запиту. Без API очікування може тривати від 3 днів до 3 місяців.</p>
+      </div>
+
+      <h2 id="comparison">Детальне порівняння</h2>
+
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Критерій</th>
+            <th>Sitemap.xml</th>
+            <th>Indexing API</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Швидкість індексації</td>
+            <td><span class="badge-bad">Від 3 днів до кількох місяців</span></td>
+            <td><span class="badge-good">Від кількох годин до доби</span></td>
+          </tr>
+          <tr>
+            <td>Контроль</td>
+            <td><span class="badge-bad">Мінімальний — Google сам вирішує</span></td>
+            <td><span class="badge-good">Висока — ви ініціюєте сканування</span></td>
+          </tr>
+          <tr>
+            <td>Складність налаштування</td>
+            <td><span class="badge-good">Дуже просто — один XML-файл</span></td>
+            <td><span class="badge-mid">Середня — потрібен Service Account</span></td>
+          </tr>
+          <tr>
+            <td>Вартість</td>
+            <td><span class="badge-good">Безкоштовно</span></td>
+            <td><span class="badge-good">Безкоштовно (є ліміти)</span></td>
+          </tr>
+          <tr>
+            <td>Ліміти</td>
+            <td>Не більше 50 000 URL в одному sitemap</td>
+            <td>200 запитів на день на сайт (для більшості)</td>
+          </tr>
+          <tr>
+            <td>Типи контенту</td>
+            <td><span class="badge-good">Будь-які сторінки</span></td>
+            <td><span class="badge-mid">Офіційно — тільки JobPosting і BroadcastEvent, але на практиці працює для всіх</span></td>
+          </tr>
+          <tr>
+            <td>Ефективність при великих сайтах</td>
+            <td><span class="badge-bad">Низька — crawl budget обмежений</span></td>
+            <td><span class="badge-good">Висока — пріоритетна черга</span></td>
+          </tr>
+          <tr>
+            <td>Видалення з індексу</td>
+            <td><span class="badge-bad">Тільки через Search Console</span></td>
+            <td><span class="badge-good">URL_DELETED-запит</span></td>
+          </tr>
+          <tr>
+            <td>Підтримка</td>
+            <td><span class="badge-good">Офіційна, стабільна</span></td>
+            <td><span class="badge-good">Офіційна, активно розвивається</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2 id="when-sitemap">Коли достатньо sitemap.xml</h2>
+
+      <p>Sitemap.xml є достатнім рішенням якщо:</p>
+      <ul>
+        <li>Ваш сайт невеликий (до 100–200 сторінок) і давно існує</li>
+        <li>Контент оновлюється рідко — раз на тиждень і рідше</li>
+        <li>SEO — не пріоритет, терміновості немає</li>
+        <li>Сайт має високий crawl budget (новинні сайти, великі авторитетні домени)</li>
+        <li>У вас немає технічних ресурсів для налаштування API</li>
+      </ul>
+
+      <h2 id="when-api">Коли потрібен Google Indexing API</h2>
+
+      <p>API стає необхідністю якщо:</p>
+      <ul>
+        <li><strong>Інтернет-магазин</strong> — нові товари мають з'являтися в пошуку якнайшвидше</li>
+        <li><strong>Новинний сайт</strong> — актуальність контенту критична, години мають значення</li>
+        <li><strong>Великий сайт</strong> — тисячі сторінок, crawl budget не встигає</li>
+        <li><strong>Часті оновлення</strong> — ціни, наявність товарів, актуальна інформація</li>
+        <li><strong>Новий сайт</strong> — потрібно швидко набрати проіндексовану базу</li>
+        <li><strong>Після редизайну</strong> — масово переіндексувати оновлені сторінки</li>
+      </ul>
+
+      <div class="tip-box">
+        <strong>💡 Рішення для будь-якого сайту</strong>
+        <p>IndexFast автоматизує роботу з Indexing API — ви додаєте sitemap URL, сервіс сам відправляє запити і звітує про результати. Не потрібно писати код або розбиратися з Google Cloud Console.</p>
+      </div>
+
+      <h2 id="combine">Оптимальна стратегія: поєднати обидва методи</h2>
+
+      <p>Найефективніший підхід — використовувати sitemap і API одночасно. Вони не суперечать одне одному.</p>
+
+      <p><strong>Ваш sitemap.xml</strong> — для загального покриття сайту, щоб Googlebot мав повну карту всіх URL. Це базовий рівень, він завжди має бути актуальним.</p>
+
+      <p><strong>Google Indexing API</strong> — для нових і оновлених сторінок. Кожного разу коли публікується новий матеріал або змінюється важлива сторінка — відправляйте запит через API.</p>
+
+      <div class="warn-box">
+        <strong>⚠ Важливо про ліміти API</strong>
+        <p>За замовчуванням Google дає 200 запитів на добу. Для більшості сайтів цього достатньо. Якщо потрібно більше — можна подати заявку на збільшення ліміту через Google Cloud Console, або розподілити запити на кілька днів через чергу.</p>
+      </div>
+
+      <h2 id="setup-api">Як налаштувати Google Indexing API</h2>
+
+      <h3>Варіант 1: Вручну через Google Cloud Console</h3>
+      <ol>
+        <li>Створіть проєкт в Google Cloud Console</li>
+        <li>Увімкніть Google Indexing API</li>
+        <li>Створіть Service Account і завантажте JSON-ключ</li>
+        <li>Додайте email Service Account як власника сайту в Search Console</li>
+        <li>Відправляйте POST-запити до <code style="background:rgba(255,255,255,0.06);padding:2px 6px;border-radius:4px">https://indexing.googleapis.com/v3/urlNotifications:publish</code></li>
+      </ol>
+
+      <h3>Варіант 2: Через IndexFast (автоматично)</h3>
+      <ol>
+        <li>Зареєструйтесь в IndexFast</li>
+        <li>Додайте сайт і вставте JSON-ключ Service Account</li>
+        <li>Натисніть «Запустити» — IndexFast сам відправить всі URL зі sitemap</li>
+        <li>Дивіться результати в логах у реальному часі</li>
+      </ol>
+
+      <div class="cta-block">
+        <h3>Спробуйте IndexFast — безкоштовно</h3>
+        <p>Налаштуйте автоматичну індексацію за 5 хвилин. Не потрібно писати код — просто додайте сайт і натисніть «Старт».</p>
+        <a href="/app/register">Почати безкоштовно →</a>
+      </div>
+
+      <h2 id="summary">Висновок</h2>
+
+      <p>Sitemap.xml — це базовий необхідний мінімум для будь-якого сайту. Google Indexing API — це інструмент для тих, кому важлива швидкість і контроль над індексацією.</p>
+
+      <p>Якщо ваш бізнес залежить від видимості в пошуку — не чекайте Googlebot. Відправте URL через API сьогодні і побачите результат вже завтра.</p>
+
+    </div>
+  </article>
+
+  <aside class="sidebar">
+    <div class="sidebar-card">
+      <h4>Зміст статті</h4>
+      <ul class="toc-list">
+        <li><a href="#how-sitemap-works">Як працює sitemap.xml</a></li>
+        <li><a href="#how-api-works">Як працює Indexing API</a></li>
+        <li><a href="#comparison">Порівняльна таблиця</a></li>
+        <li><a href="#when-sitemap">Коли достатньо sitemap</a></li>
+        <li><a href="#when-api">Коли потрібен API</a></li>
+        <li><a href="#combine">Оптимальна стратегія</a></li>
+        <li><a href="#setup-api">Як налаштувати API</a></li>
+        <li><a href="#summary">Висновок</a></li>
+      </ul>
+    </div>
+    <div class="sidebar-card">
+      <h4>Читайте також</h4>
+      <ul class="related-list">
+        <li><a href="/blog/yak-pryskoriti-indeksaciyu-saitu-v-google.html">Як прискорити індексацію сайту</a></li>
+        <li><a href="/blog/shcho-take-sitemap-xml.html">Що таке sitemap.xml</a></li>
+        <li><a href="/blog/yak-pereviriti-indeksaciyu-saitu.html">Як перевірити індексацію</a></li>
+        <li><a href="/blog/chomu-sait-ne-indeksuyetsya.html">Чому сайт не індексується</a></li>
+      </ul>
+    </div>
+    <div class="sidebar-card" style="background: rgba(0,255,136,0.05); border-color: rgba(0,255,136,0.2);">
+      <h4 style="color: var(--green);">Спробуйте IndexFast</h4>
+      <p style="font-size:0.85rem; color:var(--muted); margin-bottom:16px; line-height:1.5;">Автоматична індексація через Google Indexing API. Безкоштовний старт.</p>
+      <a href="/app/register" style="display:block; background:var(--green); color:var(--black); text-align:center; padding:10px; border-radius:100px; font-family:var(--font-display); font-weight:700; font-size:0.85rem; text-decoration:none;">Безкоштовно →</a>
+    </div>
+  </aside>
+</div>
+
+<footer>
+  <div class="footer-links">
+    <a href="/">Головна</a>
+    <a href="/blog/">Блог</a>
+    <a href="/docs/">Документація</a>
+    <a href="/privacy-policy.html">Конфіденційність</a>
+    <a href="/terms.html">Умови</a>
+  </div>
+  <p>© 2025 IndexFast. Всі права захищені.</p>
+</footer>
+
+</body>
+</html>

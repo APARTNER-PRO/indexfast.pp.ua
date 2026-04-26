@@ -75,6 +75,10 @@ export default function Profile({ user, onUpdate, showToast }) {
   const [surname, setSurname] = useState(user?.surname ?? "");
   const [savingInfo, setSavingInfo] = useState(false);
 
+  // ── Marketing consent
+  const [marketing,     setMarketing]    = useState(user?.marketing_consent ?? false);
+  const [savingMarketing, setSavingMarketing] = useState(false);
+
   // ── Email
   const [email,      setEmail]      = useState(user?.email ?? "");
   const [savingEmail, setSavingEmail] = useState(false);
@@ -94,6 +98,7 @@ export default function Profile({ user, onUpdate, showToast }) {
       setName(user.name ?? "");
       setSurname(user.surname ?? "");
       setEmail(user.email ?? "");
+      setMarketing(user.marketing_consent ?? false);
     }
   }, [user?.id]);
 
@@ -131,6 +136,22 @@ export default function Profile({ user, onUpdate, showToast }) {
       showToast(e.message || "Помилка зміни email", "error");
     } finally {
       setSavingEmail(false);
+    }
+  }
+
+  // ── Маркетинг
+  async function saveMarketing(val) {
+    setMarketing(val);
+    setSavingMarketing(true);
+    try {
+      await apiClient.updateProfile({ marketing_consent: val });
+      qc.invalidateQueries({ queryKey: KEYS.stats });
+      showToast(val ? "✓ Підписку оновлено" : "✓ Відписано від розсилки");
+    } catch (e) {
+      setMarketing(!val); // rollback
+      showToast(e.message || "Помилка збереження", "error");
+    } finally {
+      setSavingMarketing(false);
     }
   }
 
@@ -295,6 +316,44 @@ export default function Profile({ user, onUpdate, showToast }) {
             Після зміни пароля вас буде розлоговано.
           </p>
         </form>
+      </Section>
+
+      {/* ── Маркетингові листи */}
+      <Section title="Email розсилка">
+        <label style={{ display: "flex", alignItems: "flex-start", gap: 14,
+          cursor: savingMarketing ? "not-allowed" : "pointer" }}>
+          <div style={{ position: "relative", flexShrink: 0, marginTop: 2 }}>
+            <input type="checkbox"
+              checked={marketing}
+              disabled={savingMarketing}
+              onChange={e => saveMarketing(e.target.checked)}
+              style={{ width: 18, height: 18, cursor: "pointer", accentColor: C.green }}/>
+          </div>
+          <div>
+            <div style={{ fontWeight: 600, fontSize: 14, marginBottom: 4 }}>
+              Отримувати маркетингові листи
+              {savingMarketing && (
+                <span style={{ marginLeft: 8, fontSize: 11, color: C.muted }}>
+                  збережено...
+                </span>
+              )}
+            </div>
+            <div style={{ fontSize: 13, color: C.muted, lineHeight: 1.6 }}>
+              Новини продукту, оновлення IndexFast та спеціальні пропозиції.
+              Транзакційні листи (підтвердження, сповіщення) надсилаються завжди.
+            </div>
+            {!marketing && (
+              <div style={{ fontSize: 12, color: C.gold, marginTop: 6 }}>
+                ○ Ви відписані від маркетингових листів
+              </div>
+            )}
+            {marketing && (
+              <div style={{ fontSize: 12, color: C.green, marginTop: 6 }}>
+                ✓ Ви підписані на маркетингові листи
+              </div>
+            )}
+          </div>
+        </label>
       </Section>
 
       {/* ── Небезпечна зона */}

@@ -11,7 +11,7 @@ $uid = (int)requireAuth()['sub'];
 
 // ── 1. Юзер
 $user = DB::row(
-    "SELECT id, name, surname, email, plan, avatar_url FROM users WHERE id = ?",
+    "SELECT id, name, surname, email, email_verified, marketing_consent, plan, avatar_url FROM users WHERE id = ?",
     [$uid]
 );
 if (!$user) respond(404, 'Користувача не знайдено');
@@ -53,9 +53,24 @@ try {
     error_log('[stats] sites query failed: ' . $e->getMessage());
 }
 
-// ── 4. Активні jobs (простий запит без ROW_NUMBER)
-$activeJobs = [];
+// ── 4. has_sa — чи є service_account для кожного сайту
+$sitesHasSa = [];
 $siteIds = array_column($sites, 'id');
+if ($siteIds) {
+    try {
+        $in = implode(',', array_fill(0, count($siteIds), '?'));
+        $saRows = DB::all(
+            "SELECT site_id FROM site_credentials WHERE site_id IN ({$in})",
+            $siteIds
+        );
+        foreach ($saRows as $r) $sitesHasSa[$r['site_id']] = true;
+    } catch (Throwable $e) {
+        error_log('[stats] has_sa query failed: ' . $e->getMessage());
+    }
+}
+
+// ── 5. Активні jobs (простий запит без ROW_NUMBER)
+$activeJobs = [];
 if ($siteIds) {
     try {
         $in = implode(',', array_fill(0, count($siteIds), '?'));
@@ -115,13 +130,15 @@ try {
 
 respondOk('OK', [
     'user' => [
-        'id'         => (int)$user['id'],
-        'name'       => $user['name'],
-        'surname'    => $user['surname'],
-        'email'      => $user['email'],
-        'plan'       => $plan,
-        'plan_label' => $cfg['label'],
-        'avatar_url' => $user['avatar_url'],
+        'id'             => (int)$user['id'],
+        'name'           => $user['name'],
+        'surname'        => $user['surname'],
+        'email'          => $user['email'],
+        'email_verified'     => (bool)$user['email_verified'],
+        'marketing_consent'  => (bool)$user['marketing_consent'],
+        'plan'               => $plan,
+        'plan_label'     => $cfg['label'],
+        'avatar_url'     => $user['avatar_url'],
     ],
     'today' => [
         'sent'      => $todaySent,
@@ -139,6 +156,7 @@ respondOk('OK', [
         'total_urls'    => (int)$s['total_urls'],
         'indexed_total' => (int)$s['indexed_total'],
         'last_run_at'   => $s['last_run_at'],
+        'has_sa'        => isset($sitesHasSa[$s['id']]),
         'active_job'    => isset($activeJobs[$s['id']]) ? [
             'id'       => (int)$activeJobs[$s['id']]['id'],
             'status'   => $activeJobs[$s['id']]['status'],

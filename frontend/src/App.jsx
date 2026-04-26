@@ -38,6 +38,55 @@ function PageLoader() {
   );
 }
 
+
+// ══════════════════════════════════════════════
+//  Банер: підтвердіть email
+// ══════════════════════════════════════════════
+function EmailVerifyBanner({ email, showToast }) {
+  const [sending, setSending] = useState(false);
+  const [sent,    setSent]    = useState(false);
+
+  async function resend() {
+    setSending(true);
+    try {
+      await apiClient.resendVerify();
+      setSent(true);
+      showToast?.("✓ Лист надіслано на " + email);
+    } catch (e) {
+      showToast?.(e.message || "Помилка надсилання", "error");
+    } finally {
+      setSending(false);
+    }
+  }
+
+  return (
+    <div style={{
+      display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap",
+      background: "rgba(255,208,96,0.07)", border: "1px solid rgba(255,208,96,0.25)",
+      borderRadius: 12, padding: "12px 16px", marginBottom: 20, fontSize: 13,
+    }}>
+      <span style={{ fontSize: 18, flexShrink: 0 }}>📧</span>
+      <span style={{ flex: 1, color: "#e8d88a", lineHeight: 1.5 }}>
+        <strong>Підтвердіть email</strong> — перевірте пошту{" "}
+        <span style={{ opacity: 0.8 }}>{email}</span>
+        {" "}і натисніть на посилання в листі.
+      </span>
+      {!sent ? (
+        <button onClick={resend} disabled={sending}
+          style={{ flexShrink: 0, background: "rgba(255,208,96,0.15)",
+            border: "1px solid rgba(255,208,96,0.3)", color: "#ffd060",
+            borderRadius: 8, padding: "6px 14px", fontSize: 12,
+            fontWeight: 700, cursor: sending ? "not-allowed" : "pointer",
+            opacity: sending ? 0.6 : 1, whiteSpace: "nowrap" }}>
+          {sending ? "Надсилаємо..." : "Надіслати повторно"}
+        </button>
+      ) : (
+        <span style={{ color: "#00ff88", fontSize: 12, flexShrink: 0 }}>✓ Лист надіслано</span>
+      )}
+    </div>
+  );
+}
+
 // ══════════════════════════════════════════════
 //  Sidebar
 // ══════════════════════════════════════════════
@@ -362,6 +411,7 @@ export default function App() {
               onRun={setRunSite}
               onDelete={handleDelete}
               onToggle={handleToggle}
+              showToast={showToast}
             />
           </Suspense>
         );
@@ -469,6 +519,10 @@ export default function App() {
           />
 
           <main className="main-padding" style={{ padding: 28, flex: 1 }}>
+            {/* Банер підтвердження email */}
+            {user && user.email_verified === false && (
+              <EmailVerifyBanner email={user.email} showToast={showToast}/>
+            )}
             {renderPage()}
           </main>
         </div>
