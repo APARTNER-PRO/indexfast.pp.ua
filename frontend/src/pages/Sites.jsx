@@ -1,7 +1,6 @@
 // src/pages/Sites.jsx  ← окремий chunk (lazy)
 import { memo, useState, useEffect } from "react";
 import { SitesTable }       from "../components/SitesTable.jsx";
-import { GscImportModal }  from "../components/GscImportModal.jsx";
 import { EditSiteModal }   from "../components/EditSiteModal.jsx";
 import { Btn, Badge }    from "../components/ui/index.jsx";
 import { C }             from "../constants.js";
@@ -11,14 +10,8 @@ export default memo(function Sites({
   today, onAddSite, onRun, onDelete, onToggle,
 }) {
   const [filter,  setFilter]  = useState("all");
-  const [gscOpen,  setGscOpen]  = useState(false);
   const [editSite, setEditSite] = useState(null); // сайт для редагування
 
-  // Автоматично відкриваємо GSC modal після OAuth redirect
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    if (params.get("gsc")) setGscOpen(true);
-  }, []);
 
   const filtered = filter === "all"
     ? sitesList
@@ -147,14 +140,6 @@ export default memo(function Sites({
       site={editSite}
     />
 
-    <GscImportModal
-      open={gscOpen}
-      onClose={() => setGscOpen(false)}
-      onImported={() => setGscOpen(false)}
-      plan={plan}
-      sitesCount={sitesList.length}
-      sitesLimit={sitesLimit}
-    />
     </>
   );
 });
