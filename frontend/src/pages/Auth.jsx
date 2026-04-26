@@ -43,21 +43,22 @@ export default function Auth() {
   const emailTimer = useRef(null);
   const [emailError, setEmailError] = useState("");
 
-  // ── Google OAuth: обробляємо токени з URL fragment #token=...&refresh=...
+  // ── Google OAuth: обробляємо токени з URL (fragment або query)
   useEffect(() => {
-    const hash = window.location.hash;
-    if (hash && hash.includes("token=")) {
-      const params = new URLSearchParams(hash.slice(1)); // прибираємо #
-      const accessToken  = params.get("token");
-      const refreshToken = params.get("refresh");
-      if (accessToken) {
-        localStorage.setItem("access_token",  accessToken);
-        localStorage.setItem("refresh_token", refreshToken || "");
-        // Очищаємо fragment з URL (токени не повинні залишатись в history)
-        window.history.replaceState(null, "", window.location.pathname);
-        navigate("/app/dashboard", { replace: true });
-        return;
-      }
+    const search = new URLSearchParams(window.location.search);
+    const hash   = new URLSearchParams(window.location.hash.slice(1));
+    
+    const accessToken  = search.get("token")   || hash.get("token");
+    const refreshToken = search.get("refresh") || hash.get("refresh");
+
+    if (accessToken) {
+      localStorage.setItem("access_token",  accessToken);
+      localStorage.setItem("refresh_token", refreshToken || "");
+      
+      // Очищаємо URL та редіректимо в кабінет
+      window.history.replaceState(null, "", window.location.pathname);
+      navigate("/app/dashboard", { replace: true });
+      return;
     }
     // Redirect якщо вже авторизований
     if (localStorage.getItem("access_token")) {
