@@ -36,7 +36,14 @@ function Loader() {
 
 // ── Guard для авторизованих
 function RequireAuth() {
-  if (!localStorage.getItem("access_token")) {
+  const hasTokenInStorage = !!localStorage.getItem("access_token");
+  
+  // Перевіряємо також URL (якщо щойно редіректнуло з Google)
+  const params = new URLSearchParams(window.location.search);
+  const hash   = new URLSearchParams(window.location.hash.slice(1));
+  const hasTokenInUrl = params.has("token") || hash.has("token");
+
+  if (!hasTokenInStorage && !hasTokenInUrl) {
     return <Navigate to="/app/login" replace state={{ from: window.location.pathname }}/>;
   }
   return <Outlet/>;

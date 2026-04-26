@@ -252,19 +252,20 @@ export default function App() {
     }
   }, []);
 
-  // ── Google OAuth: якщо прийшли на /app/dashboard з #token= у fragment
-  // (токени вже збережені в Auth.jsx, але на випадок прямого переходу)
+  // ── Google OAuth: якщо прийшли на /app/dashboard з token у fragment або query
   useEffect(() => {
-    const hash = window.location.hash;
-    if (hash && hash.includes("token=")) {
-      const params = new URLSearchParams(hash.slice(1));
-      const accessToken  = params.get("token");
-      const refreshToken = params.get("refresh");
-      if (accessToken) {
-        localStorage.setItem("access_token",  accessToken);
-        if (refreshToken) localStorage.setItem("refresh_token", refreshToken);
-        window.history.replaceState(null, "", window.location.pathname);
-      }
+    const search = new URLSearchParams(window.location.search);
+    const hash   = new URLSearchParams(window.location.hash.slice(1));
+    
+    const accessToken  = search.get("token")   || hash.get("token");
+    const refreshToken = search.get("refresh") || hash.get("refresh");
+
+    if (accessToken) {
+      localStorage.setItem("access_token",  accessToken);
+      if (refreshToken) localStorage.setItem("refresh_token", refreshToken);
+      
+      // Очищаємо URL від токенів
+      window.history.replaceState(null, "", window.location.pathname);
     }
   }, []);
   const [activePage, setActivePage] = useState("overview");
