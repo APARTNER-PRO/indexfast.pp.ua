@@ -361,3 +361,25 @@ https://indexfast.pp.ua/
 - `public_html/dashboard/` (після npm run build)
 
 `vercel.json` вже є в архіві з правильними redirects.
+
+
+## Підписки і білінг
+
+### Cron завершення підписок
+Додайте в crontab (crontab -e):
+```
+5 0 * * * php /home/USERNAME/worker/expire_subscriptions.php >> /home/USERNAME/logs/expire.log 2>&1
+```
+Запускається щодня о 00:05. Скидає прострочені підписки на план Start і надсилає нагадування за 3 дні.
+
+### Paddle Webhook
+В Paddle Dashboard → Notifications → New Notification:
+- URL: https://indexfast.pp.ua/api/billing/paddle_webhook.php
+- Events: subscription.created, subscription.activated, subscription.updated,
+          subscription.canceled, subscription.payment_failed, transaction.completed
+- Скопіюйте Webhook Secret → PADDLE_WEBHOOK_SECRET в .env
+
+### Ручне встановлення плану (адмінка)
+POST /api/billing/set_plan.php
+Header: X-Admin-Secret: ваш_ADMIN_SECRET
+Body: { "user_id": 1, "plan": "pro", "months": 1 }
