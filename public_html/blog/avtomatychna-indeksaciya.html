@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23050508'/><text x='16' y='22' font-family='system-ui,sans-serif' font-size='15' font-weight='800' fill='%2300ff88' text-anchor='middle'>IF</text></svg>">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Автоматична індексація сайту в Google: налаштування і кращі рішення 2025 — IndexFast</title>
+  <meta name="description" content="Як налаштувати автоматичну індексацію нових сторінок у Google через Indexing API. Порівняння підходів: власний скрипт, WordPress плагіни і IndexFast без коду.">
+  <meta name="keywords" content="автоматична індексація google, автоматична відправка url google, auto indexing google, автоматизація індексації, indexing api автоматизація">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+  <link rel="canonical" href="https://indexfast.pp.ua/blog/avtomatychna-indeksaciya.html">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://indexfast.pp.ua/blog/avtomatychna-indeksaciya.html">
+  <meta property="og:title" content="Автоматична індексація сайту в Google: налаштування і кращі рішення 2025">
+  <meta property="og:description" content="Як налаштувати автоматичну індексацію нових сторінок у Google через Indexing API. Порівняння підходів: власний скрипт, WordPress плагіни і IndexFast без коду.">
+  <meta property="og:image" content="https://indexfast.pp.ua/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="uk_UA">
+  <meta property="article:published_time" content="2025-12-20T10:00:00+02:00">
+  <meta property="article:modified_time" content="2025-12-20T10:00:00+02:00">
+  <meta property="article:author" content="IndexFast">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Article","headline":"Автоматична індексація сайту в Google: налаштування і кращі рішення 2025","description":"Як налаштувати автоматичну індексацію нових сторінок у Google через Indexing API. Порівняння підходів: власний скрипт, WordPress плагіни і IndexFast без коду.","inLanguage":"uk",
+    "author":{"@type":"Organization","name":"IndexFast","url":"https://indexfast.pp.ua"},
+    "publisher":{"@type":"Organization","name":"IndexFast","url":"https://indexfast.pp.ua"},
+    "datePublished":"2025-12-20","dateModified":"2025-12-20","url":"https://indexfast.pp.ua/blog/avtomatychna-indeksaciya.html",
+    "mainEntityOfPage":{"@type":"WebPage","@id":"https://indexfast.pp.ua/blog/avtomatychna-indeksaciya.html"},
+    "image":{"@type":"ImageObject","url":"https://indexfast.pp.ua/og-image.jpg","width":1200,"height":630}}
+  </script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[
+    {"@type":"ListItem","position":1,"name":"Головна","item":"https://indexfast.pp.ua/"},
+    {"@type":"ListItem","position":2,"name":"Блог","item":"https://indexfast.pp.ua/blog/"},
+    {"@type":"ListItem","position":3,"name":"Автоматична індексація сайту в Google: налаштування і кращі рішення 2025","item":"https://indexfast.pp.ua/blog/avtomatychna-indeksaciya.html"}]}
+  </script>
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Автоматична індексація сайту в Google: налаштування і кращі рішення 2025">
+  <meta name="twitter:description" content="Як налаштувати автоматичну індексацію нових сторінок у Google через Indexing API. Порівняння підходів: власний скрипт, WordPress плагіни і IndexFast без коду.">
+  <meta name="twitter:image" content="https://indexfast.pp.ua/og-image.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --black: #050508; --dark: #0d0d14; --card: #12121c;
+      --border: rgba(255,255,255,0.07); --green: #00ff88;
+      --white: #f0f0f8; --muted: #7a7a95;
+      --font-display: 'Syne', sans-serif; --font-body: 'DM Sans', sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--black); color: var(--white); font-family: var(--font-body); font-weight: 300; }
+
+    nav {
+      position: sticky; top: 0; z-index: 100; padding: 18px 60px;
+      display: flex; align-items: center; justify-content: space-between;
+      background: rgba(5,5,8,0.95); backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .logo { font-family: var(--font-display); font-size: 1.4rem; font-weight: 800; letter-spacing: -0.03em; color: var(--white); text-decoration: none; }
+    .logo span { color: var(--green); }
+    .nav-right { display: flex; align-items: center; gap: 24px; }
+    .nav-link { color: var(--muted); text-decoration: none; font-size: 0.875rem; transition: color 0.2s; }
+    .nav-link:hover { color: var(--white); }
+    .nav-cta { background: var(--green); color: var(--black); padding: 8px 20px; border-radius: 100px; font-family: var(--font-display); font-weight: 700; font-size: 0.85rem; text-decoration: none; transition: box-shadow 0.2s; }
+    .nav-cta:hover { box-shadow: 0 0 20px rgba(0,255,136,0.4); }
+
+    /* LAYOUT */
+    .page-wrap { max-width: 1160px; margin: 0 auto; padding: 60px 40px 100px; display: grid; grid-template-columns: 1fr 300px; gap: 60px; align-items: start; }
+
+    /* ARTICLE */
+    article { min-width: 0; }
+    .article-meta { display: flex; align-items: center; gap: 16px; margin-bottom: 28px; flex-wrap: wrap; }
+    .meta-tag { background: rgba(0,255,136,0.08); border: 1px solid rgba(0,255,136,0.2); color: var(--green); padding: 4px 12px; border-radius: 100px; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
+    .meta-date { color: var(--muted); font-size: 0.85rem; }
+    .meta-read { color: var(--muted); font-size: 0.85rem; }
+
+    h1 { font-family: var(--font-display); font-size: clamp(1.9rem, 3.5vw, 2.8rem); font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 24px; }
+    .article-lead { font-size: 1.1rem; color: rgba(240,240,248,0.85); line-height: 1.75; margin-bottom: 40px; border-left: 3px solid var(--green); padding-left: 20px; }
+
+    .article-body h2 { font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; margin: 48px 0 16px; letter-spacing: -0.02em; scroll-margin-top: 80px; }
+    .article-body h3 { font-family: var(--font-display); font-size: 1.15rem; font-weight: 700; margin: 28px 0 12px; color: rgba(240,240,248,0.9); }
+    .article-body p { color: rgba(240,240,248,0.8); line-height: 1.8; margin-bottom: 18px; font-size: 1rem; }
+    .article-body ul, .article-body ol { margin: 16px 0 20px 0; display: flex; flex-direction: column; gap: 10px; }
+    .article-body ul li, .article-body ol li { color: rgba(240,240,248,0.8); line-height: 1.65; padding-left: 22px; position: relative; font-size: 0.975rem; }
+    .article-body ul li::before { content: '→'; position: absolute; left: 0; color: var(--green); font-weight: 700; }
+    .article-body ol { counter-reset: ol; }
+    .article-body ol li { counter-increment: ol; }
+    .article-body ol li::before { content: counter(ol)'.'; position: absolute; left: 0; color: var(--green); font-family: var(--font-display); font-weight: 700; }
+
+    .tip-box { background: rgba(0,255,136,0.05); border: 1px solid rgba(0,255,136,0.18); border-radius: 14px; padding: 20px 24px; margin: 24px 0; }
+    .tip-box strong { color: var(--green); font-family: var(--font-display); display: block; margin-bottom: 8px; font-size: 0.9rem; letter-spacing: 0.05em; text-transform: uppercase; }
+    .tip-box p { color: rgba(240,240,248,0.8); font-size: 0.9rem; margin: 0; line-height: 1.65; }
+
+    .code-block { background: var(--dark); border: 1px solid var(--border); border-radius: 12px; padding: 20px 24px; margin: 20px 0; font-family: 'Courier New', monospace; font-size: 0.85rem; color: var(--green); overflow-x: auto; line-height: 1.7; }
+
+    .cta-block { background: var(--card); border: 1px solid rgba(0,255,136,0.2); border-radius: 20px; padding: 32px; margin: 48px 0; text-align: center; }
+    .cta-block h3 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 800; margin-bottom: 10px; }
+    .cta-block p { color: var(--muted); margin-bottom: 24px; font-size: 0.95rem; }
+    .cta-block a { display: inline-flex; background: var(--green); color: var(--black); padding: 14px 32px; border-radius: 100px; font-family: var(--font-display); font-weight: 700; text-decoration: none; transition: box-shadow 0.2s; }
+    .cta-block a:hover { box-shadow: 0 0 30px rgba(0,255,136,0.4); }
+
+    .divider { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
+
+    /* SIDEBAR */
+    .sidebar { position: sticky; top: 100px; }
+    .sidebar-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 24px; margin-bottom: 20px; }
+    .sidebar-card h4 { font-family: var(--font-display); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 16px; }
+    .toc-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+    .toc-list a { color: var(--muted); text-decoration: none; font-size: 0.85rem; line-height: 1.5; transition: color 0.2s; display: block; padding: 4px 0 4px 10px; border-left: 2px solid transparent; }
+    .toc-list a:hover { color: var(--white); border-left-color: var(--green); }
+    .related-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .related-list a { color: rgba(240,240,248,0.75); text-decoration: none; font-size: 0.875rem; line-height: 1.4; transition: color 0.2s; }
+    .related-list a:hover { color: var(--green); }
+    .related-list a::before { content: '→ '; color: var(--green); font-size: 0.75rem; }
+
+    footer { background: var(--dark); border-top: 1px solid var(--border); padding: 28px 40px; text-align: center; }
+    .footer-links { display: flex; justify-content: center; gap: 28px; margin-bottom: 12px; flex-wrap: wrap; }
+    .footer-links a { color: var(--muted); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--white); }
+    footer p { color: var(--muted); font-size: 0.78rem; }
+
+    @media (max-width: 860px) {
+      nav { padding: 16px 20px; }
+      .page-wrap { grid-template-columns: 1fr; padding: 40px 20px 60px; gap: 40px; }
+      .sidebar { position: static; }
+    }
+      .nav-login {
+      color: var(--muted, #7a7a95);
+      font-size: 0.875rem;
+      text-decoration: none;
+      padding: 7px 16px;
+      border-radius: 100px;
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .nav-login:hover {
+      color: var(--white, #f0f0f8);
+      border-color: rgba(255,255,255,0.25);
+    }
+  </style>
+</head>
+<body>
+<nav>
+  <a href="/" class="logo">Index<span>Fast</span></a>
+  <div class="nav-right">
+    <a href="/blog/" class="nav-link">← Блог</a>
+    <a href="/app/login" class="nav-login">Увійти</a>
+    <a href="/app/register"" class="nav-cta">Спробувати безкоштовно</a>
+  </div>
+</nav>
+<div class="page-wrap">
+  <article>
+    <div class="article-meta">
+      <span class="meta-tag">Автоматизація</span>
+      <span class="meta-date">20 грудня 2025</span>
+      <span class="meta-read">⏱ 10 хвилин читання</span>
+    </div>
+    <h1>Автоматична індексація сайту в Google: налаштуйте раз — працює завжди</h1>
+    <p class="article-lead">Щодня нові сторінки чекають тижнями поки Google їх знайде? Автоматична індексація через Google Indexing API вирішує проблему раз і назавжди. Розбираємо три способи налаштування — від самописного скрипту до готового рішення без коду.</p>
+    <div class="article-body">
+      <h2 id="manual-pain">Проблема ручної роботи з індексацією</h2>
+      <p>Щодня ви публікуєте нові матеріали. Нові товари, статті, посадкові сторінки, оновлені ціни. І щодня одне і те саме питання: «Чому Google ще не показує нові сторінки?»</p>
+      <p>Ручне відправлення через Search Console — максимум 10–15 URL на день. Якщо у вас інтернет-магазин з десятками нових товарів щодня або активний блог — ручна робота просто не масштабується.</p>
+      <p>Автоматизація індексації вирішує цю проблему раз і назавжди.</p>
+
+      <h2 id="what-is-auto">Що таке автоматична індексація</h2>
+      <p>Автоматична індексація — це налаштований процес де кожна нова або оновлена сторінка автоматично відправляється в Google через Indexing API без вашої участі.</p>
+      <p>Схема виглядає так:</p>
+      <ol>
+        <li>Ви публікуєте новий матеріал або оновлюєте існуючий</li>
+        <li>Система виявляє зміну (через sitemap або webhook від CMS)</li>
+        <li>URL автоматично відправляється через Google Indexing API</li>
+        <li>Googlebot сканує сторінку протягом кількох годин</li>
+        <li>Сторінка з'являється в результатах пошуку — цього ж дня</li>
+      </ol>
+
+      <div class="tip-box">
+        <strong>💡 Порівняння підходів</strong>
+        <p>Без автоматизації нова стаття чекає індексації 14–60 днів. З автоматичною відправкою через Indexing API — 2–24 години. Для новинного сайту або активного магазину це різниця між першим і останнім місцем в гонці за трафіком.</p>
+      </div>
+
+      <h2 id="ways-to-automate">Способи налаштувати автоматичну індексацію</h2>
+
+      <h3>Варіант 1: Самостійно через Google Cloud + скрипт</h3>
+      <p>Технічний підхід який вимагає навичок програмування:</p>
+      <ul>
+        <li>Створити проєкт в Google Cloud Console</li>
+        <li>Увімкнути Google Indexing API</li>
+        <li>Створити Service Account з правами власника в Search Console</li>
+        <li>Написати скрипт (Python, PHP, Node.js) для відправки запитів</li>
+        <li>Налаштувати cron job для автоматичного запуску</li>
+        <li>Додати логування і обробку помилок</li>
+      </ul>
+      <p>Час налаштування: 4–8 годин для досвідченого розробника. Потрібна підтримка і моніторинг.</p>
+
+      <h3>Варіант 2: WordPress плагіни</h3>
+      <p>Існують плагіни (Rank Math, IndexNow, Instant Indexing) які автоматично відправляють нові пости. Обмеження: тільки для WordPress, налаштування може бути складним, не всі підтримують офіційний Google Indexing API.</p>
+
+      <h3>Варіант 3: IndexFast — без коду</h3>
+      <p>IndexFast автоматизує весь процес без написання коду:</p>
+      <ul>
+        <li>Підключаєте сайт і sitemap — один раз</li>
+        <li>Встановлюєте розклад: щодня, щогодини або після кожного оновлення sitemap</li>
+        <li>IndexFast сам читає sitemap, знаходить нові URL і відправляє їх через API</li>
+        <li>Всі результати — в зручному дашборді з логами</li>
+      </ul>
+      <p>Час налаштування: 5–10 хвилин. Підтримка будь-якої CMS.</p>
+
+      <div class="cta-block">
+        <h3>Налаштуйте автоматичну індексацію за 10 хвилин</h3>
+        <p>Підключіть сайт до IndexFast — і кожна нова сторінка автоматично відправлятиметься в Google. Більше не думайте про індексацію вручну.</p>
+        <a href="/app/register">Почати безкоштовно →</a>
+      </div>
+
+      <h2 id="limits">Ліміти Google Indexing API і як їх обійти</h2>
+      <p>Google Indexing API має ліміт: 200 запитів на добу на сайт за замовчуванням. Для більшості сайтів це достатньо, але є виключення:</p>
+      <ul>
+        <li><strong>Великі магазини</strong> з сотнями нових товарів щодня — потрібно запросити збільшення ліміту в Google Cloud Console</li>
+        <li><strong>Новинні сайти</strong> з десятками публікацій на день — IndexFast розподіляє відправку рівномірно протягом доби</li>
+        <li><strong>При першому підключенні</strong> — перші кілька днів відправляйте пріоритетні сторінки, потім решту</li>
+      </ul>
+
+      <div class="warn-box">
+        <strong>⚠ Не відправляйте все підряд</strong>
+        <p>Ліміт 200 URL на день — не на всі сторінки сайту одночасно. Відправляйте тільки сторінки з якісним контентом. Сторінки тегів, фільтрів і пагінації витрачають ліміт без реальної користі.</p>
+      </div>
+
+      <h2 id="cms-integration">Автоматизація для різних CMS</h2>
+
+      <h3>WordPress</h3>
+      <p>Налаштування в IndexFast: вкажіть URL sitemap (зазвичай /sitemap_index.xml або /post-sitemap.xml). IndexFast перевіряє sitemap кожну годину і відправляє нові URL автоматично.</p>
+
+      <h3>OpenCart / PrestaShop</h3>
+      <p>Генеруйте sitemap через вбудований інструмент або плагін. Підключіть URL sitemap в IndexFast — далі все автоматично.</p>
+
+      <h3>Самописний сайт</h3>
+      <p>Генеруйте або оновлюйте sitemap.xml при кожній публікації. Або використовуйте вебхук: при публікації новини → POST запит до IndexFast API → автоматична відправка.</p>
+
+      <h2 id="results">Реальні результати автоматизації</h2>
+      <p>Клієнти IndexFast відзначають:</p>
+      <ul>
+        <li>Новий контент з'являється в Google того ж дня публікації</li>
+        <li>Кількість проіндексованих сторінок зростає на 40–80% за перший місяць</li>
+        <li>Органічний трафік починає рости через 2–4 тижні після повної індексації</li>
+        <li>Нуль ручної роботи з відправкою URL — система працює самостійно</li>
+      </ul>
+
+      <hr style="border:none;border-top:1px solid rgba(255,255,255,0.07);margin:40px 0">
+
+      <h2 id="summary">Висновок: автоматизація — це інвестиція</h2>
+      <p>Витратити один раз 10 хвилин на налаштування IndexFast — і забути про проблему індексації назавжди. Кожна нова сторінка буде в Google того ж дня. Конкуренти що досі роблять це вручну або чекають Googlebot — назавжди відстануть.</p>
+      <p>Почніть з безкоштовного плану: 20 URL на день достатньо щоб перевірити роботу системи вже завтра вранці.</p>
+    </div>
+  </article>
+  <aside class="sidebar">
+    <div class="sidebar-card">
+      <h4>Зміст статті</h4>
+      <ul class="toc-list">
+        <li><a href="#manual-pain">Проблема ручної роботи</a></li>
+        <li><a href="#what-is-auto">Що таке автоматична індексація</a></li>
+        <li><a href="#ways-to-automate">Способи автоматизації</a></li>
+        <li><a href="#limits">Ліміти API і як їх обійти</a></li>
+        <li><a href="#cms-integration">Автоматизація для різних CMS</a></li>
+        <li><a href="#results">Реальні результати</a></li>
+        <li><a href="#summary">Висновок</a></li>
+      </ul>
+    </div>
+    <div class="sidebar-card">
+      <h4>Читайте також</h4>
+      <ul class="related-list">
+        <li><a href="/blog/yak-pryskoriti-indeksaciyu-saitu-v-google.html">Як прискорити індексацію</a></li>
+        <li><a href="/blog/masova-indeksaciya-saitu.html">Масова індексація 500+ сторінок</a></li>
+        <li><a href="/blog/google-indexing-api-vs-sitemap.html">Google Indexing API vs Sitemap</a></li>
+        <li><a href="/blog/wordpress-indeksaciya.html">Індексація WordPress</a></li>
+      </ul>
+    </div>
+    <div class="sidebar-card" style="background: rgba(0,255,136,0.05); border-color: rgba(0,255,136,0.2);">
+      <h4 style="color: var(--green);">Спробуйте IndexFast</h4>
+      <p style="font-size:0.85rem; color:var(--muted); margin-bottom:16px; line-height:1.5;">Автоматична індексація всіх сторінок через Google Indexing API</p>
+      <a href="/#pricing" style="display:block; background:var(--green); color:var(--black); text-align:center; padding:10px; border-radius:100px; font-family:var(--font-display); font-weight:700; font-size:0.85rem; text-decoration:none;">Безкоштовно →</a>
+    </div>
+  </aside>
+</div>
+<footer>
+  <div class="footer-links">
+    <a href="/">Головна</a>
+    <a href="/about.html">Про нас</a>
+    <a href="/blog/">Блог</a>
+    <a href="/docs/">Документація</a>
+    <a href="/privacy-policy.html">Конфіденційність</a>
+    <a href="/terms.html">Умови</a>
+    <a href="/status.html">Статус</a>
+  </div>
+  <p>© 2026 IndexFast. Всі права захищені.</p>
+</footer>
+</body>
+</html>
