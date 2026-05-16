@@ -96,6 +96,20 @@
       .page-wrap { grid-template-columns: 1fr; padding: 40px 20px 60px; gap: 40px; }
       .sidebar { position: static; }
     }
+      /* BACK TO TOP */
+    .back-to-top {
+      position: fixed; bottom: 30px; right: 30px; width: 50px; height: 50px;
+      background: rgba(0, 255, 136, 0.1); backdrop-filter: blur(10px);
+      border: 1px solid rgba(0, 255, 136, 0.3); color: var(--green); border-radius: 50%;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      z-index: 1000; opacity: 0; visibility: hidden; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+    .back-to-top.visible { opacity: 1; visibility: visible; bottom: 40px; }
+    .back-to-top:hover {
+      background: var(--green); color: var(--black); transform: translateY(-5px);
+      box-shadow: 0 0 30px rgba(0, 255, 136, 0.4);
+    }
   </style>
 </head>
 <body>
@@ -251,7 +265,37 @@
     </div>
   </aside>
 </div>
-<footer><div class="footer-links"><a href="/">Головна</a><a href="/blog/">Блог</a><a href="/docs/">Документація</a></div><p>© 2026 IndexFast. Всі права захищені.</p></footer>
+<footer>
+  <div class="footer-links">
+    <a href="/">Головна</a>
+    <a href="/about.html">Про нас</a>
+    <a href="/blog/">Блог</a>
+    <a href="/docs/">Документація</a>
+    <a href="/privacy-policy.html">Конфіденційність</a>
+    <a href="/terms.html">Умови</a>
+    <a href="/contacts.html">Контакти</a>
+    <a href="/status.html">Статус</a>
+    <a href="mailto:indexfastapp@gmail.com">indexfastapp@gmail.com</a>
+  </div>
+  <p>© 2026 IndexFast. Всі права захищені.</p>
+  <button id="backToTop" class="back-to-top" aria-label="Вгору">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+  </button>
+</footer>
+<script>
+  // Back to Top
+  const backToTop = document.getElementById('backToTop');
+  window.addEventListener('scroll', () => {
+    if (window.pageYOffset > 500) {
+      backToTop.classList.add('visible');
+    } else {
+      backToTop.classList.remove('visible');
+    }
+  });
+  backToTop.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+</script>
 </body>
 </html>
 
