@@ -1,0 +1,18 @@
+# IndexFast
+
+IndexFast is a specialized service for instant website indexing in Google using the official Google Indexing API.
+
+## Core Features
+- **Instant Indexing**: Reduces indexing time from weeks to 24-48 hours.
+- **Official API**: Uses Google Indexing API (legal and reliable).
+- **Automation**: Supports daily automated indexing via cron or internal scheduler.
+- **Sitemap Support**: Automatically parses sitemap.xml and nested sitemap indices.
+- **Quota Management**: Handles Google's 200 URL/day free quota automatically.
+
+## Integration
+Works with any platform that has a sitemap.xml (WordPress, Shopify, Wix, Laravel, etc.).
+
+## Links
+- Homepage: https://indexfast.pp.ua
+- Documentation: https://indexfast.pp.ua/docs/
+- Dashboard: https://indexfast.pp.ua/app/dashboard

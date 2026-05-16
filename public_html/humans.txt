@@ -1,0 +1,15 @@
+/* TEAM */
+Chef: APARTNER-PRO
+AI Developer: Antigravity AI (Google Deepmind)
+Location: Ukraine
+
+/* THANKS */
+Google: For the Indexing API
+Our Customers: For trusting us with their SEO
+
+/* SITE */
+Last update: 2026/05/16
+Language: Ukrainian, English
+Software: Vanilla JS, CSS3, HTML5, Google Cloud Platform
+Standards: HTML5, CSS3, JSON-LD, Schema.org
+Components: Custom ROI Calculator, Live Ticker, Promo System
