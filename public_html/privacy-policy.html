@@ -360,4 +360,19 @@
 
 <script>
   // Active sidebar link on scroll
-  const sections = docum
+  const sections = document.querySelectorAll('.section');
+  const sideLinks = document.querySelectorAll('.sidebar-nav a');
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        sideLinks.forEach(l => {
+          l.classList.toggle('active', l.getAttribute('href') === '#' + id);
+        });
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '-100px 0px -60% 0px' });
+
+  sections.forEach(s => observer.observe(s));
+</script>
