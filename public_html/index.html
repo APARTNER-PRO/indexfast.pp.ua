@@ -3802,12 +3802,13 @@
 
         // ── Trigger 3: MOBILE BACK BUTTON INTERCEPT
         if (window.history && window.history.pushState) {
-          window.history.pushState('forward', null, './#');
+          const cleanUrl = window.location.pathname + window.location.search;
+          window.history.pushState('forward', null, cleanUrl);
           window.onpopstate = function () {
             if (!popupShown && shouldShow()) {
               showPopup('back_button');
               // Stay on page
-              window.history.pushState('forward', null, './#');
+              window.history.pushState('forward', null, cleanUrl);
             }
           };
         }
@@ -3918,6 +3919,13 @@
         updateTicker();
         setInterval(updateTicker, 3000);
       }
+
+      // ── Mobile menu: close on nav link click
+      document.querySelectorAll('.nav-links a').forEach(link => {
+        link.addEventListener('click', () => {
+          document.querySelector('.nav-links').classList.remove('active');
+        });
+      });
 
     }); // DOMContentLoaded
   </script>
