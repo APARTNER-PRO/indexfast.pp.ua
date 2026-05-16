@@ -264,14 +264,74 @@
 
     /* ── FOOTER ── */
     footer {
-      background: var(--dark); border-top: 1px solid var(--border);
-      padding: 28px 40px; text-align: center;
+      background: var(--dark);
+      border-top: 1px solid var(--border);
+      padding: 60px 40px 40px;
+      text-align: left;
     }
-    .footer-links { display: flex; justify-content: center; gap: 28px; margin-bottom: 12px; flex-wrap: wrap; }
-    .footer-links a { color: var(--muted); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
-    .footer-links a:hover { color: var(--white); }
-    .footer-links a.active { color: var(--green); }
-    footer p { color: var(--muted); font-size: 0.78rem; }
+    .footer-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 60px;
+    }
+    .footer-brand p {
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.7;
+      margin-top: 16px;
+      max-width: 280px;
+    }
+    .footer-col h4 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      margin-bottom: 20px;
+      font-size: 0.9rem;
+      letter-spacing: 0.05em;
+    }
+    .footer-col ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .footer-col ul a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+    .footer-col ul a:hover {
+      color: var(--white);
+    }
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 48px auto 0;
+      padding-top: 28px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    .footer-bottom a {
+      color: var(--muted);
+      text-decoration: none;
+    }
+    .footer-bottom a:hover {
+      color: var(--white);
+    }
+
+    /* ── MOBILE ── */
+    @media (max-width: 900px) {
+      nav { padding: 0 20px; }
+      .status-hero { padding: 48px 20px 36px; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+      .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+      footer { padding: 40px 20px; }
+    }
 
     @media (max-width: 700px) {
       nav { padding: 16px 20px; }
@@ -620,17 +680,47 @@
 </div>
 
 <!-- FOOTER -->
-<footer>
-  <div class="footer-links">
-    <a href="/">Головна</a>
-    <a href="/about.html">Про нас</a>
-    <a href="/blog/">Блог</a>
-    <a href="/docs/">Документація</a>
-    <a href="/privacy-policy.html">Конфіденційність</a>
-    <a href="/terms.html">Умови</a>
-    <a href="/status.html" class="active">Статус</a>
+<footer role="contentinfo">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="/" class="logo">Index<span>Fast</span></a>
+      <p>Сервіс автоматичної індексації сторінок сайту в Google через офіційний Google Indexing API.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Продукт</h4>
+      <ul>
+        <li><a href="/#how-it-works">Як це працює</a></li>
+        <li><a href="/#features">Переваги</a></li>
+        <li><a href="/#pricing">Тарифи</a></li>
+        <li><a href="/docs/">Документація</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Компанія</h4>
+      <ul>
+        <li><a href="/about.html">Про нас</a></li>
+        <li><a href="/blog/">Блог</a></li>
+        <li><a href="/affiliate.html">Партнерська програма</a></li>
+        <li><a href="https://t.me/indexfastgoogle" target="_blank" rel="noopener noreferrer">Контакти</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Підтримка</h4>
+      <ul>
+        <li><a href="/#faq">FAQ</a></li>
+        <li><a href="https://t.me/indexfastgoogle" target="_blank" rel="noopener noreferrer">Telegram чат</a></li>
+        <li><a href="mailto:indexfastapp@gmail.com">Email підтримка</a></li>
+        <li><a href="/status.html" class="active">Статус сервісу</a></li>
+      </ul>
+    </div>
   </div>
-  <p>© 2026 IndexFast. Всі права захищені.</p>
+  <div class="footer-bottom">
+    <p>© 2026 IndexFast. Всі права захищені.</p>
+    <p>
+      <a href="/privacy-policy.html">Політика конфіденційності</a> &nbsp;·&nbsp;
+      <a href="/terms.html">Умови використання</a>
+    </p>
+  </div>
 </footer>
 
 <script>
