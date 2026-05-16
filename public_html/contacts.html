@@ -28,7 +28,7 @@
   <meta name="twitter:description" content="Зв'яжіться з нами для технічної підтримки або співпраці.">
   <meta name="twitter:image" content="https://indexfast.pp.ua/og-image.jpg">
 
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap">
+  <link rel="preload" as="style" crossorigin href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
@@ -159,6 +159,40 @@
     .footer-bottom { max-width: 1200px; margin: 48px auto 0; padding-top: 28px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; color: var(--muted); }
     .footer-bottom a { color: var(--muted); text-decoration: none; }
 
+    /* ─── BACK TO TOP ─── */
+    .back-to-top {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 50px;
+      height: 50px;
+      background: rgba(0, 255, 136, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(0, 255, 136, 0.3);
+      color: var(--green);
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+    .back-to-top.visible {
+      opacity: 1;
+      visibility: visible;
+      bottom: 40px;
+    }
+    .back-to-top:hover {
+      background: var(--green);
+      color: var(--black);
+      transform: translateY(-5px);
+      box-shadow: 0 0 30px rgba(0, 255, 136, 0.4);
+    }
+
     @media (max-width: 900px) {
       .contacts-grid { grid-template-columns: 1fr; padding: 0 24px 60px; }
       nav { padding: 0 20px; }
@@ -249,7 +283,7 @@
       <p>Сервіс автоматичної індексації сторінок сайту в Google через офіційний Google Indexing API.</p>
     </div>
     <div class="footer-col">
-      <p class="footer-title">Продукт</p>
+      <h3 class="footer-title">Продукт</h3>
       <ul>
         <li><a href="/#how-it-works">Як це працює</a></li>
         <li><a href="/#features">Переваги</a></li>
@@ -258,7 +292,7 @@
       </ul>
     </div>
     <div class="footer-col">
-      <p class="footer-title">Компанія</p>
+      <h3 class="footer-title">Компанія</h3>
       <ul>
         <li><a href="/about.html">Про нас</a></li>
         <li><a href="/blog/">Блог</a></li>
@@ -267,23 +301,41 @@
       </ul>
     </div>
     <div class="footer-col">
-      <p class="footer-title">Підтримка</p>
+      <h3 class="footer-title">Підтримка</h3>
       <ul>
         <li><a href="/#faq">FAQ</a></li>
         <li><a href="https://t.me/indexfastgoogle" target="_blank" rel="noopener noreferrer">Telegram чат</a></li>
-        <li><a href="mailto:indexfastapp@gmail.com">Email підтримка</a></li>
+        <li><a href="mailto:indexfastapp@gmail.com">indexfastapp@gmail.com</a></li>
         <li><a href="/status.html">Статус сервісу</a></li>
       </ul>
     </div>
   </div>
   <div class="footer-bottom">
-    <p>© 2025 IndexFast. Всі права захищені.</p>
+    <p>© 2026 IndexFast. Всі права захищені.</p>
     <div style="display:flex; gap:20px;">
       <a href="/privacy-policy.html">Конфіденційність</a>
       <a href="/terms.html">Умови</a>
     </div>
   </div>
+  <button id="backToTop" class="back-to-top" aria-label="Вгору">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+  </button>
 </footer>
+
+<script>
+  // Back to Top
+  const backToTop = document.getElementById('backToTop');
+  window.addEventListener('scroll', () => {
+    if (window.pageYOffset > 500) {
+      backToTop.classList.add('visible');
+    } else {
+      backToTop.classList.remove('visible');
+    }
+  });
+  backToTop.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+</script>
 
 </body>
 </html>
