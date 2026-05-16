@@ -161,28 +161,23 @@
 149     .card-title { font-family: var(--font-display); font-weight: 700; line-height: 1.25; letter-spacing: -0.02em; margin: 0; padding: 0; border: none; }
 150     .card-title { font-size: 1.4rem; }
 151     .card-desc { color: var(--muted); font-size: 0.875rem; line-height: 1.65; flex: 1; }
-152     .card-footer { display: flex; align-items: center; justify-content: space-between; margin-top: auto; padding-top: 16px; border-top: 1px solid var(--border); }
-153     .card-author { display: flex; align-items: center; gap: 8px; }
-154     .author-avatar {
-155          width: 28px; height: 28px; border-radius: 50%;
-156          background: linear-gradient(135deg, var(--green), #00d4ff);
-157          display: flex; align-items: center; justify-content: center;
-158          font-family: var(--font-display); font-size: 0.6rem; font-weight: 800; color: var(--black);
-159      }
-160     .author-name { font-size: 0.78rem; color: var(--muted); }
-161     .card-arrow { color: var(--green); font-size: 1rem; transition: transform 0.2s; }
-162     .article-card:hover .card-arrow { transform: translateX(4px); }
-163
-164     .featured-badge {
-165          position: absolute; top: 16px; right: 16px; z-index: 2;
-166          background: var(--green); color: var(--black);
-167          font-family: var(--font-display); font-size: 0.62rem; font-weight: 800;
-168          letter-spacing: 0.1em; text-transform: uppercase;
-169          padding: 3px 10px; border-radius: 100px;
-170      }
-171
-172     /* ── MOBILE ── */
-173     @media (max-width: 900px) {
+152     .card-    /* ── FOOTER ── */
+    footer { background: var(--dark); border-top: 1px solid var(--border); padding: 60px 40px 40px; text-align: left; }
+    .footer-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 60px; }
+    .footer-brand p { color: var(--muted); font-size: 0.9rem; line-height: 1.7; margin-top: 16px; max-width: 280px; }
+    .footer-col .footer-title { font-family: var(--font-display); font-weight: 700; margin-bottom: 20px; font-size: 0.9rem; letter-spacing: 0.05em; color: var(--white); }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .footer-col ul a { color: var(--muted); text-decoration: none; font-size: 0.9rem; transition: color 0.2s; }
+    .footer-col ul a:hover { color: var(--white); }
+    .footer-bottom { max-width: 1200px; margin: 48px auto 0; padding-top: 28px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; color: var(--muted); }
+    .footer-bottom a { color: var(--muted); text-decoration: none; }
+    .footer-bottom a:hover { color: var(--white); }
+    @media (max-width: 900px) {
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+      .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+      footer { padding: 40px 20px; }
+    }
+    @media (max-width: 900px) {
 174          nav { padding: 0 20px; }
 175          .blog-hero { padding: 48px 20px 36px; }
 176          .filters-wrap { padding: 0 20px 28px; }
@@ -284,19 +279,47 @@
 264	</div>
 265
 266	<!-- FOOTER -->
-267	<footer>
-  <div class="footer-links">
-    <a href="/">Головна</a>
-    <a href="/about.html">Про нас</a>
-    <a href="/blog/">Блог</a>
-    <a href="/docs/">Документація</a>
-    <a href="/privacy-policy.html">Конфіденційність</a>
-    <a href="/terms.html">Умови</a>
-    <a href="/contacts.html">Контакти</a>
-    <a href="/status.html">Статус</a>
-    <a href="mailto:indexfastapp@gmail.com">indexfastapp@gmail.com</a>
+267	<footer role="contentinfo">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="/" class="logo">Index<span>Fast</span></a>
+      <p>Сервіс автоматичної індексації сторінок сайту в Google через офіційний Google Indexing API.</p>
+    </div>
+    <div class="footer-col">
+      <p class="footer-title">Продукт</p>
+      <ul>
+        <li><a href="/#how-it-works">Як це працює</a></li>
+        <li><a href="/#features">Переваги</a></li>
+        <li><a href="/#pricing">Тарифи</a></li>
+        <li><a href="/docs/">Документація</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <p class="footer-title">Компанія</p>
+      <ul>
+        <li><a href="/about.html">Про нас</a></li>
+        <li><a href="/blog/">Блог</a></li>
+        <li><a href="/affiliate.html">Партнерська програма</a></li>
+        <li><a href="/contacts.html">Контакти</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <p class="footer-title">Підтримка</p>
+      <ul>
+        <li><a href="/#faq">FAQ</a></li>
+        <li><a href="https://t.me/indexfastgoogle" target="_blank" rel="noopener noreferrer">Telegram чат</a></li>
+        <li><a href="mailto:indexfastapp@gmail.com">Email підтримка</a></li>
+        <li><a href="/status.html">Статус сервісу</a></li>
+      </ul>
+    </div>
   </div>
-  <p>© 2026 IndexFast. Всі права захищені.</p>
+  <div class="footer-bottom">
+    <p>© 2026 IndexFast. Всі права захищені.</p>
+    <div style="display:flex; gap:20px;">
+      <a href="/privacy-policy.html">Конфіденційність</a>
+      <a href="/terms.html">Умови</a>
+    </div>
+  </div>
   <button id="backToTop" class="back-to-top" aria-label="Вгору">
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
   </button>
