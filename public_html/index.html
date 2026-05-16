@@ -1953,6 +1953,10 @@
       color: var(--muted);
     }
 
+    .promo-modal-social span {
+      transition: opacity 0.5s ease;
+    }
+
     .pms-dot {
       width: 8px;
       height: 8px;
@@ -2429,7 +2433,7 @@
         </div>
         <div class="promo-modal-social">
           <span class="pms-dot"></span>
-          <span>Андрій з Харкова щойно активував PRO</span>
+          <span id="promoSocialText">Андрій з Харкова щойно активував PRO</span>
         </div>
       </div>
     </div>
@@ -3524,12 +3528,23 @@
 
       // ── Promo System (popup: exit intent, scroll, time)
       (function () {
-        const PROMO_END_KEY = 'indexfast_promo_end';
+        const PROMO_END_KEY = 'indexfast_promo_end_v2';
+        const SOCIAL_PROOF_INTERVAL = 5000;
+        
+        const recentActivations = [
+          "Андрій з Харкова щойно активував PRO",
+          "Олена з Києва отримала знижку -50%",
+          "Максим з Одеси підключив 5-й сайт",
+          "Ігор зі Львова перейшов на PRO план",
+          "Тетяна з Дніпра активувала спецпропозицію",
+          "Віктор з Вінниці щойно став PRO",
+          "Марина з Полтави заощадила ₴490"
+        ];
 
-        // ── Countdown end time (3 days, persists in session)
+        // ── Countdown end time (2 hours for real urgency, persists in session)
         let promoEnd = +sessionStorage.getItem(PROMO_END_KEY) || 0;
         if (!promoEnd || promoEnd < Date.now()) {
-          promoEnd = Date.now() + 3 * 24 * 60 * 60 * 1000;
+          promoEnd = Date.now() + 2 * 60 * 60 * 1000; // 2 hours
           try { sessionStorage.setItem(PROMO_END_KEY, promoEnd); } catch (e) { }
         }
 
@@ -3560,16 +3575,28 @@
         tickAll();
         const timerInt = setInterval(tickAll, 1000);
 
+        // ── Dynamic Social Proof
+        let socialIndex = 0;
+        function rotateSocialProof() {
+          const el = document.getElementById('promoSocialText');
+          if (!el) return;
+          el.style.opacity = '0';
+          setTimeout(() => {
+            socialIndex = (socialIndex + 1) % recentActivations.length;
+            el.textContent = recentActivations[socialIndex];
+            el.style.opacity = '1';
+          }, 500);
+        }
+        setInterval(rotateSocialProof, SOCIAL_PROOF_INTERVAL);
+
         // ── Popup logic
         const overlay = document.getElementById('promoOverlay');
         let popupShown = false;
 
-        // Використовуємо localStorage з датою — показуємо раз на добу
         const DISMISSED_KEY = 'indexfast_popup_dismissed_date';
         function wasDismissedToday() {
           try {
             const d = localStorage.getItem(DISMISSED_KEY);
-            if (!d) return false;
             return d === new Date().toDateString();
           } catch (e) { return false; }
         }
@@ -3596,6 +3623,9 @@
           }
           overlay.classList.add('active');
           document.body.style.overflow = 'hidden';
+          
+          // Analytics or logging can go here
+          console.log('Promo shown via: ' + trigger);
         }
 
         window.closePromoPopup = function () {
@@ -3608,23 +3638,18 @@
           markDismissed();
         };
 
-        // Close on overlay click (outside modal)
         overlay.addEventListener('click', function (e) {
           if (e.target === overlay) window.closePromoPopup();
         });
 
-        // Close on ESC
         document.addEventListener('keydown', function (e) {
           if (e.key === 'Escape') window.closePromoPopup();
         });
 
-        // ── Trigger 1: EXIT INTENT (desktop) — mouse leaves toward top
-        let exitTriggered = false;
+        // ── Trigger 1: EXIT INTENT (desktop)
         document.addEventListener('mouseleave', function (e) {
           if (e.clientY > 20) return;
-          if (exitTriggered) return;
-          exitTriggered = true;
-          setTimeout(() => showPopup('exit'), 200);
+          showPopup('exit');
         });
 
         // ── Trigger 2: SCROLL 60%
@@ -3634,14 +3659,26 @@
           const scrolled = window.scrollY / (document.body.scrollHeight - window.innerHeight);
           if (scrolled >= 0.60) {
             scrollTriggered = true;
-            setTimeout(() => showPopup('scroll'), 1500);
+            setTimeout(() => showPopup('scroll'), 1000);
           }
         }, { passive: true });
 
-        // ── Trigger 3: TIME — 45 секунд (fallback)
+        // ── Trigger 3: MOBILE BACK BUTTON INTERCEPT
+        if (window.history && window.history.pushState) {
+          window.history.pushState('forward', null, './#');
+          window.onpopstate = function() {
+            if (!popupShown && shouldShow()) {
+              showPopup('back_button');
+              // Stay on page
+              window.history.pushState('forward', null, './#');
+            }
+          };
+        }
+
+        // ── Trigger 4: TIME — 35 секунд
         setTimeout(function () {
-          if (!popupShown && shouldShow()) showPopup('time');
-        }, 45000);
+          showPopup('time');
+        }, 35000);
 
       })();
 
