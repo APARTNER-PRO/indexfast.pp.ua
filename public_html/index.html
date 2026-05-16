@@ -410,6 +410,7 @@
       backdrop-filter: blur(10px);
       border-bottom: 1px solid transparent;
       transition: border-color 0.3s;
+      position: relative;
     }
 
     nav.scrolled {
@@ -2454,19 +2455,43 @@
       .nav-links {
         display: none;
         flex-direction: column;
-        position: absolute;
-        top: 100%;
+        gap: 0;
+        position: fixed;
+        top: 58px;
         left: 0;
         right: 0;
         background: rgba(5, 5, 8, 0.98);
         backdrop-filter: blur(14px);
-        padding: 24px;
+        padding: 16px 20px 24px;
         border-bottom: 1px solid var(--border);
         box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        z-index: 499;
+        list-style: none;
+      }
+
+      .nav-links li {
+        border-bottom: 1px solid var(--border);
+      }
+
+      .nav-links li:last-child {
+        border-bottom: none;
+      }
+
+      .nav-links li a {
+        display: block;
+        padding: 14px 0;
+        font-size: 1rem;
+        color: var(--white);
+        text-transform: none;
+        letter-spacing: 0;
       }
 
       .nav-links.active {
         display: flex;
+      }
+
+      .nav-login {
+        display: none;
       }
 
       section {
