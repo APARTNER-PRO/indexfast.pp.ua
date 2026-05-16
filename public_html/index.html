@@ -2440,11 +2440,11 @@
   <!-- Live Ticker -->
   <div class="live-ticker" id="liveTicker">
     <div class="ticker-pulse"></div>
-    <div class="ticker-text">
+    <div class="ticker-text" aria-live="polite">
       <strong id="tickerCount">—</strong>
       <span>сторінок зараз в черзі на індексацію</span>
     </div>
-    <button class="ticker-close" onclick="document.getElementById('liveTicker').remove()"
+    <button class="ticker-close" onclick="closeLiveTicker()"
       aria-label="Закрити">×</button>
   </div>
 
@@ -3758,16 +3758,27 @@
       });
 
       // ── Live Ticker
+      const tickerWrapper = document.getElementById('liveTicker');
       const tickerEl = document.getElementById('tickerCount');
-      let tickerBase = Math.floor(Math.random() * 400) + 200;
-      function updateTicker() {
-        tickerBase += Math.floor(Math.random() * 7) - 2;
-        if (tickerBase < 80) tickerBase = 80;
-        if (tickerBase > 900) tickerBase = 900;
-        if (tickerEl) tickerEl.textContent = tickerBase.toLocaleString('uk-UA') + ' URL';
+
+      window.closeLiveTicker = function() {
+        if (tickerWrapper) tickerWrapper.remove();
+        sessionStorage.setItem('ticker_closed_v1', 'true');
+      };
+
+      if (sessionStorage.getItem('ticker_closed_v1') === 'true') {
+        if (tickerWrapper) tickerWrapper.remove();
+      } else {
+        let tickerBase = Math.floor(Math.random() * 400) + 200;
+        function updateTicker() {
+          tickerBase += Math.floor(Math.random() * 7) - 2;
+          if (tickerBase < 80) tickerBase = 80;
+          if (tickerBase > 900) tickerBase = 900;
+          if (tickerEl) tickerEl.textContent = tickerBase.toLocaleString('uk-UA') + ' URL';
+        }
+        updateTicker();
+        setInterval(updateTicker, 3000);
       }
-      updateTicker();
-      setInterval(updateTicker, 3000);
 
     }); // DOMContentLoaded
   </script>
