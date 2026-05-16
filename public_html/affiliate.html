@@ -569,22 +569,22 @@
     <div class="calc-wrap reveal">
       <div class="calc-grid">
         <div>
-          <div class="calc-label">
+          <label class="calc-label" for="proSlider">
             PRO рефералів на місяць
             <span id="proVal">5</span>
-          </div>
+          </label>
           <input type="range" id="proSlider" min="0" max="50" value="5" oninput="calcIncome()">
 
-          <div class="calc-label">
+          <label class="calc-label" for="agencySlider">
             Агенція рефералів на місяць
             <span id="agencyVal">2</span>
-          </div>
+          </label>
           <input type="range" id="agencySlider" min="0" max="20" value="2" oninput="calcIncome()">
 
-          <div class="calc-label" style="margin-top:8px;">
+          <label class="calc-label" for="ltvSlider" style="margin-top:8px;">
             Середній термін підписки (місяців)
             <span id="ltv">12</span>
-          </div>
+          </label>
           <input type="range" id="ltvSlider" min="1" max="36" value="12" oninput="calcIncome()">
         </div>
 
