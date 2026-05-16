@@ -929,7 +929,7 @@ Authorization: Bearer <span class="v">{ACCESS_TOKEN}</span></pre>
   <p>© 2026 IndexFast</p>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
   // ── Tabs
   function switchTab(containerId, idx) {
     const container = document.getElementById(containerId);
@@ -963,4 +963,47 @@ Authorization: Bearer <span class="v">{ACCESS_TOKEN}</span></pre>
       if (entry.isIntersecting) {
         const id = entry.target.id;
         sideLinks.forEach(l => {
-          l.classList.toggle('ac
+          l.classList.toggle('active', l.getAttribute('href') === '#' + id);
+        });
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '-80px 0px -50% 0px' });
+
+  sections.forEach(s => observer.observe(s));
+
+  // ── Search functionality
+  const searchInput = document.getElementById('docsSearch');
+  if (searchInput) {
+    searchInput.addEventListener('input', (e) => {
+      const query = e.target.value.toLowerCase().trim();
+      const docsSections = document.querySelectorAll('.docs-section');
+      
+      docsSections.forEach(section => {
+        if (!query) {
+          section.style.display = '';
+          return;
+        }
+        const text = section.innerText.toLowerCase();
+        section.style.display = text.includes(query) ? '' : 'none';
+      });
+    });
+
+    // Keyboard shortcut Cmd+K or Ctrl+K
+    window.addEventListener('keydown', (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        searchInput.focus();
+      }
+    });
+  }
+
+  // Mobile sidebar auto-close on link click
+  document.querySelectorAll('.sidebar-link').forEach(link => {
+    link.addEventListener('click', () => {
+      document.querySelector('.sidebar').classList.remove('open');
+    });
+  });
+
+</script>
+</body>
+</html>
