@@ -2400,8 +2400,6 @@
         <div class="promo-modal-timer">
           <span class="pmt-label">Пропозиція діє</span>
           <div class="pmt-digits">
-            <div class="pmt-unit"><span class="pmt-num" id="mpd">00</span><span class="pmt-unit-label">дн</span></div>
-            <span class="pmt-sep">:</span>
             <div class="pmt-unit"><span class="pmt-num" id="mph">00</span><span class="pmt-unit-label">год</span></div>
             <span class="pmt-sep">:</span>
             <div class="pmt-unit"><span class="pmt-num" id="mpm">00</span><span class="pmt-unit-label">хв</span></div>
@@ -3568,8 +3566,8 @@
 
         // Update modal timer
         function tickAll() {
-          const { d, h, m, s, diff } = getTimeParts();
-          setEl('mpd', pad(d)); setEl('mph', pad(h)); setEl('mpm', pad(m)); setEl('mps', pad(s));
+          const { h, m, s, diff } = getTimeParts();
+          setEl('mph', pad(h)); setEl('mpm', pad(m)); setEl('mps', pad(s));
           if (diff <= 0) clearInterval(timerInt);
         }
         tickAll();
