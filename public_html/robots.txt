@@ -13,9 +13,3 @@ Disallow: /*.json$
 
 # Sitemap
 Sitemap: https://indexfast.pp.ua/sitemap.xml
-
-# LLM & Metadata references (non-standard directives commented out for validation)
-# llms: /llms.txt
-# llms-full: /llms-full.txt
-# humans: /humans.txt
-# security: /security.txt

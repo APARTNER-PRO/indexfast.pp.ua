@@ -7,7 +7,7 @@
   <title>404 — Сторінку не знайдено | IndexFast</title>
   <meta name="robots" content="noindex, nofollow">
 
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap">
+    <link rel="preload" as="style" crossorigin href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
@@ -38,6 +38,8 @@
       padding: 0 60px; height: 64px; flex-shrink: 0;
       display: flex; align-items: center; justify-content: space-between;
       border-bottom: 1px solid var(--border);
+      background: rgba(5,5,8,0.95); backdrop-filter: blur(12px);
+      position: sticky; top: 0; z-index: 100;
     }
     .logo { font-family: var(--font-display); font-size: 1.35rem; font-weight: 800; letter-spacing: -0.03em; color: var(--white); text-decoration: none; }
     .logo span { color: var(--green); }
@@ -51,7 +53,7 @@
     main {
       flex: 1; display: flex; flex-direction: column;
       align-items: center; justify-content: center;
-      padding: 60px 20px; text-align: center;
+      padding: 100px 20px; text-align: center;
       position: relative; overflow: hidden;
     }
 
@@ -146,21 +148,100 @@
 
     /* ── FOOTER ── */
     footer {
+      background: var(--dark);
       border-top: 1px solid var(--border);
-      padding: 20px 60px;
-      display: flex; justify-content: space-between; align-items: center;
-      flex-wrap: wrap; gap: 12px; flex-shrink: 0;
+      padding: 80px 60px 40px;
+      text-align: left;
     }
-    .footer-links { display: flex; gap: 20px; flex-wrap: wrap; }
-    .footer-links a { color: var(--muted); text-decoration: none; font-size: 0.8rem; transition: color 0.2s; }
-    .footer-links a:hover { color: var(--white); }
-    footer p { color: var(--muted); font-size: 0.78rem; }
+    .footer-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 60px;
+    }
+    .footer-brand p {
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.7;
+      margin-top: 16px;
+      max-width: 280px;
+    }
+    .footer-title { font-family: var(--font-display); font-weight: 700; margin-bottom: 20px; font-size: 0.9rem; letter-spacing: 0.05em; color: var(--white); }
+    .footer-col ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .footer-col ul a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+    .footer-col ul a:hover {
+      color: var(--white);
+    }
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 48px auto 0;
+      padding-top: 28px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    .footer-bottom a {
+      color: var(--muted);
+      text-decoration: none;
+    }
+    .footer-bottom a:hover {
+      color: var(--white);
+    }
 
-    @media (max-width: 640px) {
+    /* ─── BACK TO TOP ─── */
+    .back-to-top {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 50px;
+      height: 50px;
+      background: rgba(0, 255, 136, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(0, 255, 136, 0.3);
+      color: var(--green);
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+    .back-to-top.visible {
+      opacity: 1;
+      visibility: visible;
+      bottom: 40px;
+    }
+    .back-to-top:hover {
+      background: var(--green);
+      color: var(--black);
+      transform: translateY(-5px);
+      box-shadow: 0 0 30px rgba(0, 255, 136, 0.4);
+    }
+
+    @media (max-width: 900px) {
       nav { padding: 0 20px; }
       .big-number { font-size: 30vw; }
-      footer { padding: 20px; flex-direction: column; text-align: center; }
-      .footer-links { justify-content: center; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+      .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+      footer { padding: 40px 20px; }
     }
   </style>
 </head>
@@ -172,7 +253,7 @@
     <a href="/" class="nav-link">Головна</a>
     <a href="/blog/" class="nav-link">Блог</a>
     <a href="/docs/" class="nav-link">Документація</a>
-    <a href="/#pricing" class="nav-cta">Спробувати →</a>
+    <a href="/app/register" class="nav-cta">Спробувати →</a>
   </div>
 </nav>
 
@@ -203,18 +284,65 @@
   </div>
 </main>
 
-<footer>
-  <div class="footer-links">
-    <a href="/">Головна</a>
-    <a href="/about.html">Про нас</a>
-    <a href="/blog/">Блог</a>
-    <a href="/docs/">Документація</a>
-    <a href="/privacy-policy.html">Конфіденційність</a>
-    <a href="/terms.html">Умови</a>
-    <a href="/status.html">Статус</a>
+<footer role="contentinfo">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="/" class="logo">Index<span>Fast</span></a>
+      <p>Сервіс автоматичної індексації сторінок сайту в Google через офіційний Google Indexing API.</p>
+    </div>
+    <div class="footer-col">
+      <h3 class="footer-title">Продукт</h3>
+      <ul>
+        <li><a href="/#how-it-works">Як це працює</a></li>
+        <li><a href="/#features">Переваги</a></li>
+        <li><a href="/#pricing">Тарифи</a></li>
+        <li><a href="/docs/">Документація</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h3 class="footer-title">Компанія</h3>
+      <ul>
+        <li><a href="/about.html">Про нас</a></li>
+        <li><a href="/blog/">Блог</a></li>
+        <li><a href="/affiliate.html">Партнерська програма</a></li>
+        <li><a href="/contacts.html">Контакти</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h3 class="footer-title">Підтримка</h3>
+      <ul>
+        <li><a href="/#faq">FAQ</a></li>
+        <li><a href="https://t.me/indexfastgoogle" target="_blank" rel="noopener noreferrer">Telegram чат</a></li>
+        <li><a href="mailto:indexfastapp@gmail.com">indexfastapp@gmail.com</a></li>
+        <li><a href="/status.html">Статус сервісу</a></li>
+      </ul>
+    </div>
   </div>
-  <p>© 2026 IndexFast</p>
+  <div class="footer-bottom">
+    <p>© 2026 IndexFast. Всі права захищені.</p>
+    <p>
+      <a href="/privacy-policy.html">Політика конфіденційності</a> &nbsp;·&nbsp;
+      <a href="/terms.html">Умови використання</a>
+    </p>
+  </div>
+  <button id="backToTop" class="back-to-top" aria-label="Вгору">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+  </button>
 </footer>
 
+<script>
+  // Back to Top
+  const backToTop = document.getElementById('backToTop');
+  window.addEventListener('scroll', () => {
+    if (window.pageYOffset > 500) {
+      backToTop.classList.add('visible');
+    } else {
+      backToTop.classList.remove('visible');
+    }
+  });
+  backToTop.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+</script>
 </body>
 </html>

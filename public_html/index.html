@@ -311,7 +311,7 @@
 }
   </script>
   <!-- ═══ FONTS ═══ -->
-  <link rel="preload" as="style"
+  <link rel="preload" as="style" crossorigin
     href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -2665,7 +2665,7 @@
       <div class="promo-modal-left">
         <div class="promo-modal-glow"></div>
         <p class="promo-modal-eyebrow">🔥 Обмежена пропозиція</p>
-        <h2 class="promo-modal-title" id="promoModalTitle">Заберіть <em>-50%</em><br>із собою</h2>
+        <h3 class="promo-modal-title" id="promoModalTitle">Заберіть <em>-50%</em><br>із собою</h3>
         <p class="promo-modal-sub">Перший місяць PRO лише за <strong>₴499</strong> замість ₴990. Тільки для нових
           клієнтів.</p>
 
@@ -3408,7 +3408,7 @@
               <label class="roi-field-name" for="rPages">Сторінок на сайті</label>
               <span class="roi-field-val" id="valPages">500</span>
             </div>
-            <input type="range" class="roi-range" id="rPages" min="50" max="5000" step="50" value="500">
+            <input type="range" class="roi-range" id="rPages" min="50" max="5000" step="50" value="500" aria-label="Кількість сторінок на сайті">
           </div>
 
           <div class="roi-field reveal">
@@ -3416,7 +3416,7 @@
               <label class="roi-field-name" for="rNew">Нових сторінок на місяць</label>
               <span class="roi-field-val" id="valNew">50</span>
             </div>
-            <input type="range" class="roi-range" id="rNew" min="5" max="500" step="5" value="50">
+            <input type="range" class="roi-range" id="rNew" min="5" max="500" step="5" value="50" aria-label="Нових сторінок на місяць">
           </div>
 
           <div class="roi-field reveal">
@@ -3424,7 +3424,7 @@
               <label class="roi-field-name" for="rRate">Ваша ставка (₴/год)</label>
               <span class="roi-field-val" id="valRate">500 ₴</span>
             </div>
-            <input type="range" class="roi-range" id="rRate" min="100" max="3000" step="50" value="500">
+            <input type="range" class="roi-range" id="rRate" min="100" max="3000" step="50" value="500" aria-label="Ваша ставка за годину">
           </div>
 
           <div class="roi-field reveal">
@@ -3432,7 +3432,7 @@
               <label class="roi-field-name" for="rMin">Хвилин на ручну індексацію 1 URL</label>
               <span class="roi-field-val" id="valMin">3 хв</span>
             </div>
-            <input type="range" class="roi-range" id="rMin" min="1" max="10" step="1" value="3">
+            <input type="range" class="roi-range" id="rMin" min="1" max="10" step="1" value="3" aria-label="Хвилин на ручну індексацію">
           </div>
         </div>
 
@@ -3546,7 +3546,7 @@
             <span class="faq-arrow">+</span>
           </button>
           <div class="faq-a" role="region">
-            <p>Так, ми надаємо гарантію повного повернення коштів протягом 14 днів після оплати, якщо сервіс вам не підійшов.</p>
+            <p>Так, ми надаємо гарантію повного повернення коштів протягом 14 днів після оплати, якщо сервіс вам не підійшов. Для запиту напишіть на indexfastapp@gmail.com.</p>
           </div>
         </div>
       </div>
@@ -3665,7 +3665,7 @@
         <p>Сервіс автоматичної індексації сторінок сайту в Google через офіційний Google Indexing API.</p>
       </div>
       <div class="footer-col">
-        <p class="footer-title">Продукт</p>
+        <h3 class="footer-title">Продукт</h3>
         <ul>
           <li><a href="#how-it-works">Як це працює</a></li>
           <li><a href="#features">Переваги</a></li>
@@ -3674,7 +3674,7 @@
         </ul>
       </div>
       <div class="footer-col">
-        <p class="footer-title">Компанія</p>
+        <h3 class="footer-title">Компанія</h3>
         <ul>
           <li><a href="/about.html">Про нас</a></li>
           <li><a href="/blog/">Блог</a></li>
@@ -3683,12 +3683,11 @@
         </ul>
       </div>
       <div class="footer-col">
-        <p class="footer-title">Підтримка</p>
+        <h3 class="footer-title">Підтримка</h3>
         <ul>
           <li><a href="#faq">FAQ</a></li>
           <li><a href="https://t.me/indexfastgoogle" target="_blank" rel="noopener noreferrer">Telegram чат</a></li>
-          <li><a href="mailto:indexfastapp@gmail.com">Email підтримка</a>
-          </li>
+          <li><a href="mailto:indexfastapp@gmail.com">indexfastapp@gmail.com</a>
           <li><a href="/status.html">Статус сервісу</a></li>
         </ul>
       </div>
