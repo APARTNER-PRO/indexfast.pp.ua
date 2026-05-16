@@ -3441,8 +3441,8 @@
         <h4>Підтримка</h4>
         <ul>
           <li><a href="#faq">FAQ</a></li>
-          <li><a href="https://t.me/indexfastgoogle" target="_blank">Telegram чат</a></li>
-          <li><a href="/cdn-cgi/l/email-protection#0f676a6363604f66616b6a77696e7c7b217f7f217a6e">Email підтримка</a>
+          <li><a href="https://t.me/indexfastgoogle" target="_blank" rel="noopener noreferrer">Telegram чат</a></li>
+          <li><a href="mailto:indexfastapp@gmail.com">Email підтримка</a>
           </li>
           <li><a href="/status.html">Статус сервісу</a></li>
         </ul>
@@ -3528,7 +3528,7 @@
       (function () {
         const PROMO_END_KEY = 'indexfast_promo_end_v2';
         const SOCIAL_PROOF_INTERVAL = 5000;
-        
+
         const recentActivations = [
           "Андрій з Харкова щойно активував PRO",
           "Олена з Києва отримала знижку -50%",
@@ -3621,7 +3621,7 @@
           }
           overlay.classList.add('active');
           document.body.style.overflow = 'hidden';
-          
+
           // Analytics or logging can go here
           console.log('Promo shown via: ' + trigger);
         }
@@ -3664,7 +3664,7 @@
         // ── Trigger 3: MOBILE BACK BUTTON INTERCEPT
         if (window.history && window.history.pushState) {
           window.history.pushState('forward', null, './#');
-          window.onpopstate = function() {
+          window.onpopstate = function () {
             if (!popupShown && shouldShow()) {
               showPopup('back_button');
               // Stay on page
