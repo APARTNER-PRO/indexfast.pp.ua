@@ -2488,6 +2488,12 @@
       }
     }
 
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
     .nav-login {
       color: var(--muted, #7a7a95);
       font-size: 0.875rem;
@@ -2587,8 +2593,10 @@
       <li><a href="#pricing">Ціни</a></li>
       <li><a href="#faq">FAQ</a></li>
     </ul>
-    <a href="/app/login" class="nav-login">Увійти</a>
-    <a href="/app/register" class="nav-cta">Почати безкоштовно →</a>
+    <div class="nav-actions">
+      <a href="/app/login" class="nav-login">Увійти</a>
+      <a href="/app/register" class="nav-cta">Почати безкоштовно →</a>
+    </div>
   </nav>
 
   <!-- ═══════════════════════════════════════════
