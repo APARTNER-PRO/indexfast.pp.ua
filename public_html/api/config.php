@@ -1,32 +1,47 @@
 <?php
 // ══════════════════════════════════════════════
-//  IndexFast — config.php
-//  Всі налаштування. Підключай першим.
+//  public_html/api/config.php  — ПАТЧ
+//  Заміни ПОВНІСТЮ існуючий config.php цим файлом.
+//
+//  Зміни відносно оригіналу:
+//  1. PHP 7.4+ сумісність: str_starts_with() → strncmp(),
+//     str_contains() → strpos()
+//  2. FRONTEND_URL підтримує кілька доменів через кому —
+//     CORS_ORIGINS масив, FRONTEND_URL = перший домен
+//  3. Додано FRONTEND_URLS константу для крос-доменної роботи
+//  4. MySQL 5.7 нотатка (в коді змін немає — SQL файл вже сумісний)
 // ══════════════════════════════════════════════
 
-// ── Завантажуємо .env якщо є (через vlucas/phpdotenv або вручну)
+// ── Завантажуємо .env (PHP 7.4 compatible — без str_starts_with, str_contains)
 $envFile = dirname(__DIR__, 2) . '/.env';
 if (file_exists($envFile)) {
     foreach (file($envFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) as $line) {
-        if (str_starts_with(trim($line), '#') || !str_contains($line, '=')) continue;
-        [$key, $val] = explode('=', $line, 2);
-        $val = trim($val);
-        // Видаляємо inline-коментарі: APP_URL=https://example.com # коментар
-        // Але не чіпаємо # всередині лапок
-        if (!str_starts_with($val, '"') && !str_starts_with($val, "'")) {
+        $line = trim($line);
+        // PHP 7.4: замість str_starts_with($line, '#')
+        if ($line === '' || $line[0] === '#') continue;
+        // PHP 7.4: замість str_contains($line, '=')
+        if (strpos($line, '=') === false) continue;
+
+        $parts = explode('=', $line, 2);
+        $key   = trim($parts[0]);
+        $val   = isset($parts[1]) ? trim($parts[1]) : '';
+
+        // Inline-коментарі (тільки якщо не в лапках)
+        // PHP 7.4: замість str_starts_with($val, '"')
+        if ($val !== '' && $val[0] !== '"' && $val[0] !== "'") {
             $val = preg_replace('/\s+#.*$/', '', $val);
         }
-        $_ENV[trim($key)] = trim($val, " \t\n\r\0\x0B\"'");
+        $_ENV[$key] = trim($val, " \t\n\r\0\x0B\"'");
     }
 }
 
-function env(string $key, mixed $default = null): mixed {
-    return $_ENV[$key] ?? $default;
+function env(string $key, $default = null) {
+    return isset($_ENV[$key]) ? $_ENV[$key] : $default;
 }
 
-// ────────────────────────────────────────────
+// ─────────────────────────────────────────────
 //  DATABASE
-// ────────────────────────────────────────────
+// ─────────────────────────────────────────────
 define('DB_HOST',    env('DB_HOST',    'localhost'));
 define('DB_PORT',    env('DB_PORT',    '3306'));
 define('DB_NAME',    env('DB_NAME',    'indexfast'));
@@ -34,15 +49,14 @@ define('DB_USER',    env('DB_USER',    'root'));
 define('DB_PASS',    env('DB_PASS',    ''));
 define('DB_CHARSET', 'utf8mb4');
 
-// ────────────────────────────────────────────
+// ─────────────────────────────────────────────
 //  APP
-// ────────────────────────────────────────────
-define('APP_NAME',    'IndexFast');
-define('APP_URL',     env('APP_URL',   'https://indexfast.pp.ua'));
-define('APP_ENV',     env('APP_ENV',   'production')); // development | production
-define('DEBUG',       APP_ENV === 'development');
+// ─────────────────────────────────────────────
+define('APP_NAME', 'IndexFast');
+define('APP_URL',  env('APP_URL',  'https://indexfast.pp.ua'));
+define('APP_ENV',  env('APP_ENV',  'production'));
+define('DEBUG',    APP_ENV === 'development');
 
-// ── PHP error reporting — вмикаємо тільки в development
 if (DEBUG) {
     ini_set('display_errors', '1');
     ini_set('display_startup_errors', '1');
@@ -52,82 +66,79 @@ if (DEBUG) {
     error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED);
 }
 
-// ────────────────────────────────────────────
+// ─────────────────────────────────────────────
 //  JWT
-// ────────────────────────────────────────────
-define('JWT_SECRET',        env('JWT_SECRET', 'CHANGE_ME_USE_STRONG_RANDOM_STRING_32+'));
-// Захист від запуску з дефолтним секретом
+// ─────────────────────────────────────────────
+define('JWT_SECRET',       env('JWT_SECRET', 'CHANGE_ME_USE_STRONG_RANDOM_STRING_32+'));
 if (JWT_SECRET === 'CHANGE_ME_USE_STRONG_RANDOM_STRING_32+' && APP_ENV === 'production') {
     http_response_code(500);
-    die(json_encode(['success' => false, 'message' => 'Сервер не налаштований: JWT_SECRET не змінено']));
+    die(json_encode(['success' => false, 'message' => 'JWT_SECRET не змінено']));
 }
+define('JWT_ACCESS_TTL',  60 * 60);
+define('JWT_REFRESH_TTL', 60 * 60 * 24 * 30);
 
-define('JWT_ACCESS_TTL',    60 * 60);         // 1 година (секунди)
-define('JWT_REFRESH_TTL',   60 * 60 * 24 * 30); // 30 днів
+// ─────────────────────────────────────────────
+//  CORS / FRONTEND_URL
+//
+//  FRONTEND_URL може містити ОДИН або КІЛЬКА доменів через кому:
+//    FRONTEND_URL=https://indexfast.pp.ua
+//    FRONTEND_URL=https://indexfast.pp.ua,https://app.indexfast.com
+//
+//  CORS_ORIGINS — масив дозволених origins для middleware.php
+//  FRONTEND_URL — перший домен (для посилань в email тощо)
+// ─────────────────────────────────────────────
+$_frontendRaw = env('FRONTEND_URL', 'https://indexfast.pp.ua');
 
-// ────────────────────────────────────────────
-//  CORS — дозволені origin
-// ────────────────────────────────────────────
-// FRONTEND_URL — домен де розміщений frontend (може відрізнятись від бекенду)
-// Можна вказати кілька через кому: https://indexfast.pp.ua,https://app.indexfast.com
-define('FRONTEND_URLS', env('FRONTEND_URL', 'https://indexfast.pp.ua'));
-define('CORS_ORIGINS', array_filter(array_map('trim', explode(',', FRONTEND_URLS))));
+// Розбиваємо на масив, фільтруємо порожні
+$_corsArray = array_values(array_filter(
+    array_map('trim', explode(',', $_frontendRaw))
+));
 
-// Основний фронтенд URL — для лінків в email (verify, reset password тощо)
-// Береться перший URL зі списку FRONTEND_URL
-define('FRONTEND_URL', CORS_ORIGINS[0] ?? 'https://indexfast.pp.ua');
+define('CORS_ORIGINS',  $_corsArray);
+define('FRONTEND_URLS', $_frontendRaw);
 
-// ────────────────────────────────────────────
-//  GOOGLE OAUTH 2.0
-//  Налаштуй на: https://console.cloud.google.com/
-//  Authorized redirect URI: FRONTEND_URL/api/auth/google/callback.php
-// ────────────────────────────────────────────
+// FRONTEND_URL — перший з масиву (для email-лінків, redirect_uri тощо)
+define('FRONTEND_URL', !empty($_corsArray) ? $_corsArray[0] : 'https://indexfast.pp.ua');
+
+// ─────────────────────────────────────────────
+//  GOOGLE OAUTH
+// ─────────────────────────────────────────────
 define('GOOGLE_CLIENT_ID',     env('GOOGLE_CLIENT_ID',     ''));
 define('GOOGLE_CLIENT_SECRET', env('GOOGLE_CLIENT_SECRET', ''));
 define('GOOGLE_REDIRECT_URI',  FRONTEND_URL . '/api/auth/google/callback.php');
 define('GOOGLE_SCOPES',        'openid email profile');
 
-// ────────────────────────────────────────────
+// ─────────────────────────────────────────────
 //  EMAIL (SMTP)
-//  Використовується для: підтвердження email, скидання пароля
-// ────────────────────────────────────────────
-define('MAIL_FROM',      env('MAIL_FROM',    'noreply@indexfast.pp.ua'));
+// ─────────────────────────────────────────────
+define('MAIL_FROM',      env('MAIL_FROM',      'noreply@indexfast.pp.ua'));
 define('MAIL_FROM_NAME', env('MAIL_FROM_NAME', APP_NAME));
-define('SMTP_HOST',      env('SMTP_HOST',    'smtp.gmail.com'));
-define('SMTP_PORT',      env('SMTP_PORT',    587));
-define('SMTP_USER',      env('SMTP_USER',    ''));
-define('SMTP_PASS',      env('SMTP_PASS',    ''));
-define('SMTP_SECURE',    env('SMTP_SECURE',  'tls')); // tls | ssl
+define('SMTP_HOST',      env('SMTP_HOST',      'smtp.gmail.com'));
+define('SMTP_PORT',      env('SMTP_PORT',      587));
+define('SMTP_USER',      env('SMTP_USER',      ''));
+define('SMTP_PASS',      env('SMTP_PASS',      ''));
+define('SMTP_SECURE',    env('SMTP_SECURE',    'tls'));
 
-// ────────────────────────────────────────────
+// ─────────────────────────────────────────────
 //  RATE LIMITING
-// ────────────────────────────────────────────
-define('RATE_LOGIN_MAX',    5);    // спроб
-define('RATE_LOGIN_WINDOW', 15);   // хвилин
-define('RATE_REG_MAX',      3);
-define('RATE_REG_WINDOW',   60);
-define('RATE_FORGOT_MAX',   3);
-define('RATE_FORGOT_WINDOW',60);
+// ─────────────────────────────────────────────
+define('RATE_LOGIN_MAX',     5);
+define('RATE_LOGIN_WINDOW',  15);
+define('RATE_REG_MAX',       3);
+define('RATE_REG_WINDOW',    60);
+define('RATE_FORGOT_MAX',    3);
+define('RATE_FORGOT_WINDOW', 60);
 
-// ────────────────────────────────────────────
+// ─────────────────────────────────────────────
 //  TOKENS TTL
-// ────────────────────────────────────────────
-define('TOKEN_EMAIL_VERIFY_TTL',  60 * 24);      // 24 год (хвилини)
-define('TOKEN_PASSWORD_RESET_TTL', 60);           // 60 хвилин
+// ─────────────────────────────────────────────
+define('TOKEN_EMAIL_VERIFY_TTL',   60 * 24);
+define('TOKEN_PASSWORD_RESET_TTL', 60);
 
-// ────────────────────────────────────────────
+// ─────────────────────────────────────────────
 //  БЕЗПЕКА
-// ────────────────────────────────────────────
+// ─────────────────────────────────────────────
 define('PASSWORD_MIN_LENGTH', 8);
 define('BCRYPT_COST',         12);
-define('SESSION_LIFETIME',    60 * 60 * 24 * 30); // 30 днів
+define('SESSION_LIFETIME',    60 * 60 * 24 * 30);
 define('WORKER_KEY',          env('WORKER_KEY', 'indexfast_secret_key_2024'));
-
-// Повідомлення про помилки тільки в dev
-if (!DEBUG) {
-    error_reporting(0);
-    ini_set('display_errors', 0);
-} else {
-    error_reporting(E_ALL);
-    ini_set('display_errors', 1);
-}

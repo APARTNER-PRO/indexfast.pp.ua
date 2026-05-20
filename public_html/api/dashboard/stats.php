@@ -11,7 +11,7 @@ $uid = (int)requireAuth()['sub'];
 
 // ── 1. Юзер
 $user = DB::row(
-    "SELECT id, name, surname, email, email_verified, marketing_consent, plan, avatar_url FROM users WHERE id = ?",
+    "SELECT id, name, surname, email, email_verified, marketing_consent, plan, plan_expires_at, avatar_url FROM users WHERE id = ?",
     [$uid]
 );
 if (!$user) respond(404, 'Користувача не знайдено');
@@ -137,6 +137,7 @@ respondOk('OK', [
         'email_verified'     => (bool)$user['email_verified'],
         'marketing_consent'  => (bool)$user['marketing_consent'],
         'plan'               => $plan,
+        'plan_expires_at'    => $user['plan_expires_at'],
         'plan_label'     => $cfg['label'],
         'avatar_url'     => $user['avatar_url'],
     ],
