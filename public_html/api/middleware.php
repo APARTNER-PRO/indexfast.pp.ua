@@ -90,5 +90,11 @@ function requireAuth(): array
         respond(401, 'Unauthorized: невалідний або прострочений токен');
     }
 
+    // JWT зберігає user id у стандартному полі 'sub'.
+    // Додаємо аліас 'id' щоб весь код що використовує $user['id'] працював коректно.
+    if (!isset($payload['id']) && isset($payload['sub'])) {
+        $payload['id'] = $payload['sub'];
+    }
+
     return $payload;
 }
