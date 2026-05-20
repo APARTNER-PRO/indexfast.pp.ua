@@ -19,14 +19,17 @@ $history = DB::all(
     [$user['id']]
 );
 
-// Ціни тарифів з ENV
+// Ціни тарифів з ENV + метадані з Plans::CONFIG
 $plans = [];
 foreach (Plans::CONFIG as $pid => $cfg) {
-    if ($pid === 'start' || $pid === 'free') continue; // пропускаємо безкоштовні
+    if ($pid === 'free') continue; // пропускаємо legacy
     $plans[$pid] = [
-        'label' => $cfg['label'],
-        'month' => (float)env('PRICE_' . strtoupper($pid) . '_MONTH', 0),
-        'year'  => (float)env('PRICE_' . strtoupper($pid) . '_YEAR',  0),
+        'label'      => $cfg['label'],
+        'popular'    => (bool)($cfg['popular']    ?? false),
+        'enterprise' => (bool)($cfg['enterprise'] ?? false),
+        'features'   => $cfg['features'] ?? [],
+        'month'      => (float)env('PRICE_' . strtoupper($pid) . '_MONTH', 0),
+        'year'       => (float)env('PRICE_' . strtoupper($pid) . '_YEAR',  0),
     ];
 }
 
