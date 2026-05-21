@@ -255,18 +255,41 @@ export default function Billing() {
             {/* Перемикач місяць/рік/3 роки */}
             <div style={{ display: 'flex', gap: 4, background: 'rgba(255,255,255,0.05)',
                           borderRadius: 12, padding: 4 }}>
-              {['month', 'year', '3_years'].map(per => (
-                <button
-                  key={per}
-                  onClick={() => setSelPeriod(per)}
-                  style={{ padding: '7px 18px', borderRadius: 9, fontSize: 13, fontWeight: 600,
-                           cursor: 'pointer', transition: 'all .15s', border: 'none',
-                           ...(selPeriod === per
-                             ? { background: '#00ff88', color: '#050508' }
-                             : { background: 'transparent', color: '#6a6a85' }) }}>
-                  {per === 'month' ? 'Місяць' : per === 'year' ? 'Рік −17%' : '3 роки'}
-                </button>
-              ))}
+              {['month', 'year', '3_years'].map(per => {
+                let label = per === 'month' ? 'Місяць' : per === 'year' ? 'Рік' : '3 роки';
+                let discountText = '';
+                
+                if (per === 'year') {
+                  const m = plans['pro']?.month;
+                  const y = plans['pro']?.year;
+                  if (m > 0 && y > 0) {
+                    const d = Math.round((1 - y / (m * 12)) * 100);
+                    if (d > 0) discountText = ` −${d}%`;
+                  } else {
+                    discountText = ' −17%'; // fallback
+                  }
+                } else if (per === '3_years') {
+                  const m = plans['pro']?.month;
+                  const y3 = plans['pro']?.['3_years'];
+                  if (m > 0 && y3 > 0) {
+                    const d = Math.round((1 - y3 / (m * 36)) * 100);
+                    if (d > 0) discountText = ` −${d}%`;
+                  }
+                }
+
+                return (
+                  <button
+                    key={per}
+                    onClick={() => setSelPeriod(per)}
+                    style={{ padding: '7px 18px', borderRadius: 9, fontSize: 13, fontWeight: 600,
+                             cursor: 'pointer', transition: 'all .15s', border: 'none',
+                             ...(selPeriod === per
+                               ? { background: '#00ff88', color: '#050508' }
+                               : { background: 'transparent', color: '#6a6a85' }) }}>
+                    {label}{discountText}
+                  </button>
+                );
+              })}
             </div>
           </div>
 
