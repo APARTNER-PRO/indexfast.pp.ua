@@ -10,7 +10,7 @@ const BASE = (typeof import.meta !== 'undefined' && import.meta?.env?.VITE_API_U
   : '/api';
 
 const PLAN_LABELS   = { pro: 'PRO', agency: 'Агенція', enterprise: 'Enterprise', start: 'Старт' };
-const PERIOD_LABELS = { month: 'місяць', year: 'рік' };
+const PERIOD_LABELS = { month: 'місяць', year: 'рік', '3_years': '3 роки' };
 
 const PaymentIcon = ({ id }) => {
   if (id === 'stripe')   return <span className="font-bold text-[#635BFF] text-sm">Stripe</span>;
@@ -181,35 +181,63 @@ export default function Billing() {
   const manual  = data?.manual_requisites;
 
   return (
-    <div className="max-w-2xl mx-auto px-4 py-8 space-y-6">
+    <div style={{ width: '100%', maxWidth: 1400, padding: '32px 16px' }} className="space-y-6">
 
       {/* Поточна підписка */}
-      <div className="rounded-2xl border border-white/10 bg-[#111119] p-6">
-        <h2 className="text-base font-bold text-white mb-3">Поточна підписка</h2>
+      <div style={{ borderRadius: 20, border: '1px solid rgba(255,255,255,0.07)',
+                    background: '#0d0d17', padding: '24px 28px' }}>
+        <p style={{ fontSize: 11, fontWeight: 700, color: '#4a4a68', letterSpacing: '0.1em',
+                    textTransform: 'uppercase', marginBottom: 14 }}>Поточна підписка</p>
         {data?.current_plan && data.current_plan !== 'free' && data.current_plan !== 'start' ? (
-          <div className="flex items-center justify-between flex-wrap gap-3">
-            <div>
-              <span className="text-xl font-bold text-[#00ff88]">
-                {PLAN_LABELS[data.current_plan] || data.current_plan}
-              </span>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                        flexWrap: 'wrap', gap: 12 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+              <div style={{ background: 'rgba(0,255,136,0.08)', border: '1px solid rgba(0,255,136,0.2)',
+                            borderRadius: 12, padding: '10px 20px' }}>
+                <span style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 20,
+                               color: '#00ff88' }}>
+                  {PLAN_LABELS[data.current_plan] || data.current_plan}
+                </span>
+              </div>
               {data.plan_expires_at && (
-                <p className="text-sm text-gray-400 mt-1">
-                  До: {new Date(data.plan_expires_at).toLocaleDateString('uk-UA')}
-                </p>
+                <div>
+                  <p style={{ fontSize: 11, color: '#4a4a68', marginBottom: 2 }}>Дійсний до</p>
+                  <p style={{ fontSize: 15, fontWeight: 600, color: '#d0d0e8' }}>
+                    {new Date(data.plan_expires_at).toLocaleDateString('uk-UA', { day: 'numeric', month: 'long', year: 'numeric' })}
+                  </p>
+                </div>
+              )}
+              {sub && (
+                <span style={{ fontSize: 11, fontWeight: 700,
+                               padding: '4px 10px', borderRadius: 100,
+                               background: sub.status === 'paid' ? 'rgba(0,255,136,0.1)' : 'rgba(255,200,0,0.1)',
+                               color: sub.status === 'paid' ? '#00ff88' : '#ffd060',
+                               border: sub.status === 'paid' ? '1px solid rgba(0,255,136,0.2)' : '1px solid rgba(255,208,96,0.2)' }}>
+                  {sub.status === 'paid' ? '● Активна' : '○ ' + sub.status}
+                </span>
               )}
             </div>
             {sub && sub.status === 'paid' && (
               <button
                 onClick={() => cancelSub(sub.id)}
                 disabled={busy}
-                className="px-4 py-2 rounded-xl border border-red-500/30 text-red-400 text-sm hover:bg-red-500/10 transition disabled:opacity-50"
-              >
+                style={{ padding: '9px 18px', borderRadius: 10, fontSize: 13, fontWeight: 600,
+                         cursor: busy ? 'not-allowed' : 'pointer', transition: 'all .15s',
+                         background: 'transparent', color: '#f87171',
+                         border: '1px solid rgba(248,113,113,0.25)' }}>
                 Скасувати
               </button>
             )}
           </div>
         ) : (
-          <p className="text-gray-400 text-sm">Безкоштовний план (Старт)</p>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+            <div style={{ background: 'rgba(255,255,255,0.04)', borderRadius: 10,
+                          padding: '8px 16px', border: '1px solid rgba(255,255,255,0.06)' }}>
+              <span style={{ fontFamily: 'Syne, sans-serif', fontWeight: 700,
+                             fontSize: 15, color: '#5a5a78' }}>Старт</span>
+            </div>
+            <p style={{ fontSize: 13, color: '#4a4a68' }}>Безкоштовний план — оберіть тариф для розширення можливостей</p>
+          </div>
         )}
       </div>
 
@@ -218,113 +246,133 @@ export default function Billing() {
 
       {/* КРОК 1: Вибір тарифу */}
       {step === 'plan' && (
-        <div className="rounded-2xl border border-white/10 bg-[#111119] p-6 space-y-5">
-          <h2 className="text-base font-bold text-white">Оберіть тариф</h2>
-
-          <div className="flex gap-1 bg-white/5 rounded-xl p-1 w-fit">
-            {['month', 'year'].map(p => (
-              <button
-                key={p}
-                onClick={() => setSelPeriod(p)}
-                className={`px-4 py-1.5 rounded-lg text-sm font-medium transition ${
-                  selPeriod === p ? 'bg-[#00ff88] text-black' : 'text-gray-400 hover:text-white'
-                }`}
-              >
-                {p === 'month' ? 'Місяць' : 'Рік (-17%)'}
-              </button>
-            ))}
+        <div style={{ borderRadius: 20, border: '1px solid rgba(255,255,255,0.07)',
+                      background: '#0d0d17', padding: '28px', marginTop: 40 }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                        flexWrap: 'wrap', gap: 12, marginBottom: 24 }}>
+            <p style={{ fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: 16,
+                        color: '#eeeef6' }}>Оберіть тариф</p>
+            {/* Перемикач місяць/рік/3 роки */}
+            <div style={{ display: 'flex', gap: 4, background: 'rgba(255,255,255,0.05)',
+                          borderRadius: 12, padding: 4 }}>
+              {['month', 'year', '3_years'].map(per => (
+                <button
+                  key={per}
+                  onClick={() => setSelPeriod(per)}
+                  style={{ padding: '7px 18px', borderRadius: 9, fontSize: 13, fontWeight: 600,
+                           cursor: 'pointer', transition: 'all .15s', border: 'none',
+                           ...(selPeriod === per
+                             ? { background: '#00ff88', color: '#050508' }
+                             : { background: 'transparent', color: '#6a6a85' }) }}>
+                  {per === 'month' ? 'Місяць' : per === 'year' ? 'Рік −17%' : '3 роки'}
+                </button>
+              ))}
+            </div>
           </div>
 
-          <div className="grid sm:grid-cols-2 gap-3">
-            {Object.entries(plans).map(([id, plan]) => {
-              const price = plan[selPeriod] || 0;
-              const sel   = selPlan === id;
+          {/* Картки — всі в одному ряду, горизонтальний скрол на мобільному */}
+          <div style={{ display: 'flex', gap: 16, paddingTop: 20, overflowX: 'auto', paddingBottom: 16 }}>
+            {Object.entries(plans).map(([id, p]) => {
+              const priceVal   = p[selPeriod] || 0;
+              const isEnterprise = !!p.enterprise;
+              const priceNum  = isEnterprise ? '' : (priceVal > 0 ? priceVal.toLocaleString('uk-UA') : '0');
+              const desc      = isEnterprise ? 'під ваші потреби' : (priceVal > 0 ? '/ ' + PERIOD_LABELS[selPeriod] : 'назавжди безкоштовно');
               return (
-                <button
-                  key={id}
-                  onClick={() => setSelPlan(id)}
-                  className={`rounded-2xl border p-5 text-left transition ${
-                    sel ? 'border-[#00ff88] bg-[#00ff88]/5' : 'border-white/10 hover:border-white/20'
-                  }`}
-                >
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="font-bold text-white">{plan.label}</span>
-                    {sel && <span className="text-[#00ff88] text-xs font-bold">✓</span>}
-                  </div>
-                  <p className="text-2xl font-bold text-white">
-                    {price > 0 ? '₴' + price.toLocaleString('uk-UA') : '—'}
-                    {price > 0 && (
-                      <span className="text-sm font-normal text-gray-400">
-                        {' /'}{PERIOD_LABELS[selPeriod]}
-                      </span>
-                    )}
-                  </p>
-                </button>
+                <div key={id} style={{ flex: '1 1 0', minWidth: 260 }}>
+                  <PlanCard
+                    plan={{ id, name: p.label, priceNum, desc,
+                            popular: !!p.popular, enterprise: isEnterprise,
+                            features: p.features || [] }}
+                    isCurrent={data?.current_plan === id}
+                    isSelected={selPlan === id}
+                    onSelect={() => setSelPlan(id)}
+                    onBuy={() => { setSelPlan(id); goNext(); }}
+                    busy={busy}
+                    methodsOk={(methods?.count || 0) > 0}
+                  />
+                </div>
               );
             })}
           </div>
-
-          <button
-            onClick={goNext}
-            disabled={busy || (methods?.count || 0) === 0}
-            className="w-full py-3 rounded-2xl bg-[#00ff88] text-black font-bold hover:bg-[#00e07a] transition disabled:opacity-50"
-          >
-            {busy ? 'Зачекайте…'
-              : (methods?.count || 0) === 0 ? 'Методи оплати недоступні'
-              : methods?.count === 1 ? 'Оплатити через ' + methods.methods[0].label
-              : 'Обрати метод оплати →'}
-          </button>
         </div>
       )}
 
       {/* КРОК 2: Вибір методу */}
       {step === 'method' && (
-        <div className="rounded-2xl border border-white/10 bg-[#111119] p-6 space-y-4">
-          <div className="flex items-center gap-3">
-            <button onClick={() => setStep('plan')} className="text-gray-400 hover:text-white text-sm">
+        <div style={{ borderRadius: 20, border: '1px solid rgba(255,255,255,0.07)',
+                      background: '#0d0d17', padding: '28px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 24 }}>
+            <button
+              onClick={() => setStep('plan')}
+              style={{ background: 'rgba(255,255,255,0.05)', border: 'none',
+                       borderRadius: 10, padding: '8px 12px', cursor: 'pointer',
+                       color: '#a0a0c0', fontSize: 13, fontWeight: 600, transition: 'background .15s' }}
+              onMouseOver={e => e.currentTarget.style.background = 'rgba(255,255,255,0.1)'}
+              onMouseOut={e => e.currentTarget.style.background = 'rgba(255,255,255,0.05)'}
+            >
               ← Назад
             </button>
-            <h2 className="text-base font-bold text-white">Метод оплати</h2>
+            <h2 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: 16, color: '#eeeef6', margin: 0 }}>
+              Метод оплати
+            </h2>
           </div>
 
-          <div className="flex items-center gap-2 bg-white/5 rounded-xl px-4 py-2.5 text-sm text-gray-300">
-            <span className="text-[#00ff88] font-bold">{PLAN_LABELS[selPlan] || selPlan}</span>
-            <span className="text-gray-600">·</span>
-            <span>{PERIOD_LABELS[selPeriod]}</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap',
+                        background: 'rgba(255,255,255,0.03)', borderRadius: 14,
+                        padding: '12px 20px', marginBottom: 24, border: '1px solid rgba(255,255,255,0.05)' }}>
+            <span style={{ color: '#00ff88', fontWeight: 700, fontSize: 14 }}>
+              {PLAN_LABELS[selPlan] || selPlan}
+            </span>
+            <span style={{ color: '#4a4a68' }}>·</span>
+            <span style={{ color: '#d0d0e8', fontSize: 14 }}>{PERIOD_LABELS[selPeriod]}</span>
             {plans[selPlan] && plans[selPlan][selPeriod] > 0 && (
               <>
-                <span className="text-gray-600">·</span>
-                <span className="font-bold text-white">
+                <span style={{ color: '#4a4a68' }}>·</span>
+                <span style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, color: '#fff', fontSize: 16 }}>
                   ₴{plans[selPlan][selPeriod].toLocaleString('uk-UA')}
                 </span>
               </>
             )}
           </div>
 
-          <div className="space-y-2">
-            {(methods?.methods || []).map(m => (
-              <button
-                key={m.id}
-                onClick={() => setSelMethod(m.id)}
-                className={`w-full flex items-center gap-4 p-4 rounded-2xl border transition ${
-                  selMethod === m.id
-                    ? 'border-[#00ff88] bg-[#00ff88]/5'
-                    : 'border-white/10 hover:border-white/20'
-                }`}
-              >
-                <span className="text-gray-300"><PaymentIcon id={m.icon} /></span>
-                <span className="font-medium text-white">{m.label}</span>
-                {selMethod === m.id && (
-                  <span className="ml-auto text-[#00ff88] text-sm font-bold">✓</span>
-                )}
-              </button>
-            ))}
+          <div style={{ display: 'grid', gap: 12, marginBottom: 24 }}>
+            {(methods?.methods || []).map(m => {
+              const isSelected = selMethod === m.id;
+              // Some icons are just styled text, some are svgs
+              const iconNeedsLabel = ['manual', 'bank'].includes(m.icon);
+              return (
+                <button
+                  key={m.id}
+                  onClick={() => setSelMethod(m.id)}
+                  style={{ display: 'flex', alignItems: 'center', gap: 16, width: '100%',
+                           padding: '16px 20px', borderRadius: 16, cursor: 'pointer',
+                           transition: 'all .15s', textAlign: 'left',
+                           border: isSelected ? '1px solid rgba(0,255,136,0.4)' : '1px solid rgba(255,255,255,0.08)',
+                           background: isSelected ? 'rgba(0,255,136,0.05)' : 'rgba(255,255,255,0.02)' }}
+                >
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                width: 32, height: 32, borderRadius: 8, background: 'rgba(255,255,255,0.05)' }}>
+                    <PaymentIcon id={m.icon} />
+                  </div>
+                  <span style={{ fontWeight: 600, fontSize: 15, color: isSelected ? '#fff' : '#d0d0e8' }}>
+                    {iconNeedsLabel ? m.label : (m.label.includes('Monobank') ? 'Monobank' : m.label)}
+                  </span>
+                  {isSelected && (
+                    <span style={{ marginLeft: 'auto', color: '#00ff88', fontWeight: 800, fontSize: 16 }}>✓</span>
+                  )}
+                </button>
+              );
+            })}
           </div>
 
           <button
             onClick={() => startPayment()}
             disabled={!selMethod || busy}
-            className="w-full py-3 rounded-2xl bg-[#00ff88] text-black font-bold hover:bg-[#00e07a] transition disabled:opacity-50"
+            style={{ width: '100%', padding: '16px', borderRadius: 14, cursor: !selMethod || busy ? 'not-allowed' : 'pointer',
+                     fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: 15,
+                     transition: 'all .15s', border: 'none',
+                     background: !selMethod ? 'rgba(0,255,136,0.3)' : '#00ff88',
+                     color: '#050508', opacity: busy ? 0.7 : 1 }}
           >
             {busy ? 'Зачекайте…' : 'Продовжити →'}
           </button>
@@ -333,90 +381,245 @@ export default function Billing() {
 
       {/* КРОК 3: Ручний переказ */}
       {step === 'manual' && !manualDone && (
-        <div className="rounded-2xl border border-white/10 bg-[#111119] p-6 space-y-5">
-          <div className="flex items-center gap-3">
+        <div style={{ borderRadius: 20, border: '1px solid rgba(255,255,255,0.07)',
+                      background: '#0d0d17', padding: 28 }}>
+
+          {/* Header */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 28 }}>
             <button
               onClick={() => setStep(methods?.count > 1 ? 'method' : 'plan')}
-              className="text-gray-400 hover:text-white text-sm"
+              style={{ background: 'rgba(255,255,255,0.05)', border: 'none',
+                       borderRadius: 10, padding: '8px 12px', cursor: 'pointer',
+                       color: '#a0a0c0', fontSize: 13, fontWeight: 600, transition: 'background .15s' }}
+              onMouseOver={e => e.currentTarget.style.background = 'rgba(255,255,255,0.1)'}
+              onMouseOut={e => e.currentTarget.style.background = 'rgba(255,255,255,0.05)'}
             >
               ← Назад
             </button>
-            <h2 className="text-base font-bold text-white">Банківський переказ</h2>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+              <div style={{ width: 36, height: 36, borderRadius: 10,
+                            background: 'rgba(0,255,136,0.08)', border: '1px solid rgba(0,255,136,0.15)',
+                            display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <svg viewBox="0 0 24 24" style={{ width: 18, height: 18 }} fill="none" stroke="#00ff88" strokeWidth="1.5">
+                  <path d="M3 21h18M3 10h18M5 6l7-3 7 3M4 10v11M20 10v11M8 14v3M12 14v3M16 14v3"
+                        strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </div>
+              <h2 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: 16,
+                           color: '#eeeef6', margin: 0 }}>
+                Банківський переказ
+              </h2>
+            </div>
           </div>
 
-          {/* Реквізити */}
+          {/* Обраний тариф — pill */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap',
+                        background: 'rgba(255,255,255,0.03)', borderRadius: 14,
+                        padding: '12px 20px', marginBottom: 24,
+                        border: '1px solid rgba(255,255,255,0.05)' }}>
+            <span style={{ color: '#00ff88', fontWeight: 700, fontSize: 14 }}>
+              {PLAN_LABELS[selPlan] || selPlan}
+            </span>
+            <span style={{ color: '#4a4a68' }}>·</span>
+            <span style={{ color: '#d0d0e8', fontSize: 14 }}>{PERIOD_LABELS[selPeriod]}</span>
+            {plans[selPlan] && plans[selPlan][selPeriod] > 0 && (
+              <>
+                <span style={{ color: '#4a4a68' }}>·</span>
+                <span style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, color: '#fff', fontSize: 16 }}>
+                  ₴{plans[selPlan][selPeriod].toLocaleString('uk-UA')}
+                </span>
+              </>
+            )}
+          </div>
+
+          {/* Реквізити — premium card */}
           {manual && (
-            <div className="bg-white/5 rounded-2xl p-5 space-y-3 text-sm">
-              <p className="text-gray-500 text-xs uppercase tracking-wider font-medium">Реквізити</p>
-              {manual.card_number && (
-                <ReqRow label="Картка" value={
-                  <span className="font-mono font-bold text-white">{manual.card_number}</span>
-                } />
-              )}
-              {manual.iban && (
-                <ReqRow label="IBAN" value={
-                  <span className="font-mono text-white text-xs">{manual.iban}</span>
-                } />
-              )}
-              {manual.recipient && <ReqRow label="Отримувач" value={manual.recipient} />}
-              {manual.bank      && <ReqRow label="Банк"      value={manual.bank} />}
+            <div style={{ background: 'linear-gradient(135deg, rgba(0,255,136,0.03) 0%, rgba(0,180,255,0.02) 100%)',
+                          border: '1px solid rgba(0,255,136,0.12)', borderRadius: 18,
+                          padding: 0, marginBottom: 24, overflow: 'hidden' }}>
+
+              {/* Card header */}
+              <div style={{ padding: '14px 22px', borderBottom: '1px solid rgba(255,255,255,0.06)',
+                            display: 'flex', alignItems: 'center', gap: 8 }}>
+                <span style={{ fontSize: 11, fontWeight: 700, color: '#00ff88', letterSpacing: '0.12em',
+                               textTransform: 'uppercase' }}>Реквізити для оплати</span>
+              </div>
+
+              {/* Card body — grid rows */}
+              <div style={{ padding: '6px 0' }}>
+                {manual.card_number && (
+                  <ManualReqRow
+                    icon="💳" label="Картка" value={manual.card_number}
+                    mono bold copyable />
+                )}
+                {manual.iban && (
+                  <ManualReqRow
+                    icon="🏛" label="IBAN" value={manual.iban}
+                    mono small copyable />
+                )}
+                {manual.recipient && (
+                  <ManualReqRow icon="👤" label="Отримувач" value={manual.recipient} />
+                )}
+                {manual.bank && (
+                  <ManualReqRow icon="🏦" label="Банк" value={manual.bank} />
+                )}
+              </div>
+
+              {/* Сума — виділена секція */}
               {plans[selPlan] && plans[selPlan][selPeriod] > 0 && (
-                <div className="border-t border-white/10 pt-3 flex justify-between">
-                  <span className="text-gray-400">Сума:</span>
-                  <span className="font-bold text-[#00ff88] text-lg">
+                <div style={{ padding: '16px 22px', borderTop: '1px solid rgba(255,255,255,0.06)',
+                              background: 'rgba(0,255,136,0.04)',
+                              display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                  <span style={{ fontSize: 13, color: '#6a6a85', fontWeight: 600 }}>Сума до сплати</span>
+                  <span style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 24,
+                                 color: '#00ff88', letterSpacing: '-0.02em' }}>
                     ₴{plans[selPlan][selPeriod].toLocaleString('uk-UA')}
                   </span>
                 </div>
               )}
-              <div className="border-t border-white/10 pt-3">
-                <p className="text-gray-400">Призначення платежу:</p>
-                <p className="text-white mt-1">
+
+              {/* Призначення платежу */}
+              <div style={{ padding: '14px 22px', borderTop: '1px solid rgba(255,255,255,0.06)',
+                            display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12 }}>
+                <span style={{ fontSize: 12, color: '#6a6a85', fontWeight: 600, flexShrink: 0 }}>Призначення:</span>
+                <span style={{ fontSize: 13, color: '#d0d0e8', fontWeight: 500, textAlign: 'right' }}>
                   Підписка IndexFast {PLAN_LABELS[selPlan]} ({PERIOD_LABELS[selPeriod]})
-                </p>
+                </span>
               </div>
             </div>
           )}
 
-          <ol className="text-sm text-gray-400 space-y-1 list-decimal list-inside">
-            <li>Здійсніть переказ на вказані реквізити</li>
-            <li>Збережіть квитанцію або скріншот підтвердження</li>
-            <li>Завантажте квитанцію нижче та натисніть «Надіслати»</li>
-            <li>Підписка активується після перевірки адміністратором (1–24 год)</li>
-          </ol>
+          {/* Інструкції — numbered stepper */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 0, marginBottom: 28 }}>
+            {[
+              'Здійсніть переказ на вказані реквізити',
+              'Збережіть квитанцію або скріншот підтвердження',
+              'Завантажте квитанцію нижче та натисніть «Надіслати»',
+              'Підписка активується після перевірки (1–24 год)',
+            ].map((text, i) => (
+              <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 14 }}>
+                {/* Vertical line + circle */}
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', flexShrink: 0 }}>
+                  <div style={{ width: 28, height: 28, borderRadius: '50%',
+                                background: 'rgba(0,255,136,0.08)',
+                                border: '1px solid rgba(0,255,136,0.2)',
+                                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                fontFamily: 'Syne, sans-serif', fontWeight: 800,
+                                fontSize: 12, color: '#00ff88' }}>
+                    {i + 1}
+                  </div>
+                  {i < 3 && (
+                    <div style={{ width: 1, height: 18,
+                                  background: 'rgba(0,255,136,0.12)' }} />
+                  )}
+                </div>
+                <p style={{ fontSize: 13, color: '#a0a0c0', lineHeight: 1.5,
+                            paddingTop: 4 }}>
+                  {text}
+                </p>
+              </div>
+            ))}
+          </div>
 
-          <div>
+          {/* Завантаження квитанції — dropzone */}
+          <div style={{ marginBottom: 16 }}>
             <div
               onClick={() => document.getElementById('receipt-file').click()}
-              className="border-2 border-dashed border-white/20 rounded-2xl p-6 text-center cursor-pointer hover:border-white/40 transition"
+              onDragOver={e => { e.preventDefault(); e.currentTarget.style.borderColor = 'rgba(0,255,136,0.5)'; e.currentTarget.style.background = 'rgba(0,255,136,0.04)'; }}
+              onDragLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.12)'; e.currentTarget.style.background = 'transparent'; }}
+              onDrop={e => { e.preventDefault(); e.currentTarget.style.borderColor = 'rgba(255,255,255,0.12)'; e.currentTarget.style.background = 'transparent'; if (e.dataTransfer.files[0]) setReceipt(e.dataTransfer.files[0]); }}
+              style={{ border: '2px dashed rgba(255,255,255,0.12)', borderRadius: 16,
+                       padding: '28px 20px', textAlign: 'center', cursor: 'pointer',
+                       transition: 'all .2s', background: 'transparent' }}
+              onMouseOver={e => { if (!receipt) { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.25)'; e.currentTarget.style.background = 'rgba(255,255,255,0.02)'; }}}
+              onMouseOut={e => { if (!receipt) { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.12)'; e.currentTarget.style.background = 'transparent'; }}}
             >
-              {receipt
-                ? <p className="text-[#00ff88] text-sm">✓ {receipt.name}</p>
-                : <p className="text-gray-500 text-sm">Клацніть для вибору файлу (JPG, PNG, PDF, макс 10 МБ)</p>
-              }
+              {receipt ? (
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10 }}>
+                  <div style={{ width: 36, height: 36, borderRadius: 10,
+                                background: 'rgba(0,255,136,0.1)', border: '1px solid rgba(0,255,136,0.2)',
+                                display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <span style={{ fontSize: 18 }}>✓</span>
+                  </div>
+                  <div style={{ textAlign: 'left' }}>
+                    <p style={{ fontSize: 14, fontWeight: 600, color: '#00ff88', margin: 0 }}>{receipt.name}</p>
+                    <p style={{ fontSize: 11, color: '#6a6a85', margin: '2px 0 0' }}>
+                      {(receipt.size / 1024 / 1024).toFixed(2)} МБ
+                    </p>
+                  </div>
+                  <button
+                    onClick={e => { e.stopPropagation(); setReceipt(null); }}
+                    style={{ marginLeft: 8, background: 'rgba(248,113,113,0.1)',
+                             border: '1px solid rgba(248,113,113,0.2)', borderRadius: 8,
+                             padding: '4px 10px', cursor: 'pointer',
+                             fontSize: 11, fontWeight: 600, color: '#f87171',
+                             transition: 'all .15s' }}
+                    onMouseOver={e => e.currentTarget.style.background = 'rgba(248,113,113,0.2)'}
+                    onMouseOut={e => e.currentTarget.style.background = 'rgba(248,113,113,0.1)'}
+                  >
+                    ✕
+                  </button>
+                </div>
+              ) : (
+                <>
+                  <svg viewBox="0 0 24 24" style={{ width: 32, height: 32, margin: '0 auto 10px',
+                       opacity: 0.35 }} fill="none" stroke="currentColor" strokeWidth="1.5">
+                    <path d="M12 16V4m0 0L8 8m4-4l4 4M4 17v2a1 1 0 001 1h14a1 1 0 001-1v-2"
+                          strokeLinecap="round" strokeLinejoin="round" stroke="#a0a0c0"/>
+                  </svg>
+                  <p style={{ fontSize: 14, color: '#8a8aa0', margin: 0, fontWeight: 500 }}>
+                    Перетягніть файл або <span style={{ color: '#00ff88', fontWeight: 600 }}>оберіть</span>
+                  </p>
+                  <p style={{ fontSize: 11, color: '#4a4a68', margin: '6px 0 0' }}>
+                    JPG, PNG, PDF або WebP · макс 10 МБ
+                  </p>
+                </>
+              )}
             </div>
             <input
               id="receipt-file"
               type="file"
               accept=".jpg,.jpeg,.png,.pdf,.webp"
-              className="hidden"
+              style={{ display: 'none' }}
               onChange={e => setReceipt(e.target.files[0])}
             />
           </div>
 
+          {/* Примітка */}
           <textarea
             value={notes}
             onChange={e => setNotes(e.target.value)}
             rows={2}
             placeholder="Примітка (необов'язково)"
-            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-gray-500 resize-none focus:border-[#00ff88]/50 outline-none"
+            style={{ width: '100%', boxSizing: 'border-box',
+                     background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)',
+                     borderRadius: 14, padding: '14px 18px', fontSize: 14, color: '#eeeef6',
+                     resize: 'none', outline: 'none', fontFamily: 'inherit',
+                     transition: 'border-color .15s', marginBottom: 20 }}
+            onFocus={e => e.currentTarget.style.borderColor = 'rgba(0,255,136,0.3)'}
+            onBlur={e => e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)'}
           />
 
+          {/* Submit */}
           <button
             onClick={sendReceipt}
             disabled={busy || (!receipt && !notes)}
-            className="w-full py-3 rounded-2xl bg-[#00ff88] text-black font-bold hover:bg-[#00e07a] transition disabled:opacity-50"
+            style={{ width: '100%', padding: '16px', borderRadius: 14, border: 'none',
+                     cursor: busy || (!receipt && !notes) ? 'not-allowed' : 'pointer',
+                     fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: 15,
+                     transition: 'all .15s',
+                     background: (!receipt && !notes) ? 'rgba(0,255,136,0.3)' : '#00ff88',
+                     color: '#050508', opacity: busy ? 0.7 : 1,
+                     display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}
           >
-            {busy ? 'Надсилаємо…' : '📨 Надіслати квитанцію'}
+            {busy ? 'Надсилаємо…' : (
+              <>
+                <svg viewBox="0 0 24 24" style={{ width: 18, height: 18 }} fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" strokeLinecap="round" strokeLinejoin="round" stroke="#050508"/>
+                </svg>
+                Надіслати квитанцію
+              </>
+            )}
           </button>
         </div>
       )}
@@ -471,6 +674,55 @@ function ReqRow({ label, value }) {
   );
 }
 
+function ManualReqRow({ icon, label, value, mono, bold, small, copyable }) {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = (e) => {
+    e.stopPropagation();
+    navigator.clipboard.writeText(typeof value === 'string' ? value : '').then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1500);
+    });
+  };
+
+  return (
+    <div style={{ display: 'flex', alignItems: 'center', gap: 14,
+                  padding: '12px 22px', transition: 'background .15s' }}
+         onMouseOver={e => e.currentTarget.style.background = 'rgba(255,255,255,0.02)'}
+         onMouseOut={e => e.currentTarget.style.background = 'transparent'}>
+      <span style={{ fontSize: 16, flexShrink: 0, width: 24, textAlign: 'center' }}>{icon}</span>
+      <span style={{ fontSize: 12, color: '#6a6a85', fontWeight: 600, flexShrink: 0, minWidth: 90 }}>{label}</span>
+      <span style={{ flex: 1, fontSize: small ? 12 : 14, color: '#eeeef6',
+                     fontFamily: mono ? "'JetBrains Mono', 'Fira Code', monospace" : 'inherit',
+                     fontWeight: bold ? 700 : 500, letterSpacing: mono ? '0.04em' : 'normal',
+                     overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+        {value}
+      </span>
+      {copyable && (
+        <button
+          onClick={handleCopy}
+          style={{ flexShrink: 0, background: copied ? 'rgba(0,255,136,0.12)' : 'rgba(255,255,255,0.05)',
+                   border: copied ? '1px solid rgba(0,255,136,0.25)' : '1px solid rgba(255,255,255,0.08)',
+                   borderRadius: 8, padding: '5px 10px', cursor: 'pointer',
+                   fontSize: 11, fontWeight: 600, transition: 'all .2s',
+                   color: copied ? '#00ff88' : '#8a8aa0',
+                   display: 'flex', alignItems: 'center', gap: 4 }}
+          onMouseOver={e => { if (!copied) { e.currentTarget.style.background = 'rgba(255,255,255,0.1)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.15)'; }}}
+          onMouseOut={e => { if (!copied) { e.currentTarget.style.background = 'rgba(255,255,255,0.05)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)'; }}}
+        >
+          {copied ? '✓' : (
+            <svg viewBox="0 0 24 24" style={{ width: 13, height: 13 }} fill="none" stroke="currentColor" strokeWidth="2">
+              <rect x="9" y="9" width="13" height="13" rx="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          )}
+          {copied ? 'Скопійовано' : 'Копіювати'}
+        </button>
+      )}
+    </div>
+  );
+}
+
 function Alert({ type, children, large }) {
   const cls = type === 'success'
     ? 'border-green-500/30 bg-green-500/10 text-green-300'
@@ -505,3 +757,171 @@ function StatusBadge({ status }) {
   const label = labels[status] || status;
   return <span className={'text-xs px-2 py-0.5 rounded-full ' + cls}>{label}</span>;
 }
+
+// ── PlanCard — дизайн як на головній сторінці, дані з API (plans.php → subscription.php)
+
+const PlanCard = ({ plan: p, isCurrent, isSelected, onSelect, onBuy, busy, methodsOk }) => {
+  const isEnterprise = p.enterprise || p.id === 'enterprise';
+  const isStart      = p.id === 'start';
+  const purple = '#9370db';
+  const green  = '#00ff88';
+
+  // Border & background
+  const borderColor = isEnterprise
+    ? (isSelected ? 'rgba(147,112,219,0.6)' : 'rgba(147,112,219,0.25)')
+    : p.popular
+      ? (isSelected ? green : 'rgba(0,255,136,0.35)')
+      : isSelected
+        ? 'rgba(0,255,136,0.4)'
+        : 'rgba(255,255,255,0.07)';
+
+  const bg = isEnterprise
+    ? 'rgba(147,112,219,0.04)'
+    : p.popular
+      ? 'rgba(0,255,136,0.04)'
+      : '#0d0d17';
+
+  const boxShadow = p.popular
+    ? '0 0 40px rgba(0,255,136,0.1)'
+    : isEnterprise
+      ? '0 0 40px rgba(147,112,219,0.07)'
+      : 'none';
+
+  return (
+    <div
+      onClick={() => { if (!isEnterprise) onSelect(); }}
+      style={{ background: bg, border: `1px solid ${borderColor}`, boxShadow,
+               borderRadius: 20, padding: '32px 24px 24px', position: 'relative',
+               display: 'flex', flexDirection: 'column', height: '100%',
+               cursor: isEnterprise ? 'default' : 'pointer',
+               transition: 'border-color .2s, box-shadow .2s' }}
+    >
+      {/* "Популярний" centered pill at top — як на скриншоті */}
+      {p.popular && (
+        <div style={{ position: 'absolute', top: -14, left: 0, right: 0,
+                      display: 'flex', justifyContent: 'center' }}>
+          <span style={{ background: green, color: '#050508', fontSize: 11,
+                         fontWeight: 800, padding: '4px 14px', borderRadius: 100,
+                         fontFamily: 'Syne, sans-serif', letterSpacing: '0.05em' }}>
+            Популярний
+          </span>
+        </div>
+      )}
+      {isEnterprise && (
+        <div style={{ position: 'absolute', top: -14, left: 0, right: 0,
+                      display: 'flex', justifyContent: 'center' }}>
+          <span style={{ background: 'rgba(147,112,219,0.15)', color: purple, fontSize: 11,
+                         fontWeight: 800, padding: '4px 14px', borderRadius: 100,
+                         border: '1px solid rgba(147,112,219,0.4)',
+                         fontFamily: 'Syne, sans-serif', letterSpacing: '0.05em' }}>
+            Enterprise
+          </span>
+        </div>
+      )}
+
+      {/* ✓ Активний */}
+      {isCurrent && (
+        <div style={{ position: 'absolute', top: 16, right: 16, fontSize: 10,
+                      fontWeight: 800, background: 'rgba(0,255,136,0.1)', color: green,
+                      padding: '3px 9px', borderRadius: 100,
+                      border: '1px solid rgba(0,255,136,0.2)' }}>
+          ✓ Активний
+        </div>
+      )}
+
+      {/* Tier name */}
+      <p style={{ fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: 13,
+                  letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 18,
+                  color: isEnterprise ? purple : p.popular ? green : '#5a5a78' }}>
+        {p.name}
+      </p>
+
+      {/* Price — ₴ маленька + велике число */}
+      <div style={{ display: 'flex', alignItems: 'flex-start', lineHeight: 1, marginBottom: 6 }}>
+        {!isEnterprise && (
+          <span style={{ fontFamily: 'Syne, sans-serif', fontWeight: 700,
+                         fontSize: 22, color: '#fff', marginTop: 6, marginRight: 1,
+                         lineHeight: 1 }}>₴</span>
+        )}
+        <span style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800,
+                       fontSize: isEnterprise ? 26 : 52, lineHeight: 1,
+                       color: isEnterprise ? purple : '#fff' }}>
+          {isEnterprise ? 'Індивідуально' : p.priceNum}
+        </span>
+      </div>
+
+      {/* Period */}
+      <p style={{ fontSize: 13, color: '#4a4a68', marginBottom: 24 }}>{p.desc}</p>
+
+      {/* Feature list */}
+      <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 28px', flex: 1 }}>
+        {(p.features || []).map(f => {
+          const disabled = typeof f === 'object' && f.disabled;
+          const label    = typeof f === 'object' ? f.label : f;
+          return (
+            <li key={label}
+                style={{ display: 'flex', alignItems: 'center', gap: 10,
+                         padding: '8px 0',
+                         borderBottom: '1px solid rgba(255,255,255,0.04)',
+                         fontSize: 13.5,
+                         color: disabled ? '#28283e' : '#a0a0c0' }}>
+              <span style={{ flexShrink: 0, fontSize: 13,
+                             color: disabled ? '#28283e' : green }}>
+                {disabled ? '✕' : '✓'}
+              </span>
+              <span style={{ textDecoration: disabled ? 'line-through' : 'none' }}>
+                {label}
+              </span>
+            </li>
+          );
+        })}
+      </ul>
+
+      {/* CTA */}
+      {isCurrent ? (
+        <div style={{ textAlign: 'center', fontSize: 13, fontWeight: 700,
+                      padding: '14px', borderRadius: 12,
+                      color: isEnterprise ? purple : green,
+                      background: isEnterprise ? 'rgba(147,112,219,0.08)' : 'rgba(0,255,136,0.06)' }}>
+          Поточний план
+        </div>
+      ) : isEnterprise ? (
+        <button
+          onClick={e => { e.stopPropagation(); window.open('https://t.me/indexfastgoogle?text=Хочу%20дізнатись%20про%20Enterprise%20план', '_blank'); }}
+          style={{ width: '100%', padding: '14px', borderRadius: 12, cursor: 'pointer',
+                   fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: 14,
+                   transition: 'all .15s', background: 'rgba(147,112,219,0.1)',
+                   border: '2px solid rgba(147,112,219,0.35)', color: purple }}>
+          Зв'язатись →
+        </button>
+      ) : isStart ? (
+        <button
+          onClick={e => { e.stopPropagation(); onSelect(); }}
+          style={{ width: '100%', padding: '14px', borderRadius: 12, cursor: 'pointer',
+                   fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: 14,
+                   transition: 'all .15s',
+                   ...(isSelected
+                     ? { background: green, color: '#050508', border: 'none' }
+                     : { background: 'transparent', color: '#d0d0e8',
+                         border: '1px solid rgba(255,255,255,0.14)' }) }}>
+          {isSelected ? '✓ Обрано' : 'Обрати'}
+        </button>
+      ) : (
+        <button
+          onClick={e => { e.stopPropagation(); if (methodsOk && !busy) onBuy(); }}
+          disabled={busy || !methodsOk}
+          style={{ width: '100%', padding: '14px', borderRadius: 12, cursor: busy || !methodsOk ? 'not-allowed' : 'pointer',
+                   fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: 14,
+                   transition: 'all .15s', border: 'none',
+                   background: methodsOk ? green : 'rgba(0,255,136,0.3)',
+                   color: '#050508', opacity: busy ? 0.7 : 1 }}>
+          {busy ? 'Зачекайте…'
+            : !methodsOk ? 'Оплата недоступна'
+            : p.popular ? `Придбати ${p.name} →`
+            : `Придбати →`}
+        </button>
+      )}
+    </div>
+  );
+};
+
