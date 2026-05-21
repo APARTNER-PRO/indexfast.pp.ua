@@ -49,7 +49,7 @@ if ($manualProvider !== null && $manualProvider->isEnabled()) {
 }
 
 respond(200, 'ok', [
-    'current_plan'      => isset($user['plan']) ? $user['plan'] : 'free',
+    'current_plan'      => isset($user['plan']) ? $user['plan'] : 'start',
     'plan_expires_at'   => isset($user['plan_expires_at']) ? $user['plan_expires_at'] : null,
     'subscription'      => $svc->getActive((int)$user['id']),
     'history'           => $history,

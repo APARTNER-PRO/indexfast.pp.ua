@@ -136,7 +136,7 @@ class WebhookHandler
         );
         DB::exec(
             "UPDATE users
-             SET plan = 'free', plan_expires_at = NULL, plan_started_at = NULL,
+             SET plan = 'start', plan_expires_at = NULL, plan_started_at = NULL,
                  active_subscription_id = NULL
              WHERE id = ? AND active_subscription_id = ?",
             [$sub['user_id'], $sub['id']]
@@ -159,7 +159,7 @@ class WebhookHandler
         if (!$future) {
             DB::exec(
                 "UPDATE users
-                 SET plan = 'free', plan_expires_at = NULL, active_subscription_id = NULL
+                 SET plan = 'start', plan_expires_at = NULL, active_subscription_id = NULL
                  WHERE id = ? AND active_subscription_id = ?",
                 [$sub['user_id'], $sub['id']]
             );
