@@ -9,14 +9,14 @@ if (!class_exists('Plans')) {
         public const CONFIG = [
             'start' => [
                 'label'       => 'Старт',
-                'urls_per_day'=> 100,
-                'max_sites'   => 3,
-                'limits'      => ['sites' => 3, 'pages' => 100],
+                'urls_per_day'=> 10,
+                'max_sites'   => 1,
+                'limits'      => ['sites' => 1, 'pages' => 10],
                 'popular'     => false,
                 'enterprise'  => false,
                 'features'    => [
-                    '100 URL/день',
-                    'До 3 сайтів',
+                    '10 URL/день',
+                    '1 сайт',
                     'Sitemap Index підтримка',
                     'Базова підтримка',
                     'Стандартна швидкість',
