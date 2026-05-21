@@ -51,7 +51,7 @@ error_log("[paddle_webhook] event={$eventType} id=" . ($data['id'] ?? ''));
 function planByPriceId(string $priceId): string {
     return match($priceId) {
         'pri_01kpy78kbrnk3pzxc9grpe2ye3' => 'pro',    // PRO ₴499/міс
-        'pri_01kpy7am19g27zn99w8k74qdxq' => 'agency', // Agency ₴3999/міс
+        'pri_01kpy7am19g27zn99w8k74qdxq' => 'agency', // Agency ₴2999/міс
         default                           => '',
     };
 }
