@@ -322,6 +322,9 @@ class SubscriptionService
         if ($period === 'year') {
             return date('Y-m-d H:i:s', strtotime('+1 year'));
         }
+        if ($period === '3_years') {
+            return date('Y-m-d H:i:s', strtotime('+3 years'));
+        }
         if ($period === 'custom') {
             return null;
         }

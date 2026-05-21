@@ -30,6 +30,7 @@ foreach (Plans::CONFIG as $pid => $cfg) {
         'features'   => $cfg['features'] ?? [],
         'month'      => (float)env('PRICE_' . strtoupper($pid) . '_MONTH', 0),
         'year'       => (float)env('PRICE_' . strtoupper($pid) . '_YEAR',  0),
+        '3_years'    => (float)env('PRICE_' . strtoupper($pid) . '_3_YEARS', 0),
     ];
 }
 
