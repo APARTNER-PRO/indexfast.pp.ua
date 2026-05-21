@@ -20,7 +20,7 @@ class LiqPayProvider implements PaymentProviderInterface
     {
         $pub    = env('LIQPAY_PUBLIC_KEY');
         $priv   = env('LIQPAY_PRIVATE_KEY');
-        $period = ($params['period'] === 'year') ? 'year' : 'month';
+        $period = in_array($params['period'], ['year', '3_years'], true) ? 'year' : 'month';
 
         $data = [
             'version'              => 3,

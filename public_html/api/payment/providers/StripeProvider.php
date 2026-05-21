@@ -21,7 +21,7 @@ class StripeProvider implements PaymentProviderInterface
         $secretKey   = env('STRIPE_SECRET_KEY');
         $isRecurring = ($params['period'] !== 'custom');
         $mode        = $isRecurring ? 'subscription' : 'payment';
-        $interval    = ($params['period'] === 'year') ? 'year' : 'month';
+        $interval    = in_array($params['period'], ['year', '3_years'], true) ? 'year' : 'month';
 
         $postFields = [
             'payment_method_types[]'                           => 'card',
@@ -40,6 +40,9 @@ class StripeProvider implements PaymentProviderInterface
 
         if ($isRecurring) {
             $postFields['line_items[0][price_data][recurring][interval]'] = $interval;
+            if ($params['period'] === '3_years') {
+                $postFields['line_items[0][price_data][recurring][interval_count]'] = 3;
+            }
         }
 
         $ch = curl_init('https://api.stripe.com/v1/checkout/sessions');
