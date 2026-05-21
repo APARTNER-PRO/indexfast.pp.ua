@@ -243,6 +243,9 @@ tr:hover td { background:rgba(255,255,255,.015); }
       <a class="nav-item" onclick="showPage('marketing',this)">
         <span class="icon">📧</span> Підписники
       </a>
+      <a class="nav-item" onclick="showPage('payments',this)">
+        <span class="icon">💳</span> Платежі
+      </a>
       <a class="nav-item" href="send_email.php" target="_blank"
         style="color:var(--green);border:1px solid rgba(0,255,136,0.2)">
         <span class="icon">✉</span> Відправити лист
@@ -421,6 +424,11 @@ tr:hover td { background:rgba(255,255,255,.015); }
         <iframe src="marketing.php" style="width:100%;height:calc(100vh - 100px);border:none;background:transparent" id="marketing-frame"></iframe>
       </div>
 
+      <!-- ══ PAYMENTS ══ -->
+      <div class="page" id="page-payments">
+        <iframe src="payments.php" style="width:100%;height:calc(100vh - 100px);border:none;background:transparent" id="payments-frame"></iframe>
+      </div>
+
       <!-- ══ SYSTEM ══ -->
       <div class="page" id="page-system">
         <iframe src="system.php" style="width:100%;height:calc(100vh - 100px);border:none;background:transparent" id="system-frame"></iframe>
@@ -431,7 +439,7 @@ tr:hover td { background:rgba(255,255,255,.015); }
 </div><!-- /layout -->
 
 <script>
-const titles = { dashboard:'Огляд', users:'Користувачі', jobs:'Черга / Jobs', marketing:'Розсилка', system:'Система' };
+const titles = { dashboard:'Огляд', users:'Користувачі', jobs:'Черга / Jobs', marketing:'Розсилка', payments:'Платежі', system:'Система' };
 
 function showPage(id, el) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));

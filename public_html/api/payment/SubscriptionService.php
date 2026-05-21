@@ -233,11 +233,11 @@ class SubscriptionService
         // "Осирілі" юзери без активної підписки
         DB::exec(
             "UPDATE users
-             SET plan = 'free',
+             SET plan = 'start',
                  plan_expires_at        = NULL,
                  plan_started_at        = NULL,
                  active_subscription_id = NULL
-             WHERE plan != 'free'
+             WHERE plan != 'start'
                AND plan_expires_at IS NOT NULL
                AND plan_expires_at < NOW()
                AND (
@@ -269,7 +269,7 @@ class SubscriptionService
             if (!$other) {
                 DB::exec(
                     "UPDATE users
-                     SET plan = 'free',
+                     SET plan = 'start',
                          plan_expires_at        = NULL,
                          plan_started_at        = NULL,
                          active_subscription_id = NULL
