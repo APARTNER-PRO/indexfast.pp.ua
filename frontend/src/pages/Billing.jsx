@@ -657,30 +657,78 @@ export default function Billing() {
 
       {/* Історія підписок */}
       {data?.history && data.history.length > 0 && (
-        <div className="rounded-2xl border border-white/10 bg-[#111119] p-6">
-          <h2 className="text-base font-bold text-white mb-4">Історія підписок</h2>
-          <div className="space-y-1">
-            {data.history.map(h => (
-              <div
-                key={h.id}
-                className="flex items-center justify-between py-2.5 border-b border-white/5 last:border-0 text-sm flex-wrap gap-2"
-              >
-                <div className="flex items-center gap-2">
-                  <span className="text-white font-medium">{PLAN_LABELS[h.plan_id] || h.plan_id}</span>
-                  <span className="text-gray-600">·</span>
-                  <span className="text-gray-400">{PERIOD_LABELS[h.period] || h.period}</span>
-                  <span className="text-xs text-gray-500 bg-white/5 px-2 py-0.5 rounded">
-                    {h.payment_method}
-                  </span>
+        <div style={{ borderRadius: 20, border: '1px solid rgba(255,255,255,0.07)',
+                      background: '#0d0d17', padding: '28px', marginTop: 40 }}>
+          <h2 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: 16,
+                       color: '#eeeef6', marginBottom: 20 }}>
+            Історія підписок
+          </h2>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+            {data.history.map(h => {
+              const isManual = h.payment_method === 'manual';
+              const methodName = isManual ? 'Банківський переказ' : (h.payment_method || '—');
+              const dateStr = h.created_at ? new Date(h.created_at.replace(' ', 'T')).toLocaleDateString('uk-UA', { day: 'numeric', month: 'long', year: 'numeric' }) : '';
+              
+              return (
+                <div
+                  key={h.id}
+                  style={{
+                    display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                    padding: '16px 20px', borderRadius: 16,
+                    background: 'rgba(255,255,255,0.02)',
+                    border: '1px solid rgba(255,255,255,0.05)',
+                    flexWrap: 'wrap', gap: 16,
+                    transition: 'background .2s'
+                  }}
+                  onMouseOver={e => e.currentTarget.style.background = 'rgba(255,255,255,0.04)'}
+                  onMouseOut={e => e.currentTarget.style.background = 'rgba(255,255,255,0.02)'}
+                >
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+                    <div style={{
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      width: 42, height: 42, borderRadius: 12,
+                      background: 'rgba(255,255,255,0.04)',
+                      border: '1px solid rgba(255,255,255,0.06)'
+                    }}>
+                      <svg viewBox="0 0 24 24" style={{ width: 20, height: 20, opacity: 0.7, color: '#a0a0c0' }} fill="none" stroke="currentColor" strokeWidth="1.5">
+                        <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                        <span style={{ fontWeight: 700, fontSize: 15, color: '#fff' }}>
+                          {PLAN_LABELS[h.plan_id] || h.plan_id}
+                        </span>
+                        <span style={{ color: '#4a4a68' }}>·</span>
+                        <span style={{ fontSize: 14, color: '#d0d0e8' }}>
+                          {PERIOD_LABELS[h.period] || h.period}
+                        </span>
+                      </div>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap' }}>
+                        <span style={{ fontSize: 12, color: '#8a8aa0', background: 'rgba(255,255,255,0.05)', padding: '2px 8px', borderRadius: 6, fontWeight: 500 }}>
+                          {methodName}
+                        </span>
+                        {dateStr && (
+                          <>
+                            <span style={{ color: '#4a4a68' }}>·</span>
+                            <span style={{ fontSize: 12, color: '#6a6a85' }}>{dateStr}</span>
+                          </>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginLeft: 'auto' }}>
+                    {h.amount > 0 && (
+                      <span style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 16, color: '#fff', letterSpacing: '0.02em' }}>
+                        ₴{Number(h.amount).toLocaleString('uk-UA')}
+                      </span>
+                    )}
+                    <StatusBadge status={h.status} />
+                  </div>
                 </div>
-                <div className="flex items-center gap-3">
-                  {h.amount > 0 && (
-                    <span className="text-gray-300">₴{Number(h.amount).toLocaleString('uk-UA')}</span>
-                  )}
-                  <StatusBadge status={h.status} />
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       )}
@@ -759,13 +807,13 @@ function Alert({ type, children, large }) {
 
 function StatusBadge({ status }) {
   const cfg = {
-    paid:                         'bg-green-500/10 text-green-400',
-    pending:                      'bg-yellow-500/10 text-yellow-400',
-    failed:                       'bg-red-500/10 text-red-400',
-    expired:                      'bg-white/5 text-gray-500',
-    cancelled:                    'bg-white/5 text-gray-500',
-    refunded:                     'bg-yellow-500/10 text-yellow-400',
-    awaiting_manual_confirmation: 'bg-yellow-500/10 text-yellow-400',
+    paid:                         'bg-green-500/10 text-green-400 border border-green-500/20',
+    pending:                      'bg-yellow-500/10 text-yellow-400 border border-yellow-500/20',
+    failed:                       'bg-red-500/10 text-red-400 border border-red-500/20',
+    expired:                      'bg-white/5 text-gray-500 border border-white/10',
+    cancelled:                    'bg-white/5 text-gray-500 border border-white/10',
+    refunded:                     'bg-yellow-500/10 text-yellow-400 border border-yellow-500/20',
+    awaiting_manual_confirmation: 'bg-yellow-500/10 text-yellow-400 border border-yellow-500/20',
   };
   const labels = {
     paid:                         '✅ Активна',
@@ -776,9 +824,9 @@ function StatusBadge({ status }) {
     refunded:                     '↩ Повернено',
     awaiting_manual_confirmation: '⏳ Підтвердження',
   };
-  const cls   = cfg[status]    || 'bg-white/5 text-gray-400';
+  const cls   = cfg[status]    || 'bg-white/5 text-gray-400 border border-white/10';
   const label = labels[status] || status;
-  return <span className={'text-xs px-2 py-0.5 rounded-full ' + cls}>{label}</span>;
+  return <span className={'text-[11px] font-semibold px-2.5 py-1 rounded-full ' + cls}>{label}</span>;
 }
 
 // ── PlanCard — дизайн як на головній сторінці, дані з API (plans.php → subscription.php)
