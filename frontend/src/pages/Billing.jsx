@@ -300,7 +300,7 @@ export default function Billing() {
       {/* КРОК 2: Вибір методу */}
       {step === 'method' && (
         <div style={{ borderRadius: 20, border: '1px solid rgba(255,255,255,0.07)',
-                      background: '#0d0d17', padding: '28px' }}>
+                      background: '#0d0d17', padding: '28px', marginTop: 40 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 24 }}>
             <button
               onClick={() => setStep('plan')}
@@ -382,7 +382,7 @@ export default function Billing() {
       {/* КРОК 3: Ручний переказ */}
       {step === 'manual' && !manualDone && (
         <div style={{ borderRadius: 20, border: '1px solid rgba(255,255,255,0.07)',
-                      background: '#0d0d17', padding: 28 }}>
+                      background: '#0d0d17', padding: 28, marginTop: 40 }}>
 
           {/* Header */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 28 }}>
