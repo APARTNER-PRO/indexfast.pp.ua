@@ -60,7 +60,7 @@ $processed = 0;
 while (elapsed() < WORKER_MAX_TIME) {
 
     // Беремо наступний доступний job (SELECT FOR UPDATE — атомарно)
-    $job = DB::pdo()->transaction(function(PDO $pdo) {
+    $job = DB::transaction(function(PDO $pdo) {
         $stmt = $pdo->prepare(
             "SELECT j.*, u.plan
              FROM jobs j
@@ -491,27 +491,4 @@ function b64u(string $d): string {
     return rtrim(strtr(base64_encode($d), '+/', '-_'), '=');
 }
 
-// ── PDO transaction helper (якщо немає в DB class)
-if (!method_exists('DB', 'transaction')) {
-    // Fallback: додаємо через closure
-    DB::pdo()->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-}
-
-// Розширюємо DB::pdo() методом transaction якщо його немає
-class WorkerPDO {
-    public static function transaction(callable $fn) {
-        $pdo = DB::pdo();
-        $pdo->beginTransaction();
-        try {
-            $result = $fn($pdo);
-            $pdo->commit();
-            return $result;
-        } catch (Throwable $e) {
-            $pdo->rollBack();
-            throw $e;
-        }
-    }
-}
-
-// Патчимо виклик вище
-// (у продакшн краще додати transaction() прямо в клас DB)
+// DB::transaction() визначено в db_worker.php — виклик вище коректний.

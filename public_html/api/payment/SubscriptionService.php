@@ -175,6 +175,23 @@ class SubscriptionService
         } catch (Exception $e) {
             error_log("[SubscriptionService] Activation email: " . $e->getMessage());
         }
+
+        // Conversion tracking — позначаємо upsell email який призвів до апгрейду
+        try {
+            DB::exec(
+                "UPDATE email_logs
+                 SET converted_at = NOW()
+                 WHERE user_id     = ?
+                   AND email_type  = 'upsell'
+                   AND target_plan = ?
+                   AND converted_at IS NULL
+                 ORDER BY created_at DESC
+                 LIMIT 1",
+                [$userId, $sub['plan_id']]
+            );
+        } catch (Exception $e) {
+            error_log("[SubscriptionService] Conversion tracking: " . $e->getMessage());
+        }
     }
 
     // ════════════════════════════════════════
