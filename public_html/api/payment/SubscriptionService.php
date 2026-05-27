@@ -15,7 +15,7 @@ class SubscriptionService
     //  1. ІНІЦІЮВАТИ ОПЛАТУ
     // ════════════════════════════════════════
 
-    public function initiate(array $user, string $planId, string $period, string $paymentMethod): array
+    public function initiate(array $user, string $planId, string $period, string $paymentMethod, string $promoCode = ''): array
     {
         $manager  = PaymentManager::getInstance();
         $provider = $manager->getProvider($paymentMethod);
@@ -27,10 +27,39 @@ class SubscriptionService
             throw new RuntimeException("Plan '{$planId}' does not exist.");
         }
 
-        $amountData = $this->calcAmount($planId, $period);
-        $amount     = $amountData[0];
-        $currency   = $amountData[1];
-        $endAt      = $this->calcEndAt($period);
+        $amountData      = $this->calcAmount($planId, $period);
+        $amount          = $amountData[0];
+        $currency        = $amountData[1];
+        $endAt           = $this->calcEndAt($period);
+        $discountPercent = 0;
+        $promoApplied    = '';
+
+        // ── Валідація промокоду ──────────────────────────────────────────────
+        if ($promoCode !== '') {
+            $promoCode = strtoupper(trim($promoCode));
+            $promo = DB::row(
+                "SELECT id, discount_percent, expires_at, target_plan
+                 FROM email_logs
+                 WHERE user_id    = ?
+                   AND promo_code = ?
+                   AND email_type = 'upsell'
+                   AND (expires_at IS NULL OR expires_at >= CURDATE())
+                 ORDER BY created_at DESC
+                 LIMIT 1",
+                [$user['id'], $promoCode]
+            );
+
+            if (!$promo) {
+                throw new RuntimeException("Промокод '{$promoCode}' недійсний або не призначений вашому акаунту.");
+            }
+            if ($promo['target_plan'] !== $planId) {
+                throw new RuntimeException("Промокод '{$promoCode}' дійсний лише для тарифу " . strtoupper($promo['target_plan']) . ".");
+            }
+
+            $discountPercent = (int)$promo['discount_percent'];
+            $amount          = round($amount * (1 - $discountPercent / 100), 2);
+            $promoApplied    = $promoCode;
+        }
 
         // Створюємо підписку та платіж в транзакції
         $subId     = 0;
@@ -64,16 +93,18 @@ class SubscriptionService
         // Сесія у провайдері
         $baseUrl = env('FRONTEND_URL', env('APP_URL', ''));
         $session = $provider->createPaymentSession([
-            'user_id'     => $user['id'],
-            'plan_id'     => $planId,
-            'period'      => $period,
-            'amount'      => $amount,
-            'currency'    => $currency,
-            'email'       => $user['email'],
-            'name'        => trim(($user['name'] ?? '') . ' ' . ($user['surname'] ?? '')),
-            'sub_id'      => $subId,
-            'success_url' => $baseUrl . '/app?payment=success&sub=' . $subId,
-            'cancel_url'  => $baseUrl . '/app?payment=cancel&sub='  . $subId,
+            'user_id'         => $user['id'],
+            'plan_id'         => $planId,
+            'period'          => $period,
+            'amount'          => $amount,
+            'currency'        => $currency,
+            'email'           => $user['email'],
+            'name'            => trim(($user['name'] ?? '') . ' ' . ($user['surname'] ?? '')),
+            'sub_id'          => $subId,
+            'promo_code'      => $promoApplied,
+            'discount_percent'=> $discountPercent,
+            'success_url'     => $baseUrl . '/app?payment=success&sub=' . $subId,
+            'cancel_url'      => $baseUrl . '/app?payment=cancel&sub='  . $subId,
         ]);
 
         if (!empty($session['payment_id'])) {
@@ -88,11 +119,14 @@ class SubscriptionService
         $extra = isset($session['extra']) ? $session['extra'] : [];
 
         return [
-            'sub_id'       => $subId,
-            'payment_id'   => $paymentId,
-            'redirect_url' => isset($session['redirect_url']) ? $session['redirect_url'] : null,
-            'extra'        => $extra,
-            'provider'     => $paymentMethod,
+            'sub_id'          => $subId,
+            'payment_id'      => $paymentId,
+            'redirect_url'    => isset($session['redirect_url']) ? $session['redirect_url'] : null,
+            'extra'           => $extra,
+            'provider'        => $paymentMethod,
+            'amount'          => $amount,
+            'discount_percent'=> $discountPercent,
+            'promo_code'      => $promoApplied,
         ];
     }
 
