@@ -39,8 +39,10 @@ export default function Billing() {
   const [selPlan,     setSelPlan]    = useState('pro');
   const [selPeriod,   setSelPeriod]  = useState('month');
   const [selMethod,   setSelMethod]  = useState('');
-  const [activeSlide, setActiveSlide] = useState(0);
-  const sliderRef = useRef(null);
+  const [slideIdx,    setSlideIdx]   = useState(0);
+  const [isMobile,    setIsMobile]   = useState(() => typeof window !== 'undefined' && window.innerWidth < 640);
+  const autoTimer  = useRef(null);
+  const touchStart = useRef(null);
 
   // Manual transfer
   const [manualSubId, setManualSubId] = useState(null);
@@ -60,6 +62,40 @@ export default function Billing() {
     setPromoInput('');
     setPromoError('');
   }, [selPlan, selPeriod]);
+
+  // Mobile slider: resize listener
+  useEffect(() => {
+    const onResize = () => setIsMobile(window.innerWidth < 640);
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
+
+  // Mobile slider: auto-rotate
+  useEffect(() => {
+    if (!isMobile) { clearInterval(autoTimer.current); return; }
+    autoTimer.current = setInterval(() => {
+      setSlideIdx(prev => (prev + 1) % 10); // clamped later by total
+    }, 4000);
+    return () => clearInterval(autoTimer.current);
+  }, [isMobile]);
+
+  const goToSlide = (idx, total) => {
+    clearInterval(autoTimer.current);
+    setSlideIdx(idx);
+    autoTimer.current = setInterval(() => {
+      setSlideIdx(prev => (prev + 1) % total);
+    }, 4000);
+  };
+
+  const handleTouchStart = (e) => { touchStart.current = e.touches[0].clientX; };
+  const handleTouchEnd   = (e, total) => {
+    if (touchStart.current === null) return;
+    const dx = e.changedTouches[0].clientX - touchStart.current;
+    touchStart.current = null;
+    if (Math.abs(dx) < 30) return;
+    if (dx < 0) goToSlide((slideIdx + 1) % total, total);
+    else        goToSlide((slideIdx - 1 + total) % total, total);
+  };
 
   const handleApplyPromo = async () => {
     if (!promoInput.trim()) return;
@@ -346,61 +382,57 @@ export default function Billing() {
             </div>
           </div>
 
-          {/* CSS for slider behaviour */}
-          <style>{`
-            .plan-slider { scrollbar-width: none; -ms-overflow-style: none; }
-            .plan-slider::-webkit-scrollbar { display: none; }
-            @media (min-width: 640px) {
-              .plan-slide { flex: 1 1 0 !important; min-width: 260px !important;
-                            scroll-snap-align: unset !important;
-                            padding-left: 0 !important; padding-right: 8px !important; }
-              .plan-slide:last-child { padding-right: 0 !important; }
-            }
-            @media (max-width: 639px) {
-              .plan-slider {
-                margin-left: -28px !important;
-                margin-right: -28px !important;
-                padding-left: 16px !important;
-                padding-right: 16px !important;
-              }
-              .plan-slide { flex: 0 0 85vw !important; width: 85vw !important;
-                            max-width: 320px !important;
-                            scroll-snap-align: start !important;
-                            padding-right: 12px !important; }
-              .plan-slide:last-child { padding-right: 0 !important; }
-              .plan-dots { display: flex !important; }
-            }
-          `}</style>
+          {/* Plan cards: grid on desktop, single-card slider on mobile */}
+          {(() => {
+            const planEntries = Object.entries(plans);
+            const total = planEntries.length;
+            const safeIdx = slideIdx % total;
 
-          {/* Slider */}
-          <div
-            className="plan-slider"
-            ref={sliderRef}
-            onScroll={() => {
-              if (!sliderRef.current) return;
-              const el = sliderRef.current;
-              const slideW = el.querySelector('.plan-slide')?.offsetWidth || el.offsetWidth;
-              const idx = Math.round(el.scrollLeft / slideW);
-              setActiveSlide(idx);
-            }}
-            style={{
-              display: 'flex',
-              gap: 0,
-              paddingTop: 20,
-              paddingBottom: 8,
-              overflowX: 'auto',
-              scrollSnapType: 'x mandatory',
-              WebkitOverflowScrolling: 'touch',
-            }}
-          >
-            {Object.entries(plans).map(([id, p]) => {
-              const priceVal     = p[selPeriod] || 0;
-              const isEnterprise = !!p.enterprise;
-              const priceNum     = isEnterprise ? '' : (priceVal > 0 ? priceVal.toLocaleString('uk-UA') : '0');
-              const desc         = isEnterprise ? 'під ваші потреби' : (priceVal > 0 ? '/ ' + PERIOD_LABELS[selPeriod] : 'назавжди безкоштовно');
+            if (!isMobile) {
               return (
-                <div key={id} className="plan-slide" style={{ flexShrink: 0, boxSizing: 'border-box' }}>
+                <div style={{ display: 'flex', gap: 16, paddingTop: 20 }}>
+                  {planEntries.map(([id, p]) => {
+                    const priceVal     = p[selPeriod] || 0;
+                    const isEnterprise = !!p.enterprise;
+                    const priceNum     = isEnterprise ? '' : (priceVal > 0 ? priceVal.toLocaleString('uk-UA') : '0');
+                    const desc         = isEnterprise ? 'під ваші потреби' : (priceVal > 0 ? '/ ' + PERIOD_LABELS[selPeriod] : 'назавжди безкоштовно');
+                    return (
+                      <div key={id} style={{ flex: '1 1 0', minWidth: 260 }}>
+                        <PlanCard
+                          plan={{ id, name: p.label, priceNum, desc,
+                                  popular: !!p.popular, enterprise: isEnterprise,
+                                  features: p.features || [] }}
+                          isCurrent={data?.current_plan === id}
+                          isSelected={selPlan === id}
+                          onSelect={() => setSelPlan(id)}
+                          onBuy={() => { setSelPlan(id); goNext(); }}
+                          busy={busy}
+                          methodsOk={(methods?.count || 0) > 0}
+                        />
+                      </div>
+                    );
+                  })}
+                </div>
+              );
+            }
+
+            // Mobile: transform-based single-card slider
+            const [id, p] = planEntries[safeIdx];
+            const priceVal     = p[selPeriod] || 0;
+            const isEnterprise = !!p.enterprise;
+            const priceNum     = isEnterprise ? '' : (priceVal > 0 ? priceVal.toLocaleString('uk-UA') : '0');
+            const desc         = isEnterprise ? 'під ваші потреби' : (priceVal > 0 ? '/ ' + PERIOD_LABELS[selPeriod] : 'назавжди безкоштовно');
+
+            return (
+              <div style={{ paddingTop: 20 }}>
+                {/* Card with swipe */}
+                <div
+                  onTouchStart={handleTouchStart}
+                  onTouchEnd={(e) => handleTouchEnd(e, total)}
+                  style={{ userSelect: 'none' }}
+                >
                   <PlanCard
+                    key={id}
                     plan={{ id, name: p.label, priceNum, desc,
                             popular: !!p.popular, enterprise: isEnterprise,
                             features: p.features || [] }}
@@ -412,37 +444,34 @@ export default function Billing() {
                     methodsOk={(methods?.count || 0) > 0}
                   />
                 </div>
-              );
-            })}
-          </div>
 
-          {/* Dot indicators — hidden on desktop via CSS */}
-          <div
-            className="plan-dots"
-            style={{ display: 'none', justifyContent: 'center', gap: 6, marginTop: 16 }}
-          >
-            {Object.keys(plans).map((id, idx) => (
-              <button
-                key={id}
-                onClick={() => {
-                  if (!sliderRef.current) return;
-                  const slideW = sliderRef.current.querySelector('.plan-slide')?.offsetWidth || sliderRef.current.offsetWidth;
-                  sliderRef.current.scrollTo({ left: slideW * idx, behavior: 'smooth' });
-                  setActiveSlide(idx);
-                }}
-                style={{
-                  width: activeSlide === idx ? 20 : 6,
-                  height: 6,
-                  borderRadius: 100,
-                  border: 'none',
-                  cursor: 'pointer',
-                  transition: 'all 0.3s ease',
-                  background: activeSlide === idx ? '#00ff88' : 'rgba(255,255,255,0.15)',
-                  padding: 0,
-                }}
-              />
-            ))}
-          </div>
+                {/* Swipe hint */}
+                <p style={{ textAlign: 'center', fontSize: 12, color: '#4a4a68', marginTop: 10 }}>
+                  ← проведіть для переключення →
+                </p>
+
+                {/* Dots */}
+                <div style={{ display: 'flex', justifyContent: 'center', gap: 6, marginTop: 12 }}>
+                  {planEntries.map(([pid], idx) => (
+                    <button
+                      key={pid}
+                      onClick={() => goToSlide(idx, total)}
+                      style={{
+                        width: safeIdx === idx ? 22 : 6,
+                        height: 6,
+                        borderRadius: 100,
+                        border: 'none',
+                        cursor: 'pointer',
+                        transition: 'all 0.3s ease',
+                        background: safeIdx === idx ? '#00ff88' : 'rgba(255,255,255,0.15)',
+                        padding: 0,
+                      }}
+                    />
+                  ))}
+                </div>
+              </div>
+            );
+          })()}
         </div>
       )}
 
