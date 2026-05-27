@@ -468,7 +468,9 @@ export default function App() {
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: ${C.border2}; border-radius: 2px; }
         a { color: ${C.green}; }
+        .hamburger-btn { display: none; }
         @media (max-width: 768px) {
+          .hamburger-btn { display: flex !important; }
           .main-content { margin-left: 0 !important; }
           .sidebar { transform: translateX(-100%); }
           .sidebar--open { transform: translateX(0); }
