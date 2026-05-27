@@ -81,8 +81,8 @@ if (!$user) {
     } else {
         // Новий користувач через Google
         $userId = DB::exec(
-            "INSERT INTO users (email, google_id, google_email, name, surname, avatar_url, email_verified)
-             VALUES (?, ?, ?, ?, ?, ?, ?)",
+            "INSERT INTO users (email, google_id, google_email, name, surname, avatar_url, email_verified, marketing_consent)
+             VALUES (?, ?, ?, ?, ?, ?, ?, 1)",
             [$email, $googleId, $email, $name, $surname, $avatar, $verified ? 1 : 0]
         );
         $user = DB::row("SELECT * FROM users WHERE id = ?", [$userId]);

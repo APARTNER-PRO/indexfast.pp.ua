@@ -32,7 +32,7 @@ export default function Auth() {
   const [regEmail,      setRegEmail]      = useState("");
   const [regPass,       setRegPass]       = useState("");
   const [agreeTerms,    setAgreeTerms]    = useState(false);
-  const [agreeMarketing, setAgreeMarketing] = useState(false);
+  const [agreeMarketing, setAgreeMarketing] = useState(true);
   const [forgotEmail,   setForgotEmail]   = useState("");
 
   // Password strength
@@ -417,14 +417,20 @@ export default function Auth() {
                   style={{ marginTop: 2, flexShrink: 0 }}/>
                 <span>
                   Погоджуюсь отримувати корисні матеріали, оновлення продукту та спеціальні пропозиції на email.
-                  {" "}<span style={{ fontSize: 11, opacity: 0.6 }}>(необов'язково)</span>
                 </span>
               </label>
 
               <SubmitBtn loading={loading}>Зареєструватись безкоштовно</SubmitBtn>
 
               <Divider/>
-              <GoogleBtn/>
+              <GoogleBtn onClick={() => {
+                if (!agreeTerms) {
+                  setError("Будь ласка, погодьтесь з умовами використання перед реєстрацією через Google.");
+                  return;
+                }
+                const BASE = import.meta?.env?.VITE_API_URL ?? "/api";
+                window.location.href = BASE + "/auth/google/redirect.php";
+              }} />
             </form>
           )}
 
@@ -560,11 +566,11 @@ function Divider() {
   );
 }
 
-function GoogleBtn() {
+function GoogleBtn({ onClick }) {
   const BASE = import.meta?.env?.VITE_API_URL ?? "/api";
   return (
     <button type="button"
-      onClick={() => { window.location.href = BASE + "/auth/google/redirect.php"; }}
+      onClick={onClick ? onClick : () => { window.location.href = BASE + "/auth/google/redirect.php"; }}
       style={{ width: "100%", background: "rgba(255,255,255,0.04)",
         border: "1px solid rgba(255,255,255,0.1)", borderRadius: 12,
         padding: "12px 20px", color: C.white, fontFamily: "inherit",
