@@ -2,7 +2,7 @@
 // api/billing/validate_promo.php
 // Валідує промокод для поточного юзера без створення підписки
 require_once __DIR__ . '/../middleware.php';
-require_once __DIR__ . '/../payment/Plans.php';
+require_once __DIR__ . '/../plans.php';
 
 requireMethod('POST');
 $user = requireAuth();
