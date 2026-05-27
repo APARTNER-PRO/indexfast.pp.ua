@@ -50,11 +50,13 @@ export default function Billing() {
   const [promoInput,   setPromoInput]   = useState('');
   const [appliedPromo, setAppliedPromo] = useState(null);
   const [manualAmount, setManualAmount] = useState(null);
+  const [promoError,   setPromoError]   = useState('');
 
   // Reset promo code when plan or period changes
   useEffect(() => {
     setAppliedPromo(null);
     setPromoInput('');
+    setPromoError('');
   }, [selPlan, selPeriod]);
 
   const handleApplyPromo = async () => {
@@ -62,6 +64,7 @@ export default function Billing() {
     setBusy(true);
     setError('');
     setSuccess('');
+    setPromoError('');
     try {
       const res = await apiFetch('/billing/validate_promo.php', {
         method: 'POST',
@@ -76,7 +79,7 @@ export default function Billing() {
         ...res
       });
     } catch (e) {
-      setError(e.message || 'Невірний промокод');
+      setPromoError(e.message || 'Невірний промокод');
       setAppliedPromo(null);
     } finally {
       setBusy(false);
@@ -86,6 +89,7 @@ export default function Billing() {
   const handleRemovePromo = () => {
     setAppliedPromo(null);
     setPromoInput('');
+    setPromoError('');
     setSuccess('');
     setError('');
   };
@@ -436,50 +440,94 @@ export default function Billing() {
           {/* Промокод */}
           <div style={{ marginBottom: 24 }}>
             {!appliedPromo ? (
-              <div style={{ display: 'flex', gap: 10 }}>
-                <input
-                  type="text"
-                  placeholder="Введіть промокод"
-                  value={promoInput}
-                  onChange={e => setPromoInput(e.target.value)}
-                  style={{ flex: 1, boxSizing: 'border-box',
-                           background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)',
-                           borderRadius: 12, padding: '12px 16px', fontSize: 14, color: '#eeeef6',
-                           outline: 'none', fontFamily: 'inherit',
-                           transition: 'border-color .15s' }}
-                  onFocus={e => e.currentTarget.style.borderColor = 'rgba(0,255,136,0.3)'}
-                  onBlur={e => e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)'}
-                />
-                <button
-                  onClick={handleApplyPromo}
-                  disabled={busy || !promoInput.trim()}
-                  style={{ padding: '12px 20px', borderRadius: 12, border: 'none',
-                           cursor: busy || !promoInput.trim() ? 'not-allowed' : 'pointer',
-                           fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: 14,
-                           background: !promoInput.trim() ? 'rgba(0,255,136,0.3)' : '#00ff88',
-                           color: '#050508', transition: 'all .15s',
-                           opacity: busy ? 0.7 : 1 }}
-                >
-                  Застосувати
-                </button>
+              <div>
+                <div style={{ display: 'flex', gap: 10 }}>
+                  <input
+                    type="text"
+                    placeholder="Введіть промокод"
+                    value={promoInput}
+                    onChange={e => {
+                      setPromoInput(e.target.value);
+                      if (promoError) setPromoError('');
+                    }}
+                    style={{ flex: 1, boxSizing: 'border-box',
+                             background: 'rgba(255,255,255,0.03)',
+                             border: promoError ? '1px solid rgba(239, 68, 68, 0.4)' : '1px solid rgba(255,255,255,0.08)',
+                             borderRadius: 12, padding: '12px 16px', fontSize: 14, color: '#eeeef6',
+                             outline: 'none', fontFamily: 'inherit',
+                             transition: 'all .15s' }}
+                    onFocus={e => e.currentTarget.style.borderColor = promoError ? 'rgb(239, 68, 68)' : 'rgba(0,255,136,0.3)'}
+                    onBlur={e => e.currentTarget.style.borderColor = promoError ? 'rgba(239, 68, 68, 0.4)' : 'rgba(255,255,255,0.08)'}
+                  />
+                  <button
+                    onClick={handleApplyPromo}
+                    disabled={busy || !promoInput.trim()}
+                    style={{ padding: '12px 20px', borderRadius: 12, border: 'none',
+                             cursor: busy || !promoInput.trim() ? 'not-allowed' : 'pointer',
+                             fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: 14,
+                             background: !promoInput.trim() ? 'rgba(0,255,136,0.3)' : '#00ff88',
+                             color: '#050508', transition: 'all .15s',
+                             opacity: busy ? 0.7 : 1 }}
+                  >
+                    Застосувати
+                  </button>
+                </div>
+                {promoError && (
+                  <div className="flex items-start gap-2 mt-2.5 text-xs font-semibold text-[#ef4444] pl-1 animate-[fadeIn_0.2s_ease-out]">
+                    <svg className="w-3.5 h-3.5 text-[#ef4444] flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                    </svg>
+                    <span style={{ lineHeight: '1.4' }}>{promoError}</span>
+                  </div>
+                )}
               </div>
             ) : (
-              <div className="flex items-center justify-between bg-emerald-500/5 border border-emerald-500/20 rounded-xl px-4 py-3.5 transition-all">
-                <div className="flex items-center gap-3">
-                  <div className="flex items-center justify-center w-6 h-6 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs">
-                    ✓
+              <div style={{ background: '#131322', border: '1px solid rgba(16,185,129,0.15)',
+                            borderRadius: 16, padding: '16px 20px', boxShadow: '0 10px 25px -5px rgba(0,0,0,0.3)' }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                    {/* Glowing ticket icon */}
+                    <div style={{ display: 'flex', width: 40, height: 40, alignItems: 'center', justifyContent: 'center',
+                                  borderRadius: 10, background: 'rgba(16,185,129,0.08)', color: '#34d399',
+                                  border: '1px solid rgba(16,185,129,0.15)', boxShadow: '0 0 15px rgba(16,185,129,0.05)' }}>
+                      <svg style={{ width: 20, height: 20 }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z" />
+                      </svg>
+                    </div>
+
+                    <div>
+                      <div style={{ fontSize: 14, fontWeight: 700, color: '#fff', display: 'flex', alignItems: 'center', gap: 8 }}>
+                        Промокод застосовано
+                        <span style={{ display: 'inline-block', width: 6, height: 6, borderRadius: '50%', background: '#34d399' }} />
+                      </div>
+
+                      <div style={{ fontSize: 12, fontWeight: 600, color: '#9ca3af', marginTop: 3, display: 'flex', alignItems: 'center', gap: 8 }}>
+                        <span style={{ color: '#34d399', background: 'rgba(16,185,129,0.1)', padding: '2px 6px', borderRadius: 4,
+                                      border: '1px solid rgba(16,185,129,0.15)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                          {appliedPromo.code}
+                        </span>
+                        <span>· Знижка {appliedPromo.discount_type === 'percentage' ? `${appliedPromo.discount_value}%` : `₴${appliedPromo.discount_value}`}</span>
+                      </div>
+                    </div>
                   </div>
-                  <div>
-                    <span className="font-bold text-sm text-emerald-400 tracking-wide">{appliedPromo.code}</span>
-                    <span className="text-xs text-zinc-400 ml-2">активовано</span>
-                  </div>
+
+                  <button
+                    onClick={handleRemovePromo}
+                    style={{ fontSize: 13, fontWeight: 600, color: '#ef4444', background: 'rgba(239,68,68,0.06)',
+                             border: '1px solid rgba(239,68,68,0.15)', borderRadius: 8, padding: '6px 12px',
+                             cursor: 'pointer', transition: 'all 0.2s' }}
+                    onMouseOver={e => {
+                      e.currentTarget.style.background = 'rgba(239,68,68,0.12)';
+                      e.currentTarget.style.borderColor = 'rgba(239,68,68,0.3)';
+                    }}
+                    onMouseOut={e => {
+                      e.currentTarget.style.background = 'rgba(239,68,68,0.06)';
+                      e.currentTarget.style.borderColor = 'rgba(239,68,68,0.15)';
+                    }}
+                  >
+                    Видалити
+                  </button>
                 </div>
-                <button
-                  onClick={handleRemovePromo}
-                  className="text-xs font-semibold text-zinc-400 hover:text-rose-400 transition-colors px-2.5 py-1.5 rounded-lg hover:bg-rose-500/10 border border-transparent hover:border-rose-500/10"
-                >
-                  Видалити
-                </button>
               </div>
             )}
           </div>
