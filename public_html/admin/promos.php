@@ -18,6 +18,7 @@ try {
           `recur_type`       VARCHAR(20) NOT NULL DEFAULT 'forever',
           `recur_count`      INT UNSIGNED DEFAULT NULL,
           `target_plan`      VARCHAR(50) DEFAULT NULL,
+          `target_period`    VARCHAR(20) DEFAULT NULL,
           `expires_at`       DATETIME DEFAULT NULL,
           `max_uses`         INT UNSIGNED DEFAULT NULL,
           `uses_count`       INT UNSIGNED NOT NULL DEFAULT 0,
@@ -33,10 +34,13 @@ try {
     // Перевіримо, чи потрібні альтери якщо таблиця вже існувала
     $columns = DB::all("SHOW COLUMNS FROM promo_codes");
     $hasType = false;
+    $hasPeriod = false;
     foreach ($columns as $col) {
         if ($col['Field'] === 'discount_type') {
             $hasType = true;
-            break;
+        }
+        if ($col['Field'] === 'target_period') {
+            $hasPeriod = true;
         }
     }
     
@@ -54,6 +58,7 @@ try {
               `recur_type`       VARCHAR(20) NOT NULL DEFAULT 'forever',
               `recur_count`      INT UNSIGNED DEFAULT NULL,
               `target_plan`      VARCHAR(50) DEFAULT NULL,
+              `target_period`    VARCHAR(20) DEFAULT NULL,
               `expires_at`       DATETIME DEFAULT NULL,
               `max_uses`         INT UNSIGNED DEFAULT NULL,
               `uses_count`       INT UNSIGNED NOT NULL DEFAULT 0,
@@ -65,6 +70,11 @@ try {
               UNIQUE KEY `uq_code` (`code`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
         ");
+        $hasPeriod = true;
+    }
+
+    if (!$hasPeriod) {
+        DB::exec("ALTER TABLE `promo_codes` ADD COLUMN `target_period` VARCHAR(20) DEFAULT NULL");
     }
 } catch (Exception $e) {
     error_log("[Promos Migration] " . $e->getMessage());
@@ -124,6 +134,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['create'])) {
     // Якщо обрано рівно один внутрішній тариф — ставимо target_plan
     $targetPlan = (count($selectedPlans) === 1) ? array_values($selectedPlans)[0] : null;
 
+    // Визначаємо target_period
+    $targetPeriod = trim($_POST['target_period'] ?? '');
+    $targetPeriod = ($targetPeriod === '') ? null : $targetPeriod;
+
     $paddleId = null;
     $stripeId = null;
 
@@ -151,9 +165,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['create'])) {
     try {
         DB::exec(
             "INSERT INTO promo_codes 
-               (code, discount_type, discount_value, currency_code, description, recur_type, recur_count, expires_at, max_uses, target_plan, restrict_to, paddle_id, stripe_id)
-             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-            [$code, $type, $value, $currency, $desc, $recurType, $rCount, $expiresAt, $limitUses, $targetPlan, $restricList, $paddleId, $stripeId]
+               (code, discount_type, discount_value, currency_code, description, recur_type, recur_count, expires_at, max_uses, target_plan, target_period, restrict_to, paddle_id, stripe_id)
+             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            [$code, $type, $value, $currency, $desc, $recurType, $rCount, $expiresAt, $limitUses, $targetPlan, $targetPeriod, $restricList, $paddleId, $stripeId]
         );
         $msg = "✅ Промокод «{$code}» успішно створено!";
         $msgType = 'ok';
@@ -498,6 +512,9 @@ function createStripePromo(string $apiKey, string $code, string $type, float $va
                     <?php if ($p['target_plan']): ?>
                       <div style="font-size:0.7rem;margin-top:4px"><span class="badge" style="background:rgba(0,255,136,0.1);color:var(--green)">Тариф: <?= strtoupper($p['target_plan']) ?></span></div>
                     <?php endif; ?>
+                    <?php if (isset($p['target_period']) && $p['target_period']): ?>
+                      <div style="font-size:0.7rem;margin-top:4px"><span class="badge" style="background:rgba(255,193,7,0.1);color:#ffc107">Період: <?= $p['target_period'] === 'month' ? 'Місяць' : ($p['target_period'] === 'year' ? 'Рік' : ($p['target_period'] === 'three_years' ? '3 Роки' : $p['target_period'])) ?></span></div>
+                    <?php endif; ?>
                     <?php if ($p['restrict_to']): ?>
                       <div style="font-size:0.7rem;margin-top:4px"><span class="badge" style="background:rgba(0,136,255,0.1);color:#00aaff">Products: <?= htmlspecialchars($p['restrict_to']) ?></span></div>
                     <?php endif; ?>
@@ -622,6 +639,17 @@ function createStripePromo(string $apiKey, string $code, string $type, float $va
           <label>Обмеження загальної кількості погашень</label>
           <input class="form-control" type="number" name="max_uses" placeholder="Наприклад: 100">
           <p>Скільки разів загалом можна скористатися знижкою.</p>
+        </div>
+
+        <div class="form-group">
+          <label>Обмеження до періоду оплати</label>
+          <select class="form-control" name="target_period">
+            <option value="">Для будь-якого періоду (усі)</option>
+            <option value="month">Тільки місяць</option>
+            <option value="year">Тільки рік</option>
+            <option value="three_years">Тільки 3 роки</option>
+          </select>
+          <p>Якщо обрано період, купон буде дійсним лише при оформленні на відповідний термін.</p>
         </div>
 
         <div class="form-group">
