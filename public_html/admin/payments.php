@@ -11,7 +11,7 @@
     a{color:inherit;text-decoration:none}
 
     /* Layout */
-    .wrap{max-width:1100px;margin:0 auto;padding:24px 20px}
+    .wrap{padding:24px 20px}
     .page-title{font-size:20px;font-weight:800;margin-bottom:24px;display:flex;align-items:center;gap:10px}
     .page-title a{color:var(--m);font-size:13px;font-weight:400}
 
@@ -97,14 +97,16 @@
     <button class="tab on"  onclick="switchTab('manual',this)">Ручні платежі</button>
     <button class="tab"     onclick="switchTab('subs',this)">Підписки</button>
     <button class="tab"     onclick="switchTab('hooks',this)">Webhook логи</button>
+    <button class="tab"     onclick="switchTab('settings',this)">Налаштування методів</button>
   </div>
 
   <div id="alert-global"></div>
 
   <!-- Panels -->
   <div id="panel-manual"></div>
-  <div id="panel-subs"   style="display:none"></div>
-  <div id="panel-hooks"  style="display:none"></div>
+  <div id="panel-subs"     style="display:none"></div>
+  <div id="panel-hooks"    style="display:none"></div>
+  <div id="panel-settings" style="display:none"></div>
 </div>
 
 <!-- Confirm modal -->
@@ -154,12 +156,13 @@ function switchTab(name, btn) {
   currentTab = name;
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('on'));
   btn.classList.add('on');
-  ['manual','subs','hooks'].forEach(n => {
+  ['manual','subs','hooks','settings'].forEach(n => {
     document.getElementById('panel-'+n).style.display = n===name ? '' : 'none';
   });
   if (name==='manual') loadManual();
   if (name==='subs')   loadSubs();
   if (name==='hooks')  loadHooks();
+  if (name==='settings') loadSettings();
 }
 
 // ════════════════════════════════════════
@@ -414,6 +417,71 @@ function expiringSoon(d){ return d && (new Date(d)-new Date()) < 7*86400*1000; }
 function openLb(url) {
   document.getElementById('lb-img').src = url;
   document.getElementById('lb').style.display = 'flex';
+}
+
+// ════════════════════════════════════════
+//  PANEL: Налаштування методів
+// ════════════════════════════════════════
+async function loadSettings() {
+  const el = document.getElementById('panel-settings');
+  el.innerHTML = '<div style="color:var(--m);padding:20px">Завантаження…</div>';
+
+  const data = await api('/admin/api/payment_methods.php');
+  if (!data) return;
+
+  const methods = data.methods || [];
+
+  el.innerHTML = `
+    <div class="card">
+      <div class="card-title">⚙️ Управління платіжними методами</div>
+      <p style="color:var(--m);margin-bottom:16px;font-size:12px;line-height:1.5">
+        Тут ви можете вмикати або вимикати платіжні системи для клієнтів на сайті. 
+        Платіжні системи, які не налаштовані у файлі конфігурації <code style="background:rgba(255,255,255,0.06);padding:2px 5px;border-radius:4px;color:var(--t)">.env</code>, не можуть бути активовані, щоб уникнути помилок при оплаті.
+      </p>
+      <div class="tbl-wrap"><table>
+        <thead><tr>
+          <th>Метод оплати</th><th>ID</th><th>Конфігурація (.env)</th><th>Статус</th><th>Дія</th>
+        </tr></thead>
+        <tbody>${methods.map(m => {
+          let confBadge = m.configured 
+            ? '<span class="badge b-ok">Налаштовано ✓</span>' 
+            : '<span class="badge b-err">Не налаштовано —</span>';
+            
+          let statusBadge = m.enabled && m.configured
+            ? '<span class="badge b-ok" style="font-weight:700">АКТИВНИЙ</span>'
+            : '<span class="badge b-muted">ВИМКНЕНИЙ</span>';
+
+          let btnText = m.enabled ? 'Вимкнути' : 'Увімкнути';
+          let btnClass = m.enabled ? 'btn-no' : 'btn-ok';
+          let isBtnDisabled = !m.configured ? 'disabled' : '';
+
+          return `
+            <tr>
+              <td><strong>${m.label}</strong></td>
+              <td style="font-family:monospace;color:var(--m)">${m.id}</td>
+              <td>${confBadge}</td>
+              <td>${statusBadge}</td>
+              <td>
+                <button class="btn ${btnClass}" ${isBtnDisabled} onclick="toggleMethod('${m.id}', ${m.enabled ? 0 : 1})">
+                  ${btnText}
+                </button>
+              </td>
+            </tr>`;
+        }).join('')}</tbody>
+      </table></div>
+    </div>`;
+}
+
+async function toggleMethod(providerId, enabled) {
+  const res = await apiPost('/admin/api/payment_methods.php', {
+    provider_id: providerId,
+    enabled: enabled
+  });
+  if (res && res.status === 'ok') {
+    loadSettings();
+  } else {
+    alert('Помилка при зміні статусу платіжного методу');
+  }
 }
 
 // ── Init

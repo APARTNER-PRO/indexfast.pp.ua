@@ -37,8 +37,11 @@ class SubscriptionService
         // ── Валідація промокоду ──────────────────────────────────────────────
         if ($promoCode !== '') {
             $promoCode = strtoupper(trim($promoCode));
+            
+            // 1. Спочатку персональний з email_logs
             $promo = DB::row(
-                "SELECT id, discount_percent, expires_at, target_plan
+                "SELECT id, discount_percent AS discount_value, 'percentage' AS discount_type,
+                        expires_at, target_plan, NULL AS max_uses, 0 AS uses_count
                  FROM email_logs
                  WHERE user_id    = ?
                    AND promo_code = ?
@@ -49,16 +52,42 @@ class SubscriptionService
                 [$user['id'], $promoCode]
             );
 
+            // 2. Якщо не знайдено, загальний з promo_codes
             if (!$promo) {
-                throw new RuntimeException("Промокод '{$promoCode}' недійсний або не призначений вашому акаунту.");
+                $promo = DB::row(
+                    "SELECT id, discount_type, discount_value,
+                            expires_at, target_plan, max_uses, uses_count
+                     FROM promo_codes
+                     WHERE code = ?
+                       AND (expires_at IS NULL OR expires_at >= NOW())
+                     LIMIT 1",
+                    [$promoCode]
+                );
+
+                if ($promo && $promo['max_uses'] !== null && $promo['uses_count'] >= $promo['max_uses']) {
+                    throw new RuntimeException("Промокод '{$promoCode}' більше недійсний (вичерпано ліміт використань).");
+                }
             }
-            if ($promo['target_plan'] !== $planId) {
+
+            if (!$promo) {
+                throw new RuntimeException("Промокод '{$promoCode}' недійсний або закінчився його термін дії.");
+            }
+            if ($promo['target_plan'] !== null && $promo['target_plan'] !== $planId) {
                 throw new RuntimeException("Промокод '{$promoCode}' дійсний лише для тарифу " . strtoupper($promo['target_plan']) . ".");
             }
 
-            $discountPercent = (int)$promo['discount_percent'];
-            $amount          = round($amount * (1 - $discountPercent / 100), 2);
-            $promoApplied    = $promoCode;
+            $discountType  = $promo['discount_type'] ?? 'percentage';
+            $discountValue = (float)($promo['discount_value'] ?? 0);
+
+            if ($discountType === 'percentage') {
+                $discountPercent = (int)$discountValue;
+                $amount          = round($amount * (1 - $discountValue / 100), 2);
+            } else {
+                // flat або flat_per_seat — фіксована сума
+                $discountPercent = $amount > 0 ? (int)round(($discountValue / $amount) * 100) : 0;
+                $amount          = max(0.00, round($amount - $discountValue, 2));
+            }
+            $promoApplied = $promoCode;
         }
 
         // Створюємо підписку та платіж в транзакції
@@ -70,9 +99,9 @@ class SubscriptionService
             DB::exec(
                 "INSERT INTO subscriptions
                    (user_id, plan_id, payment_method, period, start_at, end_at,
-                    status, auto_renew, amount, currency)
-                 VALUES (?, ?, ?, ?, NOW(), ?, 'pending', 0, ?, ?)",
-                [$user['id'], $planId, $paymentMethod, $period, $endAt, $amount, $currency]
+                    status, auto_renew, amount, currency, promo_code)
+                 VALUES (?, ?, ?, ?, NOW(), ?, 'pending', 0, ?, ?, ?)",
+                [$user['id'], $planId, $paymentMethod, $period, $endAt, $amount, $currency, $promoApplied !== '' ? $promoApplied : null]
             );
             $subId = (int)DB::pdo()->lastInsertId();
 
@@ -192,6 +221,12 @@ class SubscriptionService
                  WHERE id = ?",
                 [$sub['plan_id'], $finalExpires, $subId, $userId]
             );
+
+            // Збільшуємо кількість використань загального промокоду (якщо застосовано)
+            $subData = DB::row("SELECT promo_code FROM subscriptions WHERE id = ?", [$subId]);
+            if (!empty($subData['promo_code'])) {
+                DB::exec("UPDATE promo_codes SET uses_count = uses_count + 1 WHERE code = ?", [$subData['promo_code']]);
+            }
 
             DB::pdo()->commit();
         } catch (Exception $e) {

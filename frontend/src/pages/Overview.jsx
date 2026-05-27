@@ -17,20 +17,35 @@ export default memo(function Overview({
       {/* Upgrade banner */}
       {plan === "start" && (
         <div style={{
-          background: "linear-gradient(135deg,rgba(0,255,136,0.07),rgba(0,212,255,0.04))",
-          border: "1px solid rgba(0,255,136,0.15)", borderRadius: 16,
-          padding: "18px 24px", display: "flex", alignItems: "center", gap: 16, flexWrap: "wrap"
+          background: "linear-gradient(135deg,rgba(0,255,136,0.08),rgba(0,212,255,0.05))",
+          border: "1px solid rgba(0,255,136,0.2)", borderRadius: 16,
+          padding: "20px 24px", display: "flex", alignItems: "center", gap: 16, flexWrap: "wrap",
+          position: "relative", overflow: "hidden"
         }}>
+          {/* Glow effect */}
+          <div style={{
+            position: "absolute", top: 0, left: 0, right: 0, height: 2,
+            background: "linear-gradient(90deg,#00ff88,#00d4ff,transparent)"
+          }} />
           <span style={{ fontSize: 28 }}>🚀</span>
           <div style={{ flex: 1, minWidth: 200 }}>
-            <div style={{ fontFamily: "Syne,sans-serif", fontWeight: 700, marginBottom: 4 }}>
-              Перейдіть на PRO — 100 URL/день замість 10
+            <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }}>
+              <div style={{ fontFamily: "Syne,sans-serif", fontWeight: 700, fontSize: 15 }}>
+                Перейдіть на PRO — 100 сторінок/день
+              </div>
+              <span style={{
+                background: "#00ff88", color: "#050508",
+                fontSize: 10, fontWeight: 800, padding: "2px 8px",
+                borderRadius: 100, fontFamily: "Syne,sans-serif", letterSpacing: "0.05em"
+              }}>−50%</span>
             </div>
             <div style={{ fontSize: 13, color: C.muted }}>
-              До 5 сайтів, автоматичний розклад, пріоритетна підтримка
+              До 10 сайтів · Автоматичний запуск · Email-сповіщення
+              <span style={{ marginLeft: 8, color: "#6a6a85", textDecoration: "line-through" }}>₴499</span>
+              <span style={{ marginLeft: 6, color: "#00ff88", fontWeight: 700 }}>₴249/перший місяць</span>
             </div>
           </div>
-          <Btn variant="primary" onClick={onGoBilling}>Upgrade → ₴499/міс</Btn>
+          <Btn variant="primary" onClick={onGoBilling}>Хочу PRO за ₴249 →</Btn>
         </div>
       )}
 
