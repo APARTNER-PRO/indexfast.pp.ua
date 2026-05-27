@@ -1,7 +1,7 @@
 <?php
 // api/billing/apply_promo_to_sub.php
 require_once __DIR__ . '/../middleware.php';
-require_once __DIR__ . '/../payment/Plans.php';
+require_once __DIR__ . '/../plans.php';
 
 requireMethod('POST');
 $user = requireAuth();

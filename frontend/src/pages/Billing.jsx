@@ -46,6 +46,50 @@ export default function Billing() {
   const [notes,       setNotes]       = useState('');
   const [manualDone,  setManualDone]  = useState(false);
 
+  // Promo code states
+  const [promoInput,   setPromoInput]   = useState('');
+  const [appliedPromo, setAppliedPromo] = useState(null);
+  const [manualAmount, setManualAmount] = useState(null);
+
+  // Reset promo code when plan or period changes
+  useEffect(() => {
+    setAppliedPromo(null);
+    setPromoInput('');
+  }, [selPlan, selPeriod]);
+
+  const handleApplyPromo = async () => {
+    if (!promoInput.trim()) return;
+    setBusy(true);
+    setError('');
+    setSuccess('');
+    try {
+      const res = await apiFetch('/billing/validate_promo.php', {
+        method: 'POST',
+        body: {
+          plan_id: selPlan,
+          period: selPeriod,
+          promo_code: promoInput
+        }
+      });
+      setAppliedPromo({
+        code: promoInput.toUpperCase().trim(),
+        ...res
+      });
+    } catch (e) {
+      setError(e.message || 'Невірний промокод');
+      setAppliedPromo(null);
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const handleRemovePromo = () => {
+    setAppliedPromo(null);
+    setPromoInput('');
+    setSuccess('');
+    setError('');
+  };
+
   const load = useCallback(async () => {
     setLoading(true);
     setError('');
@@ -69,10 +113,9 @@ export default function Billing() {
     const pm = data?.payment_methods;
     if (!pm || pm.count === 0) { setError('Методи оплати недоступні'); return; }
     if (pm.count === 1) {
-      startPayment(pm.methods[0].id);
-    } else {
-      setStep('method');
+      setSelMethod(pm.methods[0].id);
     }
+    setStep('method');
   };
 
   const startPayment = async (methodId) => {
@@ -83,11 +126,17 @@ export default function Billing() {
     try {
       const res = await apiFetch('/billing/checkout.php', {
         method: 'POST',
-        body:   { plan_id: selPlan, period: selPeriod, payment_method: meth },
+        body:   {
+          plan_id: selPlan,
+          period: selPeriod,
+          payment_method: meth,
+          promo_code: appliedPromo ? appliedPromo.code : ''
+        },
       });
 
       if (meth === 'manual') {
         setManualSubId(res.sub_id);
+        setManualAmount(res.amount);
         setStep('manual');
       } else if (res.redirect_url) {
         window.location.href = res.redirect_url;
@@ -340,21 +389,98 @@ export default function Billing() {
             </h2>
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap',
-                        background: 'rgba(255,255,255,0.03)', borderRadius: 14,
-                        padding: '12px 20px', marginBottom: 24, border: '1px solid rgba(255,255,255,0.05)' }}>
-            <span style={{ color: '#00ff88', fontWeight: 700, fontSize: 14 }}>
-              {PLAN_LABELS[selPlan] || selPlan}
+          <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)',
+                        borderRadius: 18, padding: '24px 28px', marginBottom: 24 }}>
+            <span style={{ color: '#6a6a85', fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+              Обраний тариф
             </span>
-            <span style={{ color: '#4a4a68' }}>·</span>
-            <span style={{ color: '#d0d0e8', fontSize: 14 }}>{PERIOD_LABELS[selPeriod]}</span>
+            <h3 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 24, color: '#fff', margin: '6px 0 16px' }}>
+              {PLAN_LABELS[selPlan] || selPlan}
+            </h3>
+
             {plans[selPlan] && plans[selPlan][selPeriod] > 0 && (
-              <>
-                <span style={{ color: '#4a4a68' }}>·</span>
-                <span style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, color: '#fff', fontSize: 16 }}>
-                  ₴{plans[selPlan][selPeriod].toLocaleString('uk-UA')}
-                </span>
-              </>
+              <div className="flex items-end gap-3 flex-wrap">
+                {appliedPromo ? (
+                  <>
+                    <span className="text-zinc-500 line-through text-sm mb-0.5">
+                      ₴{plans[selPlan][selPeriod].toLocaleString('uk-UA')}
+                    </span>
+
+                    <span className="text-3xl font-black text-emerald-400 leading-none">
+                      ₴{appliedPromo.final_amount.toLocaleString('uk-UA')}
+                    </span>
+
+                    <span className="text-zinc-400 text-sm mb-0.5">
+                      / {PERIOD_LABELS[selPeriod]}
+                    </span>
+
+                    <span className="rounded-full bg-emerald-400/15 px-2.5 py-1 text-xs font-semibold text-emerald-300">
+                      -{appliedPromo.discount_type === 'percentage' ? `${appliedPromo.discount_value}%` : `₴${appliedPromo.discount_value}`}
+                    </span>
+                  </>
+                ) : (
+                  <>
+                    <span className="text-3xl font-black text-white leading-none">
+                      ₴{plans[selPlan][selPeriod].toLocaleString('uk-UA')}
+                    </span>
+
+                    <span className="text-zinc-400 text-sm mb-0.5">
+                      / {PERIOD_LABELS[selPeriod]}
+                    </span>
+                  </>
+                )}
+              </div>
+            )}
+          </div>
+
+          {/* Промокод */}
+          <div style={{ marginBottom: 24 }}>
+            {!appliedPromo ? (
+              <div style={{ display: 'flex', gap: 10 }}>
+                <input
+                  type="text"
+                  placeholder="Введіть промокод"
+                  value={promoInput}
+                  onChange={e => setPromoInput(e.target.value)}
+                  style={{ flex: 1, boxSizing: 'border-box',
+                           background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)',
+                           borderRadius: 12, padding: '12px 16px', fontSize: 14, color: '#eeeef6',
+                           outline: 'none', fontFamily: 'inherit',
+                           transition: 'border-color .15s' }}
+                  onFocus={e => e.currentTarget.style.borderColor = 'rgba(0,255,136,0.3)'}
+                  onBlur={e => e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)'}
+                />
+                <button
+                  onClick={handleApplyPromo}
+                  disabled={busy || !promoInput.trim()}
+                  style={{ padding: '12px 20px', borderRadius: 12, border: 'none',
+                           cursor: busy || !promoInput.trim() ? 'not-allowed' : 'pointer',
+                           fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: 14,
+                           background: !promoInput.trim() ? 'rgba(0,255,136,0.3)' : '#00ff88',
+                           color: '#050508', transition: 'all .15s',
+                           opacity: busy ? 0.7 : 1 }}
+                >
+                  Застосувати
+                </button>
+              </div>
+            ) : (
+              <div className="flex items-center justify-between bg-emerald-500/5 border border-emerald-500/20 rounded-xl px-4 py-3.5 transition-all">
+                <div className="flex items-center gap-3">
+                  <div className="flex items-center justify-center w-6 h-6 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs">
+                    ✓
+                  </div>
+                  <div>
+                    <span className="font-bold text-sm text-emerald-400 tracking-wide">{appliedPromo.code}</span>
+                    <span className="text-xs text-zinc-400 ml-2">активовано</span>
+                  </div>
+                </div>
+                <button
+                  onClick={handleRemovePromo}
+                  className="text-xs font-semibold text-zinc-400 hover:text-rose-400 transition-colors px-2.5 py-1.5 rounded-lg hover:bg-rose-500/10 border border-transparent hover:border-rose-500/10"
+                >
+                  Видалити
+                </button>
+              </div>
             )}
           </div>
 
@@ -449,7 +575,7 @@ export default function Billing() {
               <>
                 <span style={{ color: '#4a4a68' }}>·</span>
                 <span style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, color: '#fff', fontSize: 16 }}>
-                  ₴{plans[selPlan][selPeriod].toLocaleString('uk-UA')}
+                  ₴{manualAmount !== null ? manualAmount.toLocaleString('uk-UA') : plans[selPlan][selPeriod].toLocaleString('uk-UA')}
                 </span>
               </>
             )}
@@ -494,10 +620,17 @@ export default function Billing() {
                               background: 'rgba(0,255,136,0.04)',
                               display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                   <span style={{ fontSize: 13, color: '#6a6a85', fontWeight: 600 }}>Сума до сплати</span>
-                  <span style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 24,
-                                 color: '#00ff88', letterSpacing: '-0.02em' }}>
-                    ₴{plans[selPlan][selPeriod].toLocaleString('uk-UA')}
-                  </span>
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
+                    {manualAmount !== null && manualAmount < plans[selPlan][selPeriod] && (
+                      <span style={{ textDecoration: 'line-through', color: '#6a6a85', fontSize: 13, marginBottom: 2 }}>
+                        ₴{plans[selPlan][selPeriod].toLocaleString('uk-UA')}
+                      </span>
+                    )}
+                    <span style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 24,
+                                   color: '#00ff88', letterSpacing: '-0.02em' }}>
+                      ₴{manualAmount !== null ? manualAmount.toLocaleString('uk-UA') : plans[selPlan][selPeriod].toLocaleString('uk-UA')}
+                    </span>
+                  </div>
                 </div>
               )}
 
