@@ -349,21 +349,20 @@ export default function Billing() {
               {['month', 'year', '3_years'].map(per => {
                 let label = per === 'month' ? 'Місяць' : per === 'year' ? 'Рік' : '3 роки';
                 let discountText = '';
+                const pData = plans[selPlan] || plans['pro'];
                 if (per === 'year') {
-                  const m = plans['pro']?.month;
-                  const y = plans['pro']?.year;
-                  if (m > 0 && y > 0) {
-                    const d = Math.round((1 - y / (m * 12)) * 100);
+                  if (pData?.month > 0 && pData?.year > 0) {
+                    const d = Math.round((1 - pData.year / (pData.month * 12)) * 100);
                     if (d > 0) discountText = ` −${d}%`;
                   } else {
                     discountText = ' −17%';
                   }
                 } else if (per === '3_years') {
-                  const m = plans['pro']?.month;
-                  const y3 = plans['pro']?.['3_years'];
-                  if (m > 0 && y3 > 0) {
-                    const d = Math.round((1 - y3 / (m * 36)) * 100);
+                  if (pData?.month > 0 && pData?.['3_years'] > 0) {
+                    const d = Math.round((1 - pData['3_years'] / (pData.month * 36)) * 100);
                     if (d > 0) discountText = ` −${d}%`;
+                  } else {
+                    discountText = ' −34%';
                   }
                 }
                 return (
@@ -1203,11 +1202,11 @@ const PlanCard = ({ plan: p, isCurrent, isSelected, onSelect, onBuy, busy, metho
       <div style={{ display: 'flex', alignItems: 'flex-start', lineHeight: 1, marginBottom: 6 }}>
         {!isEnterprise && (
           <span style={{ fontFamily: 'Syne, sans-serif', fontWeight: 700,
-                         fontSize: 22, color: '#fff', marginTop: 6, marginRight: 1,
+                         fontSize: 18, color: '#fff', marginTop: 4, marginRight: 2,
                          lineHeight: 1 }}>₴</span>
         )}
         <span style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800,
-                       fontSize: isEnterprise ? 26 : 52, lineHeight: 1,
+                       fontSize: isEnterprise ? 26 : 38, lineHeight: 1,
                        color: isEnterprise ? purple : '#fff' }}>
           {isEnterprise ? 'Індивідуально' : p.priceNum}
         </span>
