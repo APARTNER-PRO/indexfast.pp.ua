@@ -29,6 +29,13 @@ if (!$isCli) {
 require_once $apiDir . '/db.php';
 require_once $apiDir . '/helpers.php';
 
+// ─────────────────────────────────────────────────────────────────────────────
+// Константи лімітів
+// ─────────────────────────────────────────────────────────────────────────────
+const GLOBAL_MAX_PER_30D     = 4;  // максимум будь-яких листів за 30 днів
+const INACTIVITY_MAX_PER_30D = 2;  // максимум inactivity листів за 30 днів
+const MIN_GAP_DAYS           = 5;  // мінімальний інтервал між будь-якими листами (днів)
+
 $lock = sys_get_temp_dir() . '/indexfast_inactivity.lock';
 if (file_exists($lock) && (time() - filemtime($lock)) < 3600) {
     logMsg('Already running, skipping.');
@@ -70,11 +77,6 @@ try {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Константи лімітів
-// ─────────────────────────────────────────────────────────────────────────────
-const GLOBAL_MAX_PER_30D     = 4;  // максимум будь-яких листів за 30 днів
-const INACTIVITY_MAX_PER_30D = 2;  // максимум inactivity листів за 30 днів
-const MIN_GAP_DAYS           = 5;  // мінімальний інтервал між будь-якими листами (днів)
 
 /**
  * Перевіряє частотні ліміти перед відправкою inactivity листа.
@@ -122,9 +124,10 @@ function checkEmailLimits(int $userId): ?string
  */
 function logEmailSent(int $userId, string $subtype): void
 {
+    $token = bin2hex(random_bytes(32));
     DB::exec(
-        "INSERT INTO email_logs (user_id, email_type, email_subtype) VALUES (?, 'inactivity', ?)",
-        [$userId, $subtype]
+        "INSERT INTO email_logs (user_id, email_type, email_subtype, token) VALUES (?, 'inactivity', ?, ?)",
+        [$userId, $subtype, $token]
     );
 }
 
