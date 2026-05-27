@@ -403,32 +403,40 @@ export default function Billing() {
             </h3>
 
             {plans[selPlan] && plans[selPlan][selPeriod] > 0 && (
-              <div className="flex items-end gap-3 flex-wrap">
+              <div style={{ display: 'flex', alignItems: 'baseline', gap: '12px', flexWrap: 'wrap', marginTop: '4px' }}>
                 {appliedPromo ? (
                   <>
-                    <span className="text-zinc-500 line-through text-sm mb-0.5">
+                    {/* Стара ціна */}
+                    <span style={{ textDecoration: 'line-through', color: '#6a6a85', fontSize: '15px', fontWeight: 600 }}>
                       ₴{plans[selPlan][selPeriod].toLocaleString('uk-UA')}
                     </span>
 
-                    <span className="text-3xl font-black text-emerald-400 leading-none">
+                    {/* Нова ціна */}
+                    <span style={{ fontFamily: 'Syne, sans-serif', fontWeight: 900, fontSize: '32px', color: '#00ff88', lineHeight: 1 }}>
                       ₴{appliedPromo.final_amount.toLocaleString('uk-UA')}
                     </span>
 
-                    <span className="text-zinc-400 text-sm mb-0.5">
+                    {/* Період */}
+                    <span style={{ color: '#a0a0c0', fontSize: '14px', fontWeight: 600 }}>
                       / {PERIOD_LABELS[selPeriod]}
                     </span>
 
-                    <span className="rounded-full bg-emerald-400/15 px-2.5 py-1 text-xs font-semibold text-emerald-300">
+                    {/* Бейдж знижки */}
+                    <span style={{ display: 'inline-block', background: 'rgba(0, 255, 136, 0.1)', color: '#00ff88',
+                                  border: '1px solid rgba(0, 255, 136, 0.2)', borderRadius: '100px',
+                                  padding: '4px 10px', fontSize: '12px', fontWeight: 700 }}>
                       -{appliedPromo.discount_type === 'percentage' ? `${appliedPromo.discount_value}%` : `₴${appliedPromo.discount_value}`}
                     </span>
                   </>
                 ) : (
                   <>
-                    <span className="text-3xl font-black text-white leading-none">
+                    {/* Стандартна ціна */}
+                    <span style={{ fontFamily: 'Syne, sans-serif', fontWeight: 900, fontSize: '32px', color: '#fff', lineHeight: 1 }}>
                       ₴{plans[selPlan][selPeriod].toLocaleString('uk-UA')}
                     </span>
 
-                    <span className="text-zinc-400 text-sm mb-0.5">
+                    {/* Період */}
+                    <span style={{ color: '#a0a0c0', fontSize: '14px', fontWeight: 600 }}>
                       / {PERIOD_LABELS[selPeriod]}
                     </span>
                   </>
@@ -473,8 +481,9 @@ export default function Billing() {
                   </button>
                 </div>
                 {promoError && (
-                  <div className="flex items-start gap-2 mt-2.5 text-xs font-semibold text-[#ef4444] pl-1 animate-[fadeIn_0.2s_ease-out]">
-                    <svg className="w-3.5 h-3.5 text-[#ef4444] flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                  <div style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', marginTop: '10px',
+                                paddingLeft: '4px', color: '#ef4444', fontSize: '13px', fontWeight: 600 }}>
+                    <svg style={{ width: '14px', height: '14px', minWidth: '14px', flexShrink: 0, marginTop: '2px', color: '#ef4444' }} fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
                     </svg>
                     <span style={{ lineHeight: '1.4' }}>{promoError}</span>
