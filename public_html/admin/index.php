@@ -246,6 +246,9 @@ tr:hover td { background:rgba(255,255,255,.015); }
       <a class="nav-item" onclick="showPage('conversions',this)">
         <span class="icon">📈</span> Конверсії
       </a>
+      <a class="nav-item" onclick="showPage('promos',this)">
+        <span class="icon">🎟</span> Промокоди
+      </a>
       <a class="nav-item" onclick="showPage('payments',this)">
         <span class="icon">💳</span> Платежі
       </a>
@@ -432,6 +435,11 @@ tr:hover td { background:rgba(255,255,255,.015); }
         <iframe src="conversions.php" style="width:100%;height:calc(100vh - 100px);border:none;background:transparent" id="conversions-frame"></iframe>
       </div>
 
+      <!-- ══ PROMOS ══ -->
+      <div class="page" id="page-promos">
+        <iframe src="promos.php" style="width:100%;height:calc(100vh - 100px);border:none;background:transparent" id="promos-frame"></iframe>
+      </div>
+
       <!-- ══ PAYMENTS ══ -->
       <div class="page" id="page-payments">
         <iframe src="payments.php" style="width:100%;height:calc(100vh - 100px);border:none;background:transparent" id="payments-frame"></iframe>
@@ -452,7 +460,7 @@ tr:hover td { background:rgba(255,255,255,.015); }
 </div><!-- /layout -->
 
 <script>
-const titles = { dashboard:'Огляд', users:'Користувачі', jobs:'Черга / Jobs', marketing:'Розсилка', conversions:'Аналітика конверсій', payments:'Платежі', system:'Система', send_email:'Відправити лист' };
+const titles = { dashboard:'Огляд', users:'Користувачі', jobs:'Черга / Jobs', marketing:'Розсилка', conversions:'Аналітика конверсій', promos:'Промокоди', payments:'Платежі', system:'Система', send_email:'Відправити лист' };
 
 function showPage(id, el) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));

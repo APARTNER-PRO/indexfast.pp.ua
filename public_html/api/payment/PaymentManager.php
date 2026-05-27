@@ -51,7 +51,38 @@ class PaymentManager
     /** @return PaymentProviderInterface[] */
     public function getEnabledProviders(): array
     {
-        return array_filter($this->providers, fn($p) => $p->isEnabled());
+        // 1. Спершу створюємо таблицю, якщо її немає
+        try {
+            DB::exec("
+                CREATE TABLE IF NOT EXISTS `payment_methods_settings` (
+                  `provider_id` VARCHAR(50) NOT NULL,
+                  `is_enabled` TINYINT(1) NOT NULL DEFAULT 1,
+                  PRIMARY KEY (`provider_id`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+            ");
+        } catch (Exception $e) {}
+
+        // 2. Отримуємо стан з БД
+        $settings = [];
+        try {
+            $rows = DB::all("SELECT provider_id, is_enabled FROM payment_methods_settings");
+            foreach ($rows as $r) {
+                $settings[$r['provider_id']] = (int)$r['is_enabled'];
+            }
+        } catch (Exception $e) {}
+
+        // 3. Фільтруємо провайдери
+        return array_filter($this->providers, function($p) use ($settings) {
+            $id = $p->getId();
+            
+            // Якщо адмін примусово вимкнув у БД
+            if (isset($settings[$id]) && $settings[$id] === 0) {
+                return false;
+            }
+            
+            // Перевіряємо чи він взагалі ввімкнений у .env конфігу
+            return $p->isEnabled();
+        });
     }
 
     public function getEnabledProvidersInfo(): array
