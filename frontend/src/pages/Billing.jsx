@@ -1,7 +1,7 @@
 // frontend/src/pages/Billing.jsx
 // Крос-доменна підтримка: всі запити ідуть через BASE = VITE_API_URL ?? "/api"
 // FormData (квитанція) теж використовує BASE, не хардкодений "/api"
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { apiFetch } from '../api/client';
 
 // BASE — той самий що в client.js, щоб FormData запит теж йшов на правильний домен
@@ -39,6 +39,8 @@ export default function Billing() {
   const [selPlan,     setSelPlan]    = useState('pro');
   const [selPeriod,   setSelPeriod]  = useState('month');
   const [selMethod,   setSelMethod]  = useState('');
+  const [activeSlide, setActiveSlide] = useState(0);
+  const sliderRef = useRef(null);
 
   // Manual transfer
   const [manualSubId, setManualSubId] = useState(null);
@@ -311,7 +313,6 @@ export default function Billing() {
               {['month', 'year', '3_years'].map(per => {
                 let label = per === 'month' ? 'Місяць' : per === 'year' ? 'Рік' : '3 роки';
                 let discountText = '';
-                
                 if (per === 'year') {
                   const m = plans['pro']?.month;
                   const y = plans['pro']?.year;
@@ -319,7 +320,7 @@ export default function Billing() {
                     const d = Math.round((1 - y / (m * 12)) * 100);
                     if (d > 0) discountText = ` −${d}%`;
                   } else {
-                    discountText = ' −17%'; // fallback
+                    discountText = ' −17%';
                   }
                 } else if (per === '3_years') {
                   const m = plans['pro']?.month;
@@ -329,7 +330,6 @@ export default function Billing() {
                     if (d > 0) discountText = ` −${d}%`;
                   }
                 }
-
                 return (
                   <button
                     key={per}
@@ -346,15 +346,60 @@ export default function Billing() {
             </div>
           </div>
 
-          {/* Картки — всі в одному ряду, горизонтальний скрол на мобільному */}
-          <div style={{ display: 'flex', gap: 16, paddingTop: 20, overflowX: 'auto', paddingBottom: 16 }}>
+          {/* CSS for slider behaviour */}
+          <style>{`
+            .plan-slider { scrollbar-width: none; -ms-overflow-style: none; }
+            .plan-slider::-webkit-scrollbar { display: none; }
+            @media (min-width: 640px) {
+              .plan-slide { flex: 1 1 0 !important; min-width: 260px !important;
+                            scroll-snap-align: unset !important;
+                            padding-left: 0 !important; padding-right: 8px !important; }
+              .plan-slide:last-child { padding-right: 0 !important; }
+            }
+            @media (max-width: 639px) {
+              .plan-slider {
+                margin-left: -28px !important;
+                margin-right: -28px !important;
+                padding-left: 16px !important;
+                padding-right: 16px !important;
+              }
+              .plan-slide { flex: 0 0 85vw !important; width: 85vw !important;
+                            max-width: 320px !important;
+                            scroll-snap-align: start !important;
+                            padding-right: 12px !important; }
+              .plan-slide:last-child { padding-right: 0 !important; }
+              .plan-dots { display: flex !important; }
+            }
+          `}</style>
+
+          {/* Slider */}
+          <div
+            className="plan-slider"
+            ref={sliderRef}
+            onScroll={() => {
+              if (!sliderRef.current) return;
+              const el = sliderRef.current;
+              const slideW = el.querySelector('.plan-slide')?.offsetWidth || el.offsetWidth;
+              const idx = Math.round(el.scrollLeft / slideW);
+              setActiveSlide(idx);
+            }}
+            style={{
+              display: 'flex',
+              gap: 0,
+              paddingTop: 20,
+              paddingBottom: 8,
+              overflowX: 'auto',
+              scrollSnapType: 'x mandatory',
+              WebkitOverflowScrolling: 'touch',
+            }}
+          >
             {Object.entries(plans).map(([id, p]) => {
-              const priceVal   = p[selPeriod] || 0;
+              const priceVal     = p[selPeriod] || 0;
               const isEnterprise = !!p.enterprise;
-              const priceNum  = isEnterprise ? '' : (priceVal > 0 ? priceVal.toLocaleString('uk-UA') : '0');
-              const desc      = isEnterprise ? 'під ваші потреби' : (priceVal > 0 ? '/ ' + PERIOD_LABELS[selPeriod] : 'назавжди безкоштовно');
+              const priceNum     = isEnterprise ? '' : (priceVal > 0 ? priceVal.toLocaleString('uk-UA') : '0');
+              const desc         = isEnterprise ? 'під ваші потреби' : (priceVal > 0 ? '/ ' + PERIOD_LABELS[selPeriod] : 'назавжди безкоштовно');
               return (
-                <div key={id} style={{ flex: '1 1 0', minWidth: 260 }}>
+                <div key={id} className="plan-slide" style={{ flexShrink: 0, boxSizing: 'border-box' }}>
                   <PlanCard
                     plan={{ id, name: p.label, priceNum, desc,
                             popular: !!p.popular, enterprise: isEnterprise,
@@ -369,6 +414,34 @@ export default function Billing() {
                 </div>
               );
             })}
+          </div>
+
+          {/* Dot indicators — hidden on desktop via CSS */}
+          <div
+            className="plan-dots"
+            style={{ display: 'none', justifyContent: 'center', gap: 6, marginTop: 16 }}
+          >
+            {Object.keys(plans).map((id, idx) => (
+              <button
+                key={id}
+                onClick={() => {
+                  if (!sliderRef.current) return;
+                  const slideW = sliderRef.current.querySelector('.plan-slide')?.offsetWidth || sliderRef.current.offsetWidth;
+                  sliderRef.current.scrollTo({ left: slideW * idx, behavior: 'smooth' });
+                  setActiveSlide(idx);
+                }}
+                style={{
+                  width: activeSlide === idx ? 20 : 6,
+                  height: 6,
+                  borderRadius: 100,
+                  border: 'none',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease',
+                  background: activeSlide === idx ? '#00ff88' : 'rgba(255,255,255,0.15)',
+                  padding: 0,
+                }}
+              />
+            ))}
           </div>
         </div>
       )}
