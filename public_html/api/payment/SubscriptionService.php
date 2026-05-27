@@ -56,7 +56,7 @@ class SubscriptionService
             if (!$promo) {
                 $promo = DB::row(
                     "SELECT id, discount_type, discount_value,
-                            expires_at, target_plan, max_uses, uses_count
+                            expires_at, target_plan, target_period, max_uses, uses_count
                      FROM promo_codes
                      WHERE code = ?
                        AND (expires_at IS NULL OR expires_at >= NOW())
@@ -74,6 +74,15 @@ class SubscriptionService
             }
             if ($promo['target_plan'] !== null && $promo['target_plan'] !== $planId) {
                 throw new RuntimeException("Промокод '{$promoCode}' дійсний лише для тарифу " . strtoupper($promo['target_plan']) . ".");
+            }
+            if (isset($promo['target_period']) && $promo['target_period'] !== null && $promo['target_period'] !== $period) {
+                $periodLabels = [
+                    'month'       => 'місяць',
+                    'year'        => 'рік',
+                    'three_years' => '3 роки'
+                ];
+                $targetLabel = $periodLabels[$promo['target_period']] ?? $promo['target_period'];
+                throw new RuntimeException("Промокод '{$promoCode}' дійсний лише при оплаті на {$targetLabel}.");
             }
 
             $discountType  = $promo['discount_type'] ?? 'percentage';
