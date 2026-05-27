@@ -11,6 +11,7 @@ $body          = json_decode(file_get_contents('php://input'), true) ?? [];
 $planId        = trim($body['plan_id']        ?? '');
 $period        = trim($body['period']         ?? 'month');
 $paymentMethod = trim($body['payment_method'] ?? '');
+$promoCode     = strtoupper(trim($body['promo_code'] ?? ''));
 
 if (!$planId || !array_key_exists($planId, Plans::CONFIG)) respond(400, 'Невірний тариф');
 if (!in_array($period, ['month','year','3_years','custom'], true))   respond(400, 'Невірний period');
@@ -21,8 +22,11 @@ $provider = $manager->getProvider($paymentMethod);
 if (!$provider || !$provider->isEnabled()) respond(400, 'Цей метод оплати недоступний');
 
 try {
-    $result = (new SubscriptionService())->initiate($user, $planId, $period, $paymentMethod);
+    $result = (new SubscriptionService())->initiate($user, $planId, $period, $paymentMethod, $promoCode);
     respond(200, 'ok', $result);
+} catch (RuntimeException $e) {
+    // Бізнес-помилки (невірний промокод, невірний тариф тощо)
+    respond(422, $e->getMessage());
 } catch (Throwable $e) {
     error_log('[checkout] ' . $e->getMessage());
     respond(500, 'Помилка ініціювання оплати: ' . $e->getMessage());
