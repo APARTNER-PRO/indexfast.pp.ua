@@ -175,7 +175,7 @@ class Token {
             [$userId]
         );
         if ($existing) {
-            return APP_URL . '/api/user/unsubscribe.php?token=' . urlencode($existing['token']);
+            return FRONTEND_URL . '/api/user/unsubscribe.php?token=' . urlencode($existing['token']);
         }
 
         // Створюємо новий
@@ -185,7 +185,7 @@ class Token {
             "INSERT INTO tokens (user_id, token, type, expires_at) VALUES (?, ?, 'unsubscribe', ?)",
             [$userId, $token, $expires]
         );
-        return APP_URL . '/api/user/unsubscribe.php?token=' . urlencode($token);
+        return FRONTEND_URL . '/api/user/unsubscribe.php?token=' . urlencode($token);
     }
 }
 
