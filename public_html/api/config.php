@@ -55,6 +55,7 @@ define('DB_CHARSET', 'utf8mb4');
 define('APP_NAME', 'IndexFast');
 define('APP_URL',  env('APP_URL',  'https://indexfast.pp.ua'));
 define('APP_ENV',  env('APP_ENV',  'production'));
+define('APP_EMAIL',  env('APP_EMAIL',  'indexfastapp@gmail.com'));
 define('DEBUG',    APP_ENV === 'development');
 
 if (DEBUG) {
@@ -118,6 +119,7 @@ define('SMTP_PORT',      env('SMTP_PORT',      587));
 define('SMTP_USER',      env('SMTP_USER',      ''));
 define('SMTP_PASS',      env('SMTP_PASS',      ''));
 define('SMTP_SECURE',    env('SMTP_SECURE',    'tls'));
+define('APP_EMAIL',      env('APP_EMAIL',      env('SMTP_USER', '')));
 
 // ─────────────────────────────────────────────
 //  RATE LIMITING

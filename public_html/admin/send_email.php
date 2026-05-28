@@ -239,6 +239,66 @@ try {
     error_log('[admin email templates] fetch failed: ' . $e->getMessage());
 }
 
+// Тестова відправка
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['send_test'])) {
+    $testEmail = trim($_POST['test_email'] ?? '');
+    $subject   = trim($_POST['subject'] ?? '');
+    $body_html = $_POST['body_html'] ?? '';
+    $body_text = trim($_POST['body_text'] ?? '');
+    $mode      = $_POST['mode'] ?? 'html';
+
+    if (!$testEmail || !filter_var($testEmail, FILTER_VALIDATE_EMAIL)) {
+        $msg = 'Вкажіть коректний email для тесту';
+        $msgType = 'err';
+    } elseif (!$subject) {
+        $msg = 'Вкажіть тему листа';
+        $msgType = 'err';
+    } else {
+        $emailWrapper = '<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>body { margin:0; padding:12px; background:#0a0a10; }</style>
+</head>
+<body style="background:#0a0a10; margin:0; padding:12px;">
+  <table width="100%" cellpadding="0" cellspacing="0">
+    <tr><td align="center">
+      <table width="100%" cellpadding="0" cellspacing="0" style="background:#111119; border-radius:12px; border:1px solid rgba(255,255,255,0.08); overflow:hidden; max-width:480px">
+        <tr><td style="background:#050508; padding:16px 24px; border-bottom:1px solid rgba(255,255,255,0.06)">
+          <span style="font-size:18px; font-weight:800; color:#eeeef6; font-family:sans-serif;">Index<span style="color:#00ff88">Fast</span></span>
+          <span style="font-size:11px; color:#ff4d6d; margin-left:8px; font-family:sans-serif;">[ТЕСТ]</span>
+        </td></tr>
+        <tr><td style="padding:24px; font-size:14px; line-height:1.7; color:#c8c8d8; font-family:sans-serif;">BODY_PLACEHOLDER</td></tr>
+        <tr><td style="padding:12px 24px; border-top:1px solid rgba(255,255,255,0.06); font-size:11px; color:#555570; text-align:center; font-family:sans-serif;">© IndexFast &mdash; Тестовий лист</td></tr>
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>';
+
+        if ($mode === 'text') {
+            $html = nl2br(htmlspecialchars($body_text));
+        } else {
+            $unsubFooter = "<p style='color:#555570;font-size:12px;margin-top:24px;text-align:center'>Ссилка відписки буде в реальному листі</p>";
+            $html = str_replace('{{unsubscribe}}', $unsubFooter, $body_html);
+            if (!str_contains($html, $unsubFooter)) $html .= $unsubFooter;
+            $html = str_replace('BODY_PLACEHOLDER', $html, $emailWrapper);
+        }
+
+        // Персоналізація з тестовими даними
+        $html = str_replace(['{{name}}', '{{email}}'], ['Тестовий Користувач', $testEmail], $html);
+
+        try {
+            Mailer::send($testEmail, '[TECT] ' . $subject, $html);
+            $msg = "✅ Тестовий лист надіслано на {$testEmail}";
+            $msgType = 'ok';
+        } catch (Throwable $e) {
+            $msg = 'Помилка відправки: ' . $e->getMessage();
+            $msgType = 'err';
+        }
+    }
+}
+
 // ── Відправка
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['send'])) {
     $subject   = trim($_POST['subject'] ?? '');
@@ -397,6 +457,9 @@ $counts = [
     'marketing_pro'    => (int)DB::row("SELECT COUNT(*) c FROM users WHERE is_active=1 AND email_verified=1 AND marketing_consent=1 AND plan='pro'")['c'],
     'marketing_agency' => (int)DB::row("SELECT COUNT(*) c FROM users WHERE is_active=1 AND email_verified=1 AND marketing_consent=1 AND plan IN ('agency','enterprise')")['c'],
 ];
+
+// Безпечне зчитування APP_EMAIL
+$appEmail = defined('APP_EMAIL') ? APP_EMAIL : (defined('SMTP_USER') ? SMTP_USER : '');
 ?>
 <!DOCTYPE html>
 <html lang="uk">
@@ -575,6 +638,22 @@ h2 { font-size: .8rem; font-weight: 700; letter-spacing: .08em; text-transform: 
     </div>
 
     <!-- Надіслати -->
+    <!-- Тестова відправка -->
+    <h2>Тестова відправка</h2>
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:16px">
+      <label class="f-label" style="margin-bottom:6px">Адреса для тесту</label>
+      <div style="display:flex;gap:8px">
+        <input type="email" name="test_email" id="testEmailInput" class="f-text"
+          style="margin-bottom:0;flex:1;padding:8px 12px;font-size:.85rem"
+          value="<?= htmlspecialchars($appEmail) ?>"
+          placeholder="test@example.com">
+        <button type="button" class="seg-btn"
+          style="padding:0 16px;border-width:1px;color:var(--green);border-color:rgba(0,255,136,.3);white-space:nowrap"
+          onclick="sendTest()">&#9993; Надіслати тест</button>
+      </div>
+      <p class="hint" style="margin-top:6px">Персоналізація: {{name}} → «Тестовий Користувач»</p>
+    </div>
+
     <button class="send-btn" type="submit" name="send" value="1"
       onclick="return confirm('Надіслати листи ' + getRecipientCount() + ' отримувачам?')">
       ✉ Надіслати розсилку
@@ -763,6 +842,33 @@ function deleteTemplate() {
   }
   idInput.value = id;
   
+  form.submit();
+}
+
+function sendTest() {
+  const email = document.getElementById('testEmailInput').value.trim();
+  if (!email) {
+    alert('Вкажіть адресу для тестової відправки');
+    return;
+  }
+
+  const form = document.getElementById('mailForm');
+
+  // Додаємо прихований input send_test
+  let testInput = document.getElementById('formSendTest');
+  if (!testInput) {
+    testInput = document.createElement('input');
+    testInput.type = 'hidden';
+    testInput.name = 'send_test';
+    testInput.id = 'formSendTest';
+    form.appendChild(testInput);
+  }
+  testInput.value = '1';
+
+  // Переконуємося що test_email правильно потрапить у POST
+  document.getElementById('testEmailInput').name = 'test_email';
+
+  // Прибираємо send_test після submit, щоб повторний submit не плутав
   form.submit();
 }
 </script>
