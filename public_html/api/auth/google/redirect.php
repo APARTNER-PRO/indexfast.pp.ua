@@ -6,6 +6,15 @@
 
 require_once dirname(dirname(__DIR__)) . '/config.php';
 
+// ── Запобігаємо кешуванню редіректу браузером, проксі або Cloudflare
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
+header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
+
+// ── Додаємо маркер для верифікації, що це дійсно наш скрипт на бекенді
+header("X-OAuth-Redirect-Handler: indexfast-backend");
+
 if (!GOOGLE_CLIENT_ID) {
     die('Google OAuth не налаштовано. Вкажіть GOOGLE_CLIENT_ID в .env');
 }
