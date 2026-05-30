@@ -283,6 +283,16 @@ export default function App() {
 
   // ── Дані через react-query
   const { data, isLoading, isError, error, isRefetching } = useStats();
+
+  // Клієнтський кеш для останніх успішних даних статистики
+  const [cachedStats, setCachedStats] = useState(null);
+
+  useEffect(() => {
+    if (data?.user) {
+      setCachedStats(data);
+    }
+  }, [data]);
+
   const deleteSite   = useDeleteSite();
   const [confirmSite, setConfirmSite] = useState(null); // сайт для підтвердження видалення
   const [deleteLoading, setDeleteLoading] = useState(false);
@@ -335,11 +345,12 @@ export default function App() {
   const handleGoBilling = useCallback(() => setActivePage("billing"), []);
   const handleAddSite   = useCallback(() => setAddOpen(true),         []);
 
-  // ── Мемоізуємо пропси для сторінок
-  const statsData = data;
+  // ── Мемоізуємо пропси для сторінок (використовуємо кешовану або свіжу відповідь)
+  const statsData = cachedStats || data;
 
   // ── Loading / Error стани
-  if (isLoading) return (
+  // Показуємо завантаження або помилку тільки якщо немає раніше збережених робочих даних
+  if (isLoading && !cachedStats) return (
     <div style={{ background: C.black, minHeight: "100vh",
       display: "flex", alignItems: "center", justifyContent: "center" }}>
       <div style={{ textAlign: "center" }}>
@@ -352,7 +363,7 @@ export default function App() {
     </div>
   );
 
-  if (isError) {
+  if (isError && !cachedStats) {
     if (error?.status === 415) {
       return (
         <div style={{ background: C.black, minHeight: "100vh",
@@ -384,7 +395,7 @@ export default function App() {
     );
   }
 
-  // Guard: data прийшло але без очікуваних полів (stats.php повернув помилку без 4xx)
+  // Guard: показуємо помилку тільки якщо даних взагалі немає
   if (!statsData?.user) {
     return (
       <div style={{ background: C.black, minHeight: "100vh", display: "flex",
