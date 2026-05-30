@@ -7,6 +7,15 @@
 require_once dirname(dirname(__DIR__)) . '/middleware.php';
 require_once dirname(dirname(__DIR__)) . '/db.php';
 
+// ── Запобігаємо кешуванню відповіді браузером, проксі або Cloudflare
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
+header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
+
+// ── Маркер верифікації
+header("X-OAuth-Callback-Handler: indexfast-backend");
+
 try {
 // ── 1. Перевіряємо state (CSRF захист)
 // State це stateless HMAC-підписаний токен: nonce.timestamp.hmac
