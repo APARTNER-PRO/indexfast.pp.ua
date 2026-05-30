@@ -19,7 +19,16 @@ export function useStats() {
     queryKey:           KEYS.stats,
     queryFn:            () => apiClient.stats(),
     staleTime:          30_000,
-    refetchInterval:    60_000,   // фоновий рефреш кожну хвилину
+    refetchInterval:    (query) => {
+      const data = query?.state?.data;
+      const error = query?.state?.error;
+      // Якщо з'єднання тільки встановлюється (немає даних) або була помилка, опитуємо частіше (кожні 10 секунд)
+      if (!data || error || !data.user) {
+        return 10_000;
+      }
+      // Коли дані успішно отримано, опитуємо значно рідше (кожні 5 хвилин)
+      return 300_000;
+    },
     refetchOnWindowFocus: true,
     retry:              2,
     retryDelay:         (attempt) => Math.min(1000 * 2 ** attempt, 10_000),
