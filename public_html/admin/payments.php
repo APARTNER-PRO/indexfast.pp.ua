@@ -209,9 +209,14 @@ function manualCard(title, rows, actions) {
             <td><strong>${r.user_email}</strong></td>
             <td><span style="color:var(--a);font-weight:700">${(r.plan_id||'').toUpperCase()}</span> · ${r.period==='year'?'рік':'міс'}</td>
             <td>${r.amount ? '₴'+Number(r.amount).toLocaleString('uk-UA') : '—'}</td>
-            <td>${r.receipt_url
-              ? `<img src="${r.receipt_url}" class="thumb" onclick="openLb('${r.receipt_url}')" title="Переглянути">`
-              : '<span style="color:var(--m)">—</span>'}</td>
+            <td>${(() => {
+              if (!r.receipt_url) return '<span style="color:var(--m)">—</span>';
+              const isPdf = r.receipt_url.toLowerCase().endsWith('.pdf');
+              if (isPdf) {
+                return `<a href="${r.receipt_url}" target="_blank" class="badge b-warn" style="padding:4px 8px;border-radius:6px;" title="Відкрити PDF в новій вкладці">📄 PDF</a>`;
+              }
+              return `<img src="${r.receipt_url}" class="thumb" onclick="openLb('${r.receipt_url}')" title="Переглянути">`;
+            })()}</td>
             <td style="max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--m)">${r.notes||'—'}</td>
             <td style="color:var(--m)">${fmtDate(r.created_at)}</td>
             <td>${badge(r.status)}</td>

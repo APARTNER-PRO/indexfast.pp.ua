@@ -14,6 +14,10 @@ AddType application/xml .xml
 
 # ── HTTPS redirect
 RewriteEngine On
+
+# ── Serve manual payment receipts securely from outside public_html
+RewriteRule ^storage/receipts/([^/]+)$ api/billing/serve_receipt.php?file=$1 [L,QSA]
+
 # ── 301 редіректи старих дублікатів блогу
 RewriteRule ^blog-indexation\.html$ /blog/yak-pryskoriti-indeksaciyu-saitu-v-google.html [R=301,L]
 RewriteRule ^blog-sitemap\.html$ /blog/shcho-take-sitemap-xml.html [R=301,L]
