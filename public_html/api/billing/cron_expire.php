@@ -61,7 +61,7 @@ echo json_encode([
 function sendReminderBatch(int $days): int
 {
     $rows = DB::all(
-        "SELECT s.plan_id, s.end_at, u.email, u.name
+        "SELECT s.plan_id, s.end_at, u.id as user_id, u.email, u.name
          FROM subscriptions s
          JOIN users u ON u.id = s.user_id
          WHERE s.status = 'paid'
@@ -82,10 +82,13 @@ function sendReminderBatch(int $days): int
 
 function sendReminderEmail(array $row, int $days): void
 {
-    $label = Plans::label($row['plan_id']);
-    $date  = date('d.m.Y', strtotime($row['end_at']));
-    $url   = env('FRONTEND_URL', env('APP_URL', '')) . '/app#pricing';
-    $name  = htmlspecialchars($row['name']);
+    $label   = Plans::label($row['plan_id']);
+    $date    = date('d.m.Y', strtotime($row['end_at']));
+    $envUrls = explode(',', env('FRONTEND_URL', env('APP_URL', '')));
+    $appUrl  = rtrim(trim($envUrls[0]), '/');
+    $url     = $appUrl . '/app#pricing';
+    $name    = htmlspecialchars($row['name']);
+    $userId  = (int)$row['user_id'];
 
     // PHP 7.4 compatible day word
     if ($days === 1) {
@@ -106,6 +109,15 @@ function sendReminderEmail(array $row, int $days): void
     $html .= '<p>Підписка <strong style="color:#ffd060">' . htmlspecialchars($label) . '</strong> завершується <strong>' . $date . '</strong> — через <strong>' . $days . ' ' . $dayWord . '</strong>.</p>';
     $html .= '<p style="text-align:center;margin:24px 0">';
     $html .= '<a href="' . htmlspecialchars($url) . '" style="background:#00ff88;color:#050508;padding:12px 24px;border-radius:100px;text-decoration:none;font-weight:700">Поновити →</a>';
+    $html .= '</p>';
+
+    try {
+        $unsubUrl = Token::unsubscribeUrl($userId);
+    } catch (Throwable $e) {
+        $unsubUrl = $appUrl . '/app/profile';
+    }
+    $html .= '<p style="color:#555570;font-size:11px;text-align:center;margin-top:20px;border-top:1px solid rgba(255,255,255,0.06);padding-top:16px">';
+    $html .= '<a href="' . htmlspecialchars($unsubUrl) . '" style="color:#555570;text-decoration:underline">відписатись від новин сервісу</a>';
     $html .= '</p></td></tr></table></td></tr></table></body></html>';
 
     Mailer::send(

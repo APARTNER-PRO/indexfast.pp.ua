@@ -96,6 +96,9 @@ if (!$user) {
             [$email, $googleId, $email, $name, $surname, $avatar, $verified ? 1 : 0]
         );
         $user = DB::row("SELECT * FROM users WHERE id = ?", [$userId]);
+        
+        // Відправляємо вітальний лист (Швидкий старт)
+        Mailer::sendWelcomeEmail($email, $name, (int)$userId);
     }
 }
 

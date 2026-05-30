@@ -237,6 +237,16 @@ function workerSendInactivityEmail(array $row, string $type): void
 
     $html .= '<p style="text-align:center;margin:24px 0">';
     $html .= '<a href="' . htmlspecialchars($url) . '" style="background:#00ff88;color:#050508;padding:12px 24px;border-radius:100px;text-decoration:none;font-weight:700">' . $btnText . '</a>';
+    $html .= '</p>';
+
+    // Unsubscribe link
+    try {
+        $unsubUrl = Token::unsubscribeUrl((int)$row['id']);
+    } catch (Throwable $e) {
+        $unsubUrl = $appUrl . '/app/profile';
+    }
+    $html .= '<p style="color:#555570;font-size:11px;text-align:center;margin-top:20px;border-top:1px solid rgba(255,255,255,0.06);padding-top:16px">';
+    $html .= '<a href="' . htmlspecialchars($unsubUrl) . '" style="color:#555570;text-decoration:underline">відписатись від новин сервісу</a>';
     $html .= '</p></td></tr></table></td></tr></table></body></html>';
 
     Mailer::send($email, $subject, $html);
