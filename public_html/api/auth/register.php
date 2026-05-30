@@ -42,6 +42,9 @@ $userId = DB::exec(
 $verifyToken = Token::create((int)$userId, 'email_verify');
 Mailer::verifyEmail($email, $name, $verifyToken);
 
+// Відправляємо вітальний лист (Швидкий старт)
+Mailer::sendWelcomeEmail($email, $name, (int)$userId);
+
 $user         = DB::row("SELECT * FROM users WHERE id=?", [$userId]);
 $accessToken  = JWT::access($user);
 $refreshToken = JWT::refresh($user);

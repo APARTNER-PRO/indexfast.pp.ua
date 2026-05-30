@@ -336,7 +336,16 @@ function sendUpsellEmail(
 
     // Tracking pixel (останній елемент перед закриттям)
     $html .= '<img src="' . htmlspecialchars($trackOpenUrl) . '" width="1" height="1" alt="" style="display:block;">';
-    $html .= '</td></tr></table></td></tr></table></body></html>';
+
+    // Unsubscribe link
+    try {
+        $unsubUrl = Token::unsubscribeUrl((int)$user['id']);
+    } catch (Throwable $e) {
+        $unsubUrl = $appUrl . '/app/profile';
+    }
+    $html .= '<p style="color:#555570;font-size:11px;text-align:center;margin-top:20px;border-top:1px solid rgba(255,255,255,0.06);padding-top:16px">';
+    $html .= '<a href="' . htmlspecialchars($unsubUrl) . '" style="color:#555570;text-decoration:underline">відписатись від новин сервісу</a>';
+    $html .= '</p></td></tr></table></td></tr></table></body></html>';
 
     Mailer::send($user['email'], $subject, $html);
 }

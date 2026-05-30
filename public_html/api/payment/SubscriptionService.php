@@ -245,7 +245,7 @@ class SubscriptionService
 
         // Email поза транзакцією
         try {
-            $user = DB::row("SELECT email, name FROM users WHERE id = ?", [$userId]);
+            $user = DB::row("SELECT id, email, name FROM users WHERE id = ?", [$userId]);
             if ($user && $sub) {
                 $expires = $expiresAt !== null ? $expiresAt : $sub['end_at'];
                 $this->sendActivationEmail($user, $sub['plan_id'], $expires);
@@ -380,7 +380,7 @@ class SubscriptionService
         }
 
         try {
-            $this->sendExpiredEmail($sub['email'], $sub['name'], $sub['plan_id']);
+            $this->sendExpiredEmail($sub['email'], $sub['name'], $sub['plan_id'], (int)$sub['user_id']);
         } catch (Exception $e) {
             error_log("[expire email] " . $e->getMessage());
         }
@@ -435,7 +435,9 @@ class SubscriptionService
     {
         $label   = Plans::label($planId);
         $expDate = $expiresAt ? date('d.m.Y', strtotime($expiresAt)) : 'безстрокова';
-        $url     = env('FRONTEND_URL', env('APP_URL', '')) . '/app';
+        $envUrls = explode(',', env('FRONTEND_URL', env('APP_URL', '')));
+        $appUrl  = rtrim(trim($envUrls[0]), '/');
+        $url     = $appUrl . '/app';
         $name    = htmlspecialchars($user['name']);
 
         $html  = '<!DOCTYPE html><html><head><meta charset="UTF-8"></head>';
@@ -449,15 +451,26 @@ class SubscriptionService
         $html .= '<p>&#1055;&#1110;&#1076;&#1087;&#1080;&#1089;&#1082;&#1072; <strong style="color:#00ff88">' . htmlspecialchars($label) . '</strong> &#1072;&#1082;&#1090;&#1080;&#1074;&#1086;&#1074;&#1072;&#1085;&#1072;. &#1044;&#1110;&#1108; &#1076;&#1086;: <strong style="color:#eeeef6">' . $expDate . '</strong></p>';
         $html .= '<p style="text-align:center;margin:28px 0">';
         $html .= '<a href="' . htmlspecialchars($url) . '" style="background:#00ff88;color:#050508;padding:13px 28px;border-radius:100px;text-decoration:none;font-weight:700">&#1055;&#1077;&#1088;&#1077;&#1081;&#1090;&#1080; &#1076;&#1086; &#1082;&#1072;&#1073;&#1110;&#1085;&#1077;&#1090;&#1091; &rarr;</a>';
+        $html .= '</p>';
+
+        try {
+            $unsubUrl = Token::unsubscribeUrl((int)$user['id']);
+        } catch (Throwable $e) {
+            $unsubUrl = $appUrl . '/app/profile';
+        }
+        $html .= '<p style="color:#555570;font-size:11px;text-align:center;margin-top:20px;border-top:1px solid rgba(255,255,255,0.06);padding-top:16px">';
+        $html .= '<a href="' . htmlspecialchars($unsubUrl) . '" style="color:#555570;text-decoration:underline">відписатись від новин сервісу</a>';
         $html .= '</p></td></tr></table></td></tr></table></body></html>';
 
         Mailer::send($user['email'], '&#x2705; &#1055;&#1110;&#1076;&#1087;&#1080;&#1089;&#1082;&#1072; ' . $label . ' &#1072;&#1082;&#1090;&#1080;&#1074;&#1086;&#1074;&#1072;&#1085;&#1072; &mdash; IndexFast', $html);
     }
 
-    private function sendExpiredEmail(string $email, string $name, string $planId): void
+    private function sendExpiredEmail(string $email, string $name, string $planId, int $userId): void
     {
         $label = Plans::label($planId);
-        $url   = env('FRONTEND_URL', env('APP_URL', '')) . '/app#pricing';
+        $envUrls = explode(',', env('FRONTEND_URL', env('APP_URL', '')));
+        $appUrl  = rtrim(trim($envUrls[0]), '/');
+        $url     = $appUrl . '/app#pricing';
         $name  = htmlspecialchars($name);
 
         $html  = '<!DOCTYPE html><html><head><meta charset="UTF-8"></head>';
@@ -470,6 +483,15 @@ class SubscriptionService
         $html .= '<p>&#1055;&#1110;&#1076;&#1087;&#1080;&#1089;&#1082;&#1072; <strong style="color:#ffd060">' . htmlspecialchars($label) . '</strong> &#1079;&#1072;&#1074;&#1077;&#1088;&#1096;&#1080;&#1083;&#1072;&#1089;&#1100;. &#1040;&#1082;&#1072;&#1091;&#1085;&#1090; &#1087;&#1077;&#1088;&#1077;&#1074;&#1077;&#1076;&#1077;&#1085;&#1086; &#1085;&#1072; &#1073;&#1077;&#1079;&#1082;&#1086;&#1096;&#1090;&#1086;&#1074;&#1085;&#1080;&#1081; &#1087;&#1083;&#1072;&#1085;.</p>';
         $html .= '<p style="text-align:center;margin:28px 0">';
         $html .= '<a href="' . htmlspecialchars($url) . '" style="background:#00ff88;color:#050508;padding:13px 28px;border-radius:100px;text-decoration:none;font-weight:700">&#1055;&#1086;&#1085;&#1086;&#1074;&#1080;&#1090;&#1080; &#1087;&#1110;&#1076;&#1087;&#1080;&#1089;&#1082;&#1091; &rarr;</a>';
+        $html .= '</p>';
+
+        try {
+            $unsubUrl = Token::unsubscribeUrl($userId);
+        } catch (Throwable $e) {
+            $unsubUrl = $appUrl . '/app/profile';
+        }
+        $html .= '<p style="color:#555570;font-size:11px;text-align:center;margin-top:20px;border-top:1px solid rgba(255,255,255,0.06);padding-top:16px">';
+        $html .= '<a href="' . htmlspecialchars($unsubUrl) . '" style="color:#555570;text-decoration:underline">відписатись від новин сервісу</a>';
         $html .= '</p></td></tr></table></td></tr></table></body></html>';
 
         Mailer::send($email, '&#1055;&#1110;&#1076;&#1087;&#1080;&#1089;&#1082;&#1072; ' . $label . ' &#1079;&#1072;&#1074;&#1077;&#1088;&#1096;&#1080;&#1083;&#1072;&#1089;&#1100; &mdash; IndexFast', $html);

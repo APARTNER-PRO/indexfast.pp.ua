@@ -277,6 +277,30 @@ class Mailer {
         return self::send($to, 'Скидання пароля — IndexFast', $html);
     }
 
+    public static function sendWelcomeEmail(string $to, string $name, int $userId): bool {
+        try {
+            $tpl = DB::row("SELECT subject, body_html FROM email_templates WHERE name = 'Вітальний лист (Швидкий старт)'");
+            if (!$tpl) return false;
+            
+            $unsubUrl = Token::unsubscribeUrl($userId);
+            $unsubFooter = "<p style='color:#555570;font-size:12px;margin-top:24px;text-align:center'>
+                Ви отримали цей лист тому що зареєструвались в IndexFast.<br>
+                <a href='{$unsubUrl}' style='color:#555570'>Відписатись від розсилки</a>
+            </p>";
+            
+            $html = str_replace('{{unsubscribe}}', $unsubFooter, $tpl['body_html']);
+            $html = str_replace(['{{name}}', '{{email}}'], [$name, $to], $html);
+            
+            // Загортаємо у фірмовий шаблон. Передаємо порожній title, бо шаблон з БД вже має свій заголовок
+            $html = self::template('', $html, $unsubUrl);
+            
+            return self::send($to, $tpl['subject'], $html);
+        } catch (Throwable $e) {
+            error_log('[Mailer] sendWelcomeEmail error: ' . $e->getMessage());
+            return false;
+        }
+    }
+
     public static function jobFinished(
         string $to, string $name, string $domain,
         int $sent, int $failed, string $status,
@@ -326,6 +350,7 @@ class Mailer {
     }
 
         private static function template(string $title, string $body, string $unsubUrl = ''): string {
+        $titleHtml = $title ? "<h2 style=\"margin:0 0 20px;font-size:20px;color:#eeeef6;font-weight:700\">{$title}</h2>" : "";
         return <<<HTML
         <!DOCTYPE html>
         <html lang="uk">
@@ -343,7 +368,7 @@ class Mailer {
                 <!-- Body -->
                 <tr>
                   <td style="padding:36px;font-size:15px;line-height:1.7;color:#c8c8d8">
-                    <h2 style="margin:0 0 20px;font-size:20px;color:#eeeef6;font-weight:700">{$title}</h2>
+                    {$titleHtml}
                     {$body}
                   </td>
                 </tr>

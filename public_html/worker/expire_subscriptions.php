@@ -89,10 +89,12 @@ function workerReminders(int $days): void
 
 function workerSendReminder(array $row, int $days): void
 {
-    $label = Plans::label($row['plan_id']);
-    $date  = date('d.m.Y', strtotime($row['end_at']));
-    $url   = env('FRONTEND_URL', env('APP_URL', '')) . '/app#pricing';
-    $name  = htmlspecialchars($row['name']);
+    $label  = Plans::label($row['plan_id']);
+    $date   = date('d.m.Y', strtotime($row['end_at']));
+    $envUrls = explode(',', env('FRONTEND_URL', env('APP_URL', '')));
+    $appUrl  = rtrim(trim($envUrls[0]), '/');
+    $url    = $appUrl . '/app#pricing';
+    $name   = htmlspecialchars($row['name']);
 
     if ($days === 1) {
         $dayWord = 'день';
@@ -112,6 +114,15 @@ function workerSendReminder(array $row, int $days): void
     $html .= '<p>Підписка <strong style="color:#ffd060">' . htmlspecialchars($label) . '</strong> завершується <strong>' . $date . '</strong> — через <strong>' . $days . ' ' . $dayWord . '</strong>.</p>';
     $html .= '<p style="text-align:center;margin:24px 0">';
     $html .= '<a href="' . htmlspecialchars($url) . '" style="background:#00ff88;color:#050508;padding:12px 24px;border-radius:100px;text-decoration:none;font-weight:700">Поновити &rarr;</a>';
+    $html .= '</p>';
+
+    try {
+        $unsubUrl = Token::unsubscribeUrl((int)$row['id']);
+    } catch (Throwable $e) {
+        $unsubUrl = $appUrl . '/app/profile';
+    }
+    $html .= '<p style="color:#555570;font-size:11px;text-align:center;margin-top:20px;border-top:1px solid rgba(255,255,255,0.06);padding-top:16px">';
+    $html .= '<a href="' . htmlspecialchars($unsubUrl) . '" style="color:#555570;text-decoration:underline">відписатись від новин сервісу</a>';
     $html .= '</p></td></tr></table></td></tr></table></body></html>';
 
     Mailer::send($row['email'], '⏰ Підписка ' . $label . ' завершується ' . $date, $html);
