@@ -17,6 +17,25 @@
     :root {
       --black:  #050508;
       --dark:   #0d0d14;
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23050508'/><text x='16' y='22' font-family='system-ui,sans-serif' font-size='15' font-weight='800' fill='%2300ff88' text-anchor='middle'>IF</text></svg>">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 — Сторінку не знайдено | IndexFast</title>
+  <meta name="robots" content="noindex, nofollow">
+
+    <link rel="preload" as="style" crossorigin href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --black:  #050508;
+      --dark:   #0d0d14;
       --card:   #111119;
       --border: rgba(255,255,255,0.07);
       --green:  #00ff88;
@@ -28,32 +47,155 @@
 
     html, body { height: 100%; }
     body {
-      background: var(--black); color: var(--white);
-      font-family: var(--font-body); font-weight: 300;
-      overflow-x: hidden; display: flex; flex-direction: column;
+      background: var(--black);
+      color: var(--white);
+      font-family: var(--font-body);
+      font-weight: 300;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      cursor: none;
     }
 
-    /* ── NAV ── */
-    nav {
-      padding: 0 60px; height: 64px; flex-shrink: 0;
-      display: flex; align-items: center; justify-content: space-between;
-      border-bottom: 1px solid var(--border);
-      background: rgba(5,5,8,0.95); backdrop-filter: blur(12px);
-      position: sticky; top: 0; z-index: 100;
+    /* ─── CURSOR ─── */
+    .cursor {
+      position: fixed;
+      width: 12px;
+      height: 12px;
+      background: var(--green);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: transform 0.1s, width 0.3s, height 0.3s, opacity 0.3s;
+      mix-blend-mode: difference;
     }
-    .logo { font-family: var(--font-display); font-size: 1.35rem; font-weight: 800; letter-spacing: -0.03em; color: var(--white); text-decoration: none; }
-    .logo span { color: var(--green); }
-    .nav-right { display: flex; align-items: center; gap: 24px; }
-    .nav-link { color: var(--muted); text-decoration: none; font-size: 0.875rem; transition: color 0.2s; }
-    .nav-link:hover { color: var(--white); }
-    .nav-cta { background: var(--green); color: var(--black); padding: 8px 20px; border-radius: 100px; font-family: var(--font-display); font-weight: 700; font-size: 0.82rem; text-decoration: none; transition: box-shadow 0.2s; }
-    .nav-cta:hover { box-shadow: 0 0 20px rgba(0,255,136,0.4); }
+    .cursor-ring {
+      position: fixed;
+      width: 40px;
+      height: 40px;
+      border: 1px solid rgba(0, 255, 136, 0.4);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: transform 0.15s ease-out, width 0.3s, height 0.3s;
+    }
+    body:hover .cursor {
+      opacity: 1;
+    }
+
+    /* ─── NOISE OVERLAY ─── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      opacity: 0.4;
+      pointer-events: none;
+      z-index: 1000;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 500;
+      padding: 20px 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: linear-gradient(to bottom, rgba(5, 5, 8, 0.95) 0%, transparent 100%);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.3s;
+    }
+    nav.scrolled {
+      border-bottom-color: var(--border);
+    }
+    .logo {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--white);
+      text-decoration: none;
+    }
+    .logo span {
+      color: var(--green);
+    }
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.875rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover {
+      color: var(--white);
+    }
+    .nav-cta {
+      background: var(--green);
+      color: var(--black);
+      padding: 10px 24px;
+      border-radius: 100px;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 0.875rem;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+    }
+    .nav-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 40px rgba(0, 255, 136, 0.5);
+    }
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .nav-login {
+      color: var(--muted, #7a7a95);
+      font-size: 0.875rem;
+      text-decoration: none;
+      padding: 7px 16px;
+      border-radius: 100px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .nav-login:hover {
+      color: var(--white, #f0f0f8);
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--white);
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 0;
+      line-height: 1;
+    }
+    /* hidden on desktop, shown only in mobile dropdown */
+    .mobile-auth {
+      display: none !important;
+    }
 
     /* ── MAIN ── */
     main {
       flex: 1; display: flex; flex-direction: column;
       align-items: center; justify-content: center;
-      padding: 100px 20px; text-align: center;
+      padding: 140px 20px 100px; text-align: center;
       position: relative; overflow: hidden;
     }
 
@@ -150,7 +292,7 @@
     footer {
       background: var(--dark);
       border-top: 1px solid var(--border);
-      padding: 80px 60px 40px;
+      padding: 60px 40px 40px;
       text-align: left;
     }
     .footer-grid {
@@ -236,8 +378,97 @@
       box-shadow: 0 0 30px rgba(0, 255, 136, 0.4);
     }
 
+    @media (max-width: 1100px) {
+      nav {
+        padding: 16px 20px;
+      }
+      .mobile-menu-btn {
+        display: block;
+      }
+      .nav-actions {
+        gap: 12px;
+      }
+      .nav-login {
+        padding: 7px 12px;
+      }
+      .nav-cta {
+        padding: 8px 16px;
+        font-size: 0.8rem;
+      }
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        gap: 0;
+        position: fixed;
+        top: 58px;
+        left: 0;
+        right: 0;
+        background: rgba(5, 5, 8, 0.98);
+        backdrop-filter: blur(14px);
+        padding: 16px 20px 24px;
+        border-bottom: 1px solid var(--border);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        z-index: 499;
+        list-style: none;
+      }
+      .nav-links li {
+        border-bottom: 1px solid var(--border);
+      }
+      .nav-links li:last-child {
+        border-bottom: none;
+      }
+      .nav-links li a {
+        display: block;
+        padding: 14px 0;
+        font-size: 1rem;
+        color: var(--white);
+        text-transform: none;
+        letter-spacing: 0;
+      }
+      .nav-links.active {
+        display: flex;
+      }
+      .nav-links .mobile-auth {
+        display: flex !important;
+        gap: 12px;
+        padding: 16px 0 4px;
+        margin-top: 4px;
+        border-top: 1px solid rgba(0,255,136,0.15);
+      }
+      .nav-links .mobile-auth a {
+        padding: 10px 20px;
+        border-radius: 100px;
+        font-size: 0.875rem;
+        font-weight: 600;
+        font-family: var(--font-display);
+        text-decoration: none;
+        text-transform: none;
+        letter-spacing: 0;
+      }
+      .nav-links .mobile-auth .mobile-login {
+        color: var(--muted);
+        border: 1px solid var(--border);
+      }
+      .nav-links .mobile-auth .mobile-register {
+        background: var(--green);
+        color: var(--black);
+        flex: 1;
+        text-align: center;
+      }
+      .nav-login,
+      .nav-cta {
+        display: none;
+      }
+      body {
+        cursor: auto;
+      }
+      .cursor,
+      .cursor-ring {
+        display: none;
+      }
+    }
+
     @media (max-width: 900px) {
-      nav { padding: 0 20px; }
       .big-number { font-size: 30vw; }
       .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
       .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
@@ -247,13 +478,26 @@
 </head>
 <body>
 
-<nav>
-  <a href="/" class="logo">Index<span>Fast</span></a>
-  <div class="nav-right">
-    <a href="/" class="nav-link">Головна</a>
-    <a href="/blog/" class="nav-link">Блог</a>
-    <a href="/docs/" class="nav-link">Документація</a>
-    <a href="/app/register" class="nav-cta">Спробувати →</a>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<nav id="navbar" role="navigation" aria-label="Головне меню">
+  <a href="/" class="logo" aria-label="IndexFast — Головна">Index<span>Fast</span></a>
+  <ul class="nav-links">
+    <li><a href="/#how-it-works">Як працює</a></li>
+    <li><a href="/#for-whom">Для кого</a></li>
+    <li><a href="/#features">Переваги</a></li>
+    <li><a href="/#pricing">Ціни</a></li>
+    <li><a href="/#faq">FAQ</a></li>
+    <li class="mobile-auth">
+      <a href="/app/login" class="mobile-login">Увійти</a>
+      <a href="/app/register" class="mobile-register">Почати безкоштовно →</a>
+    </li>
+  </ul>
+  <div class="nav-actions">
+    <a href="/app/login" class="nav-login">Увійти</a>
+    <a href="/app/register" class="nav-cta">Почати безкоштовно →</a>
+    <button class="mobile-menu-btn" onclick="document.querySelector('.nav-links').classList.toggle('active')" aria-label="Відкрити меню">☰</button>
   </div>
 </nav>
 
@@ -331,6 +575,52 @@
 </footer>
 
 <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // ── Cursor
+    const cursor = document.getElementById('cursor');
+    const cursorRing = document.getElementById('cursorRing');
+    let cx = 0, cy = 0, rx = 0, ry = 0;
+    document.addEventListener('mousemove', e => { cx = e.clientX; cy = e.clientY; });
+    function animateCursor() {
+      if (cursor && cursorRing) {
+        cursor.style.left = cx + 'px'; cursor.style.top = cy + 'px';
+        rx += (cx - rx) * 0.12; ry += (cy - ry) * 0.12;
+        cursorRing.style.left = rx + 'px'; cursorRing.style.top = ry + 'px';
+      }
+      requestAnimationFrame(animateCursor);
+    }
+    animateCursor();
+    document.querySelectorAll('a, button').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        if (cursor && cursorRing) {
+          cursor.style.transform = 'translate(-50%,-50%) scale(2)';
+          cursorRing.style.transform = 'translate(-50%,-50%) scale(1.5)';
+        }
+      });
+      el.addEventListener('mouseleave', () => {
+        if (cursor && cursorRing) {
+          cursor.style.transform = 'translate(-50%,-50%) scale(1)';
+          cursorRing.style.transform = 'translate(-50%,-50%) scale(1)';
+        }
+      });
+    });
+
+    // ── Navbar scroll
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      if (navbar) {
+        navbar.classList.toggle('scrolled', window.scrollY > 50);
+      }
+    });
+
+    // ── Mobile menu: close on nav link click
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', () => {
+        document.querySelector('.nav-links').classList.remove('active');
+      });
+    });
+  });
+
   // Back to Top
   const backToTop = document.getElementById('backToTop');
   window.addEventListener('scroll', () => {
