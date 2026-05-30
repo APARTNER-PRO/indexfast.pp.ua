@@ -4,28 +4,29 @@
 //  Обробляє callback від Google після авторизації
 // ══════════════════════════════════════════════
 
-// Налаштовуємо куки для роботи через проксі
-session_set_cookie_params([
-    'lifetime' => 0,
-    'path'     => '/',
-    'domain'   => '',
-    'secure'   => true,
-    'httponly' => true,
-    'samesite' => 'Lax'
-]);
-session_start();
-
 require_once dirname(dirname(__DIR__)) . '/middleware.php';
 require_once dirname(dirname(__DIR__)) . '/db.php';
 
 try {
 // ── 1. Перевіряємо state (CSRF захист)
+// State це stateless HMAC-підписаний токен: nonce.timestamp.hmac
+// Не потребує сесії — працює надійно при будь-якій проксі чи архітектурі.
 $state = $_GET['state'] ?? '';
-if (!$state || $state !== ($_SESSION['oauth_state'] ?? '')) {
-    error_log('[Google OAuth] State mismatch. Expected: ' . ($_SESSION['oauth_state'] ?? 'null') . ', Got: ' . $state);
+$parts = explode('.', $state, 3);
+if (count($parts) !== 3) {
+    error_log('[Google OAuth] State format invalid: ' . $state);
     redirectWithError('invalid_state');
 }
-unset($_SESSION['oauth_state']);
+[$nonce, $ts, $sig] = $parts;
+$expectedSig = hash_hmac('sha256', $nonce . '.' . $ts, JWT_SECRET);
+if (!hash_equals($expectedSig, $sig)) {
+    error_log('[Google OAuth] State HMAC mismatch.');
+    redirectWithError('invalid_state');
+}
+if (time() - (int)$ts > 600) { // state дійсний 10 хвили
+    error_log('[Google OAuth] State expired. ts=' . $ts . ', now=' . time());
+    redirectWithError('invalid_state');
+}
 
 // ── 2. Перевіряємо code
 $code = $_GET['code'] ?? '';
