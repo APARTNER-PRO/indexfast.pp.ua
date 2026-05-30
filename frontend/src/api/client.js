@@ -87,24 +87,42 @@ export async function apiFetch(path, opts = {}, _isRetry = false) {
   const isSlow = path.includes("/indexing/run") || path.includes("/gsc/");
   const timeout = opts._timeout ?? (isSlow ? TIMEOUTS.slow : TIMEOUTS.default);
 
-  let res;
-  try {
-    res = await fetchWithTimeout(`${BASE}${path}`, {
-      ...opts,
-      headers: {
-        "Content-Type": "application/json",
-        ...(token ? { Authorization: `Bearer ${token}` } : {}),
-        ...(opts.headers ?? {}),
-      },
-      body: opts.body !== undefined ? JSON.stringify(opts.body) : undefined,
-    }, timeout);
-  } catch (e) {
+    const method = (opts.method ?? "GET").toUpperCase();
+    const headers = {
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      ...(opts.headers ?? {}),
+    };
+    if (opts.body !== undefined || ["POST", "PUT", "PATCH", "DELETE"].includes(method)) {
+      headers["Content-Type"] = "application/json";
+    }
+
+    let res;
+    try {
+      res = await fetchWithTimeout(`${BASE}${path}`, {
+        ...opts,
+        method,
+        headers,
+        body: opts.body !== undefined ? JSON.stringify(opts.body) : undefined,
+      }, timeout);
+    } catch (e) {
     // AbortError — таймаут
     if (e.name === "AbortError") {
       throw new ApiError("Сервер не відповідає. Перевірте з'єднання.", 0);
     }
     // Мережева помилка
     throw new ApiError("Помилка мережі. Перевірте з'єднання.", 0);
+  }
+
+  // ── 415: спробуємо повторити запит без заголовка Content-Type один раз
+  if (res.status === 415 && !_isRetry) {
+    const newOpts = { ...opts };
+    if (newOpts.headers) {
+      const cleanHeaders = { ...newOpts.headers };
+      delete cleanHeaders['Content-Type'];
+      delete cleanHeaders['content-type'];
+      newOpts.headers = cleanHeaders;
+    }
+    return apiFetch(path, newOpts, true);
   }
 
   // ── 401: спробуємо оновити токен один раз

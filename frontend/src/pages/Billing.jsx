@@ -141,9 +141,14 @@ export default function Billing() {
       if (res?.payment_methods?.count === 1) {
         setSelMethod(res.payment_methods.methods[0].id);
       }
+      setLoading(false);
     } catch (e) {
+      if (e.status === 415) {
+        // Якщо помилка 415, тихо пробуємо знову за 3 секунди
+        setTimeout(load, 3000);
+        return;
+      }
       setError(e.message || 'Помилка завантаження');
-    } finally {
       setLoading(false);
     }
   }, []);
@@ -216,32 +221,43 @@ export default function Billing() {
     }
     setBusy(true);
     setError('');
-    try {
-      const formData = new FormData();
-      formData.append('sub_id', manualSubId);
-      formData.append('notes',  notes);
-      if (receipt) formData.append('receipt', receipt);
 
-      const token = localStorage.getItem('access_token');
-      const headers = {};
-      if (token) headers['Authorization'] = 'Bearer ' + token;
+    const attemptSend = async () => {
+      try {
+        const formData = new FormData();
+        formData.append('sub_id', manualSubId);
+        formData.append('notes',  notes);
+        if (receipt) formData.append('receipt', receipt);
 
-      // BASE замість хардкоду '/api' — підтримка різних доменів
-      const res = await fetch(BASE + '/billing/manual_receipt.php', {
-        method:  'POST',
-        headers: headers,
-        // НЕ додаємо Content-Type — браузер сам виставить multipart/form-data з boundary
-        body:    formData,
-      });
+        const token = localStorage.getItem('access_token');
+        const headers = {};
+        if (token) headers['Authorization'] = 'Bearer ' + token;
 
-      const json = await res.json().catch(() => ({}));
-      if (!res.ok) throw new Error(json.message || 'HTTP ' + res.status);
-      setManualDone(true);
-    } catch (e) {
-      setError(e.message || 'Помилка надсилання');
-    } finally {
-      setBusy(false);
-    }
+        // BASE замість хардкоду '/api' — підтримка різних доменів
+        const res = await fetch(BASE + '/billing/manual_receipt.php', {
+          method:  'POST',
+          headers: headers,
+          // НЕ додаємо Content-Type — браузер сам виставить multipart/form-data з boundary
+          body:    formData,
+        });
+
+        if (res.status === 415) {
+          // Тихо пробуємо знову за 3 секунди, не показуємо помилку
+          setTimeout(attemptSend, 3000);
+          return;
+        }
+
+        const json = await res.json().catch(() => ({}));
+        if (!res.ok) throw new Error(json.message || 'HTTP ' + res.status);
+        setManualDone(true);
+        setBusy(false);
+      } catch (e) {
+        setError(e.message || 'Помилка надсилання');
+        setBusy(false);
+      }
+    };
+
+    await attemptSend();
   };
 
   const cancelSub = async (subId) => {

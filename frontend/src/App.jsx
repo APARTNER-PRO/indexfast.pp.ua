@@ -352,17 +352,37 @@ export default function App() {
     </div>
   );
 
-  if (isError) return (
-    <div style={{ background: C.black, minHeight: "100vh", display: "flex",
-      alignItems: "center", justifyContent: "center",
-      color: C.red, fontFamily: "Syne,sans-serif" }}>
-      <div style={{ textAlign: "center" }}>
-        <div style={{ fontSize: 48, marginBottom: 16 }}>⚠</div>
-        <div style={{ marginBottom: 20 }}>{error?.message}</div>
-        <Btn variant="outline" onClick={handleRefresh}>Повторити</Btn>
+  if (isError) {
+    if (error?.status === 415) {
+      return (
+        <div style={{ background: C.black, minHeight: "100vh",
+          display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <div style={{ textAlign: "center" }}>
+            <div style={{ fontFamily: "Syne,sans-serif", fontSize: 24, fontWeight: 800,
+              marginBottom: 24, letterSpacing: "-0.04em" }}>
+              Index<span style={{ color: C.green }}>Fast</span>
+            </div>
+            <div style={{ color: C.muted, fontSize: 13, marginBottom: 16 }}>
+              З'єднання...
+            </div>
+            <Spinner size={32}/>
+          </div>
+        </div>
+      );
+    }
+
+    return (
+      <div style={{ background: C.black, minHeight: "100vh", display: "flex",
+        alignItems: "center", justifyContent: "center",
+        color: C.red, fontFamily: "Syne,sans-serif" }}>
+        <div style={{ textAlign: "center" }}>
+          <div style={{ fontSize: 48, marginBottom: 16 }}>⚠</div>
+          <div style={{ marginBottom: 20 }}>{error?.message}</div>
+          <Btn variant="outline" onClick={handleRefresh}>Повторити</Btn>
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 
   // Guard: data прийшло але без очікуваних полів (stats.php повернув помилку без 4xx)
   if (!statsData?.user) {
