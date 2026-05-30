@@ -1,0 +1,37 @@
+# ── storage/receipts/.htaccess
+# Повна заборона прямого доступу до квитанцій через веб.
+# Файли видаються виключно через /api/billing/serve_receipt.php
+# після перевірки авторизації адміністратора.
+
+# Apache 2.4+
+<IfModule mod_authz_core.c>
+    Require all denied
+</IfModule>
+
+# Apache 2.2 (fallback)
+<IfModule !mod_authz_core.c>
+    Order deny,allow
+    Deny from all
+</IfModule>
+
+# Явна заборона виконання PHP
+<FilesMatch "\.(php|php3|php4|php5|php7|php8|phtml|phar)$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order deny,allow
+        Deny from all
+    </IfModule>
+</FilesMatch>
+
+# Забороняємо підключення PHP-обробника для будь-яких файлів у цій папці
+<IfModule mod_php.c>
+    php_flag engine off
+</IfModule>
+<IfModule mod_php7.c>
+    php_flag engine off
+</IfModule>
+<IfModule mod_php8.c>
+    php_flag engine off
+</IfModule>
