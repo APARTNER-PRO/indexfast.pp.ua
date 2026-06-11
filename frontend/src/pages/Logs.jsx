@@ -32,6 +32,31 @@ function daysAgoStr(n) {
   return toDateStr(d);
 }
 
+/* ── Mobile-responsive styles ── */
+const MOBILE_STYLES = `
+  @media (max-width: 600px) {
+    .logs-filters { gap: 6px !important; }
+    .logs-filters select { width: 100%; }
+    .logs-status-btns { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .logs-status-btns::-webkit-scrollbar { display: none; }
+    .logs-count { width: 100%; text-align: right; margin-left: 0 !important; }
+    .logs-date-row { gap: 6px !important; }
+    .logs-date-row .logs-date-inputs { width: 100%; margin-left: 0 !important; }
+    .logs-date-row .logs-date-inputs input { flex: 1; min-width: 0; }
+    .logs-pagination { gap: 4px !important; flex-wrap: wrap; }
+    .logs-pagination .logs-page-nums { display: none; }
+    .logs-pagination .logs-page-info { display: flex !important; }
+
+    .log-row { flex-wrap: wrap !important; gap: 6px !important; padding: 10px 12px !important; }
+    .log-row .log-url { order: 1; width: calc(100% - 30px); font-size: 10px !important; }
+    .log-row .log-copy { order: 2; }
+    .log-row .log-meta { order: 3; display: flex; width: 100%; align-items: center; gap: 8px; padding-left: 22px; }
+    .log-row .log-domain { font-size: 10px !important; }
+    .log-row .log-status-icon { flex-shrink: 0; }
+    .log-row .log-error { max-width: none !important; flex: 1; }
+  }
+`;
+
 export default memo(function Logs({ sites }) {
   const [siteId,   setSiteId]   = useState("");
   const [status,   setStatus]   = useState("");
@@ -84,6 +109,8 @@ export default memo(function Logs({ sites }) {
 
   return (
     <div>
+      <style>{MOBILE_STYLES}</style>
+
       {/* Заголовок */}
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between",
         marginBottom: 20, flexWrap: "wrap", gap: 12 }}>
@@ -115,12 +142,12 @@ export default memo(function Logs({ sites }) {
             </select>
           )}
 
-          <div style={{ display: "flex", gap: 4 }}>
+          <div className="logs-status-btns" style={{ display: "flex", gap: 4 }}>
             {STATUS_FILTERS.map(f => (
               <button key={f.value}
                 onClick={() => resetPage(() => setStatus(f.value))}
                 style={{ padding: "6px 14px", borderRadius: 10, border: "none",
-                  cursor: "pointer", fontSize: 12,
+                  cursor: "pointer", fontSize: 12, whiteSpace: "nowrap",
                   fontFamily: "Syne,sans-serif", fontWeight: 700,
                   background: status === f.value
                     ? "rgba(0,255,136,0.1)" : "rgba(255,255,255,0.04)",
@@ -131,7 +158,7 @@ export default memo(function Logs({ sites }) {
             ))}
           </div>
 
-          <span style={{ fontSize: 12, color: C.muted, marginLeft: "auto" }}>
+          <span className="logs-count" style={{ fontSize: 12, color: C.muted, marginLeft: "auto" }}>
             {total.toLocaleString("uk-UA")} записів
           </span>
         </div>
@@ -152,7 +179,7 @@ export default memo(function Logs({ sites }) {
             </button>
           ))}
 
-          <div style={{ display: "flex", alignItems: "center", gap: 6, marginLeft: 4 }}>
+          <div className="logs-date-inputs" style={{ display: "flex", alignItems: "center", gap: 6, marginLeft: 4 }}>
             <span style={{ fontSize: 11, color: C.muted }}>від</span>
             <input type="date" value={dateFrom}
               onChange={e => onDateFromChange(e.target.value)}
@@ -204,7 +231,8 @@ export default memo(function Logs({ sites }) {
             )}
           </div>
         ) : (
-          <div style={{ maxHeight: "calc(100vh - 280px)", overflowY: "auto" }}>
+          <div style={{ maxHeight: "calc(100vh - 280px)", overflowY: "auto", overflowX: "auto",
+            WebkitOverflowScrolling: "touch" }}>
             {logs.map((l, i) => (
               <LogRow key={l.id ?? i} log={l} icons={icons} colors={colors}/>
             ))}
@@ -214,25 +242,34 @@ export default memo(function Logs({ sites }) {
 
       {/* Пагінація */}
       {pages > 1 && (
-        <div style={{ display: "flex", justifyContent: "center", gap: 8, marginTop: 16 }}>
+        <div className="logs-pagination" style={{ display: "flex", justifyContent: "center",
+          alignItems: "center", gap: 8, marginTop: 16 }}>
           <Btn variant="ghost" disabled={page === 0}
             onClick={() => setPage(p => p - 1)}
             style={{ padding: "7px 16px", fontSize: 13 }}>← Попередня</Btn>
 
-          {Array.from({ length: Math.min(pages, 7) }, (_, i) => {
-            const p = page < 3 ? i : page > pages - 4 ? pages - 7 + i : page - 3 + i;
-            if (p < 0 || p >= pages) return null;
-            return (
-              <button key={p} onClick={() => setPage(p)}
-                style={{ width: 36, height: 36, borderRadius: 10, border: "none",
-                  cursor: "pointer", fontFamily: "Syne,sans-serif", fontWeight: 700,
-                  fontSize: 13,
-                  background: p === page ? "rgba(0,255,136,0.1)" : "rgba(255,255,255,0.04)",
-                  color: p === page ? C.green : C.muted }}>
-                {p + 1}
-              </button>
-            );
-          })}
+          <span className="logs-page-nums">
+            {Array.from({ length: Math.min(pages, 7) }, (_, i) => {
+              const p = page < 3 ? i : page > pages - 4 ? pages - 7 + i : page - 3 + i;
+              if (p < 0 || p >= pages) return null;
+              return (
+                <button key={p} onClick={() => setPage(p)}
+                  style={{ width: 36, height: 36, borderRadius: 10, border: "none",
+                    cursor: "pointer", fontFamily: "Syne,sans-serif", fontWeight: 700,
+                    fontSize: 13,
+                    background: p === page ? "rgba(0,255,136,0.1)" : "rgba(255,255,255,0.04)",
+                    color: p === page ? C.green : C.muted }}>
+                  {p + 1}
+                </button>
+              );
+            })}
+          </span>
+
+          {/* Mobile-only page info */}
+          <span className="logs-page-info" style={{ display: "none", fontSize: 12,
+            color: C.muted, fontFamily: "Syne,sans-serif", fontWeight: 700 }}>
+            {page + 1} / {pages}
+          </span>
 
           <Btn variant="ghost" disabled={page >= pages - 1}
             onClick={() => setPage(p => p + 1)}
@@ -254,24 +291,26 @@ const LogRow = memo(function LogRow({ log: l, icons, colors }) {
   }
 
   return (
-    <div style={{ display: "flex", alignItems: "center", gap: 10, padding: "10px 16px",
-      borderBottom: `1px solid ${C.border}`, fontSize: 12 }}
+    <div className="log-row" style={{ display: "flex", alignItems: "center", gap: 10,
+      padding: "10px 16px", borderBottom: `1px solid ${C.border}`, fontSize: 12 }}
       onMouseEnter={e => e.currentTarget.style.background = "rgba(255,255,255,0.015)"}
       onMouseLeave={e => e.currentTarget.style.background = "transparent"}>
 
       {/* Статус */}
-      <span style={{ color: colors[l.status], fontWeight: 800,
+      <span className="log-status-icon" style={{ color: colors[l.status], fontWeight: 800,
         width: 16, textAlign: "center", flexShrink: 0 }}>
         {icons[l.status] ?? "?"}
       </span>
 
-      {/* URL + кнопка копіювання */}
-      <span style={{ flex: 1, fontFamily: "ui-monospace,monospace", fontSize: 11,
+      {/* URL */}
+      <span className="log-url" style={{ flex: 1, fontFamily: "ui-monospace,monospace", fontSize: 11,
         color: C.white, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap",
         minWidth: 0 }}>
         {l.url}
       </span>
-      <button onClick={copyUrl} title="Копіювати URL"
+
+      {/* Копіювання */}
+      <button className="log-copy" onClick={copyUrl} title="Копіювати URL"
         style={{ flexShrink: 0, background: "none", border: "none",
           cursor: "pointer", fontSize: 12, color: copied ? C.green : C.muted,
           padding: "2px 6px", borderRadius: 6,
@@ -279,35 +318,40 @@ const LogRow = memo(function LogRow({ log: l, icons, colors }) {
         {copied ? "✓" : "⎘"}
       </button>
 
-      {/* Домен */}
-      {l.domain && (
-        <span style={{ fontSize: 11, color: C.muted, flexShrink: 0,
-          background: "rgba(255,255,255,0.04)", padding: "2px 8px", borderRadius: 6 }}>
-          {l.domain}
+      {/* Мета-інформація (на мобільному зливається в окремий рядок) */}
+      <span className="log-meta" style={{ display: "contents" }}>
+        {/* Домен */}
+        {l.domain && (
+          <span className="log-domain" style={{ fontSize: 11, color: C.muted, flexShrink: 0,
+            background: "rgba(255,255,255,0.04)", padding: "2px 8px", borderRadius: 6 }}>
+            {l.domain}
+          </span>
+        )}
+
+        {/* HTTP код */}
+        <span style={{ fontWeight: 700, fontSize: 10, flexShrink: 0,
+          fontFamily: "Syne,sans-serif", letterSpacing: "0.05em",
+          color: colors[l.status] }}>
+          {l.status === "ok" ? "200" : l.http_status ? `${l.http_status}` : l.status?.toUpperCase()}
         </span>
-      )}
 
-      {/* HTTP код */}
-      <span style={{ fontWeight: 700, fontSize: 10, flexShrink: 0,
-        fontFamily: "Syne,sans-serif", letterSpacing: "0.05em",
-        color: colors[l.status] }}>
-        {l.status === "ok" ? "200" : l.http_status ? `${l.http_status}` : l.status?.toUpperCase()}
-      </span>
+        {/* Помилка */}
+        {l.error_msg && (
+          <span className="log-error" title={l.error_msg} style={{ fontSize: 10, color: C.red,
+            flexShrink: 0, maxWidth: 120, overflow: "hidden", textOverflow: "ellipsis",
+            whiteSpace: "nowrap" }}>
+            {l.error_msg}
+          </span>
+        )}
 
-      {/* Помилка */}
-      {l.error_msg && (
-        <span title={l.error_msg} style={{ fontSize: 10, color: C.red, flexShrink: 0,
-          maxWidth: 120, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-          {l.error_msg}
+        {/* Дата */}
+        <span style={{ color: C.muted, fontSize: 10, whiteSpace: "nowrap", flexShrink: 0,
+          marginLeft: "auto" }}>
+          {new Date(l.created_at).toLocaleString("uk-UA", {
+            day: "2-digit", month: "2-digit",
+            hour: "2-digit", minute: "2-digit",
+          })}
         </span>
-      )}
-
-      {/* Дата */}
-      <span style={{ color: C.muted, fontSize: 10, whiteSpace: "nowrap", flexShrink: 0 }}>
-        {new Date(l.created_at).toLocaleString("uk-UA", {
-          day: "2-digit", month: "2-digit",
-          hour: "2-digit", minute: "2-digit",
-        })}
       </span>
     </div>
   );
