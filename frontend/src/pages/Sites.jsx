@@ -5,6 +5,18 @@ import { EditSiteModal }   from "../components/EditSiteModal.jsx";
 import { Btn, Badge }    from "../components/ui/index.jsx";
 import { C }             from "../constants.js";
 
+const SITES_PAGE_STYLES = `
+  @media (max-width: 640px) {
+    .sites-limit-banner { flex-direction: column !important; align-items: flex-start !important; gap: 10px !important; }
+    .sites-limit-banner .sites-limit-btn { width: 100%; }
+    .sites-stats-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 8px !important; }
+    .sites-stats-grid > div { padding: 12px 14px !important; }
+    .sites-filter-btns { overflow-x: auto; -webkit-overflow-scrolling: touch; flex-wrap: nowrap !important; }
+    .sites-filter-btns::-webkit-scrollbar { display: none; }
+    .sites-filter-btns button { white-space: nowrap; flex-shrink: 0; }
+  }
+`;
+
 export default memo(function Sites({
   sites, sitesList, sitesLimit, plan,
   today, onAddSite, onRun, onDelete, onToggle,
@@ -30,6 +42,8 @@ export default memo(function Sites({
   return (
     <>
       <div>
+        <style>{SITES_PAGE_STYLES}</style>
+
         {/* Заголовок */}
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between",
         marginBottom: 24, flexWrap: "wrap", gap: 12 }}>
@@ -51,7 +65,8 @@ export default memo(function Sites({
 
       {/* Ліміт плану */}
       {!canAdd && (
-        <div style={{ background: "rgba(255,208,96,0.06)", border: "1px solid rgba(255,208,96,0.2)",
+        <div className="sites-limit-banner" style={{ background: "rgba(255,208,96,0.06)",
+          border: "1px solid rgba(255,208,96,0.2)",
           borderRadius: 14, padding: "14px 20px", marginBottom: 20,
           display: "flex", alignItems: "center", gap: 12 }}>
           <span style={{ fontSize: 20 }}>⚠️</span>
@@ -63,7 +78,8 @@ export default memo(function Sites({
               Оновіть план щоб підключити більше сайтів
             </span>
           </div>
-          <Btn variant="primary" onClick={() => window.location.href = "/#pricing"}
+          <Btn className="sites-limit-btn" variant="primary"
+            onClick={() => window.location.href = "/#pricing"}
             style={{ padding: "7px 16px", fontSize: 12, flexShrink: 0 }}>
             Оновити план →
           </Btn>
@@ -71,7 +87,8 @@ export default memo(function Sites({
       )}
 
       {/* Денний ліміт */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(160px,1fr))",
+      <div className="sites-stats-grid" style={{ display: "grid",
+        gridTemplateColumns: "repeat(auto-fit,minmax(160px,1fr))",
         gap: 12, marginBottom: 24 }}>
         {[
           { label: "URL сьогодні", value: today.sent, max: today.limit,
@@ -93,7 +110,8 @@ export default memo(function Sites({
 
       {/* Фільтр */}
       {sitesList.length > 0 && (
-        <div style={{ display: "flex", gap: 6, marginBottom: 16, flexWrap: "wrap" }}>
+        <div className="sites-filter-btns" style={{ display: "flex", gap: 6,
+          marginBottom: 16, flexWrap: "wrap" }}>
           {[
             { key: "all",    label: `Всі (${counts.all})` },
             { key: "active", label: `✓ Активні (${counts.active})` },

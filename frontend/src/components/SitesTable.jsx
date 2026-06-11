@@ -3,6 +3,14 @@ import { memo } from "react";
 import { StatusDot, Btn, ProgressBar } from "./ui/index.jsx";
 import { C } from "../constants.js";
 
+/* ── Mobile-responsive styles ── */
+const SITES_MOBILE_STYLES = `
+  @media (max-width: 640px) {
+    .sites-table-wrap table { display: none; }
+    .sites-mobile-list { display: flex !important; }
+  }
+`;
+
 export const SitesTable = memo(function SitesTable({
   sites, remaining, onRun, onDelete, onToggle, onEdit,
 }) {
@@ -16,6 +24,9 @@ export const SitesTable = memo(function SitesTable({
 
   return (
     <div className="sites-table-wrap" style={{ overflowX: "auto" }}>
+      <style>{SITES_MOBILE_STYLES}</style>
+
+      {/* Desktop table */}
       <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
         <thead>
           <tr style={{ borderBottom: `1px solid ${C.border}` }}>
@@ -41,10 +52,153 @@ export const SitesTable = memo(function SitesTable({
           ))}
         </tbody>
       </table>
+
+      {/* Mobile cards */}
+      <div className="sites-mobile-list" style={{ display: "none", flexDirection: "column" }}>
+        {sites.map(s => (
+          <SiteCard
+            key={s.id}
+            site={s}
+            remaining={remaining}
+            onRun={onRun}
+            onDelete={onDelete}
+            onToggle={onToggle}
+            onEdit={onEdit}
+          />
+        ))}
+      </div>
     </div>
   );
 });
 
+/* ── Mobile card layout ── */
+const SiteCard = memo(function SiteCard({ site: s, remaining, onRun, onDelete, onToggle, onEdit }) {
+  const handleRun    = () => onRun(s);
+  const handleDelete = () => onDelete(s);
+  const handleToggle = () => onToggle(s.id);
+  const handleEdit   = () => onEdit?.(s);
+
+  const isActive     = s.status === "active";
+  const isPaused     = s.status === "paused";
+  const isError      = s.status === "error";
+  const isJobRunning = s.active_job?.status === "pending" || s.active_job?.status === "processing";
+
+  return (
+    <div style={{ padding: "14px 16px", borderBottom: `1px solid ${C.border}` }}>
+      {/* Row 1: Icon + Domain + Status */}
+      <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 8 }}>
+        <div style={{ width: 30, height: 30, borderRadius: 8, flexShrink: 0,
+          background: isPaused ? "rgba(255,208,96,0.08)" : "rgba(0,255,136,0.08)",
+          border: `1px solid ${isPaused ? "rgba(255,208,96,0.2)" : "rgba(0,255,136,0.15)"}`,
+          display: "flex", alignItems: "center", justifyContent: "center",
+          fontSize: 14 }}>
+          {isPaused ? "⏸" : isError ? "⚠️" : "🌐"}
+        </div>
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap" }}>
+            <span style={{ fontWeight: 600, color: isPaused ? C.muted : C.white,
+              overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+              {s.domain}
+            </span>
+            {s.has_sa === false && (
+              <span title="Немає Service Account"
+                style={{ fontSize: 10, background: "rgba(255,208,96,0.12)",
+                  color: "#ffd060", border: "1px solid rgba(255,208,96,0.25)",
+                  borderRadius: 4, padding: "1px 5px", cursor: "pointer" }}
+                onClick={handleEdit}>
+                ⚠ SA
+              </span>
+            )}
+          </div>
+        </div>
+        <StatusDot status={s.status}/>
+      </div>
+
+      {/* Sitemap URL */}
+      <div style={{ fontSize: 11, color: C.muted, marginBottom: 8,
+        overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+        {s.sitemap_url}
+      </div>
+
+      {/* Error message */}
+      {s.error_message && (
+        <div style={{ fontSize: 11, color: C.red, marginBottom: 8 }}>{s.error_message}</div>
+      )}
+
+      {/* Job progress */}
+      {isJobRunning && (
+        <div style={{ marginBottom: 10 }}>
+          <ProgressBar value={s.active_job.progress ?? 0} max={100}/>
+          <div style={{ fontSize: 10, color: C.muted, marginTop: 4 }}>
+            {s.active_job.sent}/{s.active_job.total} URL
+          </div>
+        </div>
+      )}
+
+      {/* Row 2: Stats */}
+      <div style={{ display: "flex", gap: 12, marginBottom: 10, fontSize: 11 }}>
+        <div>
+          <span style={{ color: C.muted }}>Sitemap: </span>
+          <span style={{ color: C.white, fontWeight: 600 }}>
+            {(s.total_urls || 0).toLocaleString("uk-UA")}
+          </span>
+        </div>
+        <div>
+          <span style={{ color: C.muted }}>Відправлено: </span>
+          <span style={{ color: C.green, fontWeight: 700 }}>
+            {(s.indexed_total || 0).toLocaleString("uk-UA")}
+          </span>
+        </div>
+        <div style={{ marginLeft: "auto" }}>
+          <span style={{ color: C.muted, fontSize: 10 }}>
+            {s.last_run_at
+              ? new Date(s.last_run_at).toLocaleString("uk-UA", {
+                  day: "2-digit", month: "2-digit",
+                  hour: "2-digit", minute: "2-digit",
+                })
+              : "—"}
+          </span>
+        </div>
+      </div>
+
+      {/* Row 3: Actions */}
+      <div style={{ display: "flex", gap: 6 }}>
+        {!isPaused && (
+          <Btn variant="outline" onClick={handleRun}
+            disabled={remaining === 0 || isJobRunning}
+            title={remaining === 0 ? "Денний ліміт вичерпано" : "Запустити індексацію"}
+            style={{ padding: "6px 12px", fontSize: 12, flex: 1 }}>
+            ▶ Запуск
+          </Btn>
+        )}
+        <Btn
+          variant={isPaused ? "outline" : "ghost"}
+          onClick={handleToggle}
+          disabled={isJobRunning}
+          title={isJobRunning
+            ? "Дочекайтесь завершення індексації"
+            : isPaused ? "Активувати сайт" : "Призупинити сайт"}
+          style={{
+            padding: "6px 12px", fontSize: 12,
+            flex: isPaused ? 1 : undefined,
+            ...(isPaused ? { color: C.green, borderColor: "rgba(0,255,136,0.3)" } : {}),
+          }}>
+          {isPaused ? "▶ Активувати" : "⏸"}
+        </Btn>
+        <Btn variant="ghost" onClick={handleEdit} title="Редагувати сайт"
+          style={{ padding: "6px 12px", fontSize: 12 }}>
+          ✏
+        </Btn>
+        <Btn variant="danger" onClick={handleDelete} title="Видалити сайт"
+          style={{ padding: "6px 12px", fontSize: 12 }}>
+          ✕
+        </Btn>
+      </div>
+    </div>
+  );
+});
+
+/* ── Desktop table row (unchanged) ── */
 const SiteRow = memo(function SiteRow({ site: s, remaining, onRun, onDelete, onToggle, onEdit }) {
   // Прямі виклики замість useCallback — уникаємо stale closure
   const handleRun    = () => onRun(s);
