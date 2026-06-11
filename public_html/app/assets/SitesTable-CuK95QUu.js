@@ -1,4 +1,4 @@
-import{j as e}from"./vendor-query-BEUqgBPG.js";import{r as j}from"./vendor-router-nbMWPCiB.js";import{P as y,b,B as s}from"./App-DuEajJVK.js";import{C as i}from"./index-B5Y6J6J2.js";const v=`
+import{j as e}from"./vendor-query-BEUqgBPG.js";import{r as j}from"./vendor-router-nbMWPCiB.js";import{P as y,b,B as s}from"./App-BTdur3vj.js";import{C as i}from"./index-JKxGhsk5.js";const v=`
   @media (max-width: 640px) {
     .sites-table-wrap table { display: none; }
     .sites-mobile-list { display: flex !important; }
