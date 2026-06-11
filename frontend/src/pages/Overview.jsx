@@ -4,6 +4,26 @@ import { Badge, Btn, ProgressBar, Sparkline } from "../components/ui/index.jsx";
 import { SitesTable } from "../components/SitesTable.jsx";
 import { C } from "../constants.js";
 
+const OVERVIEW_MOBILE = `
+  @media (max-width: 640px) {
+    .ov-upgrade { flex-direction: column !important; align-items: flex-start !important; padding: 16px !important; gap: 12px !important; }
+    .ov-upgrade .ov-upgrade-btn { width: 100%; }
+    .ov-stats { grid-template-columns: repeat(2, 1fr) !important; gap: 10px !important; }
+    .ov-stats > div { padding: 14px 16px !important; border-radius: 12px !important; }
+    .ov-stats .ov-stat-value { font-size: 22px !important; }
+    .ov-mid { grid-template-columns: 1fr !important; gap: 12px !important; }
+    .ov-mid > div { padding: 18px !important; }
+    .ov-section-header { padding: 14px 16px !important; gap: 8px !important; }
+    .ov-section-header .ov-section-btn { padding: 6px 12px !important; font-size: 11px !important; }
+
+    .ov-log-row { gap: 8px !important; padding: 8px 12px !important; flex-wrap: wrap !important; }
+    .ov-log-url { font-size: 10px !important; width: calc(100% - 26px) !important; order: 1; }
+    .ov-log-icon { order: 0; }
+    .ov-log-meta { order: 2; width: 100%; display: flex !important; padding-left: 28px; gap: 8px; align-items: center; }
+    .ov-log-domain { display: none !important; }
+  }
+`;
+
 export default memo(function Overview({
   data, onAddSite, onRun, onDelete, onToggle, onGoLogs, onGoBilling,
 }) {
@@ -13,10 +33,11 @@ export default memo(function Overview({
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+      <style>{OVERVIEW_MOBILE}</style>
 
       {/* Upgrade banner */}
       {plan === "start" && (
-        <div style={{
+        <div className="ov-upgrade" style={{
           background: "linear-gradient(135deg,rgba(0,255,136,0.08),rgba(0,212,255,0.05))",
           border: "1px solid rgba(0,255,136,0.2)", borderRadius: 16,
           padding: "20px 24px", display: "flex", alignItems: "center", gap: 16, flexWrap: "wrap",
@@ -45,12 +66,12 @@ export default memo(function Overview({
               <span style={{ marginLeft: 6, color: "#00ff88", fontWeight: 700 }}>₴249/перший місяць</span>
             </div>
           </div>
-          <Btn variant="primary" onClick={onGoBilling}>Хочу PRO за ₴249 →</Btn>
+          <Btn className="ov-upgrade-btn" variant="primary" onClick={onGoBilling}>Хочу PRO за ₴249 →</Btn>
         </div>
       )}
 
       {/* Stat cards */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(180px,1fr))", gap: 16 }}>
+      <div className="ov-stats" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(180px,1fr))", gap: 16 }}>
         {[
           {
             label: "Сьогодні відправлено", value: today.sent,
@@ -84,7 +105,7 @@ export default memo(function Overview({
               fontSize: 10, fontWeight: 700, letterSpacing: "0.1em",
               textTransform: "uppercase", color: C.muted, marginBottom: 10
             }}>{label}</div>
-            <div style={{
+            <div className="ov-stat-value" style={{
               fontFamily: "Syne,sans-serif", fontSize: 28, fontWeight: 800,
               letterSpacing: "-0.04em", marginBottom: 6
             }}>{value}</div>
@@ -94,7 +115,7 @@ export default memo(function Overview({
       </div>
 
       {/* Графік + Ліміти */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 16 }}>
+      <div className="ov-mid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 16 }}>
         <div style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 16, padding: 24 }}>
           <div style={{ fontFamily: "Syne,sans-serif", fontWeight: 700, marginBottom: 4 }}>Активність за 30 днів</div>
           <div style={{ fontSize: 12, color: C.muted, marginBottom: 16 }}>
@@ -143,7 +164,7 @@ export default memo(function Overview({
 
       {/* Сайти */}
       <div style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 16, overflow: "hidden" }}>
-        <div style={{
+        <div className="ov-section-header" style={{
           display: "flex", alignItems: "center", justifyContent: "space-between",
           padding: "18px 20px", borderBottom: `1px solid ${C.border}`
         }}>
@@ -151,7 +172,7 @@ export default memo(function Overview({
             <div style={{ fontFamily: "Syne,sans-serif", fontWeight: 700 }}>Мої сайти</div>
             <div style={{ fontSize: 12, color: C.muted, marginTop: 2 }}>{sites.length} підключено</div>
           </div>
-          <Btn variant="outline" onClick={onAddSite} style={{ padding: "7px 16px", fontSize: 13 }}>
+          <Btn className="ov-section-btn" variant="outline" onClick={onAddSite} style={{ padding: "7px 16px", fontSize: 13 }}>
             + Додати сайт
           </Btn>
         </div>
@@ -160,7 +181,7 @@ export default memo(function Overview({
 
       {/* Логи — preview */}
       <div style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 16, overflow: "hidden" }}>
-        <div style={{
+        <div className="ov-section-header" style={{
           display: "flex", alignItems: "center", justifyContent: "space-between",
           padding: "18px 20px", borderBottom: `1px solid ${C.border}`
         }}>
@@ -170,7 +191,7 @@ export default memo(function Overview({
               Лог відправок у Google Indexing API
             </div>
           </div>
-          <Btn variant="ghost" onClick={onGoLogs} style={{ padding: "7px 14px", fontSize: 12 }}>
+          <Btn className="ov-section-btn" variant="ghost" onClick={onGoLogs} style={{ padding: "7px 14px", fontSize: 12 }}>
             Всі логи →
           </Btn>
         </div>
@@ -192,30 +213,37 @@ const LogPreview = memo(function LogPreview({ logs }) {
   return (
     <div>
       {logs.slice(0, 10).map((l, i) => (
-        <div key={i} style={{
+        <div key={i} className="ov-log-row" style={{
           display: "flex", alignItems: "center", gap: 12,
           padding: "10px 20px", borderBottom: `1px solid ${C.border}`, fontSize: 12
         }}
           onMouseEnter={e => e.currentTarget.style.background = "rgba(255,255,255,0.015)"}
           onMouseLeave={e => e.currentTarget.style.background = "transparent"}>
-          <span style={{ color: colors[l.status], fontWeight: 800, width: 16, textAlign: "center" }}>
+          <span className="ov-log-icon" style={{ color: colors[l.status], fontWeight: 800, width: 16,
+            textAlign: "center", flexShrink: 0 }}>
             {icons[l.status]}
           </span>
-          <span style={{
+          <span className="ov-log-url" style={{
             flex: 1, fontFamily: "ui-monospace,monospace", fontSize: 11,
-            color: C.white, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap"
+            color: C.white, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap",
+            minWidth: 0
           }}>
             {l.url}
           </span>
-          {l.domain && <span style={{ fontSize: 11, color: C.muted, flexShrink: 0 }}>{l.domain}</span>}
-          <span style={{
-            fontWeight: 700, fontSize: 10, color: colors[l.status], flexShrink: 0,
-            fontFamily: "Syne,sans-serif", letterSpacing: "0.05em"
-          }}>
-            {l.status === "ok" ? "OK 200" : l.http_status ? `ERR ${l.http_status}` : l.status.toUpperCase()}
-          </span>
-          <span style={{ color: C.muted, fontSize: 10, whiteSpace: "nowrap", flexShrink: 0 }}>
-            {new Date(l.created_at).toLocaleTimeString("uk-UA", { hour: "2-digit", minute: "2-digit" })}
+
+          <span className="ov-log-meta" style={{ display: "contents" }}>
+            {l.domain && <span className="ov-log-domain" style={{ fontSize: 11, color: C.muted,
+              flexShrink: 0 }}>{l.domain}</span>}
+            <span style={{
+              fontWeight: 700, fontSize: 10, color: colors[l.status], flexShrink: 0,
+              fontFamily: "Syne,sans-serif", letterSpacing: "0.05em"
+            }}>
+              {l.status === "ok" ? "OK 200" : l.http_status ? `ERR ${l.http_status}` : l.status.toUpperCase()}
+            </span>
+            <span style={{ color: C.muted, fontSize: 10, whiteSpace: "nowrap", flexShrink: 0,
+              marginLeft: "auto" }}>
+              {new Date(l.created_at).toLocaleTimeString("uk-UA", { hour: "2-digit", minute: "2-digit" })}
+            </span>
           </span>
         </div>
       ))}
