@@ -216,21 +216,35 @@ export const Sparkline = memo(function Sparkline({ data = [] }) {
   const line = `M${pts.map(p => p.join(",")).join("L")}`;
 
   return (
-    <svg viewBox={`0 0 ${W} ${H}`} style={{ width: "100%", height: 80, overflow: "visible" }}
-      preserveAspectRatio="none">
-      <defs>
-        <linearGradient id="sg" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%"   stopColor={C.green} stopOpacity="0.3"/>
-          <stop offset="100%" stopColor={C.green} stopOpacity="0"/>
-        </linearGradient>
-      </defs>
-      <path d={area} fill="url(#sg)"/>
-      <path d={line} fill="none" stroke={C.green} strokeWidth="1.5"
-        strokeLinecap="round" strokeLinejoin="round"/>
+    <div style={{ position: "relative", width: "100%", height: 80 }}>
+      <svg viewBox={`0 0 ${W} ${H}`} style={{ width: "100%", height: "100%", overflow: "visible", position: "absolute", inset: 0 }}
+        preserveAspectRatio="none">
+        <defs>
+          <linearGradient id="sg" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%"   stopColor={C.green} stopOpacity="0.3"/>
+            <stop offset="100%" stopColor={C.green} stopOpacity="0"/>
+          </linearGradient>
+        </defs>
+        <path d={area} fill="url(#sg)"/>
+        <path d={line} fill="none" stroke={C.green} strokeWidth="1.5"
+          strokeLinecap="round" strokeLinejoin="round" vectorEffect="non-scaling-stroke"/>
+      </svg>
       {pts.map(([x, y], i) => (
-        <circle key={i} cx={x} cy={y} r="2.5" fill={C.green} stroke={C.black} strokeWidth="1.5"/>
+        <div key={i} style={{
+          position: "absolute",
+          left: `${x}%`,
+          top: `${(y / H) * 100}%`,
+          width: 5,
+          height: 5,
+          background: C.green,
+          border: `1.5px solid ${C.black}`,
+          borderRadius: "50%",
+          transform: "translate(-50%, -50%)",
+          boxSizing: "content-box",
+          zIndex: 2
+        }}/>
       ))}
-    </svg>
+    </div>
   );
 });
 
