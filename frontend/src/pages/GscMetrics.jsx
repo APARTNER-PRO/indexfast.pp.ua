@@ -310,6 +310,7 @@ export default memo(function GscMetrics({ sites, onImportGsc }) {
   const [pageSort, setPageSort]   = useState({ key: "clicks", direction: "desc" });
   const [chartSiteId, setChartSiteId] = useState("all");
   const [activeTab, setActiveTab] = useState("overview");
+  const [searchDomain, setSearchDomain] = useState("");
 
   const siteIds = useMemo(() => sites.map(s => s.id), [sites]);
   const enabled = siteIds.length > 0;
@@ -344,16 +345,22 @@ export default memo(function GscMetrics({ sites, onImportGsc }) {
     missingRow: missing.find(m => m.site_id === site.id),
   })), [sites, metrics, missing]);
 
+  const filteredRows = useMemo(() => {
+    if (!searchDomain.trim()) return rows;
+    const lower = searchDomain.toLowerCase();
+    return rows.filter(r => r.site.domain.toLowerCase().includes(lower));
+  }, [rows, searchDomain]);
+
   const sortedRows = useMemo(() => {
     const dir = sort.direction === "asc" ? 1 : -1;
-    return [...rows].sort((a, b) => {
+    return [...filteredRows].sort((a, b) => {
       const av = sortValue(a, sort.key);
       const bv = sortValue(b, sort.key);
       if (typeof av === "string" || typeof bv === "string")
         return String(av).localeCompare(String(bv), "uk") * dir;
       return ((av ?? 0) - (bv ?? 0)) * dir;
     });
-  }, [rows, sort]);
+  }, [filteredRows, sort]);
 
   // ── Summary totals
   const totals = useMemo(() => sortedRows.reduce((acc, row) => {
@@ -608,6 +615,20 @@ export default memo(function GscMetrics({ sites, onImportGsc }) {
           </div>
 
           {/* ── Sites table ── */}
+          <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "center", marginBottom: 16, gap: 12 }}>
+            <h3 style={{ fontSize: 16, fontWeight: 700 }}>Статистика сайтів</h3>
+            <input 
+              type="text" 
+              placeholder="Пошук по домену..." 
+              value={searchDomain} 
+              onChange={e => setSearchDomain(e.target.value)}
+              style={{
+                background: "rgba(255,255,255,0.03)", border: `1px solid ${C.border}`,
+                color: C.white, borderRadius: 8, padding: "8px 14px", fontSize: 13,
+                outline: "none", width: "100%", maxWidth: 240
+              }}
+            />
+          </div>
           <div style={{ background: C.card, border: `1px solid ${C.border}`,
             borderRadius: 16, overflow: "hidden" }}>
             <div style={{ overflowX: "auto" }}>
