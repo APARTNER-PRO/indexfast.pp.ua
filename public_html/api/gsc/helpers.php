@@ -256,6 +256,10 @@ function gscMetricsForSites(int $uid, array $siteIds, int $days): array {
 
     if (!$sites) return ['metrics' => [], 'missing' => [], 'period_days' => $days];
 
+    require_once __DIR__ . '/cache.php';
+    $siteIdsFromDb = array_column($sites, 'id');
+    $cachedMetrics = gscGetCachedMetrics($uid, $siteIdsFromDb, $days);
+
     $token   = gscGetAccessToken($uid);
     $missing = [];
 
@@ -274,6 +278,12 @@ function gscMetricsForSites(int $uid, array $siteIds, int $days): array {
     $missingSet = [];
     foreach ($sites as $site) {
         $siteId = (int)$site['id'];
+        
+        // Якщо дані є в актуальному кеші, пропускаємо запит до GSC
+        if (isset($cachedMetrics[$siteId])) {
+            continue;
+        }
+
         $stored = $hasGscUrl ? ($site['gsc_url'] ?? null) : null;
 
         $resolvedUrl = null;
@@ -356,10 +366,10 @@ function gscMetricsForSites(int $uid, array $siteIds, int $days): array {
     }
     curl_multi_close($mh);
 
-    $metrics = [];
+    $metrics = $cachedMetrics; // Починаємо з кешованих даних
     foreach ($curData as $siteId => $cur) {
         $prev = $prevData[$siteId] ?? null;
-        $metrics[$siteId] = [
+        $freshMetric = [
             'clicks'           => $cur['clicks'],
             'impressions'      => $cur['impressions'],
             'ctr'              => $cur['ctr'],
@@ -371,6 +381,10 @@ function gscMetricsForSites(int $uid, array $siteIds, int $days): array {
             'period_days'      => $days,
             'updated_at'       => date('c'),
         ];
+        $metrics[$siteId] = $freshMetric;
+        
+        // Зберігаємо свіжі дані в кеш
+        gscSetCachedMetrics($uid, $siteId, $days, $freshMetric);
     }
 
     return ['metrics' => $metrics, 'missing' => $missing, 'period_days' => $days];
