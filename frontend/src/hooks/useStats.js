@@ -89,6 +89,16 @@ export function useGscPages(siteIds = [], days = 30, limit = 100, enabled = true
   });
 }
 
+export function useGscDevices(siteIds = [], days = 30, enabled = true) {
+  return useQuery({
+    queryKey: ["gsc-devices", siteIds, days],
+    queryFn:  () => apiClient.gscDevices(siteIds, days),
+    enabled:  enabled && siteIds.length > 0,
+    staleTime: 10 * 60_000,
+    retry: false,
+  });
+}
+
 // ── Мутація: додати сайт
 export function useAddSite() {
   const qc = useQueryClient();

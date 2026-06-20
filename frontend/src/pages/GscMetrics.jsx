@@ -1,7 +1,7 @@
 // src/pages/GscMetrics.jsx
 import { memo, useMemo, useState } from "react";
 import { Btn } from "../components/ui/index.jsx";
-import { useGscMetrics, useGscChart, useGscQueries, useGscPages } from "../hooks/useStats.js";
+import { useGscMetrics, useGscChart, useGscQueries, useGscPages, useGscDevices } from "../hooks/useStats.js";
 import { C } from "../constants.js";
 
 /* ─── Constants ─────────────────────────────────────── */
@@ -305,6 +305,7 @@ export default memo(function GscMetrics({ sites, onImportGsc }) {
   const chartQ = useGscChart(chartQueryIds, period, enabled && chartQueryIds.length > 0);
   const queriesQ = useGscQueries(chartQueryIds, period, 100, enabled && activeTab === "queries" && chartQueryIds.length > 0);
   const pagesQ = useGscPages(chartQueryIds, period, 100, enabled && activeTab === "pages" && chartQueryIds.length > 0);
+  const devicesQ = useGscDevices(chartQueryIds, period, enabled && activeTab === "overview" && chartQueryIds.length > 0);
 
   const metrics = tableQ.data?.metrics ?? {};
   const missing = tableQ.data?.missing ?? [];
@@ -508,38 +509,80 @@ export default memo(function GscMetrics({ sites, onImportGsc }) {
             ))}
           </div>
 
-          {/* ── Chart block ── */}
-          <div style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 16,
-            padding: "20px 20px 12px", marginBottom: 20 }}>
-            {chartQ.isLoading ? (
-              <div style={{ height: CHART_H, display: "flex", alignItems: "center",
-                justifyContent: "center", color: C.muted, fontSize: 13 }}>
-                Завантажуємо дані графіку…
-              </div>
-            ) : chartQ.error ? (
-              <div style={{ height: CHART_H, display: "flex", alignItems: "center", flexDirection: "column", gap: 8,
-                justifyContent: "center", color: C.red, fontSize: 13 }}>
-                <div>Помилка завантаження графіку</div>
-                <div style={{ opacity: 0.6, fontSize: 11, maxWidth: "80%", textAlign: "center" }}>
-                  {chartQ.error.message}
+          {/* ── Charts Grid ── */}
+          <div className="gsc-charts-grid" style={{ display: "grid", gridTemplateColumns: "1fr 280px", gap: 20, marginBottom: 20 }}>
+            {/* ── Chart block ── */}
+            <div style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 16,
+              padding: "20px 20px 12px" }}>
+              {chartQ.isLoading ? (
+                <div style={{ height: CHART_H, display: "flex", alignItems: "center",
+                  justifyContent: "center", color: C.muted, fontSize: 13 }}>
+                  Завантажуємо дані графіку…
                 </div>
-              </div>
-            ) : currentData.length === 0 ? (
-              <div style={{ height: CHART_H, display: "flex", alignItems: "center",
-                justifyContent: "center", color: C.muted, fontSize: 13 }}>
-                Немає даних для графіку
-              </div>
-            ) : (
-              <>
-                <LineChart
-                  currentData={currentData}
-                  previousData={previousData}
-                  metricKey={activeMetric}
-                  color={metricCfg.color}
-                />
-                <ChartLegend color={metricCfg.color} />
-              </>
-            )}
+              ) : chartQ.error ? (
+                <div style={{ height: CHART_H, display: "flex", alignItems: "center", flexDirection: "column", gap: 8,
+                  justifyContent: "center", color: C.red, fontSize: 13 }}>
+                  <div>Помилка завантаження графіку</div>
+                  <div style={{ opacity: 0.6, fontSize: 11, maxWidth: "80%", textAlign: "center" }}>
+                    {chartQ.error.message}
+                  </div>
+                </div>
+              ) : currentData.length === 0 ? (
+                <div style={{ height: CHART_H, display: "flex", alignItems: "center",
+                  justifyContent: "center", color: C.muted, fontSize: 13 }}>
+                  Немає даних для графіку
+                </div>
+              ) : (
+                <>
+                  <LineChart
+                    currentData={currentData}
+                    previousData={previousData}
+                    metricKey={activeMetric}
+                    color={metricCfg.color}
+                  />
+                  <ChartLegend color={metricCfg.color} />
+                </>
+              )}
+            </div>
+
+            {/* ── Devices block ── */}
+            <div style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 16, padding: "20px" }}>
+              <div style={{ fontSize: 13, fontWeight: 800, color: C.white, marginBottom: 16, textTransform: "uppercase", letterSpacing: "0.05em" }}>Пристрої (Кліки)</div>
+              {devicesQ.isLoading ? (
+                <div style={{ color: C.muted, fontSize: 12, textAlign: "center", marginTop: 40 }}>Завантаження...</div>
+              ) : devicesQ.error ? (
+                <div style={{ color: C.red, fontSize: 12, textAlign: "center", marginTop: 40 }}>Помилка</div>
+              ) : !devicesQ.data?.devices?.length ? (
+                <div style={{ color: C.muted, fontSize: 12, textAlign: "center", marginTop: 40 }}>Немає даних</div>
+              ) : (
+                <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+                  {devicesQ.data.devices.map(d => {
+                    const maxClicks = Math.max(...devicesQ.data.devices.map(x => x.clicks));
+                    const pct = maxClicks > 0 ? (d.clicks / maxClicks) * 100 : 0;
+                    const isMobile = d.device === "MOBILE";
+                    const isTablet = d.device === "TABLET";
+                    const devColor = isMobile ? "#ff6b9d" : isTablet ? "#ffd060" : "#5b8cff";
+                    const label = isMobile ? "Мобільні" : isTablet ? "Планшети" : "ПК";
+                    
+                    return (
+                      <div key={d.device}>
+                        <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12, marginBottom: 6 }}>
+                          <span style={{ color: C.muted, fontWeight: 600 }}>{label}</span>
+                          <span style={{ fontWeight: 800, color: C.white }}>{fmtMetric(d.clicks)}</span>
+                        </div>
+                        <div style={{ background: "rgba(255,255,255,0.05)", height: 8, borderRadius: 4, overflow: "hidden" }}>
+                          <div style={{ width: `${pct}%`, height: "100%", background: devColor, borderRadius: 4, transition: "width 0.5s ease-out" }} />
+                        </div>
+                        <div style={{ display: "flex", justifyContent: "space-between", fontSize: 10, marginTop: 4, color: "rgba(255,255,255,0.3)" }}>
+                          <span>CTR: {fmtCtr(d.ctr)}</span>
+                          <span>Поз: {fmtPos(d.position)}</span>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
           </div>
 
           {/* ── Sites table ── */}
@@ -737,6 +780,7 @@ export default memo(function GscMetrics({ sites, onImportGsc }) {
           .gsc-period-btns::-webkit-scrollbar { display: none; }
           .gsc-period-btns button { white-space: nowrap; }
           .gsc-metrics-cards { grid-template-columns: 1fr 1fr !important; gap: 8px !important; }
+          .gsc-charts-grid { grid-template-columns: 1fr !important; }
         }
       `}</style>
     </div>
