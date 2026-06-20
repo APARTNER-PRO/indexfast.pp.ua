@@ -16,7 +16,7 @@ if (!$siteId) respond(422, 'site_id обов\'язковий');
 
 // Перевірка що сайт належить юзеру
 $site = DB::row(
-    "SELECT id, domain, sitemap_url, status FROM sites WHERE id=? AND user_id=?",
+    "SELECT id, domain, sitemap_url, status, indexnow_key FROM sites WHERE id=? AND user_id=?",
     [$siteId, $uid]
 );
 if (!$site) respond(404, 'Сайт не знайдено');
@@ -67,6 +67,18 @@ if (isset($body['gsc_url'])) {
 if (isset($body['status']) && in_array($body['status'], ['active', 'paused'], true)) {
     $updates[] = "status=?";
     $params[]  = $body['status'];
+}
+
+// ── IndexNow
+if (isset($body['indexnow_enabled'])) {
+    $updates[] = "indexnow_enabled=?";
+    $params[]  = $body['indexnow_enabled'] ? 1 : 0;
+    
+    // Якщо ключа немає — генеруємо на льоту
+    if (empty($site['indexnow_key'])) {
+        $updates[] = "indexnow_key=?";
+        $params[]  = bin2hex(random_bytes(16));
+    }
 }
 
 // Застосовуємо зміни в sites

@@ -128,6 +128,19 @@ function processOneJob(array $job) {
         DB::exec("UPDATE sites SET indexed_total=indexed_total+?, last_run_at=NOW() WHERE id=?", [$sent, $siteId]);
     }
     echo "   Done: Sent: {$sent}, Failed: {$failed}\n";
+
+    // ── Відправка в IndexNow паралельно
+    if (defined('INDEXNOW_ENABLED') && INDEXNOW_ENABLED) {
+        $site = DB::row("SELECT domain, indexnow_key, indexnow_enabled FROM sites WHERE id=?", [$siteId]);
+        if ($site && !empty($site['indexnow_enabled']) && !empty($site['indexnow_key'])) {
+            $inRes = sendToIndexNow($urls, $site['domain'], $site['indexnow_key']);
+            if ($inRes['ok']) {
+                echo "   IndexNow: Sent {$inRes['count']} URLs (Code: {$inRes['code']})\n";
+            } else {
+                echo "   IndexNow: Failed (Code: {$inRes['code']})\n";
+            }
+        }
+    }
 }
 
 function getGoogleToken(array $key) {
@@ -178,4 +191,31 @@ function sendToGoogle(array $urls, string $token) {
     }
     curl_multi_close($mh);
     return $results;
+}
+
+function sendToIndexNow(array $urls, string $host, string $key): array {
+    if (empty($urls)) return ['ok' => false, 'code' => 0, 'count' => 0];
+    
+    // Можна відправляти до 10,000 URL за раз
+    $payload = [
+        'host' => $host,
+        'key'  => $key,
+        'keyLocation' => "https://{$host}/{$key}.txt",
+        'urlList' => array_values($urls) // IndexNow очікує звичайний масив
+    ];
+
+    $ch = curl_init('https://api.indexnow.org/indexnow');
+    curl_setopt_array($ch, [
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_POST => true,
+        CURLOPT_POSTFIELDS => json_encode($payload),
+        CURLOPT_HTTPHEADER => ['Content-Type: application/json; charset=utf-8'],
+        CURLOPT_TIMEOUT => 15
+    ]);
+
+    $resp = curl_exec($ch);
+    $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    curl_close($ch);
+
+    return ['ok' => in_array($code, [200, 202]), 'code' => $code, 'count' => count($urls)];
 }

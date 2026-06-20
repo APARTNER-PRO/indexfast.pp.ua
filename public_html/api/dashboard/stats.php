@@ -46,7 +46,7 @@ $sites = [];
 try {
     $sites = DB::all(
         "SELECT id, domain, sitemap_url, status, error_message,
-                total_urls, indexed_total, last_run_at" . ($hasGscUrl ? ', gsc_url' : '') . "
+                total_urls, indexed_total, last_run_at, indexnow_key, indexnow_enabled" . ($hasGscUrl ? ', gsc_url' : '') . "
          FROM sites WHERE user_id = ? ORDER BY created_at DESC",
         [$uid]
     );
@@ -159,6 +159,8 @@ respondOk('OK', [
         'total_urls'    => (int)$s['total_urls'],
         'indexed_total' => (int)$s['indexed_total'],
         'last_run_at'   => $s['last_run_at'],
+        'indexnow_key'  => $s['indexnow_key'] ?? null,
+        'indexnow_enabled' => !empty($s['indexnow_enabled']),
         'has_sa'        => isset($sitesHasSa[$s['id']]),
         'gsc_url'       => $hasGscUrl ? ($s['gsc_url'] ?? null) : null,
         'active_job'    => isset($activeJobs[$s['id']]) ? [
