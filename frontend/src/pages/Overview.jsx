@@ -1,7 +1,8 @@
 // src/pages/Overview.jsx  ← окремий chunk
-import { memo, useCallback } from "react";
+import { memo, useCallback, useState } from "react";
 import { Badge, Btn, ProgressBar, Sparkline } from "../components/ui/index.jsx";
 import { SitesTable } from "../components/SitesTable.jsx";
+import { EditSiteModal } from "../components/EditSiteModal.jsx";
 import { useGscMetrics } from "../hooks/useStats.js";
 import { C } from "../constants.js";
 
@@ -28,6 +29,7 @@ const OVERVIEW_MOBILE = `
 export default memo(function Overview({
   data, onAddSite, onRun, onDelete, onToggle, onGoLogs, onGoBilling, onImportGsc,
 }) {
+  const [editSite, setEditSite] = useState(null);
   const { user, today, month, sites, sites_limit, logs, chart } = data;
   const plan = user.plan;
   const remaining = today.remaining;
@@ -185,6 +187,7 @@ export default memo(function Overview({
           onRun={onRun}
           onDelete={onDelete}
           onToggle={onToggle}
+          onEdit={setEditSite}
           gscMetrics={gscMetrics.data?.metrics ?? {}}
           gscLoading={gscMetrics.isLoading}
           gscError={gscMetrics.error}
@@ -210,6 +213,12 @@ export default memo(function Overview({
         </div>
         <LogPreview logs={logs} />
       </div>
+
+      <EditSiteModal
+        open={!!editSite}
+        onClose={() => setEditSite(null)}
+        site={editSite}
+      />
     </div>
   );
 });

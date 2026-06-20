@@ -12,9 +12,10 @@ export const EditSiteModal = memo(function EditSiteModal({
   const [domain,  setDomain]  = useState("");
   const [sitemap, setSitemap] = useState("");
   const [sa,      setSa]      = useState("");
+  const [indexnowEnabled, setIndexnowEnabled] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error,   setError]   = useState("");
-  const [tab,     setTab]     = useState("info"); // info | sa
+  const [tab,     setTab]     = useState("info"); // info | sa | indexnow
 
   const qc = useQueryClient();
 
@@ -24,6 +25,7 @@ export const EditSiteModal = memo(function EditSiteModal({
       setDomain(site.domain ?? "");
       setSitemap(site.sitemap_url ?? "");
       setSa("");
+      setIndexnowEnabled(site.indexnow_enabled ?? false);
       setError("");
       setTab(site.has_sa === false ? "sa" : "info"); // якщо немає SA — одразу на вкладку SA
     }
@@ -59,6 +61,7 @@ export const EditSiteModal = memo(function EditSiteModal({
         site_id:     site.id,
         domain:      trimDomain,
         sitemap_url: trimSitemap,
+        indexnow_enabled: indexnowEnabled,
       };
       if (trimSa) body.service_account = trimSa;
 
@@ -89,6 +92,7 @@ export const EditSiteModal = memo(function EditSiteModal({
         {[
           { id: "info", label: "🌐 Основне" },
           { id: "sa",   label: hasSa ? "🔑 Service Account" : "⚠ Додати SA" },
+          { id: "indexnow", label: "🚀 IndexNow" },
         ].map(t => (
           <button key={t.id} onClick={() => setTab(t.id)}
             style={{ flex: 1, padding: "8px 12px", border: "none",
@@ -166,6 +170,45 @@ export const EditSiteModal = memo(function EditSiteModal({
                 ✕ Невалідний JSON</p>;
             }
           })()}
+        </>
+      )}
+
+      {/* Вкладка: IndexNow */}
+      {tab === "indexnow" && (
+        <>
+          <div style={{ background: "rgba(0,212,255,0.06)", border: "1px solid rgba(0,212,255,0.15)",
+            borderRadius: 10, padding: "12px 16px", marginBottom: 16, fontSize: 13, color: "#c8c8d8" }}>
+            <p style={{ margin: "0 0 8px 0" }}>
+              <strong style={{ color: "#00d4ff" }}>IndexNow</strong> дозволяє миттєво відправляти URL у Bing, Yandex, Seznam та DuckDuckGo. Це працює паралельно з Google Indexing API.
+            </p>
+            {site.indexnow_key && (
+              <div style={{ marginTop: 12 }}>
+                <div style={{ fontSize: 11, color: C.muted, marginBottom: 4 }}>Ваш ключ верифікації:</div>
+                <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+                  <code style={{ background: "rgba(255,255,255,0.05)", padding: "4px 8px", borderRadius: 4, color: "#fff" }}>
+                    {site.indexnow_key}
+                  </code>
+                </div>
+                <p style={{ marginTop: 12, fontSize: 12, color: C.muted }}>
+                  1. Створіть файл <strong>{site.indexnow_key}.txt</strong><br/>
+                  2. Вставте в нього ваш ключ: <strong>{site.indexnow_key}</strong><br/>
+                  3. Завантажте файл у корінь вашого сайту: <strong>https://{site.domain}/{site.indexnow_key}.txt</strong>
+                </p>
+              </div>
+            )}
+          </div>
+
+          <label style={{ display: "flex", alignItems: "center", gap: 10, cursor: "pointer",
+            background: "rgba(255,255,255,0.02)", padding: "12px 16px", borderRadius: 10,
+            border: `1px solid ${C.border}` }}>
+            <input type="checkbox" checked={indexnowEnabled}
+              onChange={e => setIndexnowEnabled(e.target.checked)}
+              style={{ width: 16, height: 16, accentColor: C.green }} />
+            <div>
+              <div style={{ fontSize: 14, fontWeight: 600 }}>Увімкнути IndexNow</div>
+              <div style={{ fontSize: 12, color: C.muted }}>Відправляти URL у Bing при запуску індексації</div>
+            </div>
+          </label>
         </>
       )}
 
