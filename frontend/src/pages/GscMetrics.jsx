@@ -1,40 +1,278 @@
 // src/pages/GscMetrics.jsx
 import { memo, useMemo, useState } from "react";
 import { Btn } from "../components/ui/index.jsx";
-import { useGscMetrics } from "../hooks/useStats.js";
+import { useGscMetrics, useGscChart } from "../hooks/useStats.js";
 import { C } from "../constants.js";
 
+/* ─── Constants ─────────────────────────────────────── */
 const PERIODS = [
+  { label: "7 днів",   days: 7  },
   { label: "1 місяць", days: 30 },
   { label: "2 місяці", days: 60 },
   { label: "3 місяці", days: 90 },
 ];
 
-function fmtMetric(value) {
-  if (value === undefined || value === null || Number.isNaN(value)) return "—";
-  return Number(value).toLocaleString("uk-UA");
+const METRICS = [
+  { key: "clicks",      label: "Кліки",       color: "#00ff88", fmt: fmtMetric  },
+  { key: "impressions", label: "Покази",       color: "#5b8cff", fmt: fmtMetric  },
+  { key: "ctr",         label: "CTR",          color: "#ffd060", fmt: fmtCtr     },
+  { key: "position",    label: "Позиція",      color: "#ff6b9d", fmt: fmtPos     },
+];
+
+/* ─── Formatters ─────────────────────────────────────── */
+function fmtMetric(v) {
+  if (v == null || isNaN(v)) return "—";
+  return Number(v).toLocaleString("uk-UA");
+}
+function fmtCtr(v) {
+  if (v == null || isNaN(v)) return "—";
+  return `${(Number(v) * 100).toFixed(1)}%`;
+}
+function fmtPos(v) {
+  if (v == null || isNaN(v)) return "—";
+  return Number(v).toFixed(1);
+}
+function fmtDate(v) {
+  if (!v) return "—";
+  return new Date(v).toLocaleString("uk-UA", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" });
+}
+function fmtShortDate(dateStr) {
+  const d = new Date(dateStr);
+  return d.toLocaleString("uk-UA", { day: "2-digit", month: "2-digit" });
 }
 
-function fmtCtr(value) {
-  if (value === undefined || value === null || Number.isNaN(value)) return "—";
-  return `${(Number(value) * 100).toFixed(1)}%`;
+/* ─── Trend badge ────────────────────────────────────── */
+function TrendBadge({ current, previous, metricKey }) {
+  if (!previous || previous === 0) return null;
+  const delta = current - previous;
+  const pct   = Math.abs(Math.round((delta / previous) * 100));
+  if (pct === 0) return null;
+  // For position: lower is better → invert colour
+  const isPos  = metricKey === "position";
+  const isGood = isPos ? delta < 0 : delta > 0;
+  const color  = isGood ? C.green : "#ff4d6d";
+  const arrow  = delta > 0 ? "↑" : "↓";
+  return (
+    <span style={{ fontSize: 11, fontWeight: 700, color, marginLeft: 6 }}>
+      {arrow}{pct}%
+    </span>
+  );
 }
 
-function fmtPosition(value) {
-  if (value === undefined || value === null || Number.isNaN(value)) return "—";
-  return Number(value).toFixed(2);
+/* ─── SVG Line Chart ─────────────────────────────────── */
+const CHART_H = 200;
+const CHART_PAD = { top: 16, bottom: 32, left: 48, right: 16 };
+
+function LineChart({ currentData, previousData, metricKey, color }) {
+  const [tooltip, setTooltip] = useState(null);
+
+  const allVals = [
+    ...currentData.map(d => d[metricKey]),
+    ...previousData.map(d => d[metricKey]),
+  ].filter(v => v != null && !isNaN(v));
+
+  const minV = Math.min(0, ...allVals);
+  const maxV = Math.max(1, ...allVals);
+  const range = maxV - minV || 1;
+
+  const fmt   = METRICS.find(m => m.key === metricKey)?.fmt ?? fmtMetric;
+  const n     = Math.max(currentData.length, 1);
+
+  // Responsive width via viewBox
+  const VW = 800;
+  const innerW = VW - CHART_PAD.left - CHART_PAD.right;
+  const innerH = CHART_H - CHART_PAD.top - CHART_PAD.bottom;
+
+  const xOf = (i, total) => CHART_PAD.left + (total <= 1 ? innerW / 2 : (i / (total - 1)) * innerW);
+  const yOf = (v) => CHART_PAD.top + innerH - ((v - minV) / range) * innerH;
+
+  const toPath = (data) => {
+    if (!data.length) return "";
+    return data.map((d, i) => {
+      const x = xOf(i, data.length);
+      const y = yOf(d[metricKey] ?? 0);
+      return `${i === 0 ? "M" : "L"} ${x.toFixed(1)} ${y.toFixed(1)}`;
+    }).join(" ");
+  };
+
+  const toArea = (data) => {
+    if (!data.length) return "";
+    const base = yOf(minV);
+    const pts  = data.map((d, i) => `${xOf(i, data.length).toFixed(1)},${yOf(d[metricKey] ?? 0).toFixed(1)}`);
+    return `M ${xOf(0, data.length).toFixed(1)},${base} ` +
+           `L ${pts.join(" L ")} ` +
+           `L ${xOf(data.length - 1, data.length).toFixed(1)},${base} Z`;
+  };
+
+  // Y-axis ticks
+  const ticks = 4;
+  const yTicks = Array.from({ length: ticks + 1 }, (_, i) => minV + (range / ticks) * i);
+
+  // X-axis labels — show ~6 evenly spaced
+  const xLabelCount = Math.min(6, currentData.length);
+  const xLabelIdxs  = xLabelCount <= 1
+    ? [0]
+    : Array.from({ length: xLabelCount }, (_, i) =>
+        Math.round(i * (currentData.length - 1) / (xLabelCount - 1)));
+
+  const gradId = `g-${metricKey}`;
+  const prevGradId = `gp-${metricKey}`;
+
+  return (
+    <div style={{ position: "relative", userSelect: "none" }}
+      onMouseLeave={() => setTooltip(null)}>
+      <svg
+        viewBox={`0 0 ${VW} ${CHART_H}`}
+        style={{ width: "100%", height: CHART_H, display: "block", overflow: "visible" }}
+        onMouseMove={(e) => {
+          const rect = e.currentTarget.getBoundingClientRect();
+          const svgX = ((e.clientX - rect.left) / rect.width) * VW;
+          const relX = svgX - CHART_PAD.left;
+          if (relX < 0 || relX > innerW || !currentData.length) return;
+          const idx = Math.round((relX / innerW) * (currentData.length - 1));
+          const clamped = Math.max(0, Math.min(currentData.length - 1, idx));
+          setTooltip({
+            idx: clamped,
+            x: xOf(clamped, currentData.length),
+            cur: currentData[clamped],
+            prev: previousData[clamped] ?? null,
+          });
+        }}>
+        <defs>
+          <linearGradient id={gradId} x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor={color} stopOpacity="0.25" />
+            <stop offset="100%" stopColor={color} stopOpacity="0" />
+          </linearGradient>
+          <linearGradient id={prevGradId} x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor={color} stopOpacity="0.08" />
+            <stop offset="100%" stopColor={color} stopOpacity="0" />
+          </linearGradient>
+        </defs>
+
+        {/* Grid lines */}
+        {yTicks.map((tick, i) => (
+          <g key={i}>
+            <line
+              x1={CHART_PAD.left} y1={yOf(tick)}
+              x2={VW - CHART_PAD.right} y2={yOf(tick)}
+              stroke="rgba(255,255,255,0.06)" strokeWidth="1"
+            />
+            <text
+              x={CHART_PAD.left - 6} y={yOf(tick) + 4}
+              textAnchor="end" fontSize="10" fill="rgba(255,255,255,0.35)">
+              {fmt(tick)}
+            </text>
+          </g>
+        ))}
+
+        {/* X-axis labels */}
+        {xLabelIdxs.map(i => (
+          <text key={i}
+            x={xOf(i, currentData.length)}
+            y={CHART_H - 4}
+            textAnchor="middle" fontSize="10" fill="rgba(255,255,255,0.35)">
+            {currentData[i] ? fmtShortDate(currentData[i].date) : ""}
+          </text>
+        ))}
+
+        {/* Previous period area + line */}
+        {previousData.length > 0 && (
+          <>
+            <path d={toArea(previousData)} fill={`url(#${prevGradId})`} />
+            <path d={toPath(previousData)}
+              fill="none" stroke={color} strokeWidth="1.5"
+              strokeDasharray="4 3" strokeOpacity="0.4" />
+          </>
+        )}
+
+        {/* Current period area + line */}
+        {currentData.length > 0 && (
+          <>
+            <path d={toArea(currentData)} fill={`url(#${gradId})`} />
+            <path d={toPath(currentData)}
+              fill="none" stroke={color} strokeWidth="2"
+              strokeLinecap="round" strokeLinejoin="round" />
+          </>
+        )}
+
+        {/* Tooltip vertical line & dots */}
+        {tooltip && (
+          <g>
+            <line
+              x1={tooltip.x} y1={CHART_PAD.top}
+              x2={tooltip.x} y2={CHART_H - CHART_PAD.bottom}
+              stroke="rgba(255,255,255,0.2)" strokeWidth="1" strokeDasharray="3 3" />
+            {tooltip.cur && (
+              <circle
+                cx={tooltip.x}
+                cy={yOf(tooltip.cur[metricKey] ?? 0)}
+                r="5" fill={color} stroke="#1a1d2e" strokeWidth="2" />
+            )}
+            {tooltip.prev && (
+              <circle
+                cx={tooltip.x}
+                cy={yOf(tooltip.prev[metricKey] ?? 0)}
+                r="4" fill="none" stroke={color} strokeWidth="1.5" strokeOpacity="0.6" />
+            )}
+          </g>
+        )}
+      </svg>
+
+      {/* Tooltip popup */}
+      {tooltip?.cur && (
+        <div style={{
+          position: "absolute", top: 8,
+          left: tooltip.x / 800 * 100 + "%",
+          transform: tooltip.x > 600 ? "translateX(-110%)" : "translateX(8px)",
+          background: "rgba(20,22,35,0.97)",
+          border: `1px solid ${color}40`,
+          borderRadius: 10, padding: "8px 12px",
+          fontSize: 12, pointerEvents: "none", whiteSpace: "nowrap",
+          boxShadow: `0 4px 20px rgba(0,0,0,0.4)`,
+          zIndex: 10,
+        }}>
+          <div style={{ color: "rgba(255,255,255,0.5)", marginBottom: 4, fontSize: 10 }}>
+            {fmtShortDate(tooltip.cur.date)}
+          </div>
+          <div style={{ display: "flex", gap: 16 }}>
+            <div>
+              <div style={{ color: "rgba(255,255,255,0.4)", fontSize: 9, marginBottom: 2 }}>Поточний</div>
+              <div style={{ color, fontWeight: 800 }}>{fmt(tooltip.cur[metricKey])}</div>
+            </div>
+            {tooltip.prev && (
+              <div>
+                <div style={{ color: "rgba(255,255,255,0.4)", fontSize: 9, marginBottom: 2 }}>Попередній</div>
+                <div style={{ color: "rgba(255,255,255,0.45)", fontWeight: 700 }}>
+                  {fmt(tooltip.prev[metricKey])}
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+    </div>
+  );
 }
 
-function fmtDate(value) {
-  if (!value) return "—";
-  return new Date(value).toLocaleString("uk-UA", {
-    day: "2-digit",
-    month: "2-digit",
-    hour: "2-digit",
-    minute: "2-digit",
-  });
+/* ─── Chart legend ───────────────────────────────────── */
+function ChartLegend({ color }) {
+  return (
+    <div style={{ display: "flex", gap: 16, fontSize: 11, color: "rgba(255,255,255,0.45)", marginTop: 8 }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+        <svg width="20" height="2"><line x1="0" y1="1" x2="20" y2="1" stroke={color} strokeWidth="2"/></svg>
+        Поточний period
+      </div>
+      <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+        <svg width="20" height="2">
+          <line x1="0" y1="1" x2="20" y2="1" stroke={color} strokeWidth="1.5" strokeDasharray="4 3" strokeOpacity="0.5"/>
+        </svg>
+        Попередній period
+      </div>
+    </div>
+  );
 }
 
+/* ─── Sort helper ────────────────────────────────────── */
 function sortValue(row, key) {
   const m = row.metric;
   if (key === "domain") return row.site.domain;
@@ -44,55 +282,90 @@ function sortValue(row, key) {
   return m[key] ?? 0;
 }
 
+/* ─── Main component ─────────────────────────────────── */
 export default memo(function GscMetrics({ sites, onImportGsc }) {
-  const [period, setPeriod] = useState(30);
-  const [sort, setSort] = useState({ key: "clicks", direction: "desc" });
-  const siteIds = sites.map(s => s.id);
-  const query = useGscMetrics(siteIds, period, siteIds.length > 0);
-  const metrics = query.data?.metrics ?? {};
-  const missing = query.data?.missing ?? [];
+  const [period, setPeriod]     = useState(30);
+  const [activeMetric, setActiveMetric] = useState("clicks");
+  const [sort, setSort]         = useState({ key: "clicks", direction: "desc" });
+  const [chartSiteId, setChartSiteId] = useState("all");
 
-  const rows = useMemo(() => sites.map(site => {
-    const metric = metrics[site.id] ?? null;
-    const missingRow = missing.find(m => m.site_id === site.id);
-    return { site, metric, missingRow };
-  }), [sites, metrics, missing]);
+  const siteIds = useMemo(() => sites.map(s => s.id), [sites]);
+  const enabled = siteIds.length > 0;
+
+  // Table query uses ALL sites
+  const tableQ = useGscMetrics(siteIds, period, enabled);
+  
+  // Chart query uses ONLY selected site(s)
+  const chartQueryIds = useMemo(() => {
+    if (chartSiteId === "all") return siteIds;
+    return [Number(chartSiteId)];
+  }, [chartSiteId, siteIds]);
+  
+  const chartQ = useGscChart(chartQueryIds, period, enabled && chartQueryIds.length > 0);
+
+  const metrics = tableQ.data?.metrics ?? {};
+  const missing = tableQ.data?.missing ?? [];
+
+  const currentData  = chartQ.data?.current  ?? [];
+  const previousData = chartQ.data?.previous ?? [];
+
+  const metricCfg = METRICS.find(m => m.key === activeMetric);
+
+  // ── Table rows
+  const rows = useMemo(() => sites.map(site => ({
+    site,
+    metric:     metrics[site.id] ?? null,
+    missingRow: missing.find(m => m.site_id === site.id),
+  })), [sites, metrics, missing]);
 
   const sortedRows = useMemo(() => {
     const dir = sort.direction === "asc" ? 1 : -1;
     return [...rows].sort((a, b) => {
       const av = sortValue(a, sort.key);
       const bv = sortValue(b, sort.key);
-      if (typeof av === "string" || typeof bv === "string") {
+      if (typeof av === "string" || typeof bv === "string")
         return String(av).localeCompare(String(bv), "uk") * dir;
-      }
       return ((av ?? 0) - (bv ?? 0)) * dir;
     });
   }, [rows, sort]);
 
+  // ── Summary totals
   const totals = useMemo(() => sortedRows.reduce((acc, row) => {
     const m = row.metric;
     if (!m) return acc;
-    acc.clicks += Number(m.clicks || 0);
+    acc.clicks      += Number(m.clicks      || 0);
     acc.impressions += Number(m.impressions || 0);
-    acc.positionSum += Number(m.position || 0);
-    acc.counted += 1;
+    acc.positionSum += Number(m.position    || 0);
+    acc.counted     += 1;
     return acc;
   }, { clicks: 0, impressions: 0, positionSum: 0, counted: 0 }), [sortedRows]);
 
   const avgPosition = totals.counted ? totals.positionSum / totals.counted : 0;
-  const ctr = totals.impressions ? (totals.clicks / totals.impressions) : 0;
+  const ctr         = totals.impressions ? totals.clicks / totals.impressions : 0;
 
-  const changeSort = (key) => {
-    setSort(prev => prev.key === key
+  // ── Previous period totals from chart data
+  const prevTotals = useMemo(() => {
+    if (!previousData.length) return null;
+    return previousData.reduce((acc, d) => ({
+      clicks:      acc.clicks      + (d.clicks      ?? 0),
+      impressions: acc.impressions + (d.impressions  ?? 0),
+      posSum:      acc.posSum      + (d.position     ?? 0),
+      count:       acc.count       + 1,
+    }), { clicks: 0, impressions: 0, posSum: 0, count: 0 });
+  }, [previousData]);
+  const prevAvgPos = prevTotals?.count ? prevTotals.posSum / prevTotals.count : 0;
+  const prevCtr    = prevTotals?.impressions ? prevTotals.clicks / prevTotals.impressions : 0;
+
+  const changeSort = (key) => setSort(prev =>
+    prev.key === key
       ? { key, direction: prev.direction === "asc" ? "desc" : "asc" }
-      : { key, direction: key === "domain" || key === "gsc_url" ? "asc" : "desc" });
-  };
-
+      : { key, direction: key === "domain" || key === "gsc_url" ? "asc" : "desc" }
+  );
   const sortIcon = (key) => sort.key === key ? (sort.direction === "asc" ? "↑" : "↓") : "↕";
 
   return (
     <div>
+      {/* ── Header ── */}
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between",
         marginBottom: 20, gap: 12, flexWrap: "wrap" }}>
         <div>
@@ -110,86 +383,196 @@ export default memo(function GscMetrics({ sites, onImportGsc }) {
         )}
       </div>
 
-      <div style={{ display: "flex", gap: 8, marginBottom: 16, flexWrap: "wrap" }}>
+      {/* ── Period selector ── */}
+      <div style={{ display: "flex", gap: 8, marginBottom: 20, flexWrap: "wrap" }}>
         {PERIODS.map(p => (
           <button key={p.days} onClick={() => setPeriod(p.days)}
-            style={{ border: `1px solid ${period === p.days ? "rgba(0,255,136,0.55)" : C.border}`,
+            style={{
+              border: `1px solid ${period === p.days ? "rgba(0,255,136,0.55)" : C.border}`,
               background: period === p.days ? "rgba(0,255,136,0.1)" : "rgba(255,255,255,0.04)",
               color: period === p.days ? C.green : C.muted, borderRadius: 999,
-              padding: "7px 14px", fontSize: 12, fontWeight: 700, fontFamily: "Syne,sans-serif",
-              cursor: "pointer" }}>
+              padding: "7px 14px", fontSize: 12, fontWeight: 700,
+              fontFamily: "Syne,sans-serif", cursor: "pointer",
+              transition: "all 0.2s",
+            }}>
             {p.label}
           </button>
         ))}
       </div>
 
-      {query.error && (
-        <div style={{ background: "rgba(255,77,109,0.08)", border: `1px solid rgba(255,77,109,0.22)`,
+      {/* ── Error ── */}
+      {tableQ.error && (
+        <div style={{ background: "rgba(255,77,109,0.08)", border: "1px solid rgba(255,77,109,0.22)",
           borderRadius: 14, padding: "12px 14px", color: C.red, fontSize: 13, marginBottom: 16 }}>
-          {query.error.message}
+          {tableQ.error.message}
         </div>
       )}
 
-      {query.isLoading && (
-        <div style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 16, padding: 24, color: C.muted }}>
-          Завантажуємо дані Google Search Console...
-        </div>
-      )}
-
-      {!query.isLoading && sites.length === 0 && (
-        <div style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 16, padding: "40px 24px", textAlign: "center", color: C.muted }}>
+      {/* ── Empty state ── */}
+      {!tableQ.isLoading && sites.length === 0 && (
+        <div style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 16,
+          padding: "40px 24px", textAlign: "center", color: C.muted }}>
           <div style={{ fontSize: 36, marginBottom: 12 }}>🌐</div>
           <div style={{ color: C.white, fontWeight: 700, marginBottom: 6 }}>Сайти ще не додані</div>
           <div>Додайте сайт або імпортуйте список із Google Search Console</div>
         </div>
       )}
 
-      {!query.isLoading && sites.length > 0 && (
+      {sites.length > 0 && (
         <>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(170px,1fr))", gap: 12, marginBottom: 16 }}>
+          {/* ── Summary cards ── */}
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(160px,1fr))",
+            gap: 12, marginBottom: 20 }}>
             {[
-              { label: "Покази", value: fmtMetric(totals.impressions), color: C.white },
-              { label: "Кліки", value: fmtMetric(totals.clicks), color: C.green },
-              { label: "CTR", value: fmtCtr(ctr), color: C.blue },
-              { label: "Середня позиція", value: fmtPosition(avgPosition), color: C.gold },
+              { label: "Покази",        value: fmtMetric(totals.impressions), color: "#5b8cff", metricKey: "impressions", cur: totals.impressions, prev: prevTotals?.impressions },
+              { label: "Кліки",         value: fmtMetric(totals.clicks),      color: C.green,   metricKey: "clicks",      cur: totals.clicks,      prev: prevTotals?.clicks      },
+              { label: "CTR",           value: fmtCtr(ctr),                   color: C.gold,    metricKey: "ctr",         cur: ctr,                prev: prevCtr                 },
+              { label: "Сер. позиція",  value: fmtPos(avgPosition),           color: "#ff6b9d", metricKey: "position",    cur: avgPosition,        prev: prevAvgPos              },
             ].map(card => (
-              <div key={card.label} style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 16, padding: "16px 18px" }}>
-                <div style={{ fontSize: 10, fontWeight: 800, letterSpacing: "0.08em", textTransform: "uppercase", color: C.muted, marginBottom: 8 }}>
+              <div key={card.label}
+                onClick={() => setActiveMetric(card.metricKey)}
+                style={{
+                  background: activeMetric === card.metricKey
+                    ? `rgba(${card.color === C.green ? "0,255,136" : card.color === C.gold ? "255,208,96" : card.color === "#5b8cff" ? "91,140,255" : "255,107,157"},0.08)`
+                    : C.card,
+                  border: `1px solid ${activeMetric === card.metricKey ? card.color + "55" : C.border}`,
+                  borderRadius: 16, padding: "16px 18px", cursor: "pointer",
+                  transition: "all 0.2s",
+                }}>
+                <div style={{ fontSize: 10, fontWeight: 800, letterSpacing: "0.08em",
+                  textTransform: "uppercase", color: C.muted, marginBottom: 6 }}>
                   {card.label}
                 </div>
-                <div style={{ fontFamily: "Syne,sans-serif", fontSize: 24, fontWeight: 800, color: card.color }}>
-                  {card.value}
+                <div style={{ display: "flex", alignItems: "baseline", gap: 0 }}>
+                  <div style={{ fontFamily: "Syne,sans-serif", fontSize: 22, fontWeight: 800, color: card.color }}>
+                    {tableQ.isLoading ? <span style={{ opacity: 0.3 }}>…</span> : card.value}
+                  </div>
+                  {!tableQ.isLoading && (
+                    <TrendBadge current={card.cur} previous={card.prev} metricKey={card.metricKey} />
+                  )}
                 </div>
               </div>
             ))}
           </div>
 
-          <div style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 16, overflow: "hidden" }}>
+          {/* ── Metric switcher & Site Selector ── */}
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12, flexWrap: "wrap", gap: 12 }}>
+            <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
+              {METRICS.map(m => (
+                <button key={m.key} onClick={() => setActiveMetric(m.key)}
+                  style={{
+                    border: `1px solid ${activeMetric === m.key ? m.color + "66" : C.border}`,
+                    background: activeMetric === m.key ? m.color + "18" : "rgba(255,255,255,0.03)",
+                    color: activeMetric === m.key ? m.color : C.muted,
+                    borderRadius: 999, padding: "5px 12px", fontSize: 11, fontWeight: 700,
+                    fontFamily: "Syne,sans-serif", cursor: "pointer", transition: "all 0.15s",
+                  }}>
+                  {m.label}
+                </button>
+              ))}
+            </div>
+            
+            <select 
+              value={chartSiteId} 
+              onChange={e => setChartSiteId(e.target.value)}
+              style={{
+                background: "rgba(255,255,255,0.03)",
+                border: `1px solid ${C.border}`,
+                color: C.white,
+                borderRadius: 8,
+                padding: "6px 12px",
+                fontSize: 12,
+                outline: "none",
+                cursor: "pointer",
+                maxWidth: 200,
+                textOverflow: "ellipsis"
+              }}
+            >
+              <option value="all" style={{ background: "#1a1d2e", color: "#fff" }}>Всі сайти (сумарно)</option>
+              {sortedRows.map(({ site }) => (
+                <option key={site.id} value={site.id} style={{ background: "#1a1d2e", color: "#fff" }}>
+                  {site.domain}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* ── Chart block ── */}
+          <div style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 16,
+            padding: "20px 20px 12px", marginBottom: 20 }}>
+            {chartQ.isLoading ? (
+              <div style={{ height: CHART_H, display: "flex", alignItems: "center",
+                justifyContent: "center", color: C.muted, fontSize: 13 }}>
+                Завантажуємо дані графіку…
+              </div>
+            ) : chartQ.error ? (
+              <div style={{ height: CHART_H, display: "flex", alignItems: "center", flexDirection: "column", gap: 8,
+                justifyContent: "center", color: C.red, fontSize: 13 }}>
+                <div>Помилка завантаження графіку</div>
+                <div style={{ opacity: 0.6, fontSize: 11, maxWidth: "80%", textAlign: "center" }}>
+                  {chartQ.error.message}
+                </div>
+              </div>
+            ) : currentData.length === 0 ? (
+              <div style={{ height: CHART_H, display: "flex", alignItems: "center",
+                justifyContent: "center", color: C.muted, fontSize: 13 }}>
+                Немає даних для графіку
+              </div>
+            ) : (
+              <>
+                <LineChart
+                  currentData={currentData}
+                  previousData={previousData}
+                  metricKey={activeMetric}
+                  color={metricCfg.color}
+                />
+                <ChartLegend color={metricCfg.color} />
+              </>
+            )}
+          </div>
+
+          {/* ── Sites table ── */}
+          <div style={{ background: C.card, border: `1px solid ${C.border}`,
+            borderRadius: 16, overflow: "hidden" }}>
             <div style={{ overflowX: "auto" }}>
               <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
                 <thead>
                   <tr style={{ borderBottom: `1px solid ${C.border}`, background: "rgba(255,255,255,0.02)" }}>
                     {[
-                      ["domain", "Сайт"],
-                      ["gsc_url", "GSC resource"],
-                      ["impressions", "Покази"],
-                      ["clicks", "Кліки"],
-                      ["ctr", "CTR"],
-                      ["position", "Позиція"],
+                      ["domain",     "Сайт"],
+                      ["gsc_url",    "GSC resource"],
+                      ["impressions","Покази"],
+                      ["clicks",     "Кліки"],
+                      ["ctr",        "CTR"],
+                      ["position",   "Позиція"],
                       ["updated_at", "Оновлено"],
                     ].map(([key, label]) => (
                       <th key={key} onClick={() => changeSort(key)}
-                        style={{ padding: "12px 16px", textAlign: "left", color: C.muted,
+                        style={{ padding: "12px 16px", textAlign: "left", color: sort.key === key ? C.green : C.muted,
                           fontSize: 10, fontWeight: 800, letterSpacing: "0.08em",
                           textTransform: "uppercase", cursor: "pointer", whiteSpace: "nowrap" }}>
-                        {label} <span style={{ color: sort.key === key ? C.green : C.muted }}>{sortIcon(key)}</span>
+                        {label} <span style={{ opacity: sort.key === key ? 1 : 0.5 }}>{sortIcon(key)}</span>
                       </th>
                     ))}
                   </tr>
                 </thead>
                 <tbody>
-                  {sortedRows.map(({ site, metric, missingRow }) => (
-                    <tr key={site.id} style={{ borderBottom: `1px solid ${C.border}` }}
+                  {tableQ.isLoading ? (
+                    Array.from({ length: 5 }).map((_, i) => (
+                      <tr key={i} style={{ borderBottom: `1px solid ${C.border}` }}>
+                        {Array.from({ length: 7 }).map((_, j) => (
+                          <td key={j} style={{ padding: "14px 16px" }}>
+                            <div style={{ height: 12, borderRadius: 4,
+                              background: "rgba(255,255,255,0.06)",
+                              width: j === 0 ? "60%" : j === 1 ? "80%" : "40%",
+                              animation: "pulse 1.5s ease-in-out infinite" }} />
+                          </td>
+                        ))}
+                      </tr>
+                    ))
+                  ) : sortedRows.map(({ site, metric, missingRow }) => (
+                    <tr key={site.id}
+                      style={{ borderBottom: `1px solid ${C.border}`, transition: "background 0.15s" }}
                       onMouseEnter={e => { e.currentTarget.style.background = "rgba(255,255,255,0.015)"; }}
                       onMouseLeave={e => { e.currentTarget.style.background = "transparent"; }}>
                       <td style={{ padding: "14px 16px" }}>
@@ -200,20 +583,21 @@ export default memo(function GscMetrics({ sites, onImportGsc }) {
                           </div>
                         )}
                       </td>
-                      <td style={{ padding: "14px 16px", color: C.muted, maxWidth: 260, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                      <td style={{ padding: "14px 16px", color: C.muted, maxWidth: 220,
+                        overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
                         {metric?.gsc_url || site.gsc_url || "—"}
                       </td>
-                      <td style={{ padding: "14px 16px", color: C.white, fontWeight: 700 }}>
+                      <td style={{ padding: "14px 16px", color: "#5b8cff", fontWeight: 700 }}>
                         {fmtMetric(metric?.impressions)}
                       </td>
                       <td style={{ padding: "14px 16px", color: C.green, fontWeight: 700 }}>
                         {fmtMetric(metric?.clicks)}
                       </td>
-                      <td style={{ padding: "14px 16px", color: C.blue, fontWeight: 700 }}>
+                      <td style={{ padding: "14px 16px", color: C.gold, fontWeight: 700 }}>
                         {fmtCtr(metric?.ctr)}
                       </td>
-                      <td style={{ padding: "14px 16px", color: C.gold, fontWeight: 700 }}>
-                        {fmtPosition(metric?.position)}
+                      <td style={{ padding: "14px 16px", color: "#ff6b9d", fontWeight: 700 }}>
+                        {fmtPos(metric?.position)}
                       </td>
                       <td style={{ padding: "14px 16px", color: C.muted, whiteSpace: "nowrap" }}>
                         {fmtDate(metric?.updated_at)}
@@ -226,6 +610,13 @@ export default memo(function GscMetrics({ sites, onImportGsc }) {
           </div>
         </>
       )}
+
+      <style>{`
+        @keyframes pulse {
+          0%,100% { opacity: 0.4; }
+          50%      { opacity: 0.8; }
+        }
+      `}</style>
     </div>
   );
 });

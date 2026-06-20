@@ -10,6 +10,7 @@ export const KEYS = {
   job:    (id)     => ["job",  id],
   gsc:    ["gsc-sites"],
   gscMetrics: (siteIds, days) => ["gsc-metrics", siteIds, days],
+  gscChart:   (siteIds, days) => ["gsc-chart",   siteIds, days],
 };
 
 // ── Головні дані дашборду
@@ -54,6 +55,16 @@ export function useGscMetrics(siteIds = [], days = 28, enabled = true) {
     enabled:  enabled && siteIds.length > 0,
     staleTime: 5 * 60_000,
     refetchInterval: 5 * 60_000,
+    retry: false,
+  });
+}
+
+export function useGscChart(siteIds = [], days = 30, enabled = true) {
+  return useQuery({
+    queryKey: ["gsc-chart", siteIds, days],
+    queryFn:  () => apiClient.gscChart(siteIds, days),
+    enabled:  enabled && siteIds.length > 0,
+    staleTime: 10 * 60_000,
     retry: false,
   });
 }
