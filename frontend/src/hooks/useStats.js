@@ -9,6 +9,7 @@ export const KEYS = {
   logs:   (params) => ["logs", params],
   job:    (id)     => ["job",  id],
   gsc:    ["gsc-sites"],
+  gscMetrics: (siteIds, days) => ["gsc-metrics", siteIds, days],
 };
 
 // ── Головні дані дашборду
@@ -43,6 +44,17 @@ export function useGscSites(enabled = false) {
     enabled:  enabled,
     staleTime: 60_000,
     retry: false, // не ретраїмо якщо 403
+  });
+}
+
+export function useGscMetrics(siteIds = [], days = 28, enabled = true) {
+  return useQuery({
+    queryKey: KEYS.gscMetrics(siteIds, days),
+    queryFn:  () => apiClient.gscMetrics(siteIds, days),
+    enabled:  enabled && siteIds.length > 0,
+    staleTime: 5 * 60_000,
+    refetchInterval: 5 * 60_000,
+    retry: false,
   });
 }
 

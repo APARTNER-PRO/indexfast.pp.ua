@@ -6,6 +6,7 @@
 // ══════════════════════════════════════════════
 require_once dirname(__DIR__) . '/middleware.php';
 require_once dirname(__DIR__) . '/db.php';
+require_once dirname(__DIR__) . '/gsc/helpers.php';
 
 requireMethod('PATCH');
 $uid    = (int)requireAuth()['sub'];
@@ -19,6 +20,7 @@ $site = DB::row(
     [$siteId, $uid]
 );
 if (!$site) respond(404, 'Сайт не знайдено');
+$hasGscUrl = gscHasGscUrlColumn();
 
 $updates = [];
 $params  = [];
@@ -47,6 +49,18 @@ if (isset($body['sitemap_url'])) {
         respond(422, 'Невалідний URL sitemap.xml');
     $updates[] = "sitemap_url=?";
     $params[]  = $sitemap;
+}
+
+// ── Google Search Console resource URL
+if (isset($body['gsc_url'])) {
+    $gscUrl = trim($body['gsc_url']);
+    if ($gscUrl && !filter_var($gscUrl, FILTER_VALIDATE_URL) && strpos($gscUrl, 'sc-domain:') !== 0)
+        respond(422, 'Невалідний Google Search Console resource URL');
+
+    if ($hasGscUrl) {
+        $updates[] = "gsc_url=?";
+        $params[]  = $gscUrl;
+    }
 }
 
 // ── Статус (активація після паузи)
@@ -108,7 +122,7 @@ if (isset($body['sitemap_url'])) {
 // Повертаємо оновлений сайт
 $updated = DB::row(
     "SELECT id, domain, sitemap_url, status, error_message,
-            total_urls, indexed_total, last_run_at
+            total_urls, indexed_total, last_run_at" . ($hasGscUrl ? ', gsc_url' : '') . "
      FROM sites WHERE id=?",
     [$siteId]
 );
@@ -128,6 +142,7 @@ respondOk('Сайт оновлено', [
         'total_urls'    => (int)$updated['total_urls'],
         'indexed_total' => (int)$updated['indexed_total'],
         'last_run_at'   => $updated['last_run_at'],
+        'gsc_url'       => $hasGscUrl ? ($updated['gsc_url'] ?? null) : null,
         'has_sa'        => $hasSa,
     ],
 ]);

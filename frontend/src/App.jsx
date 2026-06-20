@@ -17,11 +17,12 @@ import {
 import { C, NAV_ITEMS }      from "./constants.js";
 
 // ── Lazy сторінки — окремі JS chunks
-const Overview = lazy(() => import("./pages/Overview.jsx"));
-const Profile   = lazy(() => import("./pages/Profile.jsx"));
-const Sites     = lazy(() => import("./pages/Sites.jsx"));
-const Logs      = lazy(() => import("./pages/Logs.jsx"));
-const Billing   = lazy(() => import("./pages/Billing.jsx"));
+const Overview    = lazy(() => import("./pages/Overview.jsx"));
+const GscMetrics  = lazy(() => import("./pages/GscMetrics.jsx"));
+const Profile     = lazy(() => import("./pages/Profile.jsx"));
+const Sites       = lazy(() => import("./pages/Sites.jsx"));
+const Logs        = lazy(() => import("./pages/Logs.jsx"));
+const Billing     = lazy(() => import("./pages/Billing.jsx"));
 
 // ── Fallback для Suspense
 function PageLoader() {
@@ -344,6 +345,7 @@ export default function App() {
   const handleGoLogs    = useCallback(() => setActivePage("logs"),    []);
   const handleGoBilling = useCallback(() => setActivePage("billing"), []);
   const handleAddSite   = useCallback(() => setAddOpen(true),         []);
+  const handleImportGsc = useCallback(() => setGscOpen(true),         []);
 
   // ── Мемоізуємо пропси для сторінок (використовуємо кешовану або свіжу відповідь)
   const statsData = cachedStats || data;
@@ -433,6 +435,16 @@ export default function App() {
               onToggle={handleToggle}
               onGoLogs={handleGoLogs}
               onGoBilling={handleGoBilling}
+              onImportGsc={handleImportGsc}
+            />
+          </Suspense>
+        );
+      case "gsc":
+        return (
+          <Suspense fallback={<PageLoader/>}>
+            <GscMetrics
+              sites={sites}
+              onImportGsc={handleImportGsc}
             />
           </Suspense>
         );
@@ -449,6 +461,7 @@ export default function App() {
               onDelete={handleDelete}
               onToggle={handleToggle}
               showToast={showToast}
+              onImportGsc={handleImportGsc}
             />
           </Suspense>
         );

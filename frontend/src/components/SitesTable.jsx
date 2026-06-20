@@ -11,8 +11,24 @@ const SITES_MOBILE_STYLES = `
   }
 `;
 
+function fmtMetric(value) {
+  if (value === undefined || value === null || Number.isNaN(value)) return "—";
+  return Number(value).toLocaleString("uk-UA");
+}
+
+function fmtCtr(value) {
+  if (value === undefined || value === null || Number.isNaN(value)) return "—";
+  return `${(Number(value) * 100).toFixed(1)}%`;
+}
+
+function fmtPosition(value) {
+  if (value === undefined || value === null || Number.isNaN(value)) return "—";
+  return Number(value).toFixed(2);
+}
+
 export const SitesTable = memo(function SitesTable({
   sites, remaining, onRun, onDelete, onToggle, onEdit,
+  gscMetrics = {}, gscLoading = false, gscError = null, onImportGsc,
 }) {
   if (!sites.length) return (
     <div style={{ textAlign: "center", padding: "60px 20px", color: C.muted }}>
@@ -26,11 +42,16 @@ export const SitesTable = memo(function SitesTable({
     <div className="sites-table-wrap" style={{ overflowX: "auto" }}>
       <style>{SITES_MOBILE_STYLES}</style>
 
+
+
       {/* Desktop table */}
       <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
         <thead>
           <tr style={{ borderBottom: `1px solid ${C.border}` }}>
-            {["Сайт", "Статус", "URL в sitemap", "Відправлено", "Остання індексація", ""].map(h => (
+            {[
+              "Сайт", "Статус",
+              "URL у sitemap", "Відправлено", "Остання індексація", ""
+            ].map(h => (
               <th key={h} style={{ padding: "10px 16px", textAlign: "left", color: C.muted,
                 fontSize: 10, fontWeight: 700, letterSpacing: "0.1em",
                 textTransform: "uppercase", background: "rgba(255,255,255,0.02)",
@@ -48,6 +69,7 @@ export const SitesTable = memo(function SitesTable({
               onDelete={onDelete}
               onToggle={onToggle}
               onEdit={onEdit}
+              gscMetrics={gscMetrics}
             />
           ))}
         </tbody>
@@ -64,6 +86,7 @@ export const SitesTable = memo(function SitesTable({
             onDelete={onDelete}
             onToggle={onToggle}
             onEdit={onEdit}
+            gscMetrics={gscMetrics}
           />
         ))}
       </div>
@@ -72,11 +95,12 @@ export const SitesTable = memo(function SitesTable({
 });
 
 /* ── Mobile card layout ── */
-const SiteCard = memo(function SiteCard({ site: s, remaining, onRun, onDelete, onToggle, onEdit }) {
+const SiteCard = memo(function SiteCard({ site: s, remaining, onRun, onDelete, onToggle, onEdit, gscMetrics }) {
   const handleRun    = () => onRun(s);
   const handleDelete = () => onDelete(s);
   const handleToggle = () => onToggle(s.id);
   const handleEdit   = () => onEdit?.(s);
+  const gsc = gscMetrics?.[s.id];
 
   const isActive     = s.status === "active";
   const isPaused     = s.status === "paused";
@@ -124,6 +148,8 @@ const SiteCard = memo(function SiteCard({ site: s, remaining, onRun, onDelete, o
       {s.error_message && (
         <div style={{ fontSize: 11, color: C.red, marginBottom: 8 }}>{s.error_message}</div>
       )}
+
+
 
       {/* Job progress */}
       {isJobRunning && (
@@ -198,13 +224,14 @@ const SiteCard = memo(function SiteCard({ site: s, remaining, onRun, onDelete, o
   );
 });
 
-/* ── Desktop table row (unchanged) ── */
-const SiteRow = memo(function SiteRow({ site: s, remaining, onRun, onDelete, onToggle, onEdit }) {
+/* ── Desktop table row ── */
+const SiteRow = memo(function SiteRow({ site: s, remaining, onRun, onDelete, onToggle, onEdit, gscMetrics }) {
   // Прямі виклики замість useCallback — уникаємо stale closure
   const handleRun    = () => onRun(s);
   const handleDelete = () => onDelete(s);
   const handleToggle = () => onToggle(s.id);
   const handleEdit   = () => onEdit?.(s);
+  const gsc = gscMetrics?.[s.id];
 
   const isActive     = s.status === "active";
   const isPaused     = s.status === "paused";
@@ -266,7 +293,9 @@ const SiteRow = memo(function SiteRow({ site: s, remaining, onRun, onDelete, onT
         <StatusDot status={s.status}/>
       </td>
 
-      {/* URL в sitemap */}
+
+
+      {/* URL у sitemap */}
       <td style={{ padding: "14px 16px", color: C.white }}>
         {(s.total_urls || 0).toLocaleString("uk-UA")}
       </td>
