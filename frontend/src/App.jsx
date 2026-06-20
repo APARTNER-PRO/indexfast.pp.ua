@@ -532,7 +532,16 @@ export default function App() {
           /* Логи */
           .logs-filters { flex-direction: column !important; }
           .logs-date-row { flex-wrap: wrap !important; gap: 6px !important; }
+
+          /* GSC Metrics */
+          .gsc-header { flex-direction: column !important; align-items: flex-start !important; }
+          .gsc-tabs { display: flex; flex-wrap: nowrap !important; overflow-x: auto; max-width: 100%; -webkit-overflow-scrolling: touch; }
+          .gsc-tabs::-webkit-scrollbar { display: none; }
+          .gsc-filters { width: 100%; flex-direction: column !important; align-items: stretch !important; }
+          .gsc-filters select { width: 100%; max-width: 100% !important; }
+          .gsc-metrics-cards { grid-template-columns: 1fr 1fr !important; }
         }
+
       `}</style>
 
       <div style={{ display: "flex", minHeight: "100vh" }}>
