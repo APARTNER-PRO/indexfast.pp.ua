@@ -289,12 +289,33 @@ function gscMetricsForSites(int $uid, array $siteIds, int $days): array {
     $metrics = [];
     $missing = [];
 
+    // ── Отримуємо список GSC сайтів ОДИН РАЗ для всіх ітерацій
+    $gscList    = gscListSites($uid, $token);
+    $gscEntries = $gscList['sites'] ?? [];
+
     foreach ($sites as $site) {
         $siteId = (int)$site['id'];
         $stored = $hasGscUrl ? ($site['gsc_url'] ?? null) : null;
-        $found  = gscFindSiteUrl($uid, $site['domain'], $stored, $token);
 
-        if (!$found) {
+        // Шукаємо siteUrl в кешованому списку (без додаткового API-запиту)
+        $resolvedUrl = null;
+        foreach ($gscEntries as $entry) {
+            $entryUrl = $entry['siteUrl'] ?? '';
+            if (($entry['permissionLevel'] ?? '') === 'siteUnverifiedUser') continue;
+            if (gscDomainMatches($entryUrl, $site['domain'])) {
+                $resolvedUrl = $entryUrl;
+                break;
+            }
+        }
+        // Fallback на збережений gsc_url
+        if (!$resolvedUrl && $stored) {
+            $normalized = gscNormalizeStoredGscUrl($stored);
+            if ($normalized && gscDomainMatches($normalized, $site['domain'])) {
+                $resolvedUrl = $normalized;
+            }
+        }
+
+        if (!$resolvedUrl) {
             $missing[] = [
                 'site_id' => $siteId,
                 'domain'  => $site['domain'],
@@ -303,14 +324,7 @@ function gscMetricsForSites(int $uid, array $siteIds, int $days): array {
             continue;
         }
 
-        $data = gscSearchAnalytics($uid, $found['siteUrl'], $days, $token);
-        if (isset($data['error']) && $stored) {
-            $fallback = gscFindSiteUrl($uid, $site['domain'], null, $token);
-            if ($fallback) {
-                $data = gscSearchAnalytics($uid, $fallback['siteUrl'], $days, $token);
-                $found = $fallback;
-            }
-        }
+        $data = gscSearchAnalytics($uid, $resolvedUrl, $days, $token);
 
         if (isset($data['error'])) {
             $missing[] = [
@@ -323,10 +337,10 @@ function gscMetricsForSites(int $uid, array $siteIds, int $days): array {
 
         $metrics[$siteId] = $data;
 
-        if ($hasGscUrl && ($site['gsc_url'] ?? '') !== $found['siteUrl']) {
+        if ($hasGscUrl && ($site['gsc_url'] ?? '') !== $resolvedUrl) {
             DB::exec(
                 "UPDATE sites SET gsc_url = ?, updated_at = NOW() WHERE id = ?",
-                [$found['siteUrl'], $siteId]
+                [$resolvedUrl, $siteId]
             );
         }
     }
@@ -337,3 +351,4 @@ function gscMetricsForSites(int $uid, array $siteIds, int $days): array {
         'period_days' => $days,
     ];
 }
+
