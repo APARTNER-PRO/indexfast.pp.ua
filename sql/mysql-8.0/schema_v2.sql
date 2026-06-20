@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS `sites` (
   `user_id`          INT UNSIGNED  NOT NULL,
   `domain`           VARCHAR(255)  NOT NULL,
   `sitemap_url`      VARCHAR(1000) NOT NULL,
+  `gsc_url`          VARCHAR(1000) DEFAULT NULL,
   `service_account`  MEDIUMTEXT    DEFAULT NULL,   -- base64(JSON ключ)
   `status`           ENUM('active','paused','error') NOT NULL DEFAULT 'active',
   `error_message`    VARCHAR(500)  DEFAULT NULL,
