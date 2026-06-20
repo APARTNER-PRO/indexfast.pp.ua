@@ -1,7 +1,7 @@
 // src/pages/GscMetrics.jsx
 import { memo, useMemo, useState } from "react";
 import { Btn } from "../components/ui/index.jsx";
-import { useGscMetrics, useGscChart } from "../hooks/useStats.js";
+import { useGscMetrics, useGscChart, useGscQueries } from "../hooks/useStats.js";
 import { C } from "../constants.js";
 
 /* ─── Constants ─────────────────────────────────────── */
@@ -288,6 +288,7 @@ export default memo(function GscMetrics({ sites, onImportGsc }) {
   const [activeMetric, setActiveMetric] = useState("clicks");
   const [sort, setSort]         = useState({ key: "clicks", direction: "desc" });
   const [chartSiteId, setChartSiteId] = useState("all");
+  const [activeTab, setActiveTab] = useState("overview");
 
   const siteIds = useMemo(() => sites.map(s => s.id), [sites]);
   const enabled = siteIds.length > 0;
@@ -295,13 +296,14 @@ export default memo(function GscMetrics({ sites, onImportGsc }) {
   // Table query uses ALL sites
   const tableQ = useGscMetrics(siteIds, period, enabled);
   
-  // Chart query uses ONLY selected site(s)
+  // Chart & Queries query uses ONLY selected site(s)
   const chartQueryIds = useMemo(() => {
     if (chartSiteId === "all") return siteIds;
     return [Number(chartSiteId)];
   }, [chartSiteId, siteIds]);
   
   const chartQ = useGscChart(chartQueryIds, period, enabled && chartQueryIds.length > 0);
+  const queriesQ = useGscQueries(chartQueryIds, period, 100, enabled && activeTab === "queries" && chartQueryIds.length > 0);
 
   const metrics = tableQ.data?.metrics ?? {};
   const missing = tableQ.data?.missing ?? [];
@@ -383,21 +385,55 @@ export default memo(function GscMetrics({ sites, onImportGsc }) {
         )}
       </div>
 
-      {/* ── Period selector ── */}
-      <div style={{ display: "flex", gap: 8, marginBottom: 20, flexWrap: "wrap" }}>
-        {PERIODS.map(p => (
-          <button key={p.days} onClick={() => setPeriod(p.days)}
+      {/* ── Filters & Tabs ── */}
+      <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "center", marginBottom: 20, gap: 16 }}>
+        {/* Tabs */}
+        <div style={{ display: "flex", gap: 4, background: "rgba(255,255,255,0.03)", padding: 4, borderRadius: 12, border: `1px solid ${C.border}` }}>
+          {[{ id: "overview", label: "Огляд та Графіки" }, { id: "queries", label: "Пошукові запити" }].map(tab => (
+            <button key={tab.id} onClick={() => setActiveTab(tab.id)}
+              style={{
+                padding: "8px 16px", background: activeTab === tab.id ? "rgba(255,255,255,0.08)" : "transparent",
+                color: activeTab === tab.id ? C.white : C.muted, borderRadius: 8, fontWeight: 700,
+                fontSize: 13, cursor: "pointer", transition: "all 0.2s", border: "none"
+              }}>
+              {tab.label}
+            </button>
+          ))}
+        </div>
+
+        <div style={{ display: "flex", gap: 12, flexWrap: "wrap", alignItems: "center" }}>
+          <select 
+            value={chartSiteId} 
+            onChange={e => setChartSiteId(e.target.value)}
             style={{
-              border: `1px solid ${period === p.days ? "rgba(0,255,136,0.55)" : C.border}`,
-              background: period === p.days ? "rgba(0,255,136,0.1)" : "rgba(255,255,255,0.04)",
-              color: period === p.days ? C.green : C.muted, borderRadius: 999,
-              padding: "7px 14px", fontSize: 12, fontWeight: 700,
-              fontFamily: "Syne,sans-serif", cursor: "pointer",
-              transition: "all 0.2s",
-            }}>
-            {p.label}
-          </button>
-        ))}
+              background: "rgba(255,255,255,0.03)", border: `1px solid ${C.border}`,
+              color: C.white, borderRadius: 8, padding: "8px 14px", fontSize: 13,
+              outline: "none", cursor: "pointer", maxWidth: 220, textOverflow: "ellipsis"
+            }}
+          >
+            <option value="all" style={{ background: "#1a1d2e", color: "#fff" }}>Всі сайти (сумарно)</option>
+            {sortedRows.map(({ site }) => (
+              <option key={site.id} value={site.id} style={{ background: "#1a1d2e", color: "#fff" }}>
+                {site.domain}
+              </option>
+            ))}
+          </select>
+          
+          <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+            {PERIODS.map(p => (
+              <button key={p.days} onClick={() => setPeriod(p.days)}
+                style={{
+                  border: `1px solid ${period === p.days ? "rgba(0,255,136,0.55)" : C.border}`,
+                  background: period === p.days ? "rgba(0,255,136,0.1)" : "rgba(255,255,255,0.04)",
+                  color: period === p.days ? C.green : C.muted, borderRadius: 999,
+                  padding: "7px 14px", fontSize: 12, fontWeight: 700,
+                  fontFamily: "Syne,sans-serif", cursor: "pointer", transition: "all 0.2s",
+                }}>
+                {p.label}
+              </button>
+            ))}
+          </div>
+        </div>
       </div>
 
       {/* ── Error ── */}
@@ -418,7 +454,7 @@ export default memo(function GscMetrics({ sites, onImportGsc }) {
         </div>
       )}
 
-      {sites.length > 0 && (
+      {sites.length > 0 && activeTab === "overview" && (
         <>
           {/* ── Summary cards ── */}
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(160px,1fr))",
@@ -455,46 +491,20 @@ export default memo(function GscMetrics({ sites, onImportGsc }) {
             ))}
           </div>
 
-          {/* ── Metric switcher & Site Selector ── */}
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12, flexWrap: "wrap", gap: 12 }}>
-            <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
-              {METRICS.map(m => (
-                <button key={m.key} onClick={() => setActiveMetric(m.key)}
-                  style={{
-                    border: `1px solid ${activeMetric === m.key ? m.color + "66" : C.border}`,
-                    background: activeMetric === m.key ? m.color + "18" : "rgba(255,255,255,0.03)",
-                    color: activeMetric === m.key ? m.color : C.muted,
-                    borderRadius: 999, padding: "5px 12px", fontSize: 11, fontWeight: 700,
-                    fontFamily: "Syne,sans-serif", cursor: "pointer", transition: "all 0.15s",
-                  }}>
-                  {m.label}
-                </button>
-              ))}
-            </div>
-            
-            <select 
-              value={chartSiteId} 
-              onChange={e => setChartSiteId(e.target.value)}
-              style={{
-                background: "rgba(255,255,255,0.03)",
-                border: `1px solid ${C.border}`,
-                color: C.white,
-                borderRadius: 8,
-                padding: "6px 12px",
-                fontSize: 12,
-                outline: "none",
-                cursor: "pointer",
-                maxWidth: 200,
-                textOverflow: "ellipsis"
-              }}
-            >
-              <option value="all" style={{ background: "#1a1d2e", color: "#fff" }}>Всі сайти (сумарно)</option>
-              {sortedRows.map(({ site }) => (
-                <option key={site.id} value={site.id} style={{ background: "#1a1d2e", color: "#fff" }}>
-                  {site.domain}
-                </option>
-              ))}
-            </select>
+          {/* ── Metric switcher ── */}
+          <div style={{ display: "flex", gap: 6, marginBottom: 12, flexWrap: "wrap" }}>
+            {METRICS.map(m => (
+              <button key={m.key} onClick={() => setActiveMetric(m.key)}
+                style={{
+                  border: `1px solid ${activeMetric === m.key ? m.color + "66" : C.border}`,
+                  background: activeMetric === m.key ? m.color + "18" : "rgba(255,255,255,0.03)",
+                  color: activeMetric === m.key ? m.color : C.muted,
+                  borderRadius: 999, padding: "5px 12px", fontSize: 11, fontWeight: 700,
+                  fontFamily: "Syne,sans-serif", cursor: "pointer", transition: "all 0.15s",
+                }}>
+                {m.label}
+              </button>
+            ))}
           </div>
 
           {/* ── Chart block ── */}
@@ -609,6 +619,56 @@ export default memo(function GscMetrics({ sites, onImportGsc }) {
             </div>
           </div>
         </>
+      )}
+
+      {sites.length > 0 && activeTab === "queries" && (
+        <div style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 16, overflow: "hidden" }}>
+          {queriesQ.isLoading ? (
+            <div style={{ padding: 40, textAlign: "center", color: C.muted }}>Завантажуємо ключові запити...</div>
+          ) : queriesQ.error ? (
+            <div style={{ padding: 40, textAlign: "center", color: C.red }}>
+              Помилка завантаження запитів<br/>
+              <small style={{ opacity: 0.6 }}>{queriesQ.error.message}</small>
+            </div>
+          ) : !queriesQ.data?.queries?.length ? (
+            <div style={{ padding: 40, textAlign: "center", color: C.muted }}>Немає даних по запитах за цей period</div>
+          ) : (
+            <div style={{ overflowX: "auto" }}>
+              <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
+                <thead>
+                  <tr style={{ borderBottom: `1px solid ${C.border}`, background: "rgba(255,255,255,0.02)" }}>
+                    <th style={{ padding: "12px 16px", textAlign: "left", color: C.muted, fontSize: 10, fontWeight: 800, letterSpacing: "0.08em", textTransform: "uppercase", whiteSpace: "nowrap" }}>Запит</th>
+                    {chartSiteId === "all" && (
+                      <th style={{ padding: "12px 16px", textAlign: "left", color: C.muted, fontSize: 10, fontWeight: 800, letterSpacing: "0.08em", textTransform: "uppercase", whiteSpace: "nowrap" }}>Сайт</th>
+                    )}
+                    <th style={{ padding: "12px 16px", textAlign: "left", color: C.muted, fontSize: 10, fontWeight: 800, letterSpacing: "0.08em", textTransform: "uppercase", whiteSpace: "nowrap" }}>Кліки</th>
+                    <th style={{ padding: "12px 16px", textAlign: "left", color: C.muted, fontSize: 10, fontWeight: 800, letterSpacing: "0.08em", textTransform: "uppercase", whiteSpace: "nowrap" }}>Покази</th>
+                    <th style={{ padding: "12px 16px", textAlign: "left", color: C.muted, fontSize: 10, fontWeight: 800, letterSpacing: "0.08em", textTransform: "uppercase", whiteSpace: "nowrap" }}>CTR</th>
+                    <th style={{ padding: "12px 16px", textAlign: "left", color: C.muted, fontSize: 10, fontWeight: 800, letterSpacing: "0.08em", textTransform: "uppercase", whiteSpace: "nowrap" }}>Позиція</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {queriesQ.data.queries.map((q, i) => (
+                    <tr key={i} style={{ borderBottom: `1px solid ${C.border}`, transition: "background 0.15s" }}
+                      onMouseEnter={e => { e.currentTarget.style.background = "rgba(255,255,255,0.015)"; }}
+                      onMouseLeave={e => { e.currentTarget.style.background = "transparent"; }}>
+                      <td style={{ padding: "14px 16px", fontWeight: 700, color: C.white, maxWidth: 300, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                        {q.query}
+                      </td>
+                      {chartSiteId === "all" && (
+                        <td style={{ padding: "14px 16px", color: C.muted, fontSize: 12 }}>{q.domain}</td>
+                      )}
+                      <td style={{ padding: "14px 16px", color: C.green, fontWeight: 700 }}>{fmtMetric(q.clicks)}</td>
+                      <td style={{ padding: "14px 16px", color: "#5b8cff", fontWeight: 700 }}>{fmtMetric(q.impressions)}</td>
+                      <td style={{ padding: "14px 16px", color: C.gold, fontWeight: 700 }}>{fmtCtr(q.ctr)}</td>
+                      <td style={{ padding: "14px 16px", color: "#ff6b9d", fontWeight: 700 }}>{fmtPos(q.position)}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </div>
       )}
 
       <style>{`
