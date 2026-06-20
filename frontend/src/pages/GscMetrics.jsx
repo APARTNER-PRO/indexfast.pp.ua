@@ -62,17 +62,21 @@ function TrendBadge({ current, previous, metricKey }) {
   const delta = current - previous;
   const pct   = Math.abs(Math.round((delta / previous) * 100));
   if (pct === 0) return null;
-  // For position: lower is better → invert colour
+  // For position: lower number = better ranking → invert both color and arrow
   const isPos  = metricKey === "position";
   const isGood = isPos ? delta < 0 : delta > 0;
   const color  = isGood ? C.green : "#ff4d6d";
-  const arrow  = delta > 0 ? "↑" : "↓";
+  // Arrow shows ranking direction, not numeric direction
+  const arrow  = isPos
+    ? (delta < 0 ? "↑" : "↓")   // number down = rank up ↑
+    : (delta > 0 ? "↑" : "↓");
   return (
     <span style={{ fontSize: 11, fontWeight: 700, color, marginLeft: 6 }}>
       {arrow}{pct}%
     </span>
   );
 }
+
 
 /* ─── SVG Line Chart ─────────────────────────────────── */
 const CHART_H = 200;
@@ -660,22 +664,35 @@ export default memo(function GscMetrics({ sites, onImportGsc }) {
                         {metric?.gsc_url || site.gsc_url || "—"}
                       </td>
                       <td style={{ padding: "14px 16px", color: "#5b8cff", fontWeight: 700 }}>
-                        {fmtMetric(metric?.impressions)}
+                        <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
+                          {fmtMetric(metric?.impressions)}
+                          <TrendBadge current={metric?.impressions} previous={metric?.prev_impressions} metricKey="impressions" />
+                        </div>
                       </td>
                       <td style={{ padding: "14px 16px", color: C.green, fontWeight: 700 }}>
-                        {fmtMetric(metric?.clicks)}
+                        <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
+                          {fmtMetric(metric?.clicks)}
+                          <TrendBadge current={metric?.clicks} previous={metric?.prev_clicks} metricKey="clicks" />
+                        </div>
                       </td>
                       <td style={{ padding: "14px 16px", color: C.gold, fontWeight: 700 }}>
-                        {fmtCtr(metric?.ctr)}
+                        <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
+                          {fmtCtr(metric?.ctr)}
+                          <TrendBadge current={metric?.ctr} previous={metric?.prev_ctr} metricKey="ctr" />
+                        </div>
                       </td>
                       <td style={{ padding: "14px 16px", color: "#ff6b9d", fontWeight: 700 }}>
-                        {fmtPos(metric?.position)}
+                        <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
+                          {fmtPos(metric?.position)}
+                          <TrendBadge current={metric?.position} previous={metric?.prev_position} metricKey="position" />
+                        </div>
                       </td>
                       <td style={{ padding: "14px 16px", color: C.muted, whiteSpace: "nowrap" }}>
                         {fmtDate(metric?.updated_at)}
                       </td>
                     </tr>
                   ))}
+
                 </tbody>
               </table>
             </div>

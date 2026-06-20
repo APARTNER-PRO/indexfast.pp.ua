@@ -233,35 +233,6 @@ function gscFindSiteUrl(int $uid, string $domain, ?string $storedGscUrl = null, 
     return null;
 }
 
-function gscSearchAnalytics(int $uid, string $siteUrl, int $days, ?string $token = null): array {
-    $days = max(1, min(365, (int)$days));
-    $encoded = rawurlencode($siteUrl);
-    $url = "https://www.googleapis.com/webmasters/v3/sites/{$encoded}/searchAnalytics/query";
-
-    $res = gscRequest($uid, $url, 'POST', [
-        'startDate'  => date('Y-m-d', strtotime('-' . max(1, $days - 1) . ' days')),
-        'endDate'    => date('Y-m-d'),
-        'dimensions' => [],
-        'rowLimit'   => 1,
-        'searchType' => 'web',
-    ], $token);
-
-    if ($res['code'] !== 200) {
-        return ['error' => gscErrorMessage($res['body'], $res['code']), 'gsc_url' => $siteUrl];
-    }
-
-    $row = ($res['json']['rows'] ?? [])[0] ?? [];
-    return [
-        'clicks'      => round((float)($row['clicks'] ?? 0), 2),
-        'impressions' => round((float)($row['impressions'] ?? 0), 2),
-        'ctr'         => round((float)($row['ctr'] ?? 0), 4),
-        'position'    => round((float)($row['position'] ?? 0), 2),
-        'period_days' => $days,
-        'gsc_url'     => $siteUrl,
-        'updated_at'  => date('c'),
-    ];
-}
-
 function gscMetricsForSites(int $uid, array $siteIds, int $days): array {
     $days = max(1, min(365, (int)$days));
     $hasGscUrl = gscHasGscUrlColumn();
@@ -286,69 +257,122 @@ function gscMetricsForSites(int $uid, array $siteIds, int $days): array {
     if (!$sites) return ['metrics' => [], 'missing' => [], 'period_days' => $days];
 
     $token   = gscGetAccessToken($uid);
-    $metrics = [];
     $missing = [];
 
-    // ── Отримуємо список GSC сайтів ОДИН РАЗ для всіх ітерацій
+    // Поточний та попередній period
+    $endCur   = date('Y-m-d', strtotime('-2 days'));
+    $startCur = date('Y-m-d', strtotime('-' . ($days + 1) . ' days'));
+    $endPrev  = date('Y-m-d', strtotime('-' . ($days + 2) . ' days'));
+    $startPrev = date('Y-m-d', strtotime('-' . ($days * 2 + 2) . ' days'));
+
+    // Список GSC сайтів (один запит)
     $gscList    = gscListSites($uid, $token);
     $gscEntries = $gscList['sites'] ?? [];
 
+    // Складаємо масив запитів (current + previous для кожного сайту)
+    $requests = [];
+    $missingSet = [];
     foreach ($sites as $site) {
         $siteId = (int)$site['id'];
         $stored = $hasGscUrl ? ($site['gsc_url'] ?? null) : null;
 
-        // Шукаємо siteUrl в кешованому списку (без додаткового API-запиту)
         $resolvedUrl = null;
         foreach ($gscEntries as $entry) {
             $entryUrl = $entry['siteUrl'] ?? '';
             if (($entry['permissionLevel'] ?? '') === 'siteUnverifiedUser') continue;
-            if (gscDomainMatches($entryUrl, $site['domain'])) {
-                $resolvedUrl = $entryUrl;
-                break;
-            }
+            if (gscDomainMatches($entryUrl, $site['domain'])) { $resolvedUrl = $entryUrl; break; }
         }
-        // Fallback на збережений gsc_url
         if (!$resolvedUrl && $stored) {
             $normalized = gscNormalizeStoredGscUrl($stored);
-            if ($normalized && gscDomainMatches($normalized, $site['domain'])) {
-                $resolvedUrl = $normalized;
-            }
+            if ($normalized && gscDomainMatches($normalized, $site['domain'])) $resolvedUrl = $normalized;
         }
 
         if (!$resolvedUrl) {
-            $missing[] = [
-                'site_id' => $siteId,
-                'domain'  => $site['domain'],
-                'reason'  => 'gsc_resource_not_found',
-            ];
+            $missing[] = ['site_id' => $siteId, 'domain' => $site['domain'], 'reason' => 'gsc_resource_not_found'];
             continue;
         }
-
-        $data = gscSearchAnalytics($uid, $resolvedUrl, $days, $token);
-
-        if (isset($data['error'])) {
-            $missing[] = [
-                'site_id' => $siteId,
-                'domain'  => $site['domain'],
-                'reason'  => isset($data['gsc_url']) ? $data['error'] . ' (' . $data['gsc_url'] . ')' : $data['error'],
-            ];
-            continue;
-        }
-
-        $metrics[$siteId] = $data;
 
         if ($hasGscUrl && ($site['gsc_url'] ?? '') !== $resolvedUrl) {
-            DB::exec(
-                "UPDATE sites SET gsc_url = ?, updated_at = NOW() WHERE id = ?",
-                [$resolvedUrl, $siteId]
-            );
+            DB::exec("UPDATE sites SET gsc_url = ?, updated_at = NOW() WHERE id = ?", [$resolvedUrl, $siteId]);
         }
+
+        $encoded = rawurlencode($resolvedUrl);
+        $apiUrl  = "https://www.googleapis.com/webmasters/v3/sites/{$encoded}/searchAnalytics/query";
+
+        $requests[] = ['site_id' => $siteId, 'domain' => $site['domain'], 'period' => 'cur', 'url' => $apiUrl,
+            'payload' => json_encode(['startDate' => $startCur, 'endDate' => $endCur, 'dimensions' => [], 'rowLimit' => 1, 'searchType' => 'web'])];
+        $requests[] = ['site_id' => $siteId, 'domain' => $site['domain'], 'period' => 'prev', 'url' => $apiUrl,
+            'payload' => json_encode(['startDate' => $startPrev, 'endDate' => $endPrev, 'dimensions' => [], 'rowLimit' => 1, 'searchType' => 'web'])];
     }
 
-    return [
-        'metrics'     => $metrics,
-        'missing'     => $missing,
-        'period_days' => $days,
-    ];
+    $curData  = [];
+    $prevData = [];
+    $batchSize = 20;
+    $chunks = array_chunk($requests, $batchSize);
+    $mh = curl_multi_init();
+    $httpHeaders = ['Authorization: Bearer ' . $token, 'Accept: application/json', 'Content-Type: application/json'];
+
+    foreach ($chunks as $chunk) {
+        $handles = [];
+        foreach ($chunk as $idx => $req) {
+            $ch = curl_init($req['url']);
+            curl_setopt_array($ch, [CURLOPT_RETURNTRANSFER => true, CURLOPT_TIMEOUT => 15,
+                CURLOPT_POST => true, CURLOPT_POSTFIELDS => $req['payload'], CURLOPT_HTTPHEADER => $httpHeaders]);
+            curl_multi_add_handle($mh, $ch);
+            $handles[$idx] = $ch;
+        }
+        $active = null;
+        do { $mrc = curl_multi_exec($mh, $active); } while ($mrc == CURLM_CALL_MULTI_PERFORM);
+        while ($active && $mrc == CURLM_OK) {
+            if (curl_multi_select($mh) == -1) usleep(100);
+            do { $mrc = curl_multi_exec($mh, $active); } while ($mrc == CURLM_CALL_MULTI_PERFORM);
+        }
+        foreach ($handles as $idx => $ch) {
+            $body   = curl_multi_getcontent($ch);
+            $code   = (int)curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            curl_multi_remove_handle($mh, $ch);
+            curl_close($ch);
+
+            $req    = $chunk[$idx];
+            $siteId = $req['site_id'];
+
+            if ($code === 200) {
+                $json = json_decode((string)$body, true);
+                $row  = ($json['rows'] ?? [])[0] ?? [];
+                $entry = [
+                    'clicks'      => round((float)($row['clicks']      ?? 0), 2),
+                    'impressions' => round((float)($row['impressions']  ?? 0), 2),
+                    'ctr'         => round((float)($row['ctr']          ?? 0), 4),
+                    'position'    => round((float)($row['position']     ?? 0), 2),
+                ];
+                if ($req['period'] === 'cur') $curData[$siteId]  = $entry;
+                else                          $prevData[$siteId] = $entry;
+            } elseif ($req['period'] === 'cur') {
+                $errJson = json_decode((string)$body, true);
+                $errMsg  = $errJson['error']['message'] ?? "HTTP $code";
+                $missing[] = ['site_id' => $siteId, 'domain' => $req['domain'], 'reason' => $errMsg];
+            }
+        }
+    }
+    curl_multi_close($mh);
+
+    $metrics = [];
+    foreach ($curData as $siteId => $cur) {
+        $prev = $prevData[$siteId] ?? null;
+        $metrics[$siteId] = [
+            'clicks'           => $cur['clicks'],
+            'impressions'      => $cur['impressions'],
+            'ctr'              => $cur['ctr'],
+            'position'         => $cur['position'],
+            'prev_clicks'      => $prev['clicks']      ?? null,
+            'prev_impressions' => $prev['impressions']  ?? null,
+            'prev_ctr'         => $prev['ctr']          ?? null,
+            'prev_position'    => $prev['position']     ?? null,
+            'period_days'      => $days,
+            'updated_at'       => date('c'),
+        ];
+    }
+
+    return ['metrics' => $metrics, 'missing' => $missing, 'period_days' => $days];
 }
 
