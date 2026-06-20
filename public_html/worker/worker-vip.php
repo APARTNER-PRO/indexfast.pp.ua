@@ -378,6 +378,61 @@ function processJob(array $job): void {
     }
 
     log_msg("Job #{$jobId} done: sent={$sent} failed={$failed}");
+
+    // ── IndexNow: паралельна відправка URL в Bing/Yandex/Seznam
+    if (defined('INDEXNOW_ENABLED') && INDEXNOW_ENABLED && $sent > 0) {
+        $site = DB::row("SELECT domain, indexnow_key, indexnow_enabled FROM sites WHERE id=?", [$siteId]);
+        if ($site && !empty($site['indexnow_enabled']) && !empty($site['indexnow_key'])) {
+            $inRes = sendToIndexNow($urls, $site['domain'], $site['indexnow_key']);
+            if ($inRes['ok']) {
+                log_msg("IndexNow: Sent {$inRes['count']} URLs (HTTP {$inRes['code']})");
+            } else {
+                log_msg("IndexNow: Failed (HTTP {$inRes['code']})");
+            }
+            $inStatus = $inRes['ok'] ? 'ok' : 'error';
+            try {
+                DB::exec(
+                    "UPDATE indexing_log SET indexnow_status=?, indexnow_http_status=? WHERE job_id=?",
+                    [$inStatus, $inRes['code'], $jobId]
+                );
+            } catch (Throwable $e) {
+                error_log('[worker-vip] IndexNow log update failed: ' . $e->getMessage());
+            }
+        }
+    }
+}
+
+
+// ══════════════════════════════════════════════
+//  IndexNow API — відправка URL в Bing/Yandex
+// ══════════════════════════════════════════════
+function sendToIndexNow(array $urls, string $host, string $key): array {
+    if (empty($urls)) return ['ok' => false, 'code' => 0, 'count' => 0];
+
+    $host = preg_replace('#^https?://#', '', $host);
+    $host = explode('/', $host)[0];
+
+    $payload = json_encode([
+        'host'        => $host,
+        'key'         => $key,
+        'keyLocation' => "https://{$host}/{$key}.txt",
+        'urlList'     => array_values(array_unique($urls)),
+    ]);
+
+    $ch = curl_init('https://api.indexnow.org/indexnow');
+    curl_setopt_array($ch, [
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_POST           => true,
+        CURLOPT_POSTFIELDS     => $payload,
+        CURLOPT_HTTPHEADER     => ['Content-Type: application/json; charset=utf-8'],
+        CURLOPT_TIMEOUT        => 15,
+        CURLOPT_CONNECTTIMEOUT => 5,
+    ]);
+    curl_exec($ch);
+    $code = (int)curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    curl_close($ch);
+
+    return ['ok' => in_array($code, [200, 202], true), 'code' => $code, 'count' => count($urls)];
 }
 
 

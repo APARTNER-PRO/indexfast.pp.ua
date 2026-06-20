@@ -241,10 +241,19 @@ const LogPreview = memo(function LogPreview({ logs }) {
         }}
           onMouseEnter={e => e.currentTarget.style.background = "rgba(255,255,255,0.015)"}
           onMouseLeave={e => e.currentTarget.style.background = "transparent"}>
-          <span className="ov-log-icon" style={{ color: colors[l.status], fontWeight: 800, width: 16,
-            textAlign: "center", flexShrink: 0 }}>
-            {icons[l.status]}
-          </span>
+          <div className="ov-log-icon" style={{ display: "flex", gap: 6, flexShrink: 0, width: 48, alignItems: "center" }}>
+            <span title={`Google: ${l.status}`} style={{ color: colors[l.status], fontWeight: 800 }}>
+              <span style={{ fontSize: 9, marginRight: 2, color: C.muted }}>G</span>
+              {icons[l.status] ?? "?"}
+            </span>
+            {l.indexnow_status && (
+              <span title={`IndexNow: ${l.indexnow_status} (${l.indexnow_http_status})`} 
+                style={{ color: colors[l.indexnow_status] ?? C.muted, fontWeight: 800 }}>
+                <span style={{ fontSize: 9, marginRight: 2, color: C.muted }}>I</span>
+                {icons[l.indexnow_status] ?? "?"}
+              </span>
+            )}
+          </div>
           <span className="ov-log-url" style={{
             flex: 1, fontFamily: "ui-monospace,monospace", fontSize: 11,
             color: C.white, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap",

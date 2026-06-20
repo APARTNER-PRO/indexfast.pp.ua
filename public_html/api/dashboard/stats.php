@@ -102,7 +102,7 @@ $logs = [];
 $siteDomains = array_column($sites, 'domain', 'id');
 try {
     $logs = DB::all(
-        "SELECT url, status, http_status, error_msg, created_at, site_id
+        "SELECT url, status, http_status, error_msg, indexnow_status, indexnow_http_status, created_at, site_id
          FROM indexing_log
          WHERE user_id = ? ORDER BY created_at DESC LIMIT 20",
         [$uid]

@@ -139,6 +139,12 @@ function processOneJob(array $job) {
             } else {
                 echo "   IndexNow: Failed (Code: {$inRes['code']})\n";
             }
+            
+            $inStatus = $inRes['ok'] ? 'ok' : 'error';
+            DB::exec(
+                "UPDATE indexing_log SET indexnow_status=?, indexnow_http_status=? WHERE job_id=?", 
+                [$inStatus, $inRes['code'], $jobId]
+            );
         }
     }
 }
