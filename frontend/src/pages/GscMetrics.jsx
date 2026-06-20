@@ -369,7 +369,7 @@ export default memo(function GscMetrics({ sites, onImportGsc }) {
   return (
     <div>
       {/* ── Header ── */}
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between",
+      <div className="gsc-header" style={{ display: "flex", alignItems: "center", justifyContent: "space-between",
         marginBottom: 20, gap: 12, flexWrap: "wrap" }}>
         <div>
           <h2 style={{ fontFamily: "Syne,sans-serif", fontWeight: 800, fontSize: 20, marginBottom: 4 }}>
@@ -389,20 +389,20 @@ export default memo(function GscMetrics({ sites, onImportGsc }) {
       {/* ── Filters & Tabs ── */}
       <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "center", marginBottom: 20, gap: 16 }}>
         {/* Tabs */}
-        <div style={{ display: "flex", gap: 4, background: "rgba(255,255,255,0.03)", padding: 4, borderRadius: 12, border: `1px solid ${C.border}` }}>
+        <div className="gsc-tabs" style={{ background: "rgba(255,255,255,0.03)", padding: 4, borderRadius: 12, border: `1px solid ${C.border}` }}>
           {[{ id: "overview", label: "Огляд та Графіки" }, { id: "queries", label: "Пошукові запити" }, { id: "pages", label: "Топ сторінки" }].map(tab => (
             <button key={tab.id} onClick={() => setActiveTab(tab.id)}
               style={{
                 padding: "8px 16px", background: activeTab === tab.id ? "rgba(255,255,255,0.08)" : "transparent",
                 color: activeTab === tab.id ? C.white : C.muted, borderRadius: 8, fontWeight: 700,
-                fontSize: 13, cursor: "pointer", transition: "all 0.2s", border: "none"
+                fontSize: 13, cursor: "pointer", transition: "all 0.2s", border: "none", whiteSpace: "nowrap"
               }}>
               {tab.label}
             </button>
           ))}
         </div>
 
-        <div style={{ display: "flex", gap: 12, flexWrap: "wrap", alignItems: "center" }}>
+        <div className="gsc-filters" style={{ display: "flex", gap: 12, flexWrap: "wrap", alignItems: "center" }}>
           <select 
             value={chartSiteId} 
             onChange={e => setChartSiteId(e.target.value)}
@@ -420,7 +420,7 @@ export default memo(function GscMetrics({ sites, onImportGsc }) {
             ))}
           </select>
           
-          <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+          <div className="gsc-period-btns" style={{ display: "flex", gap: 8 }}>
             {PERIODS.map(p => (
               <button key={p.days} onClick={() => setPeriod(p.days)}
                 style={{
@@ -458,7 +458,7 @@ export default memo(function GscMetrics({ sites, onImportGsc }) {
       {sites.length > 0 && activeTab === "overview" && (
         <>
           {/* ── Summary cards ── */}
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(160px,1fr))",
+          <div className="gsc-metrics-cards" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(160px,1fr))",
             gap: 12, marginBottom: 20 }}>
             {[
               { label: "Покази",        value: fmtMetric(totals.impressions), color: "#5b8cff", metricKey: "impressions", cur: totals.impressions, prev: prevTotals?.impressions },
@@ -726,6 +726,17 @@ export default memo(function GscMetrics({ sites, onImportGsc }) {
         @keyframes pulse {
           0%,100% { opacity: 0.4; }
           50%      { opacity: 0.8; }
+        }
+        .gsc-tabs { display: flex; gap: 4px; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+        .gsc-tabs::-webkit-scrollbar { display: none; }
+        @media (max-width: 768px) {
+          .gsc-header { flex-direction: column; align-items: flex-start !important; gap: 16px; }
+          .gsc-filters { width: 100%; flex-direction: column; align-items: stretch !important; gap: 12px; }
+          .gsc-filters select { max-width: 100% !important; }
+          .gsc-period-btns { display: flex; overflow-x: auto; padding-bottom: 4px; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+          .gsc-period-btns::-webkit-scrollbar { display: none; }
+          .gsc-period-btns button { white-space: nowrap; }
+          .gsc-metrics-cards { grid-template-columns: 1fr 1fr !important; gap: 8px !important; }
         }
       `}</style>
     </div>
