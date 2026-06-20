@@ -302,6 +302,8 @@ export default memo(function GscMetrics({ sites, onImportGsc }) {
   const [period, setPeriod]     = useState(30);
   const [activeMetric, setActiveMetric] = useState("clicks");
   const [sort, setSort]         = useState({ key: "clicks", direction: "desc" });
+  const [querySort, setQuerySort] = useState({ key: "clicks", direction: "desc" });
+  const [pageSort, setPageSort]   = useState({ key: "clicks", direction: "desc" });
   const [chartSiteId, setChartSiteId] = useState("all");
   const [activeTab, setActiveTab] = useState("overview");
 
@@ -681,105 +683,147 @@ export default memo(function GscMetrics({ sites, onImportGsc }) {
         </>
       )}
 
-      {sites.length > 0 && activeTab === "queries" && (
-        <div style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 16, overflow: "hidden" }}>
-          {queriesQ.isLoading ? (
-            <div style={{ padding: 40, textAlign: "center", color: C.muted }}>Завантажуємо ключові запити...</div>
-          ) : queriesQ.error ? (
-            <div style={{ padding: 40, textAlign: "center", color: C.red }}>
-              Помилка завантаження запитів<br/>
-              <small style={{ opacity: 0.6 }}>{queriesQ.error.message}</small>
-            </div>
-          ) : !queriesQ.data?.queries?.length ? (
-            <div style={{ padding: 40, textAlign: "center", color: C.muted }}>Немає даних по запитах за цей period</div>
-          ) : (
-            <div style={{ overflowX: "auto" }}>
-              <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
-                <thead>
-                  <tr style={{ borderBottom: `1px solid ${C.border}`, background: "rgba(255,255,255,0.02)" }}>
-                    <th style={{ padding: "12px 16px", textAlign: "left", color: C.muted, fontSize: 10, fontWeight: 800, letterSpacing: "0.08em", textTransform: "uppercase", whiteSpace: "nowrap" }}>Запит</th>
-                    {chartSiteId === "all" && (
-                      <th style={{ padding: "12px 16px", textAlign: "left", color: C.muted, fontSize: 10, fontWeight: 800, letterSpacing: "0.08em", textTransform: "uppercase", whiteSpace: "nowrap" }}>Сайт</th>
-                    )}
-                    <th style={{ padding: "12px 16px", textAlign: "left", color: C.muted, fontSize: 10, fontWeight: 800, letterSpacing: "0.08em", textTransform: "uppercase", whiteSpace: "nowrap" }}>Кліки</th>
-                    <th style={{ padding: "12px 16px", textAlign: "left", color: C.muted, fontSize: 10, fontWeight: 800, letterSpacing: "0.08em", textTransform: "uppercase", whiteSpace: "nowrap" }}>Покази</th>
-                    <th style={{ padding: "12px 16px", textAlign: "left", color: C.muted, fontSize: 10, fontWeight: 800, letterSpacing: "0.08em", textTransform: "uppercase", whiteSpace: "nowrap" }}>CTR</th>
-                    <th style={{ padding: "12px 16px", textAlign: "left", color: C.muted, fontSize: 10, fontWeight: 800, letterSpacing: "0.08em", textTransform: "uppercase", whiteSpace: "nowrap" }}>Позиція</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {queriesQ.data.queries.map((q, i) => (
-                    <tr key={i} style={{ borderBottom: `1px solid ${C.border}`, transition: "background 0.15s" }}
-                      onMouseEnter={e => { e.currentTarget.style.background = "rgba(255,255,255,0.015)"; }}
-                      onMouseLeave={e => { e.currentTarget.style.background = "transparent"; }}>
-                      <td style={{ padding: "14px 16px", fontWeight: 700, color: C.white, maxWidth: 300, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                        {q.query}
-                      </td>
+      {sites.length > 0 && activeTab === "queries" && (() => {
+        const toggleQuerySort = (key) => setQuerySort(prev =>
+          prev.key === key
+            ? { key, direction: prev.direction === "asc" ? "desc" : "asc" }
+            : { key, direction: key === "position" ? "asc" : "desc" }
+        );
+        const qSortIcon = (key) => querySort.key === key ? (querySort.direction === "asc" ? " ↑" : " ↓") : "";
+        const sortedQueries = queriesQ.data?.queries ? [...queriesQ.data.queries].sort((a, b) => {
+          const dir = querySort.direction === "asc" ? 1 : -1;
+          return ((a[querySort.key] ?? 0) - (b[querySort.key] ?? 0)) * dir;
+        }) : [];
+        
+        const thStyle = (key) => ({
+          padding: "12px 16px", textAlign: "left",
+          color: querySort.key === key ? C.green : C.muted,
+          fontSize: 10, fontWeight: 800, letterSpacing: "0.08em",
+          textTransform: "uppercase", whiteSpace: "nowrap",
+          cursor: "pointer", userSelect: "none",
+          transition: "color 0.15s"
+        });
+        return (
+          <div style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 16, overflow: "hidden" }}>
+            {queriesQ.isLoading ? (
+              <div style={{ padding: 40, textAlign: "center", color: C.muted }}>Завантажуємо ключові запити...</div>
+            ) : queriesQ.error ? (
+              <div style={{ padding: 40, textAlign: "center", color: C.red }}>
+                Помилка завантаження запитів<br/>
+                <small style={{ opacity: 0.6 }}>{queriesQ.error.message}</small>
+              </div>
+            ) : !sortedQueries.length ? (
+              <div style={{ padding: 40, textAlign: "center", color: C.muted }}>Немає даних по запитах за цей period</div>
+            ) : (
+              <div style={{ overflowX: "auto" }}>
+                <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
+                  <thead>
+                    <tr style={{ borderBottom: `1px solid ${C.border}`, background: "rgba(255,255,255,0.02)" }}>
+                      <th style={{ padding: "12px 16px", textAlign: "left", color: C.muted, fontSize: 10, fontWeight: 800, letterSpacing: "0.08em", textTransform: "uppercase", whiteSpace: "nowrap" }}>Запит</th>
                       {chartSiteId === "all" && (
-                        <td style={{ padding: "14px 16px", color: C.muted, fontSize: 12 }}>{q.domain}</td>
+                        <th style={{ padding: "12px 16px", textAlign: "left", color: C.muted, fontSize: 10, fontWeight: 800, letterSpacing: "0.08em", textTransform: "uppercase", whiteSpace: "nowrap" }}>Сайт</th>
                       )}
-                      <td style={{ padding: "14px 16px", color: C.green, fontWeight: 700 }}>{fmtMetric(q.clicks)}</td>
-                      <td style={{ padding: "14px 16px", color: "#5b8cff", fontWeight: 700 }}>{fmtMetric(q.impressions)}</td>
-                      <td style={{ padding: "14px 16px", color: C.gold, fontWeight: 700 }}>{fmtCtr(q.ctr)}</td>
-                      <td style={{ padding: "14px 16px", color: "#ff6b9d", fontWeight: 700 }}>{fmtPos(q.position)}</td>
+                      <th style={thStyle("clicks")} onClick={() => toggleQuerySort("clicks")}>Кліки{qSortIcon("clicks")}</th>
+                      <th style={thStyle("impressions")} onClick={() => toggleQuerySort("impressions")}>Покази{qSortIcon("impressions")}</th>
+                      <th style={thStyle("ctr")} onClick={() => toggleQuerySort("ctr")}>CTR{qSortIcon("ctr")}</th>
+                      <th style={thStyle("position")} onClick={() => toggleQuerySort("position")}>Позиція{qSortIcon("position")}</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          )}
-        </div>
-      )}
+                  </thead>
+                  <tbody>
+                    {sortedQueries.map((q, i) => (
+                      <tr key={i} style={{ borderBottom: `1px solid ${C.border}`, transition: "background 0.15s" }}
+                        onMouseEnter={e => { e.currentTarget.style.background = "rgba(255,255,255,0.015)"; }}
+                        onMouseLeave={e => { e.currentTarget.style.background = "transparent"; }}>
+                        <td style={{ padding: "14px 16px", fontWeight: 700, color: C.white, maxWidth: 300, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                          {q.query}
+                        </td>
+                        {chartSiteId === "all" && (
+                          <td style={{ padding: "14px 16px", color: C.muted, fontSize: 12 }}>{q.domain}</td>
+                        )}
+                        <td style={{ padding: "14px 16px", color: C.green, fontWeight: 700 }}>{fmtMetric(q.clicks)}</td>
+                        <td style={{ padding: "14px 16px", color: "#5b8cff", fontWeight: 700 }}>{fmtMetric(q.impressions)}</td>
+                        <td style={{ padding: "14px 16px", color: C.gold, fontWeight: 700 }}>{fmtCtr(q.ctr)}</td>
+                        <td style={{ padding: "14px 16px", color: "#ff6b9d", fontWeight: 700 }}>{fmtPos(q.position)}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
+        );
+      })()}
 
-      {sites.length > 0 && activeTab === "pages" && (
-        <div style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 16, overflow: "hidden" }}>
-          {pagesQ.isLoading ? (
-            <div style={{ padding: 40, textAlign: "center", color: C.muted }}>Завантажуємо топ сторінок...</div>
-          ) : pagesQ.error ? (
-            <div style={{ padding: 40, textAlign: "center", color: C.red }}>
-              Помилка завантаження сторінок<br/>
-              <small style={{ opacity: 0.6 }}>{pagesQ.error.message}</small>
-            </div>
-          ) : !pagesQ.data?.pages?.length ? (
-            <div style={{ padding: 40, textAlign: "center", color: C.muted }}>Немає даних по сторінках за цей period</div>
-          ) : (
-            <div style={{ overflowX: "auto" }}>
-              <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
-                <thead>
-                  <tr style={{ borderBottom: `1px solid ${C.border}`, background: "rgba(255,255,255,0.02)" }}>
-                    <th style={{ padding: "12px 16px", textAlign: "left", color: C.muted, fontSize: 10, fontWeight: 800, letterSpacing: "0.08em", textTransform: "uppercase", whiteSpace: "nowrap" }}>URL</th>
-                    {chartSiteId === "all" && (
-                      <th style={{ padding: "12px 16px", textAlign: "left", color: C.muted, fontSize: 10, fontWeight: 800, letterSpacing: "0.08em", textTransform: "uppercase", whiteSpace: "nowrap" }}>Сайт</th>
-                    )}
-                    <th style={{ padding: "12px 16px", textAlign: "left", color: C.muted, fontSize: 10, fontWeight: 800, letterSpacing: "0.08em", textTransform: "uppercase", whiteSpace: "nowrap" }}>Кліки</th>
-                    <th style={{ padding: "12px 16px", textAlign: "left", color: C.muted, fontSize: 10, fontWeight: 800, letterSpacing: "0.08em", textTransform: "uppercase", whiteSpace: "nowrap" }}>Покази</th>
-                    <th style={{ padding: "12px 16px", textAlign: "left", color: C.muted, fontSize: 10, fontWeight: 800, letterSpacing: "0.08em", textTransform: "uppercase", whiteSpace: "nowrap" }}>CTR</th>
-                    <th style={{ padding: "12px 16px", textAlign: "left", color: C.muted, fontSize: 10, fontWeight: 800, letterSpacing: "0.08em", textTransform: "uppercase", whiteSpace: "nowrap" }}>Позиція</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {pagesQ.data.pages.map((p, i) => (
-                    <tr key={i} style={{ borderBottom: `1px solid ${C.border}`, transition: "background 0.15s" }}
-                      onMouseEnter={e => { e.currentTarget.style.background = "rgba(255,255,255,0.015)"; }}
-                      onMouseLeave={e => { e.currentTarget.style.background = "transparent"; }}>
-                      <td style={{ padding: "14px 16px", fontWeight: 700, color: C.white, maxWidth: 300, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                        <a href={p.page} target="_blank" rel="noreferrer" style={{ color: "#5b8cff", textDecoration: "none" }}>{p.page}</a>
-                      </td>
+      {sites.length > 0 && activeTab === "pages" && (() => {
+        const togglePageSort = (key) => setPageSort(prev =>
+          prev.key === key
+            ? { key, direction: prev.direction === "asc" ? "desc" : "asc" }
+            : { key, direction: key === "position" ? "asc" : "desc" }
+        );
+        const pSortIcon = (key) => pageSort.key === key ? (pageSort.direction === "asc" ? " ↑" : " ↓") : "";
+        const sortedPages = pagesQ.data?.pages ? [...pagesQ.data.pages].sort((a, b) => {
+          const dir = pageSort.direction === "asc" ? 1 : -1;
+          return ((a[pageSort.key] ?? 0) - (b[pageSort.key] ?? 0)) * dir;
+        }) : [];
+        
+        const thStyle = (key) => ({
+          padding: "12px 16px", textAlign: "left",
+          color: pageSort.key === key ? C.green : C.muted,
+          fontSize: 10, fontWeight: 800, letterSpacing: "0.08em",
+          textTransform: "uppercase", whiteSpace: "nowrap",
+          cursor: "pointer", userSelect: "none",
+          transition: "color 0.15s"
+        });
+        return (
+          <div style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 16, overflow: "hidden" }}>
+            {pagesQ.isLoading ? (
+              <div style={{ padding: 40, textAlign: "center", color: C.muted }}>Завантажуємо топ сторінок...</div>
+            ) : pagesQ.error ? (
+              <div style={{ padding: 40, textAlign: "center", color: C.red }}>
+                Помилка завантаження сторінок<br/>
+                <small style={{ opacity: 0.6 }}>{pagesQ.error.message}</small>
+              </div>
+            ) : !sortedPages.length ? (
+              <div style={{ padding: 40, textAlign: "center", color: C.muted }}>Немає даних по сторінках за цей period</div>
+            ) : (
+              <div style={{ overflowX: "auto" }}>
+                <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
+                  <thead>
+                    <tr style={{ borderBottom: `1px solid ${C.border}`, background: "rgba(255,255,255,0.02)" }}>
+                      <th style={{ padding: "12px 16px", textAlign: "left", color: C.muted, fontSize: 10, fontWeight: 800, letterSpacing: "0.08em", textTransform: "uppercase", whiteSpace: "nowrap" }}>URL</th>
                       {chartSiteId === "all" && (
-                        <td style={{ padding: "14px 16px", color: C.muted, fontSize: 12 }}>{p.domain}</td>
+                        <th style={{ padding: "12px 16px", textAlign: "left", color: C.muted, fontSize: 10, fontWeight: 800, letterSpacing: "0.08em", textTransform: "uppercase", whiteSpace: "nowrap" }}>Сайт</th>
                       )}
-                      <td style={{ padding: "14px 16px", color: C.green, fontWeight: 700 }}>{fmtMetric(p.clicks)}</td>
-                      <td style={{ padding: "14px 16px", color: "#5b8cff", fontWeight: 700 }}>{fmtMetric(p.impressions)}</td>
-                      <td style={{ padding: "14px 16px", color: C.gold, fontWeight: 700 }}>{fmtCtr(p.ctr)}</td>
-                      <td style={{ padding: "14px 16px", color: "#ff6b9d", fontWeight: 700 }}>{fmtPos(p.position)}</td>
+                      <th style={thStyle("clicks")} onClick={() => togglePageSort("clicks")}>Кліки{pSortIcon("clicks")}</th>
+                      <th style={thStyle("impressions")} onClick={() => togglePageSort("impressions")}>Покази{pSortIcon("impressions")}</th>
+                      <th style={thStyle("ctr")} onClick={() => togglePageSort("ctr")}>CTR{pSortIcon("ctr")}</th>
+                      <th style={thStyle("position")} onClick={() => togglePageSort("position")}>Позиція{pSortIcon("position")}</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          )}
-        </div>
-      )}
+                  </thead>
+                  <tbody>
+                    {sortedPages.map((p, i) => (
+                      <tr key={i} style={{ borderBottom: `1px solid ${C.border}`, transition: "background 0.15s" }}
+                        onMouseEnter={e => { e.currentTarget.style.background = "rgba(255,255,255,0.015)"; }}
+                        onMouseLeave={e => { e.currentTarget.style.background = "transparent"; }}>
+                        <td style={{ padding: "14px 16px", fontWeight: 700, color: C.white, maxWidth: 300, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                          <a href={p.page} target="_blank" rel="noreferrer" style={{ color: "#5b8cff", textDecoration: "none" }}>{p.page}</a>
+                        </td>
+                        {chartSiteId === "all" && (
+                          <td style={{ padding: "14px 16px", color: C.muted, fontSize: 12 }}>{p.domain}</td>
+                        )}
+                        <td style={{ padding: "14px 16px", color: C.green, fontWeight: 700 }}>{fmtMetric(p.clicks)}</td>
+                        <td style={{ padding: "14px 16px", color: "#5b8cff", fontWeight: 700 }}>{fmtMetric(p.impressions)}</td>
+                        <td style={{ padding: "14px 16px", color: C.gold, fontWeight: 700 }}>{fmtCtr(p.ctr)}</td>
+                        <td style={{ padding: "14px 16px", color: "#ff6b9d", fontWeight: 700 }}>{fmtPos(p.position)}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
+        );
+      })()}
 
       {sites.length > 0 && activeTab === "countries" && (
         <div style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 16, overflow: "hidden", padding: "24px 0" }}>
