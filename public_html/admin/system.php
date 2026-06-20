@@ -7,9 +7,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['action'] ?? '';
     try {
         match($action) {
-            'clear_rate_limits' => DB::exec("DELETE FROM rate_limits"),
-            'clear_old_tokens'  => DB::exec("DELETE FROM tokens WHERE (used_at IS NOT NULL OR expires_at < NOW()) AND type != 'refresh'"),
-            'clear_old_logs'    => DB::exec("DELETE FROM indexing_log WHERE created_at < DATE_SUB(NOW(), INTERVAL 90 DAY)"),
+            'clear_rate_limits'  => DB::exec("DELETE FROM rate_limits"),
+            'clear_old_tokens'   => DB::exec("DELETE FROM tokens WHERE (used_at IS NOT NULL OR expires_at < NOW()) AND type != 'refresh'"),
+            'clear_old_logs'     => DB::exec("DELETE FROM indexing_log WHERE created_at < DATE_SUB(NOW(), INTERVAL 90 DAY)"),
+            'clear_worker_lock'  => @unlink(sys_get_temp_dir() . '/indexfast_worker.lock') ?: null,
             default => null,
         };
         $msg = 'Виконано'; $msgType = 'ok';
@@ -134,6 +135,15 @@ $oldLogs    = (int)(DB::row("SELECT COUNT(*) c FROM indexing_log WHERE created_a
       <input type="hidden" name="action" value="clear_old_tokens">
       <button class="action-btn warn" type="submit">🗑 Очистити прострочені токени</button>
     </form>
+    <?php if ($lockStale): ?>
+    <form method="POST">
+      <input type="hidden" name="action" value="clear_worker_lock">
+      <button class="action-btn danger" type="submit"
+        onclick="return confirm('Видалити lock-файл воркера?')">
+        🔓 Очистити Worker Lock
+      </button>
+    </form>
+    <?php endif; ?>
     <?php if ($oldLogs > 0): ?>
     <form method="POST">
       <input type="hidden" name="action" value="clear_old_logs">

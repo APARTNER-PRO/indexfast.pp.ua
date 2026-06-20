@@ -53,8 +53,8 @@ $whereSQL = implode(' AND ', $where);
 
 // Поля — для запиту з siteId не потрібен site_id, для загального — потрібен
 $fields = $siteId
-    ? "id, url, status, http_status, error_msg, created_at"
-    : "id, url, status, http_status, error_msg, created_at, site_id";
+    ? "id, url, status, http_status, error_msg, indexnow_status, indexnow_http_status, created_at"
+    : "id, url, status, http_status, error_msg, indexnow_status, indexnow_http_status, created_at, site_id";
 
 $logs  = DB::all(
     "SELECT {$fields} FROM indexing_log
