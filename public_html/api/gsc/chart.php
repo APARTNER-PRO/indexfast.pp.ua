@@ -43,6 +43,9 @@ $token = gscGetAccessToken($uid);
 $gscSiteList = gscListSites($uid, $token);
 $gscEntries  = $gscSiteList['sites'] ?? [];
 
+require_once __DIR__ . '/cache.php';
+$cachedChart = gscGetCachedMetrics($uid, array_column($sites, 'id'), $days, 'chart');
+
 // ── Будуємо map: normalized_domain → siteUrl (з кешованого списку)
 function resolveSiteUrl(string $domain, array $gscEntries, ?string $storedGscUrl): ?string {
     // 1) Шукаємо по домену серед GSC записів
@@ -88,9 +91,19 @@ $startPrev    = date('Y-m-d', strtotime('-' . ($days * 2 + 2) . ' days'));
 
 // Формуємо масив запитів для curl_multi
 $multiRequests = [];
+$aggCurrent = [];
+$aggPrev    = [];
+$freshChartData = [];
 
 try {
     foreach ($sites as $site) {
+        $siteId = (int)$site['id'];
+        if (isset($cachedChart[$siteId])) {
+            aggregateByDate($cachedChart[$siteId]['current'] ?? [], $aggCurrent);
+            aggregateByDate($cachedChart[$siteId]['previous'] ?? [], $aggPrev);
+            continue;
+        }
+
         $stored  = $hasGscUrl ? ($site['gsc_url'] ?? null) : null;
         $siteUrl = resolveSiteUrl($site['domain'], $gscEntries, $stored);
         if (!$siteUrl) continue;
@@ -100,6 +113,7 @@ try {
 
         // Поточний період
         $multiRequests[] = [
+            'site_id' => $siteId,
             'url' => $url,
             'payload' => json_encode(['startDate' => $startCurrent, 'endDate' => $endCurrent, 'dimensions' => ['date'], 'rowLimit' => 500, 'searchType' => 'web']),
             'period' => 'current'
@@ -107,6 +121,7 @@ try {
 
         // Попередній період
         $multiRequests[] = [
+            'site_id' => $siteId,
             'url' => $url,
             'payload' => json_encode(['startDate' => $startPrev, 'endDate' => $endPrev, 'dimensions' => ['date'], 'rowLimit' => 500, 'searchType' => 'web']),
             'period' => 'previous'
@@ -114,8 +129,6 @@ try {
     }
 
     // Виконуємо запити паралельно партіями (batching) щоб не отримати rate limit
-    $aggCurrent = [];
-    $aggPrev    = [];
     $batchSize = 10;
     $chunks = array_chunk($multiRequests, $batchSize);
 
@@ -165,10 +178,18 @@ try {
             if ($code === 200) {
                 $data = json_decode((string)$body, true);
                 $rows = $data['rows'] ?? [];
+                $siteId = $chunk[$index]['site_id'];
+                
+                if (!isset($freshChartData[$siteId])) {
+                    $freshChartData[$siteId] = ['current' => [], 'previous' => []];
+                }
+                
                 if ($chunk[$index]['period'] === 'current') {
                     aggregateByDate($rows, $aggCurrent);
+                    $freshChartData[$siteId]['current'] = $rows;
                 } else {
                     aggregateByDate($rows, $aggPrev);
+                    $freshChartData[$siteId]['previous'] = $rows;
                 }
             } else if ($code !== 200) {
                 // If Google returns 403 or 401 we just ignore it for this site so it doesn't break the whole chart
@@ -177,6 +198,10 @@ try {
         }
     }
     curl_multi_close($mh);
+    
+    foreach ($freshChartData as $siteId => $data) {
+        gscSetCachedMetrics($uid, $siteId, $days, $data, 'chart');
+    }
 } catch (\Throwable $e) {
     respond(500, 'Chart Error: ' . $e->getMessage() . ' on line ' . $e->getLine());
 }

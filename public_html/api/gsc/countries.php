@@ -40,6 +40,9 @@ $token = gscGetAccessToken($uid);
 $gscSiteList = gscListSites($uid, $token);
 $gscEntries  = $gscSiteList['sites'] ?? [];
 
+require_once __DIR__ . '/cache.php';
+$cachedCountries = gscGetCachedMetrics($uid, array_column($sites, 'id'), $days, 'countries');
+
 function resolveSiteUrl(string $domain, array $gscEntries, ?string $storedGscUrl): ?string {
     foreach ($gscEntries as $entry) {
         $siteUrl = $entry['siteUrl'] ?? '';
@@ -56,8 +59,35 @@ function resolveSiteUrl(string $domain, array $gscEntries, ?string $storedGscUrl
 $endDate   = date('Y-m-d', strtotime('-2 days'));
 $startDate = date('Y-m-d', strtotime('-' . ($days + 1) . ' days'));
 
+$aggCountries = [];
+
+function aggregateCountries(array $rows, array &$aggCountries) {
+    foreach ($rows as $row) {
+        $country = strtoupper($row['keys'][0] ?? '');
+        if (!$country) continue;
+        
+        if (!isset($aggCountries[$country])) {
+            $aggCountries[$country] = ['clicks' => 0, 'impressions' => 0, 'posSum' => 0, 'posCount' => 0];
+        }
+        $aggCountries[$country]['clicks']      += (int)round($row['clicks'] ?? 0);
+        $aggCountries[$country]['impressions'] += (int)round($row['impressions'] ?? 0);
+        if (($row['position'] ?? 0) > 0) {
+            $aggCountries[$country]['posSum']   += (float)$row['position'];
+            $aggCountries[$country]['posCount'] += 1;
+        }
+    }
+}
+
 $multiRequests = [];
+$freshCountriesData = [];
+
 foreach ($sites as $site) {
+    $siteId = (int)$site['id'];
+    if (isset($cachedCountries[$siteId])) {
+        aggregateCountries($cachedCountries[$siteId], $aggCountries);
+        continue;
+    }
+
     $stored  = $hasGscUrl ? ($site['gsc_url'] ?? null) : null;
     $siteUrl = resolveSiteUrl($site['domain'], $gscEntries, $stored);
     if (!$siteUrl) continue;
@@ -66,6 +96,7 @@ foreach ($sites as $site) {
     $url     = "https://www.googleapis.com/webmasters/v3/sites/{$encoded}/searchAnalytics/query";
 
     $multiRequests[] = [
+        'site_id' => $siteId,
         'url' => $url,
         'payload' => json_encode([
             'startDate'  => $startDate,
@@ -76,8 +107,6 @@ foreach ($sites as $site) {
         ]),
     ];
 }
-
-$aggCountries = [];
 
 $batchSize = 10;
 $chunks = array_chunk($multiRequests, $batchSize);
@@ -128,21 +157,10 @@ try {
             if ($code === 200) {
                 $data = json_decode((string)$body, true);
                 $rows = $data['rows'] ?? [];
+                $siteId = $chunk[$index]['site_id'];
                 
-                foreach ($rows as $row) {
-                    $country = strtoupper($row['keys'][0] ?? '');
-                    if (!$country) continue;
-                    
-                    if (!isset($aggCountries[$country])) {
-                        $aggCountries[$country] = ['clicks' => 0, 'impressions' => 0, 'posSum' => 0, 'posCount' => 0];
-                    }
-                    $aggCountries[$country]['clicks']      += (int)round($row['clicks'] ?? 0);
-                    $aggCountries[$country]['impressions'] += (int)round($row['impressions'] ?? 0);
-                    if (($row['position'] ?? 0) > 0) {
-                        $aggCountries[$country]['posSum']   += (float)$row['position'];
-                        $aggCountries[$country]['posCount'] += 1;
-                    }
-                }
+                aggregateCountries($rows, $aggCountries);
+                $freshCountriesData[$siteId] = $rows;
             }
         }
     }
@@ -151,6 +169,10 @@ try {
     respond(500, 'Countries Error: ' . $e->getMessage());
 }
 curl_multi_close($mh);
+
+foreach ($freshCountriesData as $siteId => $rows) {
+    gscSetCachedMetrics($uid, $siteId, $days, $rows, 'countries');
+}
 
 $countriesFormatted = [];
 foreach ($aggCountries as $country => $vals) {

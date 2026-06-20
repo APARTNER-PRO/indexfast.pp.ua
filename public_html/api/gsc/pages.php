@@ -40,6 +40,9 @@ $token = gscGetAccessToken($uid);
 $gscSiteList = gscListSites($uid, $token);
 $gscEntries  = $gscSiteList['sites'] ?? [];
 
+require_once __DIR__ . '/cache.php';
+$cachedPages = gscGetCachedMetrics($uid, array_column($sites, 'id'), $days, 'pages');
+
 function resolveSiteUrl(string $domain, array $gscEntries, ?string $storedGscUrl): ?string {
     foreach ($gscEntries as $entry) {
         $siteUrl = $entry['siteUrl'] ?? '';
@@ -56,10 +59,39 @@ function resolveSiteUrl(string $domain, array $gscEntries, ?string $storedGscUrl
 $endDate   = date('Y-m-d', strtotime('-2 days'));
 $startDate = date('Y-m-d', strtotime('-' . ($days + 1) . ' days'));
 
+$allPages = [];
+
+function aggregatePages(int $siteId, string $domain, array $rows, array &$allPages) {
+    foreach ($rows as $row) {
+        $pageUrl = $row['keys'][0] ?? null;
+        if (!$pageUrl) continue;
+        
+        $allPages[] = [
+            'page'        => $pageUrl,
+            'site_id'     => $siteId,
+            'domain'      => $domain,
+            'clicks'      => (int)round($row['clicks'] ?? 0),
+            'impressions' => (int)round($row['impressions'] ?? 0),
+            'ctr'         => round($row['ctr'] ?? 0, 4),
+            'position'    => round($row['position'] ?? 0, 2),
+        ];
+    }
+}
+
 $multiRequests = [];
+$freshPagesData = [];
+
 foreach ($sites as $site) {
+    $siteId = (int)$site['id'];
+    $domain = $site['domain'];
+    
+    if (isset($cachedPages[$siteId])) {
+        aggregatePages($siteId, $domain, $cachedPages[$siteId], $allPages);
+        continue;
+    }
+
     $stored  = $hasGscUrl ? ($site['gsc_url'] ?? null) : null;
-    $siteUrl = resolveSiteUrl($site['domain'], $gscEntries, $stored);
+    $siteUrl = resolveSiteUrl($domain, $gscEntries, $stored);
     if (!$siteUrl) continue;
 
     $encoded = rawurlencode($siteUrl);
@@ -74,12 +106,10 @@ foreach ($sites as $site) {
             'rowLimit'   => $limit,
             'searchType' => 'web'
         ]),
-        'site_id' => $site['id'],
-        'domain'  => $site['domain']
+        'site_id' => $siteId,
+        'domain'  => $domain
     ];
 }
-
-$allPages = [];
 $batchSize = 10;
 $chunks = array_chunk($multiRequests, $batchSize);
 
@@ -133,20 +163,8 @@ try {
                 $siteId = $chunk[$index]['site_id'];
                 $domain = $chunk[$index]['domain'];
                 
-                foreach ($rows as $row) {
-                    $pageUrl = $row['keys'][0] ?? null;
-                    if (!$pageUrl) continue;
-                    
-                    $allPages[] = [
-                        'page'        => $pageUrl,
-                        'site_id'     => $siteId,
-                        'domain'      => $domain,
-                        'clicks'      => (int)round($row['clicks'] ?? 0),
-                        'impressions' => (int)round($row['impressions'] ?? 0),
-                        'ctr'         => round($row['ctr'] ?? 0, 4),
-                        'position'    => round($row['position'] ?? 0, 2),
-                    ];
-                }
+                aggregatePages($siteId, $domain, $rows, $allPages);
+                $freshPagesData[$siteId] = $rows;
             }
         }
     }
@@ -155,6 +173,10 @@ try {
     respond(500, 'Pages Error: ' . $e->getMessage());
 }
 curl_multi_close($mh);
+
+foreach ($freshPagesData as $siteId => $rows) {
+    gscSetCachedMetrics($uid, $siteId, $days, $rows, 'pages');
+}
 
 // Sort all pages by clicks DESC
 usort($allPages, function($a, $b) {
