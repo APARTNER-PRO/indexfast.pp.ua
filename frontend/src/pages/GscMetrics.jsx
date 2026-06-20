@@ -1,7 +1,7 @@
 // src/pages/GscMetrics.jsx
 import { memo, useMemo, useState } from "react";
 import { Btn } from "../components/ui/index.jsx";
-import { useGscMetrics, useGscChart, useGscQueries } from "../hooks/useStats.js";
+import { useGscMetrics, useGscChart, useGscQueries, useGscPages } from "../hooks/useStats.js";
 import { C } from "../constants.js";
 
 /* ─── Constants ─────────────────────────────────────── */
@@ -304,6 +304,7 @@ export default memo(function GscMetrics({ sites, onImportGsc }) {
   
   const chartQ = useGscChart(chartQueryIds, period, enabled && chartQueryIds.length > 0);
   const queriesQ = useGscQueries(chartQueryIds, period, 100, enabled && activeTab === "queries" && chartQueryIds.length > 0);
+  const pagesQ = useGscPages(chartQueryIds, period, 100, enabled && activeTab === "pages" && chartQueryIds.length > 0);
 
   const metrics = tableQ.data?.metrics ?? {};
   const missing = tableQ.data?.missing ?? [];
@@ -389,7 +390,7 @@ export default memo(function GscMetrics({ sites, onImportGsc }) {
       <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "center", marginBottom: 20, gap: 16 }}>
         {/* Tabs */}
         <div style={{ display: "flex", gap: 4, background: "rgba(255,255,255,0.03)", padding: 4, borderRadius: 12, border: `1px solid ${C.border}` }}>
-          {[{ id: "overview", label: "Огляд та Графіки" }, { id: "queries", label: "Пошукові запити" }].map(tab => (
+          {[{ id: "overview", label: "Огляд та Графіки" }, { id: "queries", label: "Пошукові запити" }, { id: "pages", label: "Топ сторінки" }].map(tab => (
             <button key={tab.id} onClick={() => setActiveTab(tab.id)}
               style={{
                 padding: "8px 16px", background: activeTab === tab.id ? "rgba(255,255,255,0.08)" : "transparent",
@@ -662,6 +663,56 @@ export default memo(function GscMetrics({ sites, onImportGsc }) {
                       <td style={{ padding: "14px 16px", color: "#5b8cff", fontWeight: 700 }}>{fmtMetric(q.impressions)}</td>
                       <td style={{ padding: "14px 16px", color: C.gold, fontWeight: 700 }}>{fmtCtr(q.ctr)}</td>
                       <td style={{ padding: "14px 16px", color: "#ff6b9d", fontWeight: 700 }}>{fmtPos(q.position)}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </div>
+      )}
+
+      {sites.length > 0 && activeTab === "pages" && (
+        <div style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 16, overflow: "hidden" }}>
+          {pagesQ.isLoading ? (
+            <div style={{ padding: 40, textAlign: "center", color: C.muted }}>Завантажуємо топ сторінок...</div>
+          ) : pagesQ.error ? (
+            <div style={{ padding: 40, textAlign: "center", color: C.red }}>
+              Помилка завантаження сторінок<br/>
+              <small style={{ opacity: 0.6 }}>{pagesQ.error.message}</small>
+            </div>
+          ) : !pagesQ.data?.pages?.length ? (
+            <div style={{ padding: 40, textAlign: "center", color: C.muted }}>Немає даних по сторінках за цей period</div>
+          ) : (
+            <div style={{ overflowX: "auto" }}>
+              <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
+                <thead>
+                  <tr style={{ borderBottom: `1px solid ${C.border}`, background: "rgba(255,255,255,0.02)" }}>
+                    <th style={{ padding: "12px 16px", textAlign: "left", color: C.muted, fontSize: 10, fontWeight: 800, letterSpacing: "0.08em", textTransform: "uppercase", whiteSpace: "nowrap" }}>URL</th>
+                    {chartSiteId === "all" && (
+                      <th style={{ padding: "12px 16px", textAlign: "left", color: C.muted, fontSize: 10, fontWeight: 800, letterSpacing: "0.08em", textTransform: "uppercase", whiteSpace: "nowrap" }}>Сайт</th>
+                    )}
+                    <th style={{ padding: "12px 16px", textAlign: "left", color: C.muted, fontSize: 10, fontWeight: 800, letterSpacing: "0.08em", textTransform: "uppercase", whiteSpace: "nowrap" }}>Кліки</th>
+                    <th style={{ padding: "12px 16px", textAlign: "left", color: C.muted, fontSize: 10, fontWeight: 800, letterSpacing: "0.08em", textTransform: "uppercase", whiteSpace: "nowrap" }}>Покази</th>
+                    <th style={{ padding: "12px 16px", textAlign: "left", color: C.muted, fontSize: 10, fontWeight: 800, letterSpacing: "0.08em", textTransform: "uppercase", whiteSpace: "nowrap" }}>CTR</th>
+                    <th style={{ padding: "12px 16px", textAlign: "left", color: C.muted, fontSize: 10, fontWeight: 800, letterSpacing: "0.08em", textTransform: "uppercase", whiteSpace: "nowrap" }}>Позиція</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {pagesQ.data.pages.map((p, i) => (
+                    <tr key={i} style={{ borderBottom: `1px solid ${C.border}`, transition: "background 0.15s" }}
+                      onMouseEnter={e => { e.currentTarget.style.background = "rgba(255,255,255,0.015)"; }}
+                      onMouseLeave={e => { e.currentTarget.style.background = "transparent"; }}>
+                      <td style={{ padding: "14px 16px", fontWeight: 700, color: C.white, maxWidth: 300, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                        <a href={p.page} target="_blank" rel="noreferrer" style={{ color: "#5b8cff", textDecoration: "none" }}>{p.page}</a>
+                      </td>
+                      {chartSiteId === "all" && (
+                        <td style={{ padding: "14px 16px", color: C.muted, fontSize: 12 }}>{p.domain}</td>
+                      )}
+                      <td style={{ padding: "14px 16px", color: C.green, fontWeight: 700 }}>{fmtMetric(p.clicks)}</td>
+                      <td style={{ padding: "14px 16px", color: "#5b8cff", fontWeight: 700 }}>{fmtMetric(p.impressions)}</td>
+                      <td style={{ padding: "14px 16px", color: C.gold, fontWeight: 700 }}>{fmtCtr(p.ctr)}</td>
+                      <td style={{ padding: "14px 16px", color: "#ff6b9d", fontWeight: 700 }}>{fmtPos(p.position)}</td>
                     </tr>
                   ))}
                 </tbody>
