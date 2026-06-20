@@ -1,7 +1,7 @@
 // src/pages/GscMetrics.jsx
 import { memo, useMemo, useState } from "react";
 import { Btn } from "../components/ui/index.jsx";
-import { useGscMetrics, useGscChart, useGscQueries, useGscPages, useGscDevices } from "../hooks/useStats.js";
+import { useGscMetrics, useGscChart, useGscQueries, useGscPages, useGscDevices, useGscCountries } from "../hooks/useStats.js";
 import { C } from "../constants.js";
 
 /* ─── Constants ─────────────────────────────────────── */
@@ -18,6 +18,21 @@ const METRICS = [
   { key: "ctr",         label: "CTR",          color: "#ffd060", fmt: fmtCtr     },
   { key: "position",    label: "Позиція",      color: "#ff6b9d", fmt: fmtPos     },
 ];
+
+const COUNTRY_FLAGS = {
+  "UKR": "🇺🇦", "USA": "🇺🇸", "POL": "🇵🇱", "DEU": "🇩🇪", "GBR": "🇬🇧",
+  "FRA": "🇫🇷", "ITA": "🇮🇹", "ESP": "🇪🇸", "CAN": "🇨🇦", "AUS": "🇦🇺",
+  "IND": "🇮🇳", "BRA": "🇧🇷", "JPN": "🇯🇵", "CHN": "🇨🇳", "KOR": "🇰🇷",
+  "TUR": "🇹🇷", "NLD": "🇳🇱", "SWE": "🇸🇪", "CHE": "🇨🇭", "AUT": "🇦🇹",
+  "KAZ": "🇰🇿", "BLR": "🇧🇾", "RUS": "🇷🇺", "ROU": "🇷🇴", "CZE": "🇨🇿",
+  "SVK": "🇸🇰", "HUN": "🇭🇺", "BGR": "🇧🇬", "GRC": "🇬🇷", "PRT": "🇵🇹",
+  "MEX": "🇲🇽", "ARG": "🇦🇷", "COL": "🇨🇴", "ZAF": "🇿🇦", "EGY": "🇪🇬",
+  "SAU": "🇸🇦", "ARE": "🇦🇪", "ISR": "🇮🇱", "VNM": "🇻🇳", "THA": "🇹🇭",
+  "IDN": "🇮🇩", "MYS": "🇲🇾", "SGP": "🇸🇬", "PHL": "🇵🇭", "NZL": "🇳🇿",
+  "IRL": "🇮🇪", "NOR": "🇳🇴", "DNK": "🇩🇰", "FIN": "🇫🇮", "BEL": "🇧🇪",
+  "ZZZ": "🏳️"
+};
+const getFlag = (code) => COUNTRY_FLAGS[code] || "🏳️";
 
 /* ─── Formatters ─────────────────────────────────────── */
 function fmtMetric(v) {
@@ -306,6 +321,7 @@ export default memo(function GscMetrics({ sites, onImportGsc }) {
   const queriesQ = useGscQueries(chartQueryIds, period, 100, enabled && activeTab === "queries" && chartQueryIds.length > 0);
   const pagesQ = useGscPages(chartQueryIds, period, 100, enabled && activeTab === "pages" && chartQueryIds.length > 0);
   const devicesQ = useGscDevices(chartQueryIds, period, enabled && activeTab === "overview" && chartQueryIds.length > 0);
+  const countriesQ = useGscCountries(chartQueryIds, period, 20, enabled && activeTab === "countries" && chartQueryIds.length > 0);
 
   const metrics = tableQ.data?.metrics ?? {};
   const missing = tableQ.data?.missing ?? [];
@@ -391,7 +407,7 @@ export default memo(function GscMetrics({ sites, onImportGsc }) {
       <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "center", marginBottom: 20, gap: 16 }}>
         {/* Tabs */}
         <div className="gsc-tabs" style={{ background: "rgba(255,255,255,0.03)", padding: 4, borderRadius: 12, border: `1px solid ${C.border}` }}>
-          {[{ id: "overview", label: "Огляд та Графіки" }, { id: "queries", label: "Пошукові запити" }, { id: "pages", label: "Топ сторінки" }].map(tab => (
+          {[{ id: "overview", label: "Огляд та Графіки" }, { id: "queries", label: "Пошукові запити" }, { id: "pages", label: "Топ сторінки" }, { id: "countries", label: "Країни" }].map(tab => (
             <button key={tab.id} onClick={() => setActiveTab(tab.id)}
               style={{
                 padding: "8px 16px", background: activeTab === tab.id ? "rgba(255,255,255,0.08)" : "transparent",
@@ -760,6 +776,55 @@ export default memo(function GscMetrics({ sites, onImportGsc }) {
                   ))}
                 </tbody>
               </table>
+            </div>
+          )}
+        </div>
+      )}
+
+      {sites.length > 0 && activeTab === "countries" && (
+        <div style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 16, overflow: "hidden", padding: "24px 0" }}>
+          {countriesQ.isLoading ? (
+            <div style={{ padding: 40, textAlign: "center", color: C.muted }}>Завантажуємо статистику по країнах...</div>
+          ) : countriesQ.error ? (
+            <div style={{ padding: 40, textAlign: "center", color: C.red }}>
+              Помилка завантаження<br/>
+              <small style={{ opacity: 0.6 }}>{countriesQ.error.message}</small>
+            </div>
+          ) : !countriesQ.data?.countries?.length ? (
+            <div style={{ padding: 40, textAlign: "center", color: C.muted }}>Немає даних по країнах за цей period</div>
+          ) : (
+            <div style={{ padding: "0 24px" }}>
+              {countriesQ.data.countries.map((c, i) => {
+                const maxClicks = Math.max(...countriesQ.data.countries.map(x => x.clicks));
+                const pct = maxClicks > 0 ? (c.clicks / maxClicks) * 100 : 0;
+                
+                return (
+                  <div key={i} style={{ display: "grid", gridTemplateColumns: "140px 1fr 100px", gap: 16, alignItems: "center", marginBottom: 16, paddingBottom: 16, borderBottom: i < countriesQ.data.countries.length - 1 ? `1px solid ${C.border}` : "none" }}>
+                    {/* Country label */}
+                    <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 14, fontWeight: 700, color: C.white }}>
+                      <span style={{ fontSize: 20 }}>{getFlag(c.country)}</span>
+                      <span>{c.country}</span>
+                    </div>
+                    
+                    {/* Bar and secondary stats */}
+                    <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+                      <div style={{ background: "rgba(255,255,255,0.05)", height: 8, borderRadius: 4, overflow: "hidden", width: "100%" }}>
+                        <div style={{ width: `${pct}%`, height: "100%", background: C.green, borderRadius: 4, transition: "width 0.5s ease-out" }} />
+                      </div>
+                      <div style={{ display: "flex", gap: 16, fontSize: 11, color: "rgba(255,255,255,0.4)" }}>
+                        <span>Покази: {fmtMetric(c.impressions)}</span>
+                        <span>CTR: {fmtCtr(c.ctr)}</span>
+                        <span>Поз: {fmtPos(c.position)}</span>
+                      </div>
+                    </div>
+                    
+                    {/* Main Metric */}
+                    <div style={{ textAlign: "right", color: C.green, fontWeight: 800, fontSize: 16 }}>
+                      {fmtMetric(c.clicks)} кліків
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           )}
         </div>

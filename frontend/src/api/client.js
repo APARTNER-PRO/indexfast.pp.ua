@@ -209,6 +209,10 @@ export const apiClient = {
     `/gsc/devices.php?site_ids=${encodeURIComponent(siteIds.join(','))}&days=${days}`,
     { _timeout: 300_000 }
   ),
+  gscCountries:  (siteIds, days = 30, limit = 20) => apiFetch(
+    `/gsc/countries.php?site_ids=${encodeURIComponent(siteIds.join(','))}&days=${days}&limit=${limit}`,
+    { _timeout: 300_000 }
+  ),
   // Dashboard
   stats:      ()     => apiFetch("/dashboard/stats.php"),
   // Sites
