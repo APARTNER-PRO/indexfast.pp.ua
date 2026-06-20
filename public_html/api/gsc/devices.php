@@ -39,6 +39,9 @@ $token = gscGetAccessToken($uid);
 $gscSiteList = gscListSites($uid, $token);
 $gscEntries  = $gscSiteList['sites'] ?? [];
 
+require_once __DIR__ . '/cache.php';
+$cachedDevices = gscGetCachedMetrics($uid, array_column($sites, 'id'), $days, 'devices');
+
 function resolveSiteUrl(string $domain, array $gscEntries, ?string $storedGscUrl): ?string {
     foreach ($gscEntries as $entry) {
         $siteUrl = $entry['siteUrl'] ?? '';
@@ -55,8 +58,36 @@ function resolveSiteUrl(string $domain, array $gscEntries, ?string $storedGscUrl
 $endDate   = date('Y-m-d', strtotime('-2 days'));
 $startDate = date('Y-m-d', strtotime('-' . ($days + 1) . ' days'));
 
+$aggDevices = [
+    'DESKTOP' => ['clicks' => 0, 'impressions' => 0, 'posSum' => 0, 'posCount' => 0],
+    'MOBILE'  => ['clicks' => 0, 'impressions' => 0, 'posSum' => 0, 'posCount' => 0],
+    'TABLET'  => ['clicks' => 0, 'impressions' => 0, 'posSum' => 0, 'posCount' => 0],
+];
+
+function aggregateDevices(array $rows, array &$aggDevices) {
+    foreach ($rows as $row) {
+        $device = strtoupper($row['keys'][0] ?? '');
+        if (!isset($aggDevices[$device])) continue;
+        
+        $aggDevices[$device]['clicks']      += (int)round($row['clicks'] ?? 0);
+        $aggDevices[$device]['impressions'] += (int)round($row['impressions'] ?? 0);
+        if (($row['position'] ?? 0) > 0) {
+            $aggDevices[$device]['posSum']   += (float)$row['position'];
+            $aggDevices[$device]['posCount'] += 1;
+        }
+    }
+}
+
 $multiRequests = [];
+$freshDevicesData = [];
+
 foreach ($sites as $site) {
+    $siteId = (int)$site['id'];
+    if (isset($cachedDevices[$siteId])) {
+        aggregateDevices($cachedDevices[$siteId], $aggDevices);
+        continue;
+    }
+
     $stored  = $hasGscUrl ? ($site['gsc_url'] ?? null) : null;
     $siteUrl = resolveSiteUrl($site['domain'], $gscEntries, $stored);
     if (!$siteUrl) continue;
@@ -65,6 +96,7 @@ foreach ($sites as $site) {
     $url     = "https://www.googleapis.com/webmasters/v3/sites/{$encoded}/searchAnalytics/query";
 
     $multiRequests[] = [
+        'site_id' => $siteId,
         'url' => $url,
         'payload' => json_encode([
             'startDate'  => $startDate,
@@ -75,12 +107,6 @@ foreach ($sites as $site) {
         ]),
     ];
 }
-
-$aggDevices = [
-    'DESKTOP' => ['clicks' => 0, 'impressions' => 0, 'posSum' => 0, 'posCount' => 0],
-    'MOBILE'  => ['clicks' => 0, 'impressions' => 0, 'posSum' => 0, 'posCount' => 0],
-    'TABLET'  => ['clicks' => 0, 'impressions' => 0, 'posSum' => 0, 'posCount' => 0],
-];
 
 $batchSize = 10;
 $chunks = array_chunk($multiRequests, $batchSize);
@@ -131,18 +157,10 @@ try {
             if ($code === 200) {
                 $data = json_decode((string)$body, true);
                 $rows = $data['rows'] ?? [];
+                $siteId = $chunk[$index]['site_id'];
                 
-                foreach ($rows as $row) {
-                    $device = strtoupper($row['keys'][0] ?? '');
-                    if (!isset($aggDevices[$device])) continue;
-                    
-                    $aggDevices[$device]['clicks']      += (int)round($row['clicks'] ?? 0);
-                    $aggDevices[$device]['impressions'] += (int)round($row['impressions'] ?? 0);
-                    if (($row['position'] ?? 0) > 0) {
-                        $aggDevices[$device]['posSum']   += (float)$row['position'];
-                        $aggDevices[$device]['posCount'] += 1;
-                    }
-                }
+                aggregateDevices($rows, $aggDevices);
+                $freshDevicesData[$siteId] = $rows;
             }
         }
     }
@@ -151,6 +169,10 @@ try {
     respond(500, 'Devices Error: ' . $e->getMessage());
 }
 curl_multi_close($mh);
+
+foreach ($freshDevicesData as $siteId => $rows) {
+    gscSetCachedMetrics($uid, $siteId, $days, $rows, 'devices');
+}
 
 $devicesFormatted = [];
 foreach ($aggDevices as $key => $vals) {
