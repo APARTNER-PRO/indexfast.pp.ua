@@ -22,9 +22,10 @@ export const PLAN_COLORS = {
 };
 
 export const NAV_ITEMS = [
-  { id: "overview", icon: "◈", label: "Огляд"     },
-  { id: "sites",    icon: "⊞", label: "Мої сайти" },
-  { id: "logs",     icon: "≡", label: "Логи"       },
-  { id: "billing",  icon: "◇", label: "Підписка"  },
-  { id: "profile",  icon: "◉", label: "Профіль"   },
+  { id: "overview",  icon: "◈", label: "Огляд"           },
+  { id: "gsc",       icon: "◉", label: "GSC статистика"   },
+  { id: "sites",     icon: "⊞", label: "Мої сайти"        },
+  { id: "logs",      icon: "≡", label: "Логи"             },
+  { id: "billing",   icon: "◇", label: "Підписка"         },
+  { id: "profile",   icon: "◉", label: "Профіль"          },
 ];

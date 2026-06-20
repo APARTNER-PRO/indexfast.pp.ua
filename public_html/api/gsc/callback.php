@@ -6,6 +6,7 @@
 // ══════════════════════════════════════════════
 require_once dirname(dirname(__DIR__)) . '/api/middleware.php';
 require_once dirname(dirname(__DIR__)) . '/api/db.php';
+require_once __DIR__ . '/helpers.php';
 
 $stateRaw = $_GET['state'] ?? '';
 $payload  = JWT::decode($stateRaw);
@@ -50,12 +51,8 @@ if (empty($tokenResp['access_token'])) {
 // ── Зберігаємо GSC access_token (короткоживучий, але для імпорту достатньо)
 $gscToken = $tokenResp['access_token'];
 
-// Зберігаємо в БД для подальшого використання через API (на 1 годину)
-$expires = date('Y-m-d H:i:s', time() + 3600);
-DB::exec(
-    "UPDATE users SET gsc_access_token=?, gsc_token_expires=? WHERE id=?",
-    [$gscToken, $expires, $uid]
-);
+// Зберігаємо в БД для подальшого використання через API
+gscSaveTokens($uid, $gscToken, $tokenResp['refresh_token'] ?? null, (int)($tokenResp['expires_in'] ?? 3600));
 
 header('Location: ' . FRONTEND_URL . '/app/dashboard?gsc=ready');
 exit;

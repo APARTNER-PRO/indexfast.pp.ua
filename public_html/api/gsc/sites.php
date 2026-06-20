@@ -6,25 +6,11 @@
 // ══════════════════════════════════════════════
 require_once dirname(dirname(__DIR__)) . '/api/middleware.php';
 require_once dirname(dirname(__DIR__)) . '/api/db.php';
+require_once __DIR__ . '/helpers.php';
 
 requireMethod('GET');
 $uid = (int)requireAuth()['sub'];
-
-$user = DB::row(
-    "SELECT gsc_access_token, gsc_token_expires FROM users WHERE id=?",
-    [$uid]
-);
-
-if (!$user || empty($user['gsc_access_token'])) {
-    respond(403, 'Не авторизовано для Google Search Console. Спочатку підключіть GSC.');
-}
-
-// Перевіряємо чи не протік токен
-if ($user['gsc_token_expires'] && strtotime($user['gsc_token_expires']) < time()) {
-    // Очищаємо протілий токен
-    DB::exec("UPDATE users SET gsc_access_token=NULL, gsc_token_expires=NULL WHERE id=?", [$uid]);
-    respond(403, 'GSC токен протік. Підключіть Search Console знову.');
-}
+$token = gscGetAccessToken($uid);
 
 // ── Запит до Search Console API
 $ch = curl_init('https://www.googleapis.com/webmasters/v3/sites');
@@ -32,7 +18,7 @@ curl_setopt_array($ch, [
     CURLOPT_RETURNTRANSFER => true,
     CURLOPT_TIMEOUT        => 10,
     CURLOPT_HTTPHEADER     => [
-        'Authorization: Bearer ' . $user['gsc_access_token'],
+        'Authorization: Bearer ' . $token,
         'Accept: application/json',
     ],
 ]);

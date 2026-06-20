@@ -3,6 +3,7 @@ import { memo, useState, useEffect } from "react";
 import { SitesTable }       from "../components/SitesTable.jsx";
 import { EditSiteModal }   from "../components/EditSiteModal.jsx";
 import { Btn, Badge }    from "../components/ui/index.jsx";
+import { useGscMetrics } from "../hooks/useStats.js";
 import { C }             from "../constants.js";
 
 const SITES_PAGE_STYLES = `
@@ -19,10 +20,12 @@ const SITES_PAGE_STYLES = `
 
 export default memo(function Sites({
   sites, sitesList, sitesLimit, plan,
-  today, onAddSite, onRun, onDelete, onToggle,
+  today, onAddSite, onRun, onDelete, onToggle, onImportGsc,
 }) {
   const [filter,  setFilter]  = useState("all");
   const [editSite, setEditSite] = useState(null); // сайт для редагування
+  const siteIds = sitesList.map(s => s.id);
+  const gscMetrics = useGscMetrics(siteIds, 28, siteIds.length > 0);
 
 
   const filtered = filter === "all"
@@ -147,6 +150,10 @@ export default memo(function Sites({
             onDelete={onDelete}
             onToggle={onToggle}
             onEdit={setEditSite}
+            gscMetrics={gscMetrics.data?.metrics ?? {}}
+            gscLoading={gscMetrics.isLoading}
+            gscError={gscMetrics.error}
+            onImportGsc={onImportGsc}
           />
         )}
       </div>

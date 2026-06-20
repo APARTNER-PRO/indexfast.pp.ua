@@ -2,6 +2,7 @@
 import { memo, useCallback } from "react";
 import { Badge, Btn, ProgressBar, Sparkline } from "../components/ui/index.jsx";
 import { SitesTable } from "../components/SitesTable.jsx";
+import { useGscMetrics } from "../hooks/useStats.js";
 import { C } from "../constants.js";
 
 const OVERVIEW_MOBILE = `
@@ -25,11 +26,13 @@ const OVERVIEW_MOBILE = `
 `;
 
 export default memo(function Overview({
-  data, onAddSite, onRun, onDelete, onToggle, onGoLogs, onGoBilling,
+  data, onAddSite, onRun, onDelete, onToggle, onGoLogs, onGoBilling, onImportGsc,
 }) {
   const { user, today, month, sites, sites_limit, logs, chart } = data;
   const plan = user.plan;
   const remaining = today.remaining;
+  const siteIds = sites.map(s => s.id);
+  const gscMetrics = useGscMetrics(siteIds, 28, siteIds.length > 0);
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
@@ -176,7 +179,17 @@ export default memo(function Overview({
             + Додати сайт
           </Btn>
         </div>
-        <SitesTable sites={sites} remaining={remaining} onRun={onRun} onDelete={onDelete} onToggle={onToggle} />
+        <SitesTable
+          sites={sites}
+          remaining={remaining}
+          onRun={onRun}
+          onDelete={onDelete}
+          onToggle={onToggle}
+          gscMetrics={gscMetrics.data?.metrics ?? {}}
+          gscLoading={gscMetrics.isLoading}
+          gscError={gscMetrics.error}
+          onImportGsc={onImportGsc}
+        />
       </div>
 
       {/* Логи — preview */}

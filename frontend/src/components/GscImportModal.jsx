@@ -110,6 +110,7 @@ export const GscImportModal = memo(function GscImportModal({
         await apiClient.addSite({
           domain:      site.domain,
           sitemap_url: bestSitemap,
+          gsc_url:     site.gsc_url,
           service_account: sa.trim() || undefined,
         });
         res.push({ domain: site.domain, ok: true });

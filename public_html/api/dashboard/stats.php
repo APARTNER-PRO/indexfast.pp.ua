@@ -5,6 +5,7 @@
 require_once dirname(__DIR__) . '/middleware.php';
 require_once dirname(__DIR__) . '/db.php';
 require_once dirname(__DIR__) . '/plans.php';
+require_once dirname(__DIR__) . '/gsc/helpers.php';
 requireMethod('GET');
 
 $uid = (int)requireAuth()['sub'];
@@ -40,11 +41,12 @@ $month = (int)(DB::row(
 )['s'] ?? 0);
 
 // ── 3. Сайти
+$hasGscUrl = gscHasGscUrlColumn();
 $sites = [];
 try {
     $sites = DB::all(
         "SELECT id, domain, sitemap_url, status, error_message,
-                total_urls, indexed_total, last_run_at
+                total_urls, indexed_total, last_run_at" . ($hasGscUrl ? ', gsc_url' : '') . "
          FROM sites WHERE user_id = ? ORDER BY created_at DESC",
         [$uid]
     );
@@ -158,6 +160,7 @@ respondOk('OK', [
         'indexed_total' => (int)$s['indexed_total'],
         'last_run_at'   => $s['last_run_at'],
         'has_sa'        => isset($sitesHasSa[$s['id']]),
+        'gsc_url'       => $hasGscUrl ? ($s['gsc_url'] ?? null) : null,
         'active_job'    => isset($activeJobs[$s['id']]) ? [
             'id'       => (int)$activeJobs[$s['id']]['id'],
             'status'   => $activeJobs[$s['id']]['status'],

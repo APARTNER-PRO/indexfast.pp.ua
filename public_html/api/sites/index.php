@@ -8,10 +8,12 @@
 require_once dirname(__DIR__) . '/middleware.php';
 require_once dirname(__DIR__) . '/db.php';
 require_once dirname(__DIR__) . '/plans.php';
+require_once dirname(__DIR__) . '/gsc/helpers.php';
 
 $uid  = (int)requireAuth()['sub'];
 $user = DB::row("SELECT plan FROM users WHERE id=?", [$uid]);
 $plan = $user['plan'] ?? 'start';
+$hasGscUrl = gscHasGscUrlColumn();
 
 // ════════════════════════════════
 //  GET — список сайтів
@@ -19,7 +21,7 @@ $plan = $user['plan'] ?? 'start';
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $sites  = DB::all(
         "SELECT id, domain, sitemap_url, status, error_message,
-                total_urls, indexed_total, last_run_at, created_at
+                total_urls, indexed_total, last_run_at, created_at" . ($hasGscUrl ? ', gsc_url' : '') . "
          FROM sites WHERE user_id=? ORDER BY created_at DESC",
         [$uid]
     );
@@ -37,6 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             'indexed_total' => (int)$s['indexed_total'],
             'last_run_at'   => $s['last_run_at'],
             'created_at'    => $s['created_at'],
+            'gsc_url'       => $hasGscUrl ? ($s['gsc_url'] ?? null) : null,
         ], $sites),
         'plan'   => $plan,
         'limits' => $limits,
@@ -63,6 +66,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $sitemap = trim($body['sitemap_url']);
     if (!filter_var($sitemap, FILTER_VALIDATE_URL))
         respond(422, 'Невалідний URL sitemap.xml');
+
+    $gscUrl = trim($body['gsc_url'] ?? '');
+    if ($gscUrl && !filter_var($gscUrl, FILTER_VALIDATE_URL) && strpos($gscUrl, 'sc-domain:') !== 0)
+        respond(422, 'Невалідний Google Search Console resource URL');
 
     // Валідація Google Service Account JSON (необов'язковий — можна додати пізніше)
     $saRaw = trim($body['service_account'] ?? '');
@@ -100,16 +107,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($hasCol) {
         // Стара схема
         $siteId = DB::exec(
-            "INSERT INTO sites (user_id, domain, sitemap_url, service_account, status)
-             VALUES (?, ?, ?, ?, 'active')",
-            [$uid, $domain, $sitemap, $encKey]
+            "INSERT INTO sites (user_id, domain, sitemap_url, service_account, status" . ($hasGscUrl ? ', gsc_url' : '') . ")
+             VALUES (?, ?, ?, ?, 'active'" . ($hasGscUrl ? ', ?' : '') . ")",
+            $hasGscUrl ? [$uid, $domain, $sitemap, $encKey, $gscUrl] : [$uid, $domain, $sitemap, $encKey]
         );
     } else {
         // Нова схема (schema_v3) — credentials окремо
         $siteId = DB::exec(
-            "INSERT INTO sites (user_id, domain, sitemap_url, status)
-             VALUES (?, ?, ?, 'active')",
-            [$uid, $domain, $sitemap]
+            "INSERT INTO sites (user_id, domain, sitemap_url, status" . ($hasGscUrl ? ', gsc_url' : '') . ")
+             VALUES (?, ?, ?, 'active'" . ($hasGscUrl ? ', ?' : '') . ")",
+            $hasGscUrl ? [$uid, $domain, $sitemap, $gscUrl] : [$uid, $domain, $sitemap]
         );
     }
 
@@ -133,7 +140,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         DB::exec("UPDATE sites SET total_urls=? WHERE id=?", [$urlCount, $siteId]);
 
     $site = DB::row(
-        "SELECT id, domain, sitemap_url, status, total_urls, indexed_total, created_at
+        "SELECT id, domain, sitemap_url, status, total_urls, indexed_total, created_at" . ($hasGscUrl ? ', gsc_url' : '') . "
          FROM sites WHERE id=?",
         [$siteId]
     );
@@ -146,6 +153,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'total_urls'    => (int)$site['total_urls'],
         'indexed_total' => (int)$site['indexed_total'],
         'created_at'    => $site['created_at'],
+        'gsc_url'       => $hasGscUrl ? ($site['gsc_url'] ?? null) : null,
     ]]);
 }
 

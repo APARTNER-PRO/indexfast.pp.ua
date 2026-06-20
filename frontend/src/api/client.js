@@ -189,6 +189,10 @@ export const apiClient = {
   },
   gscSites:    ()     => apiFetch("/gsc/sites.php"),
   gscSitemaps: (url)   => apiFetch(`/gsc/sitemaps.php?url=${encodeURIComponent(url)}`),
+  gscMetrics:  (siteIds, days = 28) => apiFetch(
+    `/gsc/metrics.php?site_ids=${encodeURIComponent(siteIds.join(','))}&days=${days}`,
+    { _timeout: 60_000 }
+  ),
   // Dashboard
   stats:      ()     => apiFetch("/dashboard/stats.php"),
   // Sites
