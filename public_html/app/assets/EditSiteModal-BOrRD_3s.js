@@ -1,4 +1,4 @@
-import{j as e,b as L}from"./vendor-query-BEUqgBPG.js";import{r as d}from"./vendor-router-nbMWPCiB.js";import{P as T,g as E,B as c,M as N,F as z,I as R,T as U,K as W}from"./App-pcwN3vO6.js";import{C as i}from"./index-CR8ionkV.js";import{a as O}from"./client-DbjFF3zR.js";const D=`
+import{j as e,b as L}from"./vendor-query-BEUqgBPG.js";import{r as d}from"./vendor-router-nbMWPCiB.js";import{P as T,g as E,B as c,M as N,F as z,I as R,T as U,K as W}from"./App-BM1zWN3O.js";import{C as i}from"./index-D0Aax2q9.js";import{a as O}from"./client-DbjFF3zR.js";const D=`
   @media (max-width: 640px) {
     .sites-table-wrap table { display: none; }
     .sites-mobile-list { display: flex !important; }
