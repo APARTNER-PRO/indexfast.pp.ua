@@ -21,7 +21,7 @@ $hasGscUrl = gscHasGscUrlColumn();
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $sites  = DB::all(
         "SELECT id, domain, sitemap_url, status, error_message,
-                total_urls, indexed_total, last_run_at, created_at" . ($hasGscUrl ? ', gsc_url' : '') . "
+                total_urls, indexed_total, last_run_at, created_at, indexnow_key, indexnow_enabled" . ($hasGscUrl ? ', gsc_url' : '') . "
          FROM sites WHERE user_id=? ORDER BY created_at DESC",
         [$uid]
     );
@@ -39,6 +39,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             'indexed_total' => (int)$s['indexed_total'],
             'last_run_at'   => $s['last_run_at'],
             'created_at'    => $s['created_at'],
+            'indexnow_key'  => $s['indexnow_key'],
+            'indexnow_enabled' => (bool)$s['indexnow_enabled'],
             'gsc_url'       => $hasGscUrl ? ($s['gsc_url'] ?? null) : null,
         ], $sites),
         'plan'   => $plan,
@@ -104,19 +106,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     )['cnt'] > 0;
 
     // ── INSERT в sites
+    $indexNowKey = bin2hex(random_bytes(16));
     if ($hasCol) {
         // Стара схема
         $siteId = DB::exec(
-            "INSERT INTO sites (user_id, domain, sitemap_url, service_account, status" . ($hasGscUrl ? ', gsc_url' : '') . ")
-             VALUES (?, ?, ?, ?, 'active'" . ($hasGscUrl ? ', ?' : '') . ")",
-            $hasGscUrl ? [$uid, $domain, $sitemap, $encKey, $gscUrl] : [$uid, $domain, $sitemap, $encKey]
+            "INSERT INTO sites (user_id, domain, sitemap_url, service_account, status, indexnow_key" . ($hasGscUrl ? ', gsc_url' : '') . ")
+             VALUES (?, ?, ?, ?, 'active', ?" . ($hasGscUrl ? ', ?' : '') . ")",
+            $hasGscUrl ? [$uid, $domain, $sitemap, $encKey, $indexNowKey, $gscUrl] : [$uid, $domain, $sitemap, $encKey, $indexNowKey]
         );
     } else {
         // Нова схема (schema_v3) — credentials окремо
         $siteId = DB::exec(
-            "INSERT INTO sites (user_id, domain, sitemap_url, status" . ($hasGscUrl ? ', gsc_url' : '') . ")
-             VALUES (?, ?, ?, 'active'" . ($hasGscUrl ? ', ?' : '') . ")",
-            $hasGscUrl ? [$uid, $domain, $sitemap, $gscUrl] : [$uid, $domain, $sitemap]
+            "INSERT INTO sites (user_id, domain, sitemap_url, status, indexnow_key" . ($hasGscUrl ? ', gsc_url' : '') . ")
+             VALUES (?, ?, ?, 'active', ?" . ($hasGscUrl ? ', ?' : '') . ")",
+            $hasGscUrl ? [$uid, $domain, $sitemap, $indexNowKey, $gscUrl] : [$uid, $domain, $sitemap, $indexNowKey]
         );
     }
 
@@ -140,7 +143,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         DB::exec("UPDATE sites SET total_urls=? WHERE id=?", [$urlCount, $siteId]);
 
     $site = DB::row(
-        "SELECT id, domain, sitemap_url, status, total_urls, indexed_total, created_at" . ($hasGscUrl ? ', gsc_url' : '') . "
+        "SELECT id, domain, sitemap_url, status, total_urls, indexed_total, created_at, indexnow_key, indexnow_enabled" . ($hasGscUrl ? ', gsc_url' : '') . "
          FROM sites WHERE id=?",
         [$siteId]
     );
@@ -153,6 +156,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'total_urls'    => (int)$site['total_urls'],
         'indexed_total' => (int)$site['indexed_total'],
         'created_at'    => $site['created_at'],
+        'indexnow_key'  => $site['indexnow_key'],
+        'indexnow_enabled' => (bool)$site['indexnow_enabled'],
         'gsc_url'       => $hasGscUrl ? ($site['gsc_url'] ?? null) : null,
     ]]);
 }

@@ -110,6 +110,11 @@ define('GOOGLE_REDIRECT_URI',  FRONTEND_URL . '/api/auth/google/callback.php');
 define('GOOGLE_SCOPES',        'openid email profile');
 
 // ─────────────────────────────────────────────
+//  INDEXNOW
+// ─────────────────────────────────────────────
+define('INDEXNOW_ENABLED', env('INDEXNOW_ENABLED', false));
+
+// ─────────────────────────────────────────────
 //  EMAIL (SMTP)
 // ─────────────────────────────────────────────
 define('MAIL_FROM',      env('MAIL_FROM',      'noreply@indexfast.pp.ua'));
