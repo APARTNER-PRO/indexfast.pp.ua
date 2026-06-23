@@ -436,6 +436,7 @@ export default function App() {
               onGoLogs={handleGoLogs}
               onGoBilling={handleGoBilling}
               onImportGsc={handleImportGsc}
+              showToast={showToast}
             />
           </Suspense>
         );

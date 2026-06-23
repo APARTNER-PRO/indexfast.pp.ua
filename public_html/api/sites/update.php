@@ -134,7 +134,7 @@ if (isset($body['sitemap_url'])) {
 // Повертаємо оновлений сайт
 $updated = DB::row(
     "SELECT id, domain, sitemap_url, status, error_message,
-            total_urls, indexed_total, last_run_at" . ($hasGscUrl ? ', gsc_url' : '') . "
+            total_urls, indexed_total, last_run_at, indexnow_key, indexnow_enabled" . ($hasGscUrl ? ', gsc_url' : '') . "
      FROM sites WHERE id=?",
     [$siteId]
 );
@@ -155,6 +155,8 @@ respondOk('Сайт оновлено', [
         'indexed_total' => (int)$updated['indexed_total'],
         'last_run_at'   => $updated['last_run_at'],
         'gsc_url'       => $hasGscUrl ? ($updated['gsc_url'] ?? null) : null,
+        'indexnow_enabled' => (bool)$updated['indexnow_enabled'],
+        'indexnow_key'  => $updated['indexnow_key'],
         'has_sa'        => $hasSa,
     ],
 ]);

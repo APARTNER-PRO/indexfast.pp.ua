@@ -7,7 +7,7 @@ import { KEYS }                                from "../hooks/useStats.js";
 import { C }                                   from "../constants.js";
 
 export const EditSiteModal = memo(function EditSiteModal({
-  open, onClose, site, showToast,
+  open, onClose, site, showToast, initialTab = null,
 }) {
   const [domain,  setDomain]  = useState("");
   const [sitemap, setSitemap] = useState("");
@@ -16,18 +16,20 @@ export const EditSiteModal = memo(function EditSiteModal({
   const [loading, setLoading] = useState(false);
   const [error,   setError]   = useState("");
   const [tab,     setTab]     = useState("info"); // info | sa | indexnow
+  const [localSite, setLocalSite] = useState(null);
 
   const qc = useQueryClient();
 
   // Заповнюємо з поточного сайту
   useEffect(() => {
     if (open && site) {
+      setLocalSite(site);
       setDomain(site.domain ?? "");
       setSitemap(site.sitemap_url ?? "");
       setSa("");
       setIndexnowEnabled(site.indexnow_enabled ?? false);
       setError("");
-      setTab(site.has_sa === false ? "sa" : "info"); // якщо немає SA — одразу на вкладку SA
+      setTab(initialTab ?? (site.has_sa === false ? "sa" : "info")); // initialTab має пріоритет
     }
   }, [open, site]);
 
@@ -65,10 +67,18 @@ export const EditSiteModal = memo(function EditSiteModal({
       };
       if (trimSa) body.service_account = trimSa;
 
-      await apiClient.updateSite(body);
+      const res = await apiClient.updateSite(body);
+      if (res?.site) setLocalSite(res.site);
+      
       qc.invalidateQueries({ queryKey: KEYS.stats });
       showToast?.("✓ Сайт оновлено");
-      onClose();
+      
+      // Якщо IndexNow щойно увімкнули, залишаємо модалку відкритою на вкладці indexnow, щоб показати згенерований ключ
+      if (indexnowEnabled && !(localSite || site).indexnow_enabled) {
+        setTab("indexnow");
+      } else {
+        onClose();
+      }
     } catch (e) {
       setError(e.message || "Помилка збереження");
     } finally {
@@ -76,14 +86,15 @@ export const EditSiteModal = memo(function EditSiteModal({
     }
   }
 
-  if (!site) return null;
+  const currentSite = localSite || site;
+  if (!currentSite) return null;
 
-  const hasSa = site.has_sa !== false;
+  const hasSa = currentSite.has_sa !== false;
 
   return (
     <Modal open={open} onClose={onClose}
       title={`Редагувати сайт`}
-      subtitle={site.domain}>
+      subtitle={currentSite.domain}>
 
       {/* Вкладки */}
       <div style={{ display: "flex", gap: 4, marginBottom: 20,
@@ -176,27 +187,120 @@ export const EditSiteModal = memo(function EditSiteModal({
       {/* Вкладка: IndexNow */}
       {tab === "indexnow" && (
         <>
-          <div style={{ background: "rgba(0,212,255,0.06)", border: "1px solid rgba(0,212,255,0.15)",
-            borderRadius: 10, padding: "12px 16px", marginBottom: 16, fontSize: 13, color: "#c8c8d8" }}>
-            <p style={{ margin: "0 0 8px 0" }}>
-              <strong style={{ color: "#00d4ff" }}>IndexNow</strong> дозволяє миттєво відправляти URL у Bing, Yandex, Seznam та DuckDuckGo. Це працює паралельно з Google Indexing API.
-            </p>
-            {site.indexnow_key && (
-              <div style={{ marginTop: 12 }}>
-                <div style={{ fontSize: 11, color: C.muted, marginBottom: 4 }}>Ваш ключ верифікації:</div>
-                <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
-                  <code style={{ background: "rgba(255,255,255,0.05)", padding: "4px 8px", borderRadius: 4, color: "#fff" }}>
-                    {site.indexnow_key}
-                  </code>
+          {(() => {
+            const key      = currentSite.indexnow_key;
+            
+            if (!key) {
+              return (
+                <div style={{ marginBottom: 20, padding: "16px 20px", background: "rgba(0,212,255,0.06)", border: "1px solid rgba(0,212,255,0.2)", borderRadius: 12 }}>
+                  <div style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
+                    <div style={{ fontSize: 24, lineHeight: 1 }}>🚀</div>
+                    <div>
+                      <div style={{ fontSize: 14, fontWeight: 700, color: "#00d4ff", marginBottom: 6 }}>IndexNow не активовано</div>
+                      <div style={{ fontSize: 13, color: "#c8c8d8", lineHeight: 1.5 }}>
+                        IndexNow дозволяє миттєво повідомляти Bing, Yandex та DuckDuckGo про нові сторінки.<br/>
+                        Щоб отримати ключ верифікації та інструкцію, <strong>увімкніть опцію нижче та збережіть налаштування</strong>.
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <p style={{ marginTop: 12, fontSize: 12, color: C.muted }}>
-                  1. Створіть файл <strong>{site.indexnow_key}.txt</strong><br/>
-                  2. Вставте в нього ваш ключ: <strong>{site.indexnow_key}</strong><br/>
-                  3. Завантажте файл у корінь вашого сайту: <strong>https://{site.domain}/{site.indexnow_key}.txt</strong>
-                </p>
+              );
+            }
+
+            const filename = `${key}.txt`;
+            const fileUrl  = `https://${currentSite.domain}/${filename}`;
+            const copy = (text, label) =>
+              navigator.clipboard.writeText(text).then(() => showToast?.(`✓ ${label} скопійовано`));
+
+            const copyRowStyle = {
+              display: "flex", alignItems: "center", gap: 6, marginTop: 6,
+              background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.07)",
+              borderRadius: 6, padding: "5px 8px",
+            };
+            const codeStyle = {
+              fontFamily: "monospace", fontSize: 12, color: "#e0e0ff",
+              flex: 1, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap",
+            };
+            const iconBtn = (onClick, icon, title) => (
+              <button onClick={onClick} title={title} style={{
+                flexShrink: 0, width: 24, height: 24, padding: 0,
+                display: "flex", alignItems: "center", justifyContent: "center",
+                fontSize: 12, cursor: "pointer",
+                background: "rgba(0,212,255,0.08)", color: "#00d4ff",
+                border: "1px solid rgba(0,212,255,0.2)", borderRadius: 4,
+                fontFamily: "inherit",
+              }}>{icon}</button>
+            );
+
+            const steps = [
+              {
+                n: 1,
+                text: <>Створіть текстовий файл з назвою:</>,
+                value: filename,
+                copyLabel: "назву файлу",
+                extra: null,
+              },
+              {
+                n: 2,
+                text: <>Вставте в нього <strong style={{ color: "#e0e0ff" }}>тільки цей рядок</strong> (ваш ключ верифікації):</>,
+                value: key,
+                copyLabel: "ключ",
+                extra: null,
+              },
+              {
+                n: 3,
+                text: <>Завантажте файл у корінь сайту — він має бути доступний за адресою:</>,
+                value: fileUrl,
+                copyLabel: "URL",
+                extra: fileUrl,
+              },
+            ];
+
+            return (
+              <div style={{ marginBottom: 14 }}>
+                <div style={{ fontSize: 12, color: C.muted, marginBottom: 14, lineHeight: 1.5 }}>
+                  <strong style={{ color: "#00d4ff" }}>IndexNow</strong> — дозволяє миттєво повідомляти Bing, Yandex та DuckDuckGo про нові сторінки.
+                  Для верифікації потрібно розмістити файл-ключ на вашому сайті.
+                </div>
+
+                {steps.map(({ n, text, value, copyLabel, extra }) => (
+                  <div key={n} style={{ display: "flex", gap: 10, marginBottom: 12 }}>
+                    {/* Номер кроку */}
+                    <div style={{
+                      flexShrink: 0, width: 22, height: 22, borderRadius: "50%",
+                      background: "rgba(0,212,255,0.12)", border: "1px solid rgba(0,212,255,0.3)",
+                      display: "flex", alignItems: "center", justifyContent: "center",
+                      fontSize: 11, fontWeight: 700, color: "#00d4ff", marginTop: 1,
+                    }}>{n}</div>
+
+                    {/* Текст + рядок копіювання */}
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <div style={{ fontSize: 13, color: "#c8c8d8", lineHeight: 1.5 }}>{text}</div>
+                      <div style={copyRowStyle}>
+                        {extra
+                          ? <a href={extra} target="_blank" rel="noopener noreferrer"
+                              style={{ ...codeStyle, color: "#00d4ff", textDecoration: "none" }}
+                              title="Відкрити в новій вкладці">{value}</a>
+                          : <span style={codeStyle}>{value}</span>}
+                        {iconBtn(() => copy(value, copyLabel), "📋", `Копіювати ${copyLabel}`)}
+                        {extra && (
+                          <a href={extra} target="_blank" rel="noopener noreferrer"
+                            title="Відкрити в новій вкладці"
+                            style={{
+                              flexShrink: 0, width: 24, height: 24,
+                              display: "flex", alignItems: "center", justifyContent: "center",
+                              fontSize: 12, background: "rgba(0,212,255,0.08)", color: "#00d4ff",
+                              border: "1px solid rgba(0,212,255,0.2)", borderRadius: 4,
+                              textDecoration: "none",
+                            }}>🔗</a>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
-            )}
-          </div>
+            );
+          })()}
 
           <label style={{ display: "flex", alignItems: "center", gap: 10, cursor: "pointer",
             background: "rgba(255,255,255,0.02)", padding: "12px 16px", borderRadius: 10,

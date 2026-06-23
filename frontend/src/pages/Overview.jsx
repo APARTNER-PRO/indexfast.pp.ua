@@ -27,9 +27,10 @@ const OVERVIEW_MOBILE = `
 `;
 
 export default memo(function Overview({
-  data, onAddSite, onRun, onDelete, onToggle, onGoLogs, onGoBilling, onImportGsc,
+  data, onAddSite, onRun, onDelete, onToggle, onGoLogs, onGoBilling, onImportGsc, showToast,
 }) {
-  const [editSite, setEditSite] = useState(null);
+  const [editSite, setEditSite] = useState(null); // { site, tab }
+  const handleEdit = (site, tab = null) => setEditSite({ site, tab });
   const { user, today, month, sites, sites_limit, logs, chart } = data;
   const plan = user.plan;
   const remaining = today.remaining;
@@ -187,7 +188,8 @@ export default memo(function Overview({
           onRun={onRun}
           onDelete={onDelete}
           onToggle={onToggle}
-          onEdit={setEditSite}
+          onEdit={(s) => handleEdit(s)}
+          onEditWithTab={handleEdit}
           gscMetrics={gscMetrics.data?.metrics ?? {}}
           gscLoading={gscMetrics.isLoading}
           gscError={gscMetrics.error}
@@ -217,7 +219,9 @@ export default memo(function Overview({
       <EditSiteModal
         open={!!editSite}
         onClose={() => setEditSite(null)}
-        site={editSite}
+        site={editSite?.site ?? null}
+        initialTab={editSite?.tab ?? null}
+        showToast={showToast}
       />
     </div>
   );

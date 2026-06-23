@@ -20,10 +20,11 @@ const SITES_PAGE_STYLES = `
 
 export default memo(function Sites({
   sites, sitesList, sitesLimit, plan,
-  today, onAddSite, onRun, onDelete, onToggle, onImportGsc,
+  today, onAddSite, onRun, onDelete, onToggle, onImportGsc, showToast,
 }) {
   const [filter,  setFilter]  = useState("all");
-  const [editSite, setEditSite] = useState(null); // сайт для редагування
+  const [editSite, setEditSite] = useState(null); // { site, tab }
+  const handleEdit = (site, tab = null) => setEditSite({ site, tab });
   const siteIds = sitesList.map(s => s.id);
   const gscMetrics = useGscMetrics(siteIds, 28, siteIds.length > 0);
 
@@ -149,7 +150,8 @@ export default memo(function Sites({
             onRun={onRun}
             onDelete={onDelete}
             onToggle={onToggle}
-            onEdit={setEditSite}
+            onEdit={(s) => handleEdit(s)}
+            onEditWithTab={handleEdit}
             gscMetrics={gscMetrics.data?.metrics ?? {}}
             gscLoading={gscMetrics.isLoading}
             gscError={gscMetrics.error}
@@ -162,7 +164,9 @@ export default memo(function Sites({
     <EditSiteModal
       open={!!editSite}
       onClose={() => setEditSite(null)}
-      site={editSite}
+      site={editSite?.site ?? null}
+      initialTab={editSite?.tab ?? null}
+      showToast={showToast}
     />
 
     </>
