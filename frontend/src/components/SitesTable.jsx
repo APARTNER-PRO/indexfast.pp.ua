@@ -27,7 +27,7 @@ function fmtPosition(value) {
 }
 
 export const SitesTable = memo(function SitesTable({
-  sites, remaining, onRun, onDelete, onToggle, onEdit,
+  sites, remaining, onRun, onDelete, onToggle, onEdit, onEditWithTab,
   gscMetrics = {}, gscLoading = false, gscError = null, onImportGsc,
 }) {
   if (!sites.length) return (
@@ -69,6 +69,7 @@ export const SitesTable = memo(function SitesTable({
               onDelete={onDelete}
               onToggle={onToggle}
               onEdit={onEdit}
+              onEditWithTab={onEditWithTab}
               gscMetrics={gscMetrics}
             />
           ))}
@@ -86,6 +87,7 @@ export const SitesTable = memo(function SitesTable({
             onDelete={onDelete}
             onToggle={onToggle}
             onEdit={onEdit}
+            onEditWithTab={onEditWithTab}
             gscMetrics={gscMetrics}
           />
         ))}
@@ -95,7 +97,7 @@ export const SitesTable = memo(function SitesTable({
 });
 
 /* ── Mobile card layout ── */
-const SiteCard = memo(function SiteCard({ site: s, remaining, onRun, onDelete, onToggle, onEdit, gscMetrics }) {
+const SiteCard = memo(function SiteCard({ site: s, remaining, onRun, onDelete, onToggle, onEdit, onEditWithTab, gscMetrics }) {
   const handleRun    = () => onRun(s);
   const handleDelete = () => onDelete(s);
   const handleToggle = () => onToggle(s.id);
@@ -131,6 +133,15 @@ const SiteCard = memo(function SiteCard({ site: s, remaining, onRun, onDelete, o
                   borderRadius: 4, padding: "1px 5px", cursor: "pointer" }}
                 onClick={handleEdit}>
                 ⚠ SA
+              </span>
+            )}
+            {s.indexnow_enabled && (
+              <span title="IndexNow підключено — натисніть щоб переглянути"
+                style={{ fontSize: 10, background: "rgba(0,212,255,0.1)",
+                  color: "#00d4ff", border: "1px solid rgba(0,212,255,0.25)",
+                  borderRadius: 4, padding: "1px 5px", cursor: "pointer" }}
+                onClick={() => onEditWithTab?.(s, "indexnow")}>
+                🚀 IndexNow
               </span>
             )}
           </div>
@@ -225,7 +236,7 @@ const SiteCard = memo(function SiteCard({ site: s, remaining, onRun, onDelete, o
 });
 
 /* ── Desktop table row ── */
-const SiteRow = memo(function SiteRow({ site: s, remaining, onRun, onDelete, onToggle, onEdit, gscMetrics }) {
+const SiteRow = memo(function SiteRow({ site: s, remaining, onRun, onDelete, onToggle, onEdit, onEditWithTab, gscMetrics }) {
   // Прямі виклики замість useCallback — уникаємо stale closure
   const handleRun    = () => onRun(s);
   const handleDelete = () => onDelete(s);
@@ -254,7 +265,7 @@ const SiteRow = memo(function SiteRow({ site: s, remaining, onRun, onDelete, onT
             {isPaused ? "⏸" : isError ? "⚠️" : "🌐"}
           </div>
           <div>
-            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
               <span style={{ fontWeight: 600, color: isPaused ? C.muted : C.white,
                 transition: "color 0.2s" }}>{s.domain}</span>
               {s.has_sa === false && (
@@ -264,6 +275,15 @@ const SiteRow = memo(function SiteRow({ site: s, remaining, onRun, onDelete, onT
                     borderRadius: 4, padding: "1px 5px", cursor: "pointer" }}
                   onClick={handleEdit}>
                   ⚠ SA
+                </span>
+              )}
+              {s.indexnow_enabled && (
+                <span title="IndexNow підключено — натисніть щоб переглянути"
+                  style={{ fontSize: 10, background: "rgba(0,212,255,0.1)",
+                    color: "#00d4ff", border: "1px solid rgba(0,212,255,0.25)",
+                    borderRadius: 4, padding: "1px 5px", cursor: "pointer" }}
+                  onClick={() => onEditWithTab?.(s, "indexnow")}>
+                  🚀 IndexNow
                 </span>
               )}
             </div>
