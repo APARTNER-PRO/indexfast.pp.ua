@@ -2738,52 +2738,52 @@
 
 
   <!-- PROMO POPUP (exit intent / scroll) -->
-  <div class="promo-overlay" id="promoOverlay" aria-modal="true" role="dialog" aria-label="Спеціальна пропозиція">
+  <div class="promo-overlay" id="promoOverlay" aria-modal="true" role="dialog" aria-label="Special offer">
     <div class="promo-modal" id="promoModal">
       <button class="promo-modal-close" onclick="closePromoPopup()" aria-label="Close">×</button>
 
       <div class="promo-modal-left">
         <div class="promo-modal-glow"></div>
-        <p class="promo-modal-eyebrow">🔥 Обмежена пропозиція</p>
-        <h3 class="promo-modal-title" id="promoModalTitle">Заберіть <em>-50%</em><br>із собою</h3>
-        <p class="promo-modal-sub">Перший місяць PRO лише за <strong>₴249</strong> замість ₴499. Тільки для нових
-          клієнтів.</p>
+        <p class="promo-modal-eyebrow">🔥 Limited offer</p>
+        <h3 class="promo-modal-title" id="promoModalTitle">Take <em>-50%</em><br>with you</h3>
+        <p class="promo-modal-sub">First month of PRO for just <strong>₴249</strong> instead of ₴499. Only for new
+          clients.</p>
 
         <div class="promo-modal-timer">
-          <span class="pmt-label">Пропозиція діє</span>
+          <span class="pmt-label">Offer valid for</span>
           <div class="pmt-digits">
-            <div class="pmt-unit"><span class="pmt-num" id="mph">00</span><span class="pmt-unit-label">год</span></div>
+            <div class="pmt-unit"><span class="pmt-num" id="mph">00</span><span class="pmt-unit-label">hrs</span></div>
             <span class="pmt-sep">:</span>
-            <div class="pmt-unit"><span class="pmt-num" id="mpm">00</span><span class="pmt-unit-label">хв</span></div>
+            <div class="pmt-unit"><span class="pmt-num" id="mpm">00</span><span class="pmt-unit-label">min</span></div>
             <span class="pmt-sep">:</span>
-            <div class="pmt-unit"><span class="pmt-num" id="mps">00</span><span class="pmt-unit-label">сек</span></div>
+            <div class="pmt-unit"><span class="pmt-num" id="mps">00</span><span class="pmt-unit-label">sec</span></div>
           </div>
         </div>
 
-        <a href="https://t.me/indexfastgoogle?text=Хочу%20PRO%20за%20₴249%20(промо)" target="_blank"
+        <a href="https://t.me/indexfastgoogle?text=I+want+PRO+for+%E2%82%B4249+(promo)" target="_blank"
           class="promo-modal-btn" onclick="closePromoPopup(); markCtaClicked();">
-          Хочу PRO за ₴249 →
+          Get PRO for ₴249 →
         </a>
-        <button class="promo-modal-skip" onclick="closePromoPopup()">Ні дякую, хочу платити повну ціну</button>
+        <button class="promo-modal-skip" onclick="closePromoPopup()">No thanks, I'll pay full price</button>
       </div>
 
       <div class="promo-modal-right" aria-hidden="true">
         <div class="promo-modal-card">
-          <div class="pmc-tag">PRO план</div>
-          <div class="pmc-price-old">₴499<span>/міс</span></div>
+          <div class="pmc-tag">PRO plan</div>
+          <div class="pmc-price-old">₴499<span>/mo</span></div>
           <div class="pmc-price-new">₴249<span>/first month</span></div>
           <ul class="pmc-features">
-            <li>✓ До 100 pages/день</li>
-            <li>✓ До 10 сайтів</li>
-            <li>✓ Автоматичний запуск</li>
-            <li>✓ Детальні звіти</li>
-            <li>✓ Email-сповіщення</li>
+            <li>✓ Up to 100 pages/day</li>
+            <li>✓ Up to 10 sites</li>
+            <li>✓ Automatic run</li>
+            <li>✓ Detailed reports</li>
+            <li>✓ Email notifications</li>
           </ul>
-          <div class="pmc-badge">Знижка активна 🎉</div>
+          <div class="pmc-badge">Discount active 🎉</div>
         </div>
         <div class="promo-modal-social">
           <span class="pms-dot"></span>
-          <span id="promoSocialText">Андрій з Харкова щойно активував PRO</span>
+          <span id="promoSocialText">Andriy from Kharkiv just activated PRO</span>
         </div>
       </div>
     </div>
@@ -2794,7 +2794,7 @@
     <div class="ticker-pulse"></div>
     <div class="ticker-text" aria-live="polite">
       <strong id="tickerCount">—</strong>
-      <span>pages зараз в черзі на індексацію</span>
+      <span>pages currently in the indexing queue</span>
     </div>
     <button class="ticker-close" onclick="closeLiveTicker()"
       aria-label="Close">×</button>
@@ -2807,8 +2807,8 @@
   <!-- ═══════════════════════════════════════════
      NAV
 ════════════════════════════════════════════ -->
-  <nav id="navbar" role="navigation" aria-label="Головне меню">
-    <a href="/" class="logo" aria-label="IndexFast — Головна">Index<span>Fast</span></a>
+  <nav id="navbar" role="navigation" aria-label="Main menu">
+    <a href="/" class="logo" aria-label="IndexFast — Home">Index<span>Fast</span></a>
     <ul class="nav-links">
       <li><a href="#how-it-works">How it works</a></li>
       <li><a href="#for-whom">For whom</a></li>
@@ -2834,78 +2834,66 @@
   <header class="hero" role="banner">
     <div class="hero-grid" aria-hidden="true"></div>
 
-    <div class="hero-badge" aria-label="Нова технологія">⚡ Google Indexing API & IndexNow</div>
-
-    <h1>
-      Ваш сайт в Google та Bing<br>
-      <em>за 24 години</em><br>
-      а не за тижні
-    </h1>
-
-    <p class="hero-sub">
-      Перестаньте чекати, поки Google сам знайде ваші сторінки.
-      IndexFast відправляє їх на індексацію миттєво через офіційний API.
-    </p>
-
-    <div class="hero-actions">
-      <a href="/app/register" class="btn-primary" aria-label="Почати безкоштовно">
-        🚀 Почати безкоштовно
-      </a>
-      <a href="#how-it-works" class="btn-secondary" aria-label="Дивитись як це працює">
-        Дивитись як це працює ↓
-      </a>
-    </div>
-
-    <div class="hero-stats" aria-label="Статистика сервісу">
-      <div class="stat">
-        <div class="stat-num" id="counter1">0</div>
-        <div class="stat-label">URLs indexed</div>
-      </div>
-      <div class="stat">
-        <div class="stat-num" id="counter2">0</div>
-        <div class="stat-label">Happy clients</div>
-      </div>
-      <div class="stat">
-        <div class="stat-num">24h</div>
-        <div class="stat-label">Average indexing time</div>
-      </div>
-      <div class="stat">
-        <div class="stat-num">200</div>
-        <div class="stat-label">URLs free/day</div>
-      </div>
-    </div>
-
-    <div class="scroll-hint" aria-hidden="true">
-      <div class="scroll-line"></div>
-      <span>Scroll</span>
-    </div>
-  </header>
-
-  <!-- ═══════════════════════════════════════════
-     PROBLEM
-════════════════════════════════════════════ -->
-  <section class="problem-section" aria-labelledby="problem-title">
-    <div class="container">
-      <div class="problem-grid">
-        <div>
-          <p class="section-tag reveal">Проблема</p>
+    <div class="hero-badge" aria-label="New technolo          <p class="section-tag reveal">Problem</p>
           <h2 class="section-title reveal" id="problem-title">
-            Чому Google<br>ігнорує ваш сайт?
+            Why does Google<br>ignore your site?
           </h2>
           <ul class="problem-list">
             <li class="problem-item reveal reveal-delay-1">
               <div class="problem-icon">⏳</div>
               <div class="problem-text">
-                <strong>Googlebot сканує рідко</strong>
-                <span>Нові сторінки можуть чекати індексації від 2 тижнів до кількох місяців — конкуренти вас
-                  обганяють.</span>
+                <strong>Googlebot crawls rarely</strong>
+                <span>New pages can wait for indexing from 2 weeks to several months — competitors get ahead of you.</span>
               </div>
             </li>
             <li class="problem-item reveal reveal-delay-2">
               <div class="problem-icon">📉</div>
               <div class="problem-text">
-                <strong>Трафік не росте</strong>
-                <span>Поки сторінки не проіндексовані — вони невидимі для пошукових систем і не приносять
+                <strong>Traffic doesn't grow</strong>
+                <span>Until pages are indexed — they are invisible to search engines and bring no clients.</span>
+              </div>
+            </li>
+            <li class="problem-item reveal reveal-delay-3">
+              <div class="problem-icon">🔧</div>
+              <div class="problem-text">
+                <strong>Search Console — inconvenient</strong>
+                <span>Manually submitting URLs one by one takes hours, and API errors are scary without technical knowledge.</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="visual-compare reveal">
+          <p style="font-family: var(--font-display); font-weight: 700; margin-bottom: 24px; font-size: 1.1rem;">Time to indexing</p>
+
+          <div class="compare-item">
+            <div class="compare-label">
+              <span>❌ Without IndexFast</span>
+              <span style="color: #ff6b6b; font-weight: 600;">2–8 weeks</span>
+            </div>
+            <div class="compare-bar-wrap">
+              <div class="compare-bar bar-bad"></div>
+            </div>
+          </div>
+
+          <div class="compare-vs">VS</div>
+
+          <div class="compare-item" style="margin-top: 16px;">
+            <div class="compare-label">
+              <span>✅ With IndexFast</span>
+              <span style="color: var(--green); font-weight: 600;">24–48 hours</span>
+            </div>
+            <div class="compare-bar-wrap">
+              <div class="compare-bar bar-good"></div>
+            </div>
+          </div>
+
+          <div
+            style="margin-top: 28px; padding: 20px; background: rgba(0,255,136,0.05); border-radius: 12px; border: 1px solid rgba(0,255,136,0.15); text-align: center;">
+            <p style="font-family: var(--font-display); font-size: 2rem; font-weight: 800; color: var(--green);">14×
+              faster</p>
+            <p style="color: var(--muted); font-size: 0.85rem; margin-top: 4px;">average indexing speed boost</p>
+          </div>�індексовані — вони невидимі для пошукових систем і не приносять
                   клієнтів.</span>
               </div>
             </li>
@@ -3043,7 +3031,7 @@
   <!-- ═══════════════════════════════════════════
      INTEGRATIONS
 ════════════════════════════════════════════ -->
-  <section class="integrations-section" aria-label="Підтримувані платформи">
+  <section class="integrations-section" aria-label="Supported platforms">
     <p class="integrations-label reveal">Works with any platform</p>
 
     <div class="integrations-track-wrap reveal">
@@ -3297,59 +3285,59 @@
 
       <div class="testimonials-grid">
         <article class="testimonial reveal">
-          <div class="result-badge">+340% органічного трафіку</div>
+          <div class="result-badge">+340% organic traffic</div>
           <div class="stars">★★★★★</div>
           <p class="testimonial-text">
-            «Запустив інтернет-магазин — 800 товарів, жоден не індексувався тижнями. Після IndexFast за 2 дні всі
-            сторінки були в Google. Трафік виріс у 4 рази за first month.»
+            «Launched an online store — 800 products, none were getting indexed for weeks. After IndexFast, in 2 days all
+            pages were in Google. Traffic grew 4x in the first month.»
           </p>
           <div class="testimonial-author">
-            <div class="author-avatar">АК</div>
+            <div class="author-avatar">AK</div>
             <div>
-              <p class="author-name">Андрій Коваленко</p>
-              <p class="author-role">Власник інтернет-магазину, Київ</p>
+              <p class="author-name">Andriy Kovalenko</p>
+              <p class="author-role">Online store owner, Kyiv</p>
             </div>
           </div>
         </article>
 
         <article class="testimonial reveal reveal-delay-1">
-          <div class="result-badge">Індексація за 18 годин</div>
+          <div class="result-badge">Indexed in 18 hours</div>
           <div class="stars">★★★★★</div>
           <p class="testimonial-text">
-            «Веду блог про подорожі — публікую 3–4 статті на тиждень. Раніше чекав індексації до 3 тижнів. Тепер нові
-            статті у видачі вже наступного ранку. Це змінило гру!»
+            «I run a travel blog — publishing 3–4 articles per week. Before, I waited 3 weeks for indexing. Now new
+            articles are in search results the very next morning. This changed the game!»
           </p>
           <div class="testimonial-author">
-            <div class="author-avatar">МС</div>
+            <div class="author-avatar">MS</div>
             <div>
               <p class="author-name">Maryna Sydorenko</p>
-              <p class="author-role">Blogер, 50к subscribers</p>
+              <p class="author-role">Blogger, 50k subscribers</p>
             </div>
           </div>
         </article>
 
         <article class="testimonial reveal reveal-delay-2">
-          <div class="result-badge">Клієнти з Google з 1-го тижня</div>
+          <div class="result-badge">Clients from Google in week 1</div>
           <div class="stars">★★★★★</div>
           <p class="testimonial-text">
-            «Запустили лендінг для нового продукту. Завдяки IndexFast вже через тиждень отримали перших клієнтів з
-            органіки. SEO нарешті почало працювати так як треба.»
+            «Launched a landing page for a new product. Thanks to IndexFast, in just one week we got our first clients from
+            organic search. SEO finally started working the way it should.»
           </p>
           <div class="testimonial-author">
-            <div class="author-avatar">ДП</div>
+            <div class="author-avatar">DP</div>
             <div>
-              <p class="author-name">Дмитро Петренко</p>
-              <p class="author-role">CEO SaaS стартапу</p>
+              <p class="author-name">Dmytro Petrenko</p>
+              <p class="author-role">CEO of a SaaS startup</p>
             </div>
           </div>
         </article>
 
         <article class="testimonial reveal">
-          <div class="result-badge">Економія 8 годин/тиждень</div>
+          <div class="result-badge">Saving 8 hours/week</div>
           <div class="stars">★★★★★</div>
           <p class="testimonial-text">
-            «Обслуговую 15 сайтів клієнтів. Раніше витрачав години на ручну відправку URL через Search Console. Тепер
-            один скрипт обробляє всіх клієнтів автоматично щодня.»
+            «I manage 15 client sites. Before, I spent hours manually submitting URLs through Search Console. Now
+            one script handles all clients automatically every day.»
           </p>
           <div class="testimonial-author">
             <div class="author-avatar">OM</div>
@@ -3564,13 +3552,13 @@
             <span class="faq-arrow">+</span>
           </button>
           <div class="faq-a" role="region">
-            <p>Після відправки через IndexFast Google зазвичай індексує сторінки протягом 24–48 годин. Звичайне
-              сканування Googlebot може займати від 2 тижнів до кількох місяців.</p>
+            <p>After submission via IndexFast, Google typically indexes pages within 24–48 hours. Regular
+              Googlebot crawling can take from 2 weeks to several months.</p>
           </div>
         </div>
         <div class="faq-item">
           <button class="faq-q" aria-expanded="false">
-            Скільки URL можна відправити безкоштовно?
+            How many URLs can I submit for free?
             <span class="faq-arrow">+</span>
           </button>
           <div class="faq-a" role="region">
@@ -3579,23 +3567,23 @@
         </div>
         <div class="faq-item">
           <button class="faq-q" aria-expanded="false">
-            Чи потрібні технічні знання?
+            Do I need technical knowledge?
             <span class="faq-arrow">+</span>
           </button>
           <div class="faq-a" role="region">
-            <p>Для базового використання потрібно лише підключити Google Search Console акаунт і вказати URL
-              sitemap.xml. Покрокова інструкція входить у комплект. Для автоматизації через cron знадобляться базові
-              знання Linux.</p>
+            <p>For basic use, you only need to connect your Google Search Console account and provide your
+              sitemap.xml URL. A step-by-step guide is included. For cron automation, basic
+              Linux knowledge is required.</p>
           </div>
         </div>
         <div class="faq-item">
           <button class="faq-q" aria-expanded="false">
-            Чи це офіційний метод? Google не забанить сайт?
+            Is this an official method? Will Google ban my site?
             <span class="faq-arrow">+</span>
           </button>
           <div class="faq-a" role="region">
-            <p>IndexFast використовує виключно офіційний Google Indexing API. Це рекомендований Google спосіб для
-              прискорення індексації. Жодних ризиків для вашого сайту.</p>
+            <p>IndexFast uses exclusively the official Google Indexing API. This is the Google-recommended method for
+              speeding up indexing. No risks to your site.</p>
           </div>
         </div>
         <div class="faq-item">
