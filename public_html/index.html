@@ -1,404 +1,375 @@
-<!DOCTYPE html>
-<html lang="uk">
-
+html
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <link rel="icon" type="image/x-icon" href="/favicon.ico">
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-  <link rel="manifest" href="/site.webmanifest">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- ═══ STRUCTURED DATA — Organization ═══ -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
+<meta charset="utf-8"/>
+<link href="/favicon.ico" rel="icon" type="image/x-icon"/>
+<link href="/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+<link href="/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+<link href="/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
+<link href="/site.webmanifest" rel="manifest"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+ ═══ STRUCTURED DATA — Organization ═══ 
+<script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "IndexFast",
+  "url": "https://indexfast.pp.ua",
+  "logo": "https://indexfast.pp.ua/apple-touch-icon.png",
+  "sameAs": [
+    "https://t.me/indexfastgoogle"
+  ],
+  "description": "Сервіс миттєвої індексації сайтів у Google через Indexing API"
+}</script>
+<script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "serviceType": "Google Indexing Service",
+  "provider": {
     "@type": "Organization",
     "name": "IndexFast",
-    "url": "https://indexfast.pp.ua",
-    "logo": "https://indexfast.pp.ua/apple-touch-icon.png",
-    "sameAs": [
-      "https://t.me/indexfastgoogle"
-    ],
-    "description": "Service instant indexing сайтів у Google через Indexing API"
-  }
-  </script>
-
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    "serviceType": "Google Indexing Service",
-    "provider": {
-      "@type": "Organization",
-      "name": "IndexFast",
-      "url": "https://indexfast.pp.ua"
-    },
-    "name": "IndexFast — Миттєва індексація в Google",
-    "image": [
-      "https://indexfast.pp.ua/apple-touch-icon.png"
-    ],
-    "description": "Send your website pages for indexing to Google in minutes. Automatic indexing via Google Search Console API.",
-    "brand": {
-      "@type": "Brand",
-      "name": "IndexFast"
-    },
-    "aggregateRating": {
-      "@type": "AggregateRating",
-      "ratingValue": "4.9",
-      "reviewCount": "247",
-      "bestRating": "5",
-      "worstRating": "1"
-    },
-    "offers": {
-      "@type": "AggregateOffer",
-      "priceCurrency": "UAH",
-      "lowPrice": 0,
-      "highPrice": 2999,
-      "offerCount": 3,
-      "offers": [
-        {
-          "@type": "Offer",
-          "name": "Start",
-          "price": 0,
-          "priceCurrency": "UAH",
-          "availability": "https://schema.org/InStock",
-          "url": "https://indexfast.pp.ua/#pricing"
-        },
-        {
-          "@type": "Offer",
-          "name": "PRO",
-          "price": 499,
-          "priceCurrency": "UAH",
-          "availability": "https://schema.org/InStock",
-          "url": "https://indexfast.pp.ua/#pricing"
-        },
-        {
-          "@type": "Offer",
-          "name": "Agency",
-          "price": 2999,
-          "priceCurrency": "UAH",
-          "availability": "https://schema.org/InStock",
-          "url": "https://indexfast.pp.ua/#pricing"
-        }
-      ]
-    }
-  }
-  </script>
-
-
-
-  <!-- ═══ PRIMARY SEO ═══ -->
-  <meta name="google-adsense-account" content="ca-pub-2646134257100461">
-  <title>IndexFast — Instant Google Indexing | Site Indexing Service</title>
-  <meta name="description"
-    content="Send your website pages for indexing to Google in minutes. Automatic indexing via Google Search Console API. Free start — 10 URLss/day.">
-  <meta name="keywords"
-    content="google indexing, google indexing api, speed up indexing, search console indexing, index pages, seo indexing">
-  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
-  
-  <link rel="alternate" hreflang="en" href="https://indexfast.pp.ua/" />
-  <link rel="alternate" hreflang="uk" href="https://indexfast.pp.ua/uk/" />
-  <link rel="alternate" hreflang="x-default" href="https://indexfast.pp.ua/" />
-  <link rel="canonical" href="https://indexfast.pp.ua/">
-
-  <!-- ═══ OPEN GRAPH ═══ -->
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://indexfast.pp.ua/">
-  <meta property="og:title" content="IndexFast — Instant Google Indexing">
-  <meta property="og:description"
-    content="Send your website pages for indexing to Google in minutes. Automatic indexing via Google Search Console API.">
-  <meta property="og:image" content="https://indexfast.pp.ua/og-image.jpg">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta property="og:locale" content="uk_UA">
-  <meta property="og:site_name" content="IndexFast">
-
-  <!-- ═══ TWITTER CARD ═══ -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="IndexFast — Instant Google Indexing">
-  <meta name="twitter:description"
-    content="Відправляйте сторінки вашого сайту на індексацію в Google за лічені minutesи.">
-  <meta name="twitter:image" content="https://indexfast.pp.ua/og-image.jpg">
-
-  <!-- ═══ STRUCTURED DATA — Organization ═══ -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    "name": "IndexFast",
-    "description": "Service for automatic indexing of website pages in Google via Google Indexing API",
-    "url": "https://indexfast.pp.ua",
-    "applicationCategory": "WebApplication",
-    "operatingSystem": "Web, Linux",
+    "url": "https://indexfast.pp.ua"
+  },
+  "name": "IndexFast — Миттєва індексація в Google",
+  "image": [
+    "https://indexfast.pp.ua/apple-touch-icon.png"
+  ],
+  "description": "Submit your website pages for Google indexing in minutes. Automatic indexing via Google Search Console API.",
+  "brand": {
+    "@type": "Brand",
+    "name": "IndexFast"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.9",
+    "reviewCount": "247",
+    "bestRating": "5",
+    "worstRating": "1"
+  },
+  "offers": {
+    "@type": "AggregateOffer",
+    "priceCurrency": "UAH",
+    "lowPrice": 0,
+    "highPrice": 2999,
+    "offerCount": 3,
     "offers": [
       {
         "@type": "Offer",
         "name": "Start",
-        "price": "0",
+        "price": 0,
         "priceCurrency": "UAH",
-        "description": "Free plan — 10 URLs per day, 1 site"
+        "availability": "https://schema.org/InStock",
+        "url": "https://indexfast.pp.ua/#pricing"
       },
       {
         "@type": "Offer",
         "name": "PRO",
-        "price": "499",
+        "price": 499,
         "priceCurrency": "UAH",
-        "description": "PRO план — 100 URLs per day, up to 5 sites"
+        "availability": "https://schema.org/InStock",
+        "url": "https://indexfast.pp.ua/#pricing"
       },
       {
         "@type": "Offer",
         "name": "Agency",
-        "price": "2999",
+        "price": 2999,
         "priceCurrency": "UAH",
-        "description": "Agency план — 1000 URLs per day, up to 50 sites"
+        "availability": "https://schema.org/InStock",
+        "url": "https://indexfast.pp.ua/#pricing"
       }
-    ],
-    "aggregateRating": {
-      "@type": "AggregateRating",
-      "ratingValue": "4.9",
-      "reviewCount": "247",
-      "bestRating": "5",
-      "worstRating": "1"
+    ]
+  }
+}</script>
+ ═══ PRIMARY SEO ═══ 
+<meta content="ca-pub-2646134257100461" name="google-adsense-account"/>
+<title>IndexFast — Instant site indexing in Google | Page indexing service</title>
+<meta content="Submit your website pages for Google indexing in minutes. Automatic indexing via Google Search Console API. Free start — 10 URLs/day." name="description"/>
+<meta content="google site indexing, google indexing api, speed up indexing, search console indexing, page indexing, seo indexing" name="keywords"/>
+<meta content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" name="robots"/>
+<link href="https://indexfast.pp.ua/" hreflang="en" rel="alternate">
+<link href="https://indexfast.pp.ua/uk/" hreflang="uk" rel="alternate">
+<link href="https://indexfast.pp.ua/" hreflang="x-default" rel="alternate">
+<link href="https://indexfast.pp.ua/" rel="canonical"/>
+ ═══ OPEN GRAPH ═══ 
+<meta content="website" property="og:type"/>
+<meta content="https://indexfast.pp.ua/" property="og:url"/>
+<meta content="IndexFast — Instant indexing of the site in Google" property="og:title"/>
+<meta content="Submit your website pages for Google indexing in minutes. Automatic indexing via Google Search Console API." property="og:description"/>
+<meta content="https://indexfast.pp.ua/og-image.jpg" property="og:image"/>
+<meta content="1200" property="og:image:width"/>
+<meta content="630" property="og:image:height"/>
+<meta content="uk_UA" property="og:locale"/>
+<meta content="IndexFast" property="og:site_name"/>
+ ═══ TWITTER CARD ═══ 
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="IndexFast — Instant indexing of the site in Google" name="twitter:title"/>
+<meta content="Submit your website pages for Google indexing in minutes." name="twitter:description"/>
+<meta content="https://indexfast.pp.ua/og-image.jpg" name="twitter:image"/>
+ ═══ STRUCTURED DATA — Organization ═══ 
+<script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "IndexFast",
+  "description": "Сервіс автоматичної індексації сторінок сайту в Google через Google Indexing API",
+  "url": "https://indexfast.pp.ua",
+  "applicationCategory": "WebApplication",
+  "operatingSystem": "Web, Linux",
+  "offers": [
+    {
+      "@type": "Offer",
+      "name": "Start",
+      "price": "0",
+      "priceCurrency": "UAH",
+      "description": "Безкоштовний план — 10 URL на день, 1 сайт"
     },
-    "review": [
-      {
-        "@type": "Review",
-        "author": {
-          "@type": "Person",
-          "name": "Alexey Melnyk"
-        },
-        "datePublished": "2025-11-12",
-        "reviewBody": "Connected IndexFast and within a day my new pages appeared on Google. Highly recommend for new sites.",
-        "reviewRating": {
-          "@type": "Rating",
-          "ratingValue": "5",
-          "bestRating": "5",
-          "worstRating": "1"
-        }
+    {
+      "@type": "Offer",
+      "name": "PRO",
+      "price": "499",
+      "priceCurrency": "UAH",
+      "description": "PRO план — 100 URL на день, до 5 сайтів"
+    },
+    {
+      "@type": "Offer",
+      "name": "Agency",
+      "price": "2999",
+      "priceCurrency": "UAH",
+      "description": "Агенція план — 1000 URL на день, до 50 сайтів"
+    }
+  ],
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.9",
+    "reviewCount": "247",
+    "bestRating": "5",
+    "worstRating": "1"
+  },
+  "review": [
+    {
+      "@type": "Review",
+      "author": {
+        "@type": "Person",
+        "name": "Олексій Мельник"
       },
-      {
-        "@type": "Review",
-        "author": {
-          "@type": "Person",
-          "name": "Iryna Kovalchuk"
-        },
-        "datePublished": "2025-10-28",
-        "reviewBody": "For an online store with 3000+ products, this is a must-have. New product cards are indexed in 24 hours.",
-        "reviewRating": {
-          "@type": "Rating",
-          "ratingValue": "5",
-          "bestRating": "5",
-          "worstRating": "1"
-        }
-      },
-      {
-        "@type": "Review",
-        "author": {
-          "@type": "Person",
-          "name": "Дмитро Бондаренко"
-        },
-        "datePublished": "2025-09-15",
-        "reviewBody": "Простий і зрозумілий сервіс. Підключення зайняло 10 minutes. Безкоштовного плану вистачає для мого блогу.",
-        "reviewRating": {
-          "@type": "Rating",
-          "ratingValue": "5",
-          "bestRating": "5",
-          "worstRating": "1"
-        }
-      },
-      {
-        "@type": "Review",
-        "author": {
-          "@type": "Person",
-          "name": "Марія Шевченко"
-        },
-        "datePublished": "2025-08-22",
-        "reviewBody": "Працюю в SEO-агенції, використовуємо IndexFast для всіх клієнтських сайтів. Економить багато часу при запуску нових проєктів.",
-        "reviewRating": {
-          "@type": "Rating",
-          "ratingValue": "5",
-          "bestRating": "5",
-          "worstRating": "1"
-        }
-      },
-      {
-        "@type": "Review",
-        "author": {
-          "@type": "Person",
-          "name": "Андрій Петренко"
-        },
-        "datePublished": "2025-07-30",
-        "reviewBody": "Гарний сервіс для індексації. Хотілося б більше аналітики в дашборді, але основна функція працює відмінно.",
-        "reviewRating": {
-          "@type": "Rating",
-          "ratingValue": "4",
-          "bestRating": "5",
-          "worstRating": "1"
-        }
+      "datePublished": "2025-11-12",
+      "reviewBody": "Підключив IndexFast і вже через добу мої нові сторінки з'явились в Google. Раніше чекав тижнями. Дуже рекомендую для нових сайтів.",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5",
+        "bestRating": "5",
+        "worstRating": "1"
       }
-    ]
-  }
-  </script>
-
-  <!-- ═══ STRUCTURED DATA — FAQ ═══ -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-      {
-        "@type": "Question",
-        "name": "How quickly will Google index my pages?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "After submission via IndexFast, Google typically indexes pages within 24-48 hours, not weeks as with regular crawling."
-        }
+    },
+    {
+      "@type": "Review",
+      "author": {
+        "@type": "Person",
+        "name": "Ірина Ковальчук"
       },
-      {
-        "@type": "Question",
-        "name": "How many URLs can I submit for indexing for free?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Google надає квоту 200 URL per day безкоштовно через Indexing API. IndexFast автоматично управляє цією квотою."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Do I need technical knowledge to use IndexFast?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "No. You only need to connect your Google Search Console account and specify your sitemap.xml URL."
-        }
+      "datePublished": "2025-10-28",
+      "reviewBody": "Для інтернет-магазину з 3000+ товарів це просто must-have. Нові картки товарів індексуються за 24 години замість 2-3 тижнів.",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5",
+        "bestRating": "5",
+        "worstRating": "1"
       }
-    ]
-  }
-  </script>
-
-
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "HowTo",
-    "name": "How to connect IndexFast and speed up website indexing in Google",
-    "description": "Покроковий гайд з підключення IndexFast — сервісу для instant indexing pages у Google через офіційний Indexing API. Займає до 10 minutes.",
-    "image": {
+    },
+    {
+      "@type": "Review",
+      "author": {
+        "@type": "Person",
+        "name": "Дмитро Бондаренко"
+      },
+      "datePublished": "2025-09-15",
+      "reviewBody": "Простий і зрозумілий сервіс. Підключення зайняло 10 хвилин. Безкоштовного плану вистачає для мого блогу.",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5",
+        "bestRating": "5",
+        "worstRating": "1"
+      }
+    },
+    {
+      "@type": "Review",
+      "author": {
+        "@type": "Person",
+        "name": "Марія Шевченко"
+      },
+      "datePublished": "2025-08-22",
+      "reviewBody": "Працюю в SEO-агенції, використовуємо IndexFast для всіх клієнтських сайтів. Економить багато часу при запуску нових проєктів.",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5",
+        "bestRating": "5",
+        "worstRating": "1"
+      }
+    },
+    {
+      "@type": "Review",
+      "author": {
+        "@type": "Person",
+        "name": "Андрій Петренко"
+      },
+      "datePublished": "2025-07-30",
+      "reviewBody": "Гарний сервіс для індексації. Хотілося б більше аналітики в дашборді, але основна функція працює відмінно.",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "4",
+        "bestRating": "5",
+        "worstRating": "1"
+      }
+    }
+  ]
+}</script>
+ ═══ STRUCTURED DATA — FAQ ═══ 
+<script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How quickly will Google index my pages?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Після відправки через IndexFast Google зазвичай індексує сторінки протягом 24-48 годин, а не тижнів як при звичайному зканування."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Скільки URL можна відправити на індексацію безкоштовно?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Google надає квоту 200 URL на день безкоштовно через Indexing API. IndexFast автоматично управляє цією квотою."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Чи потрібні технічні знання для використання IndexFast?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ні. Вам потрібно лише підключити ваш Google Search Console акаунт та вказати URL вашого sitemap.xml."
+      }
+    }
+  ]
+}</script>
+<script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "Як підключити IndexFast і прискорити індексацію сайту в Google",
+  "description": "Покроковий гайд з підключення IndexFast — сервісу для миттєвої індексації сторінок у Google через офіційний Indexing API. Займає до 10 хвилин.",
+  "image": {
+    "@type": "ImageObject",
+    "url": "https://indexfast.pp.ua/og-image.jpg",
+    "width": 1200,
+    "height": 630
+  },
+  "totalTime": "PT10M",
+  "estimatedCost": {
+    "@type": "MonetaryAmount",
+    "currency": "UAH",
+    "value": "0"
+  },
+  "supply": [
+    {
+      "@type": "HowToSupply",
+      "name": "Акаунт Google"
+    },
+    {
+      "@type": "HowToSupply",
+      "name": "Сайт з sitemap.xml"
+    },
+    {
+      "@type": "HowToSupply",
+      "name": "Доступ до Google Search Console"
+    }
+  ],
+  "tool": [
+    {
+      "@type": "HowToTool",
+      "name": "Google Search Console"
+    },
+    {
+      "@type": "HowToTool",
+      "name": "Google Cloud Console"
+    },
+    {
+      "@type": "HowToTool",
+      "name": "IndexFast"
+    }
+  ],
+  "step": [
+    {
+      "@type": "HowToStep",
+      "position": 1,
+      "name": "Зареєструйтесь в IndexFast",
+      "text": "Перейдіть на indexfast.pp.ua та створіть безкоштовний акаунт. Реєстрація займає менше хвилини — потрібен лише email або акаунт Google.",
+      "url": "https://indexfast.pp.ua/app/register",
+      "image": {
         "@type": "ImageObject",
         "url": "https://indexfast.pp.ua/og-image.jpg",
         "width": 1200,
         "height": 630
+      }
     },
-    "totalTime": "PT10M",
-    "estimatedCost": {
-        "@type": "MonetaryAmount",
-        "currency": "UAH",
-        "value": "0"
+    {
+      "@type": "HowToStep",
+      "position": 2,
+      "name": "Підключіть Google Search Console",
+      "text": "Додайте свій сайт і підтвердіть право власності через Google Search Console. Це дозволяє IndexFast відправляти URL на індексацію від вашого імені.",
+      "url": "https://indexfast.pp.ua/docs/",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://indexfast.pp.ua/og-image.jpg",
+        "width": 1200,
+        "height": 630
+      }
     },
-    "supply": [
-        {
-            "@type": "HowToSupply",
-            "name": "Акаунт Google"
-        },
-        {
-            "@type": "HowToSupply",
-            "name": "Сайт з sitemap.xml"
-        },
-        {
-            "@type": "HowToSupply",
-            "name": "Доступ до Google Search Console"
-        }
-    ],
-    "tool": [
-        {
-            "@type": "HowToTool",
-            "name": "Google Search Console"
-        },
-        {
-            "@type": "HowToTool",
-            "name": "Google Cloud Console"
-        },
-        {
-            "@type": "HowToTool",
-            "name": "IndexFast"
-        }
-    ],
-    "step": [
-        {
-            "@type": "HowToStep",
-            "position": 1,
-            "name": "Sign Up for IndexFast",
-            "text": "Go to indexfast.pp.ua and create a free account. Sign up takes less than a minute — only an email or Google account is needed.",
-            "url": "https://indexfast.pp.ua/app/register",
-            "image": {
-                "@type": "ImageObject",
-                "url": "https://indexfast.pp.ua/og-image.jpg",
-                "width": 1200,
-                "height": 630
-            }
-        },
-        {
-            "@type": "HowToStep",
-            "position": 2,
-            "name": "Connect Google Search Console",
-            "text": "Add your site and verify ownership via Google Search Console. This allows IndexFast to submit URLs for indexing on your behalf.",
-            "url": "https://indexfast.pp.ua/docs/",
-            "image": {
-                "@type": "ImageObject",
-                "url": "https://indexfast.pp.ua/og-image.jpg",
-                "width": 1200,
-                "height": 630
-            }
-        },
-        {
-            "@type": "HowToStep",
-            "position": 3,
-            "name": "Create a Service Account in Google Cloud",
-            "text": "In the Google Cloud Console, create a project, enable the Indexing API, add a Service Account, and download the JSON key. Detailed instructions are in the IndexFast documentation.",
-            "url": "https://indexfast.pp.ua/docs/",
-            "image": {
-                "@type": "ImageObject",
-                "url": "https://indexfast.pp.ua/og-image.jpg",
-                "width": 1200,
-                "height": 630
-            }
-        },
-        {
-            "@type": "HowToStep",
-            "position": 4,
-            "name": "Add a site and provide a sitemap",
-            "text": "In the IndexFast dashboard, add your site, upload the Service Account JSON key, and provide the sitemap.xml URL. The service will automatically discover all pages for indexing.",
-            "url": "https://indexfast.pp.ua/app/dashboard",
-            "image": {
-                "@type": "ImageObject",
-                "url": "https://indexfast.pp.ua/og-image.jpg",
-                "width": 1200,
-                "height": 630
-            }
-        },
-        {
-            "@type": "HowToStep",
-            "position": 5,
-            "name": "Run indexing",
-            "text": "Click "Run" — IndexFast will send the URLs via the Google Indexing API. The first results appear in 24 hours. On the free plan — up to 10 URLs per day.",
-            "url": "https://indexfast.pp.ua/app/dashboard",
-            "image": {
-                "@type": "ImageObject",
-                "url": "https://indexfast.pp.ua/og-image.jpg",
-                "width": 1200,
-                "height": 630
-            }
-        }
-    ]
-}
-  </script>
-  <!-- ═══ FONTS ═══ -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap">
-
-  <style>
+    {
+      "@type": "HowToStep",
+      "position": 3,
+      "name": "Створіть Service Account у Google Cloud",
+      "text": "У Google Cloud Console створіть проєкт, увімкніть Indexing API, додайте Service Account і завантажте JSON-ключ. Детальна інструкція є в документації IndexFast.",
+      "url": "https://indexfast.pp.ua/docs/",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://indexfast.pp.ua/og-image.jpg",
+        "width": 1200,
+        "height": 630
+      }
+    },
+    {
+      "@type": "HowToStep",
+      "position": 4,
+      "name": "Додайте сайт і вкажіть sitemap",
+      "text": "В кабінеті IndexFast додайте свій сайт, завантажте JSON-ключ Service Account і вкажіть URL sitemap.xml. Сервіс автоматично визначить всі сторінки для індексації.",
+      "url": "https://indexfast.pp.ua/app/dashboard",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://indexfast.pp.ua/og-image.jpg",
+        "width": 1200,
+        "height": 630
+      }
+    },
+    {
+      "@type": "HowToStep",
+      "position": 5,
+      "name": "Запустіть індексацію",
+      "text": "Натисніть «Запустити» — IndexFast відправить URL через Google Indexing API. Перші результати з'являються вже через 24 години. На безкоштовному плані — до 10 URL на день.",
+      "url": "https://indexfast.pp.ua/app/dashboard",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://indexfast.pp.ua/og-image.jpg",
+        "width": 1200,
+        "height": 630
+      }
+    }
+  ]
+}</script>
+ ═══ FONTS ═══ 
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&amp;family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&amp;display=swap" rel="stylesheet"/>
+<style>
     *,
     *::before,
     *::after {
@@ -2732,1052 +2703,959 @@
       border-color: rgba(255, 255, 255, 0.25);
     }
   </style>
-</head>
-
+</link></link></link></head>
 <body>
-
-
-  <!-- PROMO POPUP (exit intent / scroll) -->
-  <div class="promo-overlay" id="promoOverlay" aria-modal="true" role="dialog" aria-label="Special offer">
-    <div class="promo-modal" id="promoModal">
-      <button class="promo-modal-close" onclick="closePromoPopup()" aria-label="Close">×</button>
-
-      <div class="promo-modal-left">
-        <div class="promo-modal-glow"></div>
-        <p class="promo-modal-eyebrow">🔥 Limited offer</p>
-        <h3 class="promo-modal-title" id="promoModalTitle">Take <em>-50%</em><br>with you</h3>
-        <p class="promo-modal-sub">First month of PRO for just <strong>₴249</strong> instead of ₴499. Only for new
-          clients.</p>
-
-        <div class="promo-modal-timer">
-          <span class="pmt-label">Offer valid for</span>
-          <div class="pmt-digits">
-            <div class="pmt-unit"><span class="pmt-num" id="mph">00</span><span class="pmt-unit-label">hrs</span></div>
-            <span class="pmt-sep">:</span>
-            <div class="pmt-unit"><span class="pmt-num" id="mpm">00</span><span class="pmt-unit-label">min</span></div>
-            <span class="pmt-sep">:</span>
-            <div class="pmt-unit"><span class="pmt-num" id="mps">00</span><span class="pmt-unit-label">sec</span></div>
-          </div>
-        </div>
-
-        <a href="https://t.me/indexfastgoogle?text=I+want+PRO+for+%E2%82%B4249+(promo)" target="_blank"
-          class="promo-modal-btn" onclick="closePromoPopup(); markCtaClicked();">
-          Get PRO for ₴249 →
+ PROMO POPUP (exit intent / scroll) 
+<div aria-label="Спеціальна пропозиція" aria-modal="true" class="promo-overlay" id="promoOverlay" role="dialog">
+<div class="promo-modal" id="promoModal">
+<button aria-label="Закрити" class="promo-modal-close" onclick="closePromoPopup()">×</button>
+<div class="promo-modal-left">
+<div class="promo-modal-glow"></div>
+<p class="promo-modal-eyebrow">🔥 Limited offer</p>
+<h3 class="promo-modal-title" id="promoModalTitle">Take away <em>-50%</em><br/>with myself</h3>
+<p class="promo-modal-sub">First month PRO only for <strong>₴249</strong> instead of ₴499. Only for new ones
+          customers</p>
+<div class="promo-modal-timer">
+<span class="pmt-label">The offer is valid</span>
+<div class="pmt-digits">
+<div class="pmt-unit"><span class="pmt-num" id="mph">00</span><span class="pmt-unit-label">hours</span></div>
+<span class="pmt-sep">:</span>
+<div class="pmt-unit"><span class="pmt-num" id="mpm">00</span><span class="pmt-unit-label">min</span></div>
+<span class="pmt-sep">:</span>
+<div class="pmt-unit"><span class="pmt-num" id="mps">00</span><span class="pmt-unit-label">Sec</span></div>
+</div>
+</div>
+<a class="promo-modal-btn" href="https://t.me/indexfastgoogle?text=Хочу%20PRO%20за%20₴249%20(промо)" onclick="closePromoPopup(); markCtaClicked();" target="_blank">
+          I want PRO for ₴249 →
         </a>
-        <button class="promo-modal-skip" onclick="closePromoPopup()">No thanks, I'll pay full price</button>
-      </div>
-
-      <div class="promo-modal-right" aria-hidden="true">
-        <div class="promo-modal-card">
-          <div class="pmc-tag">PRO plan</div>
-          <div class="pmc-price-old">₴499<span>/mo</span></div>
-          <div class="pmc-price-new">₴249<span>/first month</span></div>
-          <ul class="pmc-features">
-            <li>✓ Up to 100 pages/day</li>
-            <li>✓ Up to 10 sites</li>
-            <li>✓ Automatic run</li>
-            <li>✓ Detailed reports</li>
-            <li>✓ Email notifications</li>
-          </ul>
-          <div class="pmc-badge">Discount active 🎉</div>
-        </div>
-        <div class="promo-modal-social">
-          <span class="pms-dot"></span>
-          <span id="promoSocialText">Andriy from Kharkiv just activated PRO</span>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Live Ticker -->
-  <div class="live-ticker" id="liveTicker">
-    <div class="ticker-pulse"></div>
-    <div class="ticker-text" aria-live="polite">
-      <strong id="tickerCount">—</strong>
-      <span>pages currently in the indexing queue</span>
-    </div>
-    <button class="ticker-close" onclick="closeLiveTicker()"
-      aria-label="Close">×</button>
-  </div>
-
-  <!-- Cursor -->
-  <div class="cursor" id="cursor"></div>
-  <div class="cursor-ring" id="cursorRing"></div>
-
-  <!-- ═══════════════════════════════════════════
+<button class="promo-modal-skip" onclick="closePromoPopup()">No thanks, I want to pay full price</button>
+</div>
+<div aria-hidden="true" class="promo-modal-right">
+<div class="promo-modal-card">
+<div class="pmc-tag">PRO plan</div>
+<div class="pmc-price-old">₴499<span>/miss</span></div>
+<div class="pmc-price-new">₴249<span>/first month</span></div>
+<ul class="pmc-features">
+<li>✓ Up to 100 pages/day</li>
+<li>✓ Up to 10 sites</li>
+<li>✓ Automatic start</li>
+<li>✓ Detailed reports</li>
+<li>✓ Email notifications</li>
+</ul>
+<div class="pmc-badge">The discount is active 🎉</div>
+</div>
+<div class="promo-modal-social">
+<span class="pms-dot"></span>
+<span id="promoSocialText">Andriy from Kharkiv has just activated PRO</span>
+</div>
+</div>
+</div>
+</div>
+ Live Ticker 
+<div class="live-ticker" id="liveTicker">
+<div class="ticker-pulse"></div>
+<div aria-live="polite" class="ticker-text">
+<strong id="tickerCount">—</strong>
+<span>pages are currently in the queue for indexing</span>
+</div>
+<button aria-label="Закрити" class="ticker-close" onclick="closeLiveTicker()">×</button>
+</div>
+ Cursor 
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+ ═════════════════════════════════════════
      NAV
-════════════════════════════════════════════ -->
-  <nav id="navbar" role="navigation" aria-label="Main menu">
-    <a href="/" class="logo" aria-label="IndexFast — Home">Index<span>Fast</span></a>
-    <ul class="nav-links">
-      <li><a href="#how-it-works">How it works</a></li>
-      <li><a href="#for-whom">For whom</a></li>
-      <li><a href="#features">Features</a></li>
-      <li><a href="#pricing">Pricing</a></li>
-      <li><a href="#faq">FAQ</a></li>
-      <li class="mobile-auth">
-        <a href="/app/login" class="mobile-login">Log In</a>
-        <a href="/app/register" class="mobile-register">Start for free →</a>
-      </li>
-    </ul>
-    <div class="nav-actions">
-      <a href="/" class="nav-lang" style="color:var(--muted); text-decoration:none; margin-right:16px; font-weight:600; transition:color 0.2s;" onmouseover="this.style.color='var(--white)'" onmouseout="this.style.color='var(--muted)'">EN</a>
-      <a href="/app/login" class="nav-login">Log In</a>
-      <a href="/app/register" class="nav-cta">Start for free →</a>
-      <button class="mobile-menu-btn" onclick="document.querySelector('.nav-links').classList.toggle('active')" aria-label="Open menu">☰</button>
-    </div>
-  </nav>
-
-  <!-- ═══════════════════════════════════════════
+══════════════════════════════════════════ 
+<nav aria-label="Головне меню" id="navbar" role="navigation">
+<a aria-label="IndexFast — Головна" class="logo" href="/">Index<span>Fast</span></a>
+<ul class="nav-links">
+<li><a href="#how-it-works">How it works</a></li>
+<li><a href="#for-whom">For whom</a></li>
+<li><a href="#features">Advantages</a></li>
+<li><a href="#pricing">Prices</a></li>
+<li><a href="#faq">FAQ</a></li>
+<li class="mobile-auth">
+<a class="mobile-login" href="/app/login">Sign in</a>
+<a class="mobile-register" href="/app/register">Get started for free →</a>
+</li>
+</ul>
+<div class="nav-actions">
+<a class="nav-lang" href="/" onmouseout="this.style.color='var(--muted)'" onmouseover="this.style.color='var(--white)'" style="color:var(--muted); text-decoration:none; margin-right:16px; font-weight:600; transition:color 0.2s;">EN</a>
+<a class="nav-login" href="/app/login">Sign in</a>
+<a class="nav-cta" href="/app/register">Get started for free →</a>
+<button aria-label="Відкрити меню" class="mobile-menu-btn" onclick="document.querySelector('.nav-links').classList.toggle('active')">☰</button>
+</div>
+</nav>
+ ═════════════════════════════════════════
      HERO
-════════════════════════════════════════════ -->
-  <header class="hero" role="banner">
-    <div class="hero-grid" aria-hidden="true"></div>
-
-    <div class="hero-badge" aria-label="New technolo          <p class="section-tag reveal">Problem</p>
-          <h2 class="section-title reveal" id="problem-title">
-            Why does Google<br>ignore your site?
-          </h2>
-          <ul class="problem-list">
-            <li class="problem-item reveal reveal-delay-1">
-              <div class="problem-icon">⏳</div>
-              <div class="problem-text">
-                <strong>Googlebot crawls rarely</strong>
-                <span>New pages can wait for indexing from 2 weeks to several months — competitors get ahead of you.</span>
-              </div>
-            </li>
-            <li class="problem-item reveal reveal-delay-2">
-              <div class="problem-icon">📉</div>
-              <div class="problem-text">
-                <strong>Traffic doesn't grow</strong>
-                <span>Until pages are indexed — they are invisible to search engines and bring no clients.</span>
-              </div>
-            </li>
-            <li class="problem-item reveal reveal-delay-3">
-              <div class="problem-icon">🔧</div>
-              <div class="problem-text">
-                <strong>Search Console — inconvenient</strong>
-                <span>Manually submitting URLs one by one takes hours, and API errors are scary without technical knowledge.</span>
-              </div>
-            </li>
-          </ul>
-        </div>
-
-        <div class="visual-compare reveal">
-          <p style="font-family: var(--font-display); font-weight: 700; margin-bottom: 24px; font-size: 1.1rem;">Time to indexing</p>
-
-          <div class="compare-item">
-            <div class="compare-label">
-              <span>❌ Without IndexFast</span>
-              <span style="color: #ff6b6b; font-weight: 600;">2–8 weeks</span>
-            </div>
-            <div class="compare-bar-wrap">
-              <div class="compare-bar bar-bad"></div>
-            </div>
-          </div>
-
-          <div class="compare-vs">VS</div>
-
-          <div class="compare-item" style="margin-top: 16px;">
-            <div class="compare-label">
-              <span>✅ With IndexFast</span>
-              <span style="color: var(--green); font-weight: 600;">24–48 hours</span>
-            </div>
-            <div class="compare-bar-wrap">
-              <div class="compare-bar bar-good"></div>
-            </div>
-          </div>
-
-          <div
-            style="margin-top: 28px; padding: 20px; background: rgba(0,255,136,0.05); border-radius: 12px; border: 1px solid rgba(0,255,136,0.15); text-align: center;">
-            <p style="font-family: var(--font-display); font-size: 2rem; font-weight: 800; color: var(--green);">14×
-              faster</p>
-            <p style="color: var(--muted); font-size: 0.85rem; margin-top: 4px;">average indexing speed boost</p>
-          </div>�індексовані — вони невидимі для пошукових систем і не приносять
-                  клієнтів.</span>
-              </div>
-            </li>
-            <li class="problem-item reveal reveal-delay-3">
-              <div class="problem-icon">🔧</div>
-              <div class="problem-text">
-                <strong>Search Console — незручно</strong>
-                <span>Ручна відправка URL по одному займає години, а помилки API лякають без технічних знань.</span>
-              </div>
-            </li>
-          </ul>
-        </div>
-
-        <div class="visual-compare reveal">
-          <p style="font-family: var(--font-display); font-weight: 700; margin-bottom: 24px; font-size: 1.1rem;">Час до
-            індексації</p>
-
-          <div class="compare-item">
-            <div class="compare-label">
-              <span>❌ Без IndexFast</span>
-              <span style="color: #ff6b6b; font-weight: 600;">2–8 тижнів</span>
-            </div>
-            <div class="compare-bar-wrap">
-              <div class="compare-bar bar-bad"></div>
-            </div>
-          </div>
-
-          <div class="compare-vs">VS</div>
-
-          <div class="compare-item" style="margin-top: 16px;">
-            <div class="compare-label">
-              <span>✅ З IndexFast</span>
-              <span style="color: var(--green); font-weight: 600;">24–48 годин</span>
-            </div>
-            <div class="compare-bar-wrap">
-              <div class="compare-bar bar-good"></div>
-            </div>
-          </div>
-
-          <div
-            style="margin-top: 28px; padding: 20px; background: rgba(0,255,136,0.05); border-radius: 12px; border: 1px solid rgba(0,255,136,0.15); text-align: center;">
-            <p style="font-family: var(--font-display); font-size: 2rem; font-weight: 800; color: var(--green);">у 14×
-              швидше</p>
-            <p style="color: var(--muted); font-size: 0.85rem; margin-top: 4px;">середнє прискорення індексації</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════
-     HOW IT WORKS
-════════════════════════════════════════════ -->
-  <section id="how-it-works" aria-labelledby="how-title">
-    <div class="container">
-      <div style="text-align: center; max-width: 600px; margin: 0 auto 0;">
-        <p class="section-tag reveal">How it works</p>
-        <h2 class="section-title reveal" id="how-title">Three steps to<br>instant indexing</h2>
-        <p class="section-sub reveal" style="margin: 0 auto;">Setup takes less than 10 minutes. No technical knowledge required.</p>
-      </div>
-
-      <div class="steps-grid reveal">
-        <div class="step">
-          <div class="step-num">01</div>
-          <div class="step-icon">🔑</div>
-          <h3>Connect Search Console</h3>
-          <p>Upload your Google Service Account JSON key and add it to IndexFast. Just once — forever.</p>
-        </div>
-        <div class="step">
-          <div class="step-num">02</div>
-          <div class="step-icon">🗺️</div>
-          <h3>Provide Sitemap URL</h3>
-          <p>Enter the address of your sitemap.xml or just the domain — IndexFast will find the sitemap automatically.</p>
-        </div>
-        <div class="step">
-          <div class="step-num">03</div>
-          <div class="step-icon">⚡</div>
-          <h3>Get the result</h3>
-          <p>All pages are sent for indexing. Get a detailed report and watch your traffic grow.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════
-     FEATURES
-════════════════════════════════════════════ -->
-  <section id="features" class="features-section" aria-labelledby="features-title">
-    <div class="container">
-      <div class="features-header">
-        <div>
-          <p class="section-tag reveal">Features</p>
-          <h2 class="section-title reveal" id="features-title">Everything you need<br>for top rankings</h2>
-        </div>
-        <p class="section-sub reveal">
-          We took the complex Google Indexing API and turned it into a simple tool for any business.
-        </p>
-      </div>
-
-      <div class="features-grid">
-        <article class="feature-card reveal">
-          <div class="feature-icon">🗺️</div>
-          <h3>Sitemap Index support</h3>
-          <p>Automatically parses nested sitemaps of any depth — all URLs will be found and submitted.</p>
-        </article>
-        <article class="feature-card reveal reveal-delay-1">
-          <div class="feature-icon">📊</div>
-          <h3>Detailed log</h3>
-          <p>Every operation is recorded in a log file with time and status. Always know what happened and when.</p>
-        </article>
-        <article class="feature-card reveal reveal-delay-2">
-          <div class="feature-icon">🛡️</div>
-          <h3>Quota management</h3>
-          <p>Automatically adheres to the Google limit of 200 URLs/day. No quota exceeded errors.</p>
-        </article>
-        <article class="feature-card reveal">
-          <div class="feature-icon">⚙️</div>
-          <h3>Flexible execution</h3>
-          <p>CLI, arguments, interactive mode. Run manually, via cron, or CI/CD pipeline.</p>
-        </article>
-        <article class="feature-card reveal reveal-delay-1">
-          <div class="feature-icon">🚀</div>
-          <h3>Official Google API</h3>
-          <p>Uses the official Google Indexing API — no grey schemes, but a legal and reliable method.</p>
-        </article>
-        <article class="feature-card reveal reveal-delay-2">
-          <div class="feature-icon">🔄</div>
-          <h3>Automation</h3>
-          <p>Set up automatic execution via cron daily — new pages will be indexed automatically.</p>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════
-     INTEGRATIONS
-════════════════════════════════════════════ -->
-  <section class="integrations-section" aria-label="Supported platforms">
-    <p class="integrations-label reveal">Works with any platform</p>
-
-    <div class="integrations-track-wrap reveal">
-      <div class="integrations-track" id="intTrack">
-
-        <!-- WordPress -->
-        <div class="integration-card">
-          <div class="integration-logo">
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm-1.086 14.634L8.3 9.98h1.386l1.307 4.37 1.42-4.37h1.173l1.42 4.37 1.307-4.37H17.7l-2.614 6.654h-1.173l-1.42-4.24-1.42 4.24h-1.159z"
-                fill="#21759B" />
-            </svg>
-          </div>
-          <span class="integration-name">WordPress</span>
-        </div>
-
-        <!-- PrestaShop -->
-        <div class="integration-card">
-          <div class="integration-logo">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1.5 14.5h-3v-5h3v5zm0-7h-3V7.5h3V9.5z"
-                fill="#DF0067" />
-            </svg>
-          </div>
-          <span class="integration-name">PrestaShop</span>
-        </div>
-
-        <!-- Wix -->
-        <div class="integration-card">
-          <div class="integration-logo">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.5 7l-2 6-1.5-4-1.5 4-2-6h1.5l1 3 1.5-4 1.5 4 1-3H16.5z"
-                fill="#FAAD00" />
-            </svg>
-          </div>
-          <span class="integration-name">Wix</span>
-        </div>
-
-        <!-- Shopify -->
-        <div class="integration-card">
-          <div class="integration-logo">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M15.337 4.77s-.104-.052-.26-.104c-.015-.522-.366-1.983-1.252-1.983-.026 0-.052 0-.078.003C13.5 2.374 13.1 2 12.725 2c-2.87 0-4.24 3.584-4.67 5.406-.99.307-1.697.523-1.787.55-.555.174-.572.19-.645.713C5.558 9.14 4 21 4 21l11.8 2.21L20 21.903 15.337 4.77zM12.96 5.89c-.625.191-1.307.402-2.002.614.385-1.48 1.118-2.196 1.764-2.472.18.434.26 1.055.238 1.858zm-.871-2.616c.111 0 .207.09.295.27-.698.33-1.447 1.17-1.76 2.85l-1.335.41C9.72 5.22 10.903 3.274 12.089 3.274zm.55 8.31l-.77-1.992s-.63.339-1.292.339c-1.043 0-1.097-.654-1.097-.817 0-.896 1.863-1.237 1.863-3.323 0-1.645-1.137-2.7-2.66-2.7-.065 0-.131.005-.196.012l-.42 1.296c.267-.1.542-.156.82-.156.86 0 1.05.643 1.05 1.06 0 1.126-1.732 1.175-1.732 3.183 0 1.636 1.157 2.03 1.89 2.03.745 0 1.544-.28 1.544-.28z"
-                fill="#96BF48" />
-            </svg>
-          </div>
-          <span class="integration-name">Shopify</span>
-        </div>
-
-        <!-- OpenCart -->
-        <div class="integration-card">
-          <div class="integration-logo">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm-1 14a3 3 0 110-6 3 3 0 010 6zm4.5-.5a1.5 1.5 0 110-3 1.5 1.5 0 010 3z"
-                fill="#23ADEF" />
-            </svg>
-          </div>
-          <span class="integration-name">OpenCart</span>
-        </div>
-
-        <!-- Laravel -->
-        <div class="integration-card">
-          <div class="integration-logo">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M23.642 5.43a.364.364 0 01.014.1v5.149c0 .135-.073.26-.189.326l-4.323 2.49v4.934a.378.378 0 01-.189.326L9.93 23.949a.316.316 0 01-.066.027.298.298 0 01-.066.017.296.296 0 01-.132-.044L.534 18.771a.378.378 0 01-.189-.326V2.382c0-.036.004-.072.014-.106a.344.344 0 01.015-.047.36.36 0 01.046-.07l.04-.04.05-.024L4.83.014a.378.378 0 01.378 0l4.32 2.494a.38.38 0 01.19.326v4.933l3.754-2.162a.38.38 0 01.378 0l4.323 2.493a.378.378 0 01.19.326V12.6l3.754-2.162v-4.93a.38.38 0 01.19-.326l4.322-2.494a.378.378 0 01.378 0l.004.002z"
-                fill="#FF2D20" />
-            </svg>
-          </div>
-          <span class="integration-name">Laravel</span>
-        </div>
-
-        <!-- Joomla -->
-        <div class="integration-card">
-          <div class="integration-logo">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm2.5 6.5h-5a1 1 0 000 2h5a1 1 0 000-2zm-5 3h5a1 1 0 010 2h-5a1 1 0 010-2zm2.5 3a1 1 0 010 2 1 1 0 010-2z"
-                fill="#F44321" />
-            </svg>
-          </div>
-          <span class="integration-name">Joomla</span>
-        </div>
-
-        <!-- Duplicate set for seamless loop -->
-        <div class="integration-card">
-          <div class="integration-logo"><svg viewBox="0 0 24 24" fill="none">
-              <path
-                d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm-1.086 14.634L8.3 9.98h1.386l1.307 4.37 1.42-4.37h1.173l1.42 4.37 1.307-4.37H17.7l-2.614 6.654h-1.173l-1.42-4.24-1.42 4.24h-1.159z"
-                fill="#21759B" />
-            </svg></div>
-          <span class="integration-name">WordPress</span>
-        </div>
-        <div class="integration-card">
-          <div class="integration-logo"><svg viewBox="0 0 24 24">
-              <path
-                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1.5 14.5h-3v-5h3v5zm0-7h-3V7.5h3V9.5z"
-                fill="#DF0067" />
-            </svg></div>
-          <span class="integration-name">PrestaShop</span>
-        </div>
-        <div class="integration-card">
-          <div class="integration-logo"><svg viewBox="0 0 24 24">
-              <path
-                d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.5 7l-2 6-1.5-4-1.5 4-2-6h1.5l1 3 1.5-4 1.5 4 1-3H16.5z"
-                fill="#FAAD00" />
-            </svg></div>
-          <span class="integration-name">Wix</span>
-        </div>
-        <div class="integration-card">
-          <div class="integration-logo"><svg viewBox="0 0 24 24">
-              <path
-                d="M15.337 4.77s-.104-.052-.26-.104c-.015-.522-.366-1.983-1.252-1.983-.026 0-.052 0-.078.003C13.5 2.374 13.1 2 12.725 2c-2.87 0-4.24 3.584-4.67 5.406-.99.307-1.697.523-1.787.55-.555.174-.572.19-.645.713C5.558 9.14 4 21 4 21l11.8 2.21L20 21.903 15.337 4.77z"
-                fill="#96BF48" />
-            </svg></div>
-          <span class="integration-name">Shopify</span>
-        </div>
-        <div class="integration-card">
-          <div class="integration-logo"><svg viewBox="0 0 24 24">
-              <path
-                d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm-1 14a3 3 0 110-6 3 3 0 010 6zm4.5-.5a1.5 1.5 0 110-3 1.5 1.5 0 010 3z"
-                fill="#23ADEF" />
-            </svg></div>
-          <span class="integration-name">OpenCart</span>
-        </div>
-        <div class="integration-card">
-          <div class="integration-logo"><svg viewBox="0 0 24 24">
-              <path
-                d="M23.642 5.43a.364.364 0 01.014.1v5.149c0 .135-.073.26-.189.326l-4.323 2.49v4.934a.378.378 0 01-.189.326L9.93 23.949a.316.316 0 01-.066.027.298.298 0 01-.066.017.296.296 0 01-.132-.044L.534 18.771a.378.378 0 01-.189-.326V2.382c0-.036.004-.072.014-.106a.344.344 0 01.015-.047.36.36 0 01.046-.07l.04-.04.05-.024L4.83.014a.378.378 0 01.378 0l4.32 2.494a.38.38 0 01.19.326v4.933l3.754-2.162a.38.38 0 01.378 0l4.323 2.493a.378.378 0 01.19.326V12.6l3.754-2.162v-4.93a.38.38 0 01.19-.326l4.322-2.494a.378.378 0 01.378 0l.004.002z"
-                fill="#FF2D20" />
-            </svg></div>
-          <span class="integration-name">Laravel</span>
-        </div>
-        <div class="integration-card">
-          <div class="integration-logo"><svg viewBox="0 0 24 24">
-              <path
-                d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm2.5 6.5h-5a1 1 0 000 2h5a1 1 0 000-2zm-5 3h5a1 1 0 010 2h-5a1 1 0 010-2zm2.5 3a1 1 0 010 2 1 1 0 010-2z"
-                fill="#F44321" />
-            </svg></div>
-          <span class="integration-name">Joomla</span>
-        </div>
-
-      </div>
-    </div>
-
-    <p class="integrations-footer reveal">
-      If your site has a <strong>sitemap.xml</strong> — IndexFast works with it
+══════════════════════════════════════════ 
+<header class="hero" role="banner">
+<div aria-hidden="true" class="hero-grid"></div>
+<div aria-label="Нова технологія" class="hero-badge">⚡ Google Indexing API &amp; IndexNow</div>
+<h1>
+      Your site in Google and Bing<br/>
+<em>in 24 hours</em><br/>
+      not in weeks
+    </h1>
+<p class="hero-sub">
+      Stop waiting for Google to find your pages.
+      IndexFast sends them for indexing instantly via the official API.
     </p>
-  </section>
-
-  <!-- ═══════════════════════════════════════════
+<div class="hero-actions">
+<a aria-label="Почати безкоштовно" class="btn-primary" href="/app/register">
+        🚀 Get started for free
+      </a>
+<a aria-label="Дивитись як це працює" class="btn-secondary" href="#how-it-works">
+        See how it works ↓
+      </a>
+</div>
+<div aria-label="Статистика сервісу" class="hero-stats">
+<div class="stat">
+<div class="stat-num" id="counter1">0</div>
+<div class="stat-label">The URL is indexed</div>
+</div>
+<div class="stat">
+<div class="stat-num" id="counter2">0</div>
+<div class="stat-label">Satisfied customers</div>
+</div>
+<div class="stat">
+<div class="stat-num">24 hours</div>
+<div class="stat-label">Average indexing time</div>
+</div>
+<div class="stat">
+<div class="stat-num">200</div>
+<div class="stat-label">URL free/day</div>
+</div>
+</div>
+<div aria-hidden="true" class="scroll-hint">
+<div class="scroll-line"></div>
+<span>Scroll</span>
+</div>
+</header>
+ ═════════════════════════════════════════
+     PROBLEM
+══════════════════════════════════════════ 
+<section aria-labelledby="problem-title" class="problem-section">
+<div class="container">
+<div class="problem-grid">
+<div>
+<p class="section-tag reveal">Problem</p>
+<h2 class="section-title reveal" id="problem-title">
+            Why Google<br/>ignoring your site?
+          </h2>
+<ul class="problem-list">
+<li class="problem-item reveal reveal-delay-1">
+<div class="problem-icon">⏳</div>
+<div class="problem-text">
+<strong>Googlebot rarely crawls</strong>
+<span>New pages can wait for indexing from 2 weeks to several months - your competitors
+                  overtaking</span>
+</div>
+</li>
+<li class="problem-item reveal reveal-delay-2">
+<div class="problem-icon">📉</div>
+<div class="problem-text">
+<strong>Traffic is not growing</strong>
+<span>As long as the pages are not indexed, they are invisible to search engines and do not bring
+                  customers</span>
+</div>
+</li>
+<li class="problem-item reveal reveal-delay-3">
+<div class="problem-icon">🔧</div>
+<div class="problem-text">
+<strong>Search Console is inconvenient</strong>
+<span>Manually sending URLs one by one takes hours and API errors are scary without technical knowledge.</span>
+</div>
+</li>
+</ul>
+</div>
+<div class="visual-compare reveal">
+<p style="font-family: var(--font-display); font-weight: 700; margin-bottom: 24px; font-size: 1.1rem;">Time to
+            indexation</p>
+<div class="compare-item">
+<div class="compare-label">
+<span>❌ Without IndexFast</span>
+<span style="color: #ff6b6b; font-weight: 600;">2–8 weeks</span>
+</div>
+<div class="compare-bar-wrap">
+<div class="compare-bar bar-bad"></div>
+</div>
+</div>
+<div class="compare-vs">vs</div>
+<div class="compare-item" style="margin-top: 16px;">
+<div class="compare-label">
+<span>✅ With IndexFast</span>
+<span style="color: var(--green); font-weight: 600;">24–48 hours</span>
+</div>
+<div class="compare-bar-wrap">
+<div class="compare-bar bar-good"></div>
+</div>
+</div>
+<div style="margin-top: 28px; padding: 20px; background: rgba(0,255,136,0.05); border-radius: 12px; border: 1px solid rgba(0,255,136,0.15); text-align: center;">
+<p style="font-family: var(--font-display); font-size: 2rem; font-weight: 800; color: var(--green);">in 14×
+              faster</p>
+<p style="color: var(--muted); font-size: 0.85rem; margin-top: 4px;">average indexing acceleration</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+ ═════════════════════════════════════════
+     HOW IT WORKS
+══════════════════════════════════════════ 
+<section aria-labelledby="how-title" id="how-it-works">
+<div class="container">
+<div style="text-align: center; max-width: 600px; margin: 0 auto 0;">
+<p class="section-tag reveal">How it works</p>
+<h2 class="section-title reveal" id="how-title">Three steps to<br/>instant indexing</h2>
+<p class="section-sub reveal" style="margin: 0 auto;">Setup takes less than 10 minutes. No technicalities
+          knowledge is not required.</p>
+</div>
+<div class="steps-grid reveal">
+<div class="step">
+<div class="step-num">01</div>
+<div class="step-icon">🔑</div>
+<h3>Connect Search Console</h3>
+<p>Download the JSON key of your Google Service Account and add it to IndexFast. Once is forever.</p>
+</div>
+<div class="step">
+<div class="step-num">02</div>
+<div class="step-icon">🗺️</div>
+<h3>Specify the Sitemap URL</h3>
+<p>Enter the address of your sitemap.xml or just the domain - IndexFast will find the sitemap automatically.</p>
+</div>
+<div class="step">
+<div class="step-num">03</div>
+<div class="step-icon">⚡</div>
+<h3>Get the result</h3>
+<p>All pages are sent for indexing. Get a detailed report and watch your traffic grow.</p>
+</div>
+</div>
+</div>
+</section>
+ ═════════════════════════════════════════
+     FEATURES
+══════════════════════════════════════════ 
+<section aria-labelledby="features-title" class="features-section" id="features">
+<div class="container">
+<div class="features-header">
+<div>
+<p class="section-tag reveal">Advantages</p>
+<h2 class="section-title reveal" id="features-title">Everything you need<br/>for top positions</h2>
+</div>
+<p class="section-sub reveal">
+          We've taken the complex Google Indexing API and turned it into a simple tool for any business.
+        </p>
+</div>
+<div class="features-grid">
+<article class="feature-card reveal">
+<div class="feature-icon">🗺️</div>
+<h3>Sitemap Index support</h3>
+<p>Automatically parses nested sitemaps of any depth - all URLs will be found and sent.</p>
+</article>
+<article class="feature-card reveal reveal-delay-1">
+<div class="feature-icon">📊</div>
+<h3>Detailed log</h3>
+<p>Each operation is recorded in a log file with time and status. You always know what happened and when.</p>
+</article>
+<article class="feature-card reveal reveal-delay-2">
+<div class="feature-icon">🛡️</div>
+<h3>Quota management</h3>
+<p>Automatically adheres to Google's 200 URL/day limit. No quota overrun errors.</p>
+</article>
+<article class="feature-card reveal">
+<div class="feature-icon">⚙️</div>
+<h3>Flexible launch</h3>
+<p>CLI, arguments, interactive mode. Run manually, via cron or CI/CD pipeline.</p>
+</article>
+<article class="feature-card reveal reveal-delay-1">
+<div class="feature-icon">🚀</div>
+<h3>Official Google API</h3>
+<p>Uses the official Google Indexing API - not gray schemes, but a legal and reliable method.</p>
+</article>
+<article class="feature-card reveal reveal-delay-2">
+<div class="feature-icon">🔄</div>
+<h3>Automation</h3>
+<p>Set up an automatic run via cron every day - new pages will be indexed by themselves.</p>
+</article>
+</div>
+</div>
+</section>
+ ═════════════════════════════════════════
+     INTEGRATIONS
+══════════════════════════════════════════ 
+<section aria-label="Підтримувані платформи" class="integrations-section">
+<p class="integrations-label reveal">Works with any platform</p>
+<div class="integrations-track-wrap reveal">
+<div class="integrations-track" id="intTrack">
+ WordPress 
+<div class="integration-card">
+<div class="integration-logo">
+<svg fill="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm-1.086 14.634L8.3 9.98h1.386l1.307 4.37 1.42-4.37h1.173l1.42 4.37 1.307-4.37H17.7l-2.614 6.654h-1.173l-1.42-4.24-1.42 4.24h-1.159z" fill="#21759B"></path>
+</svg>
+</div>
+<span class="integration-name">WordPress</span>
+</div>
+ PrestaShop 
+<div class="integration-card">
+<div class="integration-logo">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1.5 14.5h-3v-5h3v5zm0-7h-3V7.5h3V9.5z" fill="#DF0067"></path>
+</svg>
+</div>
+<span class="integration-name">PrestaShop</span>
+</div>
+ Wix 
+<div class="integration-card">
+<div class="integration-logo">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.5 7l-2 6-1.5-4-1.5 4-2-6h1.5l1 3 1.5-4 1.5 4 1-3H16.5z" fill="#FAAD00"></path>
+</svg>
+</div>
+<span class="integration-name">Wix</span>
+</div>
+ Shopify 
+<div class="integration-card">
+<div class="integration-logo">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M15.337 4.77s-.104-.052-.26-.104c-.015-.522-.366-1.983-1.252-1.983-.026 0-.052 0-.078.003C13.5 2.374 13.1 2 12.725 2c-2.87 0-4.24 3.584-4.67 5.406-.99.307-1.697.523-1.787.55-.555.174-.572.19-.645.713C5.558 9.14 4 21 4 21l11.8 2.21L20 21.903 15.337 4.77zM12.96 5.89c-.625.191-1.307.402-2.002.614.385-1.48 1.118-2.196 1.764-2.472.18.434.26 1.055.238 1.858zm-.871-2.616c.111 0 .207.09.295.27-.698.33-1.447 1.17-1.76 2.85l-1.335.41C9.72 5.22 10.903 3.274 12.089 3.274zm.55 8.31l-.77-1.992s-.63.339-1.292.339c-1.043 0-1.097-.654-1.097-.817 0-.896 1.863-1.237 1.863-3.323 0-1.645-1.137-2.7-2.66-2.7-.065 0-.131.005-.196.012l-.42 1.296c.267-.1.542-.156.82-.156.86 0 1.05.643 1.05 1.06 0 1.126-1.732 1.175-1.732 3.183 0 1.636 1.157 2.03 1.89 2.03.745 0 1.544-.28 1.544-.28z" fill="#96BF48"></path>
+</svg>
+</div>
+<span class="integration-name">Shopify</span>
+</div>
+ OpenCart 
+<div class="integration-card">
+<div class="integration-logo">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm-1 14a3 3 0 110-6 3 3 0 010 6zm4.5-.5a1.5 1.5 0 110-3 1.5 1.5 0 010 3z" fill="#23ADEF"></path>
+</svg>
+</div>
+<span class="integration-name">OpenCart</span>
+</div>
+ Laravel 
+<div class="integration-card">
+<div class="integration-logo">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M23.642 5.43a.364.364 0 01.014.1v5.149c0 .135-.073.26-.189.326l-4.323 2.49v4.934a.378.378 0 01-.189.326L9.93 23.949a.316.316 0 01-.066.027.298.298 0 01-.066.017.296.296 0 01-.132-.044L.534 18.771a.378.378 0 01-.189-.326V2.382c0-.036.004-.072.014-.106a.344.344 0 01.015-.047.36.36 0 01.046-.07l.04-.04.05-.024L4.83.014a.378.378 0 01.378 0l4.32 2.494a.38.38 0 01.19.326v4.933l3.754-2.162a.38.38 0 01.378 0l4.323 2.493a.378.378 0 01.19.326V12.6l3.754-2.162v-4.93a.38.38 0 01.19-.326l4.322-2.494a.378.378 0 01.378 0l.004.002z" fill="#FF2D20"></path>
+</svg>
+</div>
+<span class="integration-name">Laravel</span>
+</div>
+ Joomla 
+<div class="integration-card">
+<div class="integration-logo">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm2.5 6.5h-5a1 1 0 000 2h5a1 1 0 000-2zm-5 3h5a1 1 0 010 2h-5a1 1 0 010-2zm2.5 3a1 1 0 010 2 1 1 0 010-2z" fill="#F44321"></path>
+</svg>
+</div>
+<span class="integration-name">Joomla</span>
+</div>
+ Duplicate set for seamless loop 
+<div class="integration-card">
+<div class="integration-logo"><svg fill="none" viewbox="0 0 24 24">
+<path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm-1.086 14.634L8.3 9.98h1.386l1.307 4.37 1.42-4.37h1.173l1.42 4.37 1.307-4.37H17.7l-2.614 6.654h-1.173l-1.42-4.24-1.42 4.24h-1.159z" fill="#21759B"></path>
+</svg></div>
+<span class="integration-name">WordPress</span>
+</div>
+<div class="integration-card">
+<div class="integration-logo"><svg viewbox="0 0 24 24">
+<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1.5 14.5h-3v-5h3v5zm0-7h-3V7.5h3V9.5z" fill="#DF0067"></path>
+</svg></div>
+<span class="integration-name">PrestaShop</span>
+</div>
+<div class="integration-card">
+<div class="integration-logo"><svg viewbox="0 0 24 24">
+<path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.5 7l-2 6-1.5-4-1.5 4-2-6h1.5l1 3 1.5-4 1.5 4 1-3H16.5z" fill="#FAAD00"></path>
+</svg></div>
+<span class="integration-name">Wix</span>
+</div>
+<div class="integration-card">
+<div class="integration-logo"><svg viewbox="0 0 24 24">
+<path d="M15.337 4.77s-.104-.052-.26-.104c-.015-.522-.366-1.983-1.252-1.983-.026 0-.052 0-.078.003C13.5 2.374 13.1 2 12.725 2c-2.87 0-4.24 3.584-4.67 5.406-.99.307-1.697.523-1.787.55-.555.174-.572.19-.645.713C5.558 9.14 4 21 4 21l11.8 2.21L20 21.903 15.337 4.77z" fill="#96BF48"></path>
+</svg></div>
+<span class="integration-name">Shopify</span>
+</div>
+<div class="integration-card">
+<div class="integration-logo"><svg viewbox="0 0 24 24">
+<path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm-1 14a3 3 0 110-6 3 3 0 010 6zm4.5-.5a1.5 1.5 0 110-3 1.5 1.5 0 010 3z" fill="#23ADEF"></path>
+</svg></div>
+<span class="integration-name">OpenCart</span>
+</div>
+<div class="integration-card">
+<div class="integration-logo"><svg viewbox="0 0 24 24">
+<path d="M23.642 5.43a.364.364 0 01.014.1v5.149c0 .135-.073.26-.189.326l-4.323 2.49v4.934a.378.378 0 01-.189.326L9.93 23.949a.316.316 0 01-.066.027.298.298 0 01-.066.017.296.296 0 01-.132-.044L.534 18.771a.378.378 0 01-.189-.326V2.382c0-.036.004-.072.014-.106a.344.344 0 01.015-.047.36.36 0 01.046-.07l.04-.04.05-.024L4.83.014a.378.378 0 01.378 0l4.32 2.494a.38.38 0 01.19.326v4.933l3.754-2.162a.38.38 0 01.378 0l4.323 2.493a.378.378 0 01.19.326V12.6l3.754-2.162v-4.93a.38.38 0 01.19-.326l4.322-2.494a.378.378 0 01.378 0l.004.002z" fill="#FF2D20"></path>
+</svg></div>
+<span class="integration-name">Laravel</span>
+</div>
+<div class="integration-card">
+<div class="integration-logo"><svg viewbox="0 0 24 24">
+<path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm2.5 6.5h-5a1 1 0 000 2h5a1 1 0 000-2zm-5 3h5a1 1 0 010 2h-5a1 1 0 010-2zm2.5 3a1 1 0 010 2 1 1 0 010-2z" fill="#F44321"></path>
+</svg></div>
+<span class="integration-name">Joomla</span>
+</div>
+</div>
+</div>
+<p class="integrations-footer reveal">
+      If your site has <strong>sitemap.xml</strong> — IndexFast works with it
+    </p>
+</section>
+ ═════════════════════════════════════════
      FOR WHOM
-════════════════════════════════════════════ -->
-  <section class="forwhom-section" id="for-whom" aria-labelledby="forwhom-title">
-    <div class="container">
-      <div style="text-align: center; max-width: 600px; margin: 0 auto;">
-        <p class="section-tag reveal">For whom</p>
-        <h2 class="section-title reveal" id="forwhom-title">IndexFast is suitable<br>for any business</h2>
-        <p class="section-sub reveal" style="margin: 0 auto;">From a blogger to an agency — if you have a site and you want traffic from Google, IndexFast is for you.</p>
-      </div>
-
-      <div class="forwhom-grid">
-
-        <article class="forwhom-card reveal">
-          <span class="forwhom-emoji">🛒</span>
-          <h3>E-commerce</h3>
-          <p>Hundreds and thousands of product pages that Google can't crawl fast enough. IndexFast ensures every new product
-            gets into search as fast as possible.</p>
-          <div class="forwhom-tags">
-            <span class="forwhom-tag">WooCommerce</span>
-            <span class="forwhom-tag">OpenCart</span>
-            <span class="forwhom-tag">Shopify</span>
-            <span class="forwhom-tag">Horoshop</span>
-          </div>
-        </article>
-
-        <article class="forwhom-card reveal reveal-delay-1">
-          <span class="forwhom-emoji">✍️</span>
-          <h3>Bloggers and media</h3>
-          <p>Publishing content daily? New articles get into the search results the very next morning, not in weeks. Your materials are first in search while competitors are waiting.</p>
-          <div class="forwhom-tags">
-            <span class="forwhom-tag">WordPress</span>
-            <span class="forwhom-tag">Ghost</span>
-            <span class="forwhom-tag">News portals</span>
-          </div>
-        </article>
-
-        <article class="forwhom-card reveal reveal-delay-2">
-          <span class="forwhom-emoji">🏢</span>
-          <h3>Business sites</h3>
-          <p>Updated services, added case studies or changed prices — IndexFast instantly signals Google about the changes. Up-to-date
-            information in search results without delays.</p>
-          <div class="forwhom-tags">
-            <span class="forwhom-tag">Landings</span>
-            <span class="forwhom-tag">Corporate Sites</span>
-          </div>
-        </article>
-
-        <article class="forwhom-card reveal">
-          <span class="forwhom-emoji">🏠</span>
-          <h3>Real estate and listings</h3>
-          <p>New properties appear daily. Buyers search Google right now — every minute of indexing delay
-            costs you a client.</p>
-          <div class="forwhom-tags">
-            <span class="forwhom-tag">DOM.RIA</span>
-            <span class="forwhom-tag">Aggregators</span>
-            <span class="forwhom-tag">Listing boards</span>
-          </div>
-        </article>
-
-        <article class="forwhom-card reveal reveal-delay-1">
-          <span class="forwhom-emoji">🎯</span>
-          <h3>SEO Specialists and agencies</h3>
-          <p>Managing several projects? The Agency plan allows you to manage an unlimited number of client sites from one account and generate white-label reports.</p>
-          <div class="forwhom-tags">
-            <span class="forwhom-tag">Multisite</span>
-            <span class="forwhom-tag">White-label</span>
-            <span class="forwhom-tag">API</span>
-          </div>
-        </article>
-
-        <article class="forwhom-card reveal reveal-delay-2">
-          <span class="forwhom-emoji">🚀</span>
-          <h3>Startups and SaaS</h3>
-          <p>Launching a new product? Fast indexing of a landing page and blog means your first organic users without ad spend in the first week.</p>
-          <div class="forwhom-tags">
-            <span class="forwhom-tag">Product Hunt</span>
-            <span class="forwhom-tag">Landings</span>
-            <span class="forwhom-tag">Blog</span>
-          </div>
-        </article>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════
+══════════════════════════════════════════ 
+<section aria-labelledby="forwhom-title" class="forwhom-section" id="for-whom">
+<div class="container">
+<div style="text-align: center; max-width: 600px; margin: 0 auto;">
+<p class="section-tag reveal">For whom</p>
+<h2 class="section-title reveal" id="forwhom-title">IndexFast fits the bill<br/>for any business</h2>
+<p class="section-sub reveal" style="margin: 0 auto;">From blogger to agency — if you have a site and want to
+          traffic from Google, IndexFast for you.</p>
+</div>
+<div class="forwhom-grid">
+<article class="forwhom-card reveal">
+<span class="forwhom-emoji">🛒</span>
+<h3>Online stores</h3>
+<p>Hundreds and thousands of product pages that Google does not have time to scan. IndexFast guarantees that every new product
+            gets into the search as quickly as possible.</p>
+<div class="forwhom-tags">
+<span class="forwhom-tag">WooCommerce</span>
+<span class="forwhom-tag">OpenCart</span>
+<span class="forwhom-tag">Shopify</span>
+<span class="forwhom-tag">good</span>
+</div>
+</article>
+<article class="forwhom-card reveal reveal-delay-1">
+<span class="forwhom-emoji">✍️</span>
+<h3>Bloggers and media</h3>
+<p>Posting content every day? New articles are published the next morning, not weeks later. yours
+            materials first in the search, while competitors wait.</p>
+<div class="forwhom-tags">
+<span class="forwhom-tag">WordPress</span>
+<span class="forwhom-tag">Ghost</span>
+<span class="forwhom-tag">News portals</span>
+</div>
+</article>
+<article class="forwhom-card reveal reveal-delay-2">
+<span class="forwhom-emoji">🏢</span>
+<h3>Business sites</h3>
+<p>Updated services, added cases or changed prices - IndexFast instantly signals Google about the changes. Current
+            information is issued without delay.</p>
+<div class="forwhom-tags">
+<span class="forwhom-tag">Landings</span>
+<span class="forwhom-tag">Corporate sites</span>
+</div>
+</article>
+<article class="forwhom-card reveal">
+<span class="forwhom-emoji">🏠</span>
+<h3>Real estate and classifieds</h3>
+<p>New objects appear every day. Buyers are searching on Google right now — every minute of indexation lag
+            costs you a customer.</p>
+<div class="forwhom-tags">
+<span class="forwhom-tag">DOM.RIA</span>
+<span class="forwhom-tag">Aggregators</span>
+<span class="forwhom-tag">Notice boards</span>
+</div>
+</article>
+<article class="forwhom-card reveal reveal-delay-1">
+<span class="forwhom-emoji">🎯</span>
+<h3>SEO specialists and agencies</h3>
+<p>Do you run several projects? The Agency tariff allows you to manage an unlimited number of client sites from one
+            account and generate white-label reports.</p>
+<div class="forwhom-tags">
+<span class="forwhom-tag">Multisite</span>
+<span class="forwhom-tag">White-label</span>
+<span class="forwhom-tag">API</span>
+</div>
+</article>
+<article class="forwhom-card reveal reveal-delay-2">
+<span class="forwhom-emoji">🚀</span>
+<h3>Startups and SaaS</h3>
+<p>Launching a new product? Fast indexing of landing page and blog is the first organic users without cost
+            for advertising already in the first week.</p>
+<div class="forwhom-tags">
+<span class="forwhom-tag">Product Hunt</span>
+<span class="forwhom-tag">Landings</span>
+<span class="forwhom-tag">Blog</span>
+</div>
+</article>
+</div>
+</div>
+</section>
+ ═════════════════════════════════════════
      TESTIMONIALS
-════════════════════════════════════════════ -->
-  <section aria-labelledby="reviews-title">
-    <div class="container">
-      <div style="text-align: center; margin-bottom: 0;">
-        <p class="section-tag reveal">Client reviews</p>
-        <h2 class="section-title reveal" id="reviews-title">They're already on top in Google</h2>
-      </div>
-
-      <div class="testimonials-grid">
-        <article class="testimonial reveal">
-          <div class="result-badge">+340% organic traffic</div>
-          <div class="stars">★★★★★</div>
-          <p class="testimonial-text">
-            «Launched an online store — 800 products, none were getting indexed for weeks. After IndexFast, in 2 days all
-            pages were in Google. Traffic grew 4x in the first month.»
+══════════════════════════════════════════ 
+<section aria-labelledby="reviews-title">
+<div class="container">
+<div style="text-align: center; margin-bottom: 0;">
+<p class="section-tag reveal">Customer reviews</p>
+<h2 class="section-title reveal" id="reviews-title">They are already at the top of Google</h2>
+</div>
+<div class="testimonials-grid">
+<article class="testimonial reveal">
+<div class="result-badge">+340% organic traffic</div>
+<div class="stars">★★★★★</div>
+<p class="testimonial-text">
+            "Launched an online store — 800 products, none of which were indexed for weeks. After IndexFast in 2 days all
+            pages were in Google. Traffic increased 4 times in the first month."
           </p>
-          <div class="testimonial-author">
-            <div class="author-avatar">AK</div>
-            <div>
-              <p class="author-name">Andriy Kovalenko</p>
-              <p class="author-role">Online store owner, Kyiv</p>
-            </div>
-          </div>
-        </article>
-
-        <article class="testimonial reveal reveal-delay-1">
-          <div class="result-badge">Indexed in 18 hours</div>
-          <div class="stars">★★★★★</div>
-          <p class="testimonial-text">
-            «I run a travel blog — publishing 3–4 articles per week. Before, I waited 3 weeks for indexing. Now new
-            articles are in search results the very next morning. This changed the game!»
+<div class="testimonial-author">
+<div class="author-avatar">AK</div>
+<div>
+<p class="author-name">Andriy Kovalenko</p>
+<p class="author-role">The owner of an online store, Kyiv</p>
+</div>
+</div>
+</article>
+<article class="testimonial reveal reveal-delay-1">
+<div class="result-badge">Indexing in 18 hours</div>
+<div class="stars">★★★★★</div>
+<p class="testimonial-text">
+            "I blog about travel - I publish 3-4 articles a week. Previously, I waited up to 3 weeks for indexing. Now new ones
+            the article is in circulation the very next morning. It was a game changer!”
           </p>
-          <div class="testimonial-author">
-            <div class="author-avatar">MS</div>
-            <div>
-              <p class="author-name">Maryna Sydorenko</p>
-              <p class="author-role">Blogger, 50k subscribers</p>
-            </div>
-          </div>
-        </article>
-
-        <article class="testimonial reveal reveal-delay-2">
-          <div class="result-badge">Clients from Google in week 1</div>
-          <div class="stars">★★★★★</div>
-          <p class="testimonial-text">
-            «Launched a landing page for a new product. Thanks to IndexFast, in just one week we got our first clients from
-            organic search. SEO finally started working the way it should.»
+<div class="testimonial-author">
+<div class="author-avatar">MS</div>
+<div>
+<p class="author-name">Maryna Sydorenko</p>
+<p class="author-role">Blogger, 50k followers</p>
+</div>
+</div>
+</article>
+<article class="testimonial reveal reveal-delay-2">
+<div class="result-badge">Customers from Google since the 1st week</div>
+<div class="stars">★★★★★</div>
+<p class="testimonial-text">
+            "We launched a landing page for a new product. Thanks to IndexFast, we received our first customers within a week
+            organics SEO finally started working as it should.”
           </p>
-          <div class="testimonial-author">
-            <div class="author-avatar">DP</div>
-            <div>
-              <p class="author-name">Dmytro Petrenko</p>
-              <p class="author-role">CEO of a SaaS startup</p>
-            </div>
-          </div>
-        </article>
-
-        <article class="testimonial reveal">
-          <div class="result-badge">Saving 8 hours/week</div>
-          <div class="stars">★★★★★</div>
-          <p class="testimonial-text">
-            «I manage 15 client sites. Before, I spent hours manually submitting URLs through Search Console. Now
-            one script handles all clients automatically every day.»
+<div class="testimonial-author">
+<div class="author-avatar">DP</div>
+<div>
+<p class="author-name">Dmytro Petrenko</p>
+<p class="author-role">CEO of a SaaS startup</p>
+</div>
+</div>
+</article>
+<article class="testimonial reveal">
+<div class="result-badge">Saving 8 hours/week</div>
+<div class="stars">★★★★★</div>
+<p class="testimonial-text">
+            "I serve 15 client sites. Used to spend hours manually submitting URLs through Search Console. Now
+            one script handles all customers automatically every day.”
           </p>
-          <div class="testimonial-author">
-            <div class="author-avatar">OM</div>
-            <div>
-              <p class="author-name">Oleg Morozenko</p>
-              <p class="author-role">SEO specialist, freelancer</p>
-            </div>
-          </div>
-        </article>
-
-        <article class="testimonial reveal reveal-delay-1">
-          <div class="result-badge">Top-3 in 2 weeks</div>
-          <div class="stars">★★★★★</div>
-          <p class="testimonial-text">
-            «A legal firm, very competitive niche. Updated service pages — IndexFast submitted them instantly. In 2
-            weeks we were in the top 3 for key queries. Incredible!»
+<div class="testimonial-author">
+<div class="author-avatar">OHM</div>
+<div>
+<p class="author-name">Oleg Morozenko</p>
+<p class="author-role">SEO specialist, freelancer</p>
+</div>
+</div>
+</article>
+<article class="testimonial reveal reveal-delay-1">
+<div class="result-badge">Top 3 in 2 weeks</div>
+<div class="stars">★★★★★</div>
+<p class="testimonial-text">
+            "Law firm, very competitive niche. Updated the service pages - IndexFast sent them instantly. Through 2
+            weeks were in the top 3 for key queries. Unreal!"
           </p>
-          <div class="testimonial-author">
-            <div class="author-avatar">NZ</div>
-            <div>
-              <p class="author-name">Natalia Zakharenko</p>
-              <p class="author-role">Marketing manager at a law firm</p>
-            </div>
-          </div>
-        </article>
-
-        <article class="testimonial reveal reveal-delay-2">
-          <div class="result-badge">200 → 2400 visitors/day</div>
-          <div class="stars">★★★★★</div>
-          <p class="testimonial-text">
-            «News portal — we publish 20+ articles per day. IndexFast runs in cron automatically. Traffic
-            grew from 200 to 2400 unique visitors per month.»
+<div class="testimonial-author">
+<div class="author-avatar">NZ</div>
+<div>
+<p class="author-name">Natalia Zakharenko</p>
+<p class="author-role">Law firm marketer</p>
+</div>
+</div>
+</article>
+<article class="testimonial reveal reveal-delay-2">
+<div class="result-badge">200 → 2400 visitors/day</div>
+<div class="stars">★★★★★</div>
+<p class="testimonial-text">
+            "News portal - we publish 20+ materials per day. IndexFast in cron starts automatically. Traffic
+            grew from 200 to 2,400 unique visitors per month."
           </p>
-          <div class="testimonial-author">
-            <div class="author-avatar">VK</div>
-            <div>
-              <p class="author-name">Vasyl Kravchenko</p>
-              <p class="author-role">Editor-in-chief of media</p>
-            </div>
-          </div>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════
+<div class="testimonial-author">
+<div class="author-avatar">VK</div>
+<div>
+<p class="author-name">Vasyl Kravchenko</p>
+<p class="author-role">Chief media editor</p>
+</div>
+</div>
+</article>
+</div>
+</div>
+</section>
+ ═════════════════════════════════════════
      PRICING
-════════════════════════════════════════════ -->
-  <section id="pricing" class="pricing-section" aria-labelledby="pricing-title">
-    <div class="container">
-      <div style="text-align: center; margin-bottom: 0;">
-        <p class="section-tag reveal">Pricing</p>
-        <h2 class="section-title reveal" id="pricing-title">Honest pricing,<br>no hidden fees</h2>
-        <p class="section-sub reveal" style="margin: 16px auto 0;">Start for free. Pay only when you see
-          results.</p>
-      </div>
-
-      <div class="pricing-grid">
-
-        <div class="pricing-card reveal">
-          <p class="pricing-tier">Start</p>
-          <p class="pricing-price"><span>₴</span>0</p>
-          <p class="pricing-period">forever free</p>
-          <ul class="pricing-features">
-            <li>10 pages per day</li>
-            <li>1 site</li>
-            <li>Web interface</li>
-            <li>Sitemap Index support</li>
-            <li>IndexNow support (Bing, Naver, Seznam.cz, Yep)</li>
-            <li class="disabled">Indexing log</li>
-            <li class="disabled">Scheduled auto-run</li>
-            <li class="disabled">API access</li>
-            <li class="disabled">Priority support</li>
-          </ul>
-          <a href="/app/register" class="btn-plan btn-plan-outline">Start for free</a>
-        </div>
-
-        <div class="pricing-card featured reveal reveal-delay-1">
-          <p class="pricing-tier">PRO</p>
-          <p class="pricing-price"><span>₴</span>499</p>
-          <p class="pricing-period">per month</p>
-          <ul class="pricing-features">
-            <li>100 pages per day</li>
-            <li>Up to 5 sites</li>
-            <li>Web interface</li>
-            <li>Sitemap Index support</li>
-            <li>IndexNow support (Bing, Naver, Seznam.cz, Yep)</li>
-            <li>Indexing log</li>
-            <li class="disabled">Scheduled auto-run</li>
-            <li class="disabled">API access</li>
-            <li class="disabled">Priority support</li>
-          </ul>
-          <a href="https://t.me/indexfastgoogle?text=Хочу%20придбати%20PRO%20за%20₴499" target="_blank"
-            class="btn-plan btn-plan-solid">Buy PRO →</a>
-        </div>
-
-        <div class="pricing-card reveal reveal-delay-2">
-          <p class="pricing-tier">Agency</p>
-          <p class="pricing-price"><span>₴</span>2 999</p>
-          <p class="pricing-period">per month</p>
-          <ul class="pricing-features">
-            <li>1000 pages per day</li>
-            <li>Up to 50 sites</li>
-            <li>Web interface</li>
-            <li>Sitemap Index support</li>
-            <li>IndexNow support (Bing, Naver, Seznam.cz, Yep)</li>
-            <li>Scheduled auto-run</li>
-            <li>White-label reports</li>
-            <li>Full API access</li>
-            <li>Priority support 24/7</li>
-          </ul>
-          <a href="https://t.me/indexfastgoogle?text=Хочу%20тариф%20Agency%20за%20₴2999" target="_blank"
-            class="btn-plan btn-plan-solid">Buy →</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════
+══════════════════════════════════════════ 
+<section aria-labelledby="pricing-title" class="pricing-section" id="pricing">
+<div class="container">
+<div style="text-align: center; margin-bottom: 0;">
+<p class="section-tag reveal">Tariffs</p>
+<h2 class="section-title reveal" id="pricing-title">Fair prices,<br/>no hidden fees</h2>
+<p class="section-sub reveal" style="margin: 16px auto 0;">Get started for free. Pay only when you see
+          result</p>
+</div>
+<div class="pricing-grid">
+<div class="pricing-card reveal">
+<p class="pricing-tier">Start</p>
+<p class="pricing-price"><span>₴</span>0</p>
+<p class="pricing-period">forever free</p>
+<ul class="pricing-features">
+<li>10 pages per day</li>
+<li>1 site</li>
+<li>Web interface</li>
+<li>Sitemap Index support</li>
+<li>IndexNow support (Bing, Naver, Seznam.cz, Yep)</li>
+<li class="disabled">Indexing log</li>
+<li class="disabled">Auto-run on schedule</li>
+<li class="disabled">API access</li>
+<li class="disabled">Priority support</li>
+</ul>
+<a class="btn-plan btn-plan-outline" href="/app/register">Get started for free</a>
+</div>
+<div class="pricing-card featured reveal reveal-delay-1">
+<p class="pricing-tier">PRO</p>
+<p class="pricing-price"><span>₴</span>499</p>
+<p class="pricing-period">per month</p>
+<ul class="pricing-features">
+<li>100 pages per day</li>
+<li>Up to 5 sites</li>
+<li>Web interface</li>
+<li>Sitemap Index support</li>
+<li>IndexNow support (Bing, Naver, Seznam.cz, Yep)</li>
+<li>Indexing log</li>
+<li class="disabled">Auto-run on schedule</li>
+<li class="disabled">API access</li>
+<li class="disabled">Priority support</li>
+</ul>
+<a class="btn-plan btn-plan-solid" href="https://t.me/indexfastgoogle?text=Хочу%20придбати%20PRO%20за%20₴499" target="_blank">Buy PRO →</a>
+</div>
+<div class="pricing-card reveal reveal-delay-2">
+<p class="pricing-tier">Agency</p>
+<p class="pricing-price"><span>₴</span>2,999</p>
+<p class="pricing-period">per month</p>
+<ul class="pricing-features">
+<li>1000 pages per day</li>
+<li>Up to 50 sites</li>
+<li>Web interface</li>
+<li>Sitemap Index support</li>
+<li>IndexNow support (Bing, Naver, Seznam.cz, Yep)</li>
+<li>Auto-run on schedule</li>
+<li>White-label reports</li>
+<li>Full API access</li>
+<li>Priority support 24/7</li>
+</ul>
+<a class="btn-plan btn-plan-solid" href="https://t.me/indexfastgoogle?text=Хочу%20тариф%20Агенція%20за%20₴2999" target="_blank">Buy →</a>
+</div>
+</div>
+</div>
+</section>
+ ═════════════════════════════════════════
      ROI CALCULATOR
-════════════════════════════════════════════ -->
-  <section class="roi-section" id="roi" aria-labelledby="roi-title">
-    <div class="container roi-wrap">
-      <div class="roi-grid">
-
-        <!-- INPUTS -->
-        <div>
-          <p class="roi-label reveal">Calculator</p>
-          <h2 class="roi-title reveal" id="roi-title">How much do you save<br>with IndexFast?</h2>
-          <p class="roi-sub reveal">Adjust parameters for your business — and see the real benefit in time and money.
+══════════════════════════════════════════ 
+<section aria-labelledby="roi-title" class="roi-section" id="roi">
+<div class="container roi-wrap">
+<div class="roi-grid">
+ INPUTS 
+<div>
+<p class="roi-label reveal">Calculator</p>
+<h2 class="roi-title reveal" id="roi-title">How much you save<br/>with IndexFast?</h2>
+<p class="roi-sub reveal">Customize the settings for your business — and you'll see a real benefit in time and money.
           </p>
-
-          <div class="roi-field reveal">
-            <div class="roi-field-top">
-              <label class="roi-field-name" for="rPages">Pages on the site</label>
-              <span class="roi-field-val" id="valPages">500</span>
-            </div>
-            <input type="range" class="roi-range" id="rPages" min="50" max="5000" step="50" value="500" aria-label="Number of pages on the site">
-          </div>
-
-          <div class="roi-field reveal">
-            <div class="roi-field-top">
-              <label class="roi-field-name" for="rNew">New pages per month</label>
-              <span class="roi-field-val" id="valNew">50</span>
-            </div>
-            <input type="range" class="roi-range" id="rNew" min="5" max="500" step="5" value="50" aria-label="New pages per month">
-          </div>
-
-          <div class="roi-field reveal">
-            <div class="roi-field-top">
-              <label class="roi-field-name" for="rRate">Your rate (₴/hr)</label>
-              <span class="roi-field-val" id="valRate">500 ₴</span>
-            </div>
-            <input type="range" class="roi-range" id="rRate" min="100" max="3000" step="50" value="500" aria-label="Your hourly rate">
-          </div>
-
-          <div class="roi-field reveal">
-            <div class="roi-field-top">
-              <label class="roi-field-name" for="rMin">Minutes to manually index 1 URL</label>
-              <span class="roi-field-val" id="valMin">3 min</span>
-            </div>
-            <input type="range" class="roi-range" id="rMin" min="1" max="10" step="1" value="3" aria-label="Minutes to manually index">
-          </div>
-        </div>
-
-        <!-- RESULTS -->
-        <div class="roi-results reveal">
-          <p class="roi-res-title">Your savings per month</p>
-          <div class="roi-metrics">
-            <div class="roi-metric">
-              <div class="roi-metric-label">Time saved on indexing</div>
-              <div class="roi-metric-val" id="resSavedTime">—</div>
-              <div class="roi-metric-sub" id="resSavedTimeSub">hours per month</div>
-            </div>
-            <div class="roi-metric">
-              <div class="roi-metric-label">Cost of this time</div>
-              <div class="roi-metric-val" id="resSavedMoney">—</div>
-              <div class="roi-metric-sub">at your rate</div>
-            </div>
-            <div class="roi-metric">
-              <div class="roi-metric-label">Indexing speed boost</div>
-              <div class="roi-metric-val" style="font-size:1.6rem;">up to 14×</div>
-              <div class="roi-metric-sub">from weeks to 24 hours</div>
-            </div>
-          </div>
-          <div class="roi-total">
-            <p>Net profit (savings − PRO cost)</p>
-            <strong id="resProfit">—</strong>
-            <span id="resProfitSub">per month</span>
-          </div>
-          <a href="#pricing" class="roi-action">Get this benefit →</a>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════
+<div class="roi-field reveal">
+<div class="roi-field-top">
+<label class="roi-field-name" for="rPages">Pages on the site</label>
+<span class="roi-field-val" id="valPages">500</span>
+</div>
+<input aria-label="Кількість сторінок на сайті" class="roi-range" id="rPages" max="5000" min="50" step="50" type="range" value="500"/>
+</div>
+<div class="roi-field reveal">
+<div class="roi-field-top">
+<label class="roi-field-name" for="rNew">New pages per month</label>
+<span class="roi-field-val" id="valNew">50</span>
+</div>
+<input aria-label="Нових сторінок на місяць" class="roi-range" id="rNew" max="500" min="5" step="5" type="range" value="50"/>
+</div>
+<div class="roi-field reveal">
+<div class="roi-field-top">
+<label class="roi-field-name" for="rRate">Your rate (₴/hour)</label>
+<span class="roi-field-val" id="valRate">500 ₴</span>
+</div>
+<input aria-label="Ваша ставка за годину" class="roi-range" id="rRate" max="3000" min="100" step="50" type="range" value="500"/>
+</div>
+<div class="roi-field reveal">
+<div class="roi-field-top">
+<label class="roi-field-name" for="rMin">Minutes to manually index 1 URL</label>
+<span class="roi-field-val" id="valMin">3 min</span>
+</div>
+<input aria-label="Хвилин на ручну індексацію" class="roi-range" id="rMin" max="10" min="1" step="1" type="range" value="3"/>
+</div>
+</div>
+ RESULTS 
+<div class="roi-results reveal">
+<p class="roi-res-title">Your savings for the month</p>
+<div class="roi-metrics">
+<div class="roi-metric">
+<div class="roi-metric-label">Time saved on indexing</div>
+<div class="roi-metric-val" id="resSavedTime">—</div>
+<div class="roi-metric-sub" id="resSavedTimeSub">hours per month</div>
+</div>
+<div class="roi-metric">
+<div class="roi-metric-label">The cost of this time</div>
+<div class="roi-metric-val" id="resSavedMoney">—</div>
+<div class="roi-metric-sub">at your rate</div>
+</div>
+<div class="roi-metric">
+<div class="roi-metric-label">Acceleration of indexing</div>
+<div class="roi-metric-val" style="font-size:1.6rem;">up to 14×</div>
+<div class="roi-metric-sub">from weeks to 24 hours</div>
+</div>
+</div>
+<div class="roi-total">
+<p>Net benefit (savings - cost of PRO)</p>
+<strong id="resProfit">—</strong>
+<span id="resProfitSub">per month</span>
+</div>
+<a class="roi-action" href="#pricing">Get this benefit →</a>
+</div>
+</div>
+</div>
+</section>
+ ═════════════════════════════════════════
      FAQ
-════════════════════════════════════════════ -->
-  <section id="faq" aria-labelledby="faq-title">
-    <div class="container">
-      <div style="text-align: center;">
-        <p class="section-tag reveal">FAQ</p>
-        <h2 class="section-title reveal" id="faq-title">Frequently Asked Questions</h2>
-      </div>
-
-      <div class="faq-list reveal">
-        <div class="faq-item">
-          <button class="faq-q" aria-expanded="false">
+══════════════════════════════════════════ 
+<section aria-labelledby="faq-title" id="faq">
+<div class="container">
+<div style="text-align: center;">
+<p class="section-tag reveal">FAQ</p>
+<h2 class="section-title reveal" id="faq-title">Frequently asked questions</h2>
+</div>
+<div class="faq-list reveal">
+<div class="faq-item">
+<button aria-expanded="false" class="faq-q">
             How quickly will Google index my pages?
             <span class="faq-arrow">+</span>
-          </button>
-          <div class="faq-a" role="region">
-            <p>After submission via IndexFast, Google typically indexes pages within 24–48 hours. Regular
-              Googlebot crawling can take from 2 weeks to several months.</p>
-          </div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-q" aria-expanded="false">
-            How many URLs can I submit for free?
+</button>
+<div class="faq-a" role="region">
+<p>Once submitted through IndexFast, Google typically indexes pages within 24-48 hours. It's normal
+              a Googlebot scan can take anywhere from 2 weeks to several months.</p>
+</div>
+</div>
+<div class="faq-item">
+<button aria-expanded="false" class="faq-q">
+            How many URLs can I send for free?
             <span class="faq-arrow">+</span>
-          </button>
-          <div class="faq-a" role="region">
-            <p>Google provides a quota of 200 URLs per day for free via the Indexing API. The IndexFast free plan automatically manages this quota. On Pro and Agency plans, the quota can be expanded.</p>
-          </div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-q" aria-expanded="false">
-            Do I need technical knowledge?
+</button>
+<div class="faq-a" role="region">
+<p>Google provides a quota of 200 URLs per day for free through the Indexing API. IndexFast Free Plan
+              automatically manages this quota. The quota can be expanded on Pro and Agency tariffs.</p>
+</div>
+</div>
+<div class="faq-item">
+<button aria-expanded="false" class="faq-q">
+            Is technical knowledge required?
             <span class="faq-arrow">+</span>
-          </button>
-          <div class="faq-a" role="region">
-            <p>For basic use, you only need to connect your Google Search Console account and provide your
-              sitemap.xml URL. A step-by-step guide is included. For cron automation, basic
-              Linux knowledge is required.</p>
-          </div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-q" aria-expanded="false">
-            Is this an official method? Will Google ban my site?
+</button>
+<div class="faq-a" role="region">
+<p>For basic use, you only need to connect a Google Search Console account and specify a URL
+              sitemap.xml. Step-by-step instructions are included. For automation through cron, you will need the basics
+              knowledge of Linux.</p>
+</div>
+</div>
+<div class="faq-item">
+<button aria-expanded="false" class="faq-q">
+            Is this the official method? Google will not ban the site?
             <span class="faq-arrow">+</span>
-          </button>
-          <div class="faq-a" role="region">
-            <p>IndexFast uses exclusively the official Google Indexing API. This is the Google-recommended method for
-              speeding up indexing. No risks to your site.</p>
-          </div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-q" aria-expanded="false">
+</button>
+<div class="faq-a" role="region">
+<p>IndexFast uses only the official Google Indexing API. This is Google's recommended method for
+              acceleration of indexing. No risks for your site.</p>
+</div>
+</div>
+<div class="faq-item">
+<button aria-expanded="false" class="faq-q">
             What about other search engines (Bing, Naver)?
             <span class="faq-arrow">+</span>
-          </button>
-          <div class="faq-a" role="region">
-            <p>Yes, IndexFast also fully supports the IndexNow protocol. This means your URLs are automatically sent not only to Google, but also to Bing, Naver, Seznam.cz and Yep simultaneously.</p>
-          </div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-q" aria-expanded="false">
+</button>
+<div class="faq-a" role="region">
+<p>Yes, IndexFast also fully supports the IndexNow protocol. This means that your links are automatically sent not only to Google, but also to Bing, Naver, Seznam.cz and Yep at the same time.</p>
+</div>
+</div>
+<div class="faq-item">
+<button aria-expanded="false" class="faq-q">
             What if my site is on WordPress / Webflow / another platform?
             <span class="faq-arrow">+</span>
-          </button>
-          <div class="faq-a" role="region">
-            <p>IndexFast works with any site that has a sitemap.xml — WordPress, Webflow, Wix, custom development. If your site has a sitemap — IndexFast works with it.</p>
-          </div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-q" aria-expanded="false">
-            How to set up automatic daily execution?
+</button>
+<div class="faq-a" role="region">
+<p>IndexFast works with any site that has a sitemap.xml — WordPress, Webflow, Wix, custom. If
+              your site has a sitemap — IndexFast works with it.</p>
+</div>
+</div>
+<div class="faq-item">
+<button aria-expanded="false" class="faq-q">
+            How to set automatic start every day?
             <span class="faq-arrow">+</span>
-          </button>
-          <div class="faq-a" role="region">
-            <p>On Pro and Agency plans, there is a built-in scheduler. On the free plan, you can set up a cron job on your server — detailed instructions are in the documentation.</p>
-          </div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-q" aria-expanded="false">
-            Is there a refund policy?
+</button>
+<div class="faq-a" role="region">
+<p>The Pro and Agency tariffs have a built-in planner. On the free plan, you can set up a cron task
+              on the server - detailed instructions are in the documentation.</p>
+</div>
+</div>
+<div class="faq-item">
+<button aria-expanded="false" class="faq-q">
+            Is there a refund?
             <span class="faq-arrow">+</span>
-          </button>
-          <div class="faq-a" role="region">
-            <p>Yes, we provide a full refund guarantee within 14 days of payment if the service didn't suit you. To request it, write to indexfastapp@gmail.com.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-
-  <!-- ═══════════════════════════════════════════
+</button>
+<div class="faq-a" role="region">
+<p>Yes, we provide a full refund guarantee within 14 days after payment if the service did not suit you. For inquiries, write to indexfastapp@gmail.com.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+ ═════════════════════════════════════════
      BLOG ARTICLES — Internal linking
-════════════════════════════════════════════ -->
-  <section class="blog-section" aria-labelledby="blog-section-title">
-    <div class="container">
-      <p class="section-tag reveal">Useful Resources</p>
-      <h2 class="section-title reveal" id="blog-section-title" style="margin-bottom: 12px;">
-        Read in our Blog
+══════════════════════════════════════════ 
+<section aria-labelledby="blog-section-title" class="blog-section">
+<div class="container">
+<p class="section-tag reveal">Useful materials</p>
+<h2 class="section-title reveal" id="blog-section-title" style="margin-bottom: 12px;">
+        Read on our blog
       </h2>
-      <p class="blog-intro-text reveal">
-        Practical guides about SEO, indexing and Google promotion
+<p class="blog-intro-text reveal">
+        Practical guides on SEO, indexing and promotion in Google
       </p>
-
-      <div class="blog-cards-grid reveal">
-
-        <!-- Article 1 -->
-        <a href="/blog/yak-pryskoriti-indeksaciyu-saitu-v-google.html" style="text-decoration: none;">
-          <article class="blog-card">
-            <div class="blog-card-icon">⚡</div>
-            <div class="blog-card-meta">
-              <span class="blog-card-tag">Indexing</span>
-              <span class="blog-card-readtime">10 min read</span>
-            </div>
-            <h3 class="blog-card-title">
-              How to speed up Google indexing in 2025
+<div class="blog-cards-grid reveal">
+ Article 1 
+<a href="/blog/yak-pryskoriti-indeksaciyu-saitu-v-google.html" style="text-decoration: none;">
+<article class="blog-card">
+<div class="blog-card-icon">⚡</div>
+<div class="blog-card-meta">
+<span class="blog-card-tag">Indexing</span>
+<span class="blog-card-readtime">10 minutes of reading</span>
+</div>
+<h3 class="blog-card-title">
+              How to speed up the indexing of your site in Google in 2025
             </h3>
-            <p class="blog-card-desc">
+<p class="blog-card-desc">
               Step-by-step guide: from sitemap setup to Google Indexing API. Real methods that work.
             </p>
-            <span class="blog-card-link">
-              Read article →
+<span class="blog-card-link">
+              Read the article →
             </span>
-          </article>
-        </a>
-
-        <!-- Article 2 -->
-        <a href="/blog/shcho-take-sitemap-xml.html" style="text-decoration: none;">
-          <article class="blog-card">
-            <div class="blog-card-icon">🗺️</div>
-            <div class="blog-card-meta">
-              <span class="blog-card-tag">SEO</span>
-              <span class="blog-card-readtime">7 min read</span>
-            </div>
-            <h3 class="blog-card-title">
-              What is sitemap.xml and why does your site need it
+</article>
+</a>
+ Article 2 
+<a href="/blog/shcho-take-sitemap-xml.html" style="text-decoration: none;">
+<article class="blog-card">
+<div class="blog-card-icon">🗺️</div>
+<div class="blog-card-meta">
+<span class="blog-card-tag">SEO</span>
+<span class="blog-card-readtime">7 minutes of reading</span>
+</div>
+<h3 class="blog-card-title">
+              What is sitemap.xml and why does your site need it?
             </h3>
-            <p class="blog-card-desc">
-              Full breakdown: structure, types, errors and how to correctly configure a sitemap for Google.
+<p class="blog-card-desc">
+              Full breakdown: structure, types, mistakes and how to properly set up a sitemap for Google.
             </p>
-            <span class="blog-card-link">
-              Read article →
+<span class="blog-card-link">
+              Read the article →
             </span>
-          </article>
-        </a>
-
-        <!-- CTA to blog -->
-        <a href="/blog/" style="text-decoration: none;">
-          <article class="blog-card blog-card-cta">
-            <div class="blog-card-icon">📚</div>
-            <h3 class="blog-card-title">
-              More articles about SEO and indexing
+</article>
+</a>
+ CTA to the blog 
+<a href="/blog/" style="text-decoration: none;">
+<article class="blog-card blog-card-cta">
+<div class="blog-card-icon">📚</div>
+<h3 class="blog-card-title">
+              More articles on SEO and indexing
             </h3>
-            <p class="blog-card-desc">
-              Practical guides, case studies and tips every week
+<p class="blog-card-desc">
+              Practical guides, cases and tips every week
             </p>
-            <span class="blog-card-link">
+<span class="blog-card-link">
               All articles →
             </span>
-          </article>
-        </a>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════
+</article>
+</a>
+</div>
+</div>
+</section>
+ ═════════════════════════════════════════
      CTA
-════════════════════════════════════════════ -->
-  <section class="cta-section" aria-labelledby="cta-title">
-    <div class="container" style="text-align: center; position: relative; z-index: 1;">
-      <p class="section-tag reveal">Start now</p>
-      <h2 class="section-title reveal" id="cta-title">
-        While you're reading —<br>
-        competitors are already <em>on top</em>
-      </h2>
-      <p class="cta-sub reveal">
-        Join 247+ sites that are already getting customers from Google with IndexFast.
+══════════════════════════════════════════ 
+<section aria-labelledby="cta-title" class="cta-section">
+<div class="container" style="text-align: center; position: relative; z-index: 1;">
+<p class="section-tag reveal">Get started now</p>
+<h2 class="section-title reveal" id="cta-title">
+        While you are reading—<br/>
+        competitors already <em>in the top</em>
+</h2>
+<p class="cta-sub reveal">
+        Join the 247+ sites already getting customers from Google with IndexFast.
       </p>
-      <div class="reveal">
-        <a href="/app/register" class="btn-primary" style="display: inline-flex;" aria-label="Start for free">
-          🚀 Start for free — it takes just 5 minutes
+<div class="reveal">
+<a aria-label="Почати безкоштовно" class="btn-primary" href="/app/register" style="display: inline-flex;">
+          🚀 Get started for free - it will take 5 minutes
         </a>
-      </div>
-      <p class="cta-trust reveal">
-        <span>✓</span> Free forever &nbsp;
-        <span>✓</span> No credit card required &nbsp;
+</div>
+<p class="cta-trust reveal">
+<span>✓</span> Free forever  
+        <span>✓</span> No credit card  
         <span>✓</span> Official Google API
       </p>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════
+</div>
+</section>
+ ═════════════════════════════════════════
      FOOTER
-════════════════════════════════════════════ -->
-  <footer role="contentinfo">
-  <div class="footer-grid">
-    <div class="footer-brand">
-      <a href="/" class="logo">Index<span>Fast</span></a>
-      <p>Automatic indexing of website pages in Google via the official Google Indexing API.</p>
-    </div>
-    <div class="footer-col">
-      <p class="footer-title">Product</p>
-      <ul>
-        <li><a href="/#how-it-works">How it works</a></li>
-        <li><a href="/#features">Features</a></li>
-        <li><a href="/#pricing">Pricing</a></li>
-        <li><a href="/docs/">Documentation</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <p class="footer-title">Company</p>
-      <ul>
-        <li><a href="/about.html">About Us</a></li>
-        <li><a href="/blog/">Blog</a></li>
-        <li><a href="/affiliate.html">Affiliate Program</a></li>
-        <li><a href="/contacts.html">Contacts</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <p class="footer-title">Support</p>
-      <ul>
-        <li><a href="/#faq">FAQ</a></li>
-        <li><a href="https://t.me/indexfastgoogle" target="_blank" rel="noopener noreferrer">Telegram chat</a></li>
-        <li><a href="mailto:indexfastapp@gmail.com">Email support</a></li>
-        <li><a href="/status.html">Service status</a></li>
-      </ul>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <p>© 2026 IndexFast. All rights reserved.</p>
-    <div style="display:flex; gap:20px;">
-      <a href="/privacy-policy.html">Privacy Policy</a>
-      <a href="/terms.html">Terms</a>
-    </div>
-  </div>
-  <button id="backToTop" class="back-to-top" aria-label="Back to top">
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
-  </button>
+══════════════════════════════════════════ 
+<footer role="contentinfo">
+<div class="footer-grid">
+<div class="footer-brand">
+<a class="logo" href="/">Index<span>Fast</span></a>
+<p>Service for automatic indexing of site pages in Google through the official Google Indexing API.</p>
+</div>
+<div class="footer-col">
+<p class="footer-title">Product</p>
+<ul>
+<li><a href="/#how-it-works">How it works</a></li>
+<li><a href="/#features">Advantages</a></li>
+<li><a href="/#pricing">Tariffs</a></li>
+<li><a href="/docs/">Documentation</a></li>
+</ul>
+</div>
+<div class="footer-col">
+<p class="footer-title">Company</p>
+<ul>
+<li><a href="/about.html">About us</a></li>
+<li><a href="/blog/">Blog</a></li>
+<li><a href="/affiliate.html">Partner program</a></li>
+<li><a href="/contacts.html">Contacts</a></li>
+</ul>
+</div>
+<div class="footer-col">
+<p class="footer-title">Support</p>
+<ul>
+<li><a href="/#faq">FAQ</a></li>
+<li><a href="https://t.me/indexfastgoogle" rel="noopener noreferrer" target="_blank">Telegram chat</a></li>
+<li><a href="mailto:indexfastapp@gmail.com">Email support</a></li>
+<li><a href="/status.html">Service status</a></li>
+</ul>
+</div>
+</div>
+<div class="footer-bottom">
+<p>© 2026 IndexFast. All rights reserved.</p>
+<div style="display:flex; gap:20px;">
+<a href="/privacy-policy.html">Privacy</a>
+<a href="/terms.html">Conditions</a>
+</div>
+</div>
+<button aria-label="Вгору" class="back-to-top" id="backToTop">
+<svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewbox="0 0 24 24" width="24"><path d="M18 15l-6-6-6 6"></path></svg>
+</button>
 </footer>
-
-  <script>
+<script>
     document.addEventListener("DOMContentLoaded", function () {
       // ── Cursor
       const cursor = document.getElementById('cursor');
@@ -3829,7 +3707,7 @@
       }, { threshold: 0.05, rootMargin: '0px 0px -40px 0px' });
 
       document.querySelectorAll('.reveal').forEach(el => {
-        // Elements already in viewport on load — show immediately
+        // Елементи що вже у viewport при завантаженні — одразу показуємо
         const rect = el.getBoundingClientRect();
         if (rect.top < window.innerHeight && rect.bottom > 0) {
           el.classList.add('visible');
@@ -3838,7 +3716,7 @@
         }
       });
 
-      // Additional fallback — show all hidden elements after 2 seconds
+      // Додатковий fallback — показати всі невидимі елементи через 2 секунди
       setTimeout(() => {
         document.querySelectorAll('.reveal:not(.visible)').forEach(el => el.classList.add('visible'));
       }, 2000);
@@ -3849,13 +3727,13 @@
         const SOCIAL_PROOF_INTERVAL = 5000;
 
         const recentActivations = [
-          "Andriy from Kharkiv just activated PRO",
-          "Olena from Kyiv got a -50% discount",
-          "Maksym from Odessa connected his 5th site",
-          "Ihor from Lviv switched to the PRO plan",
-          "Tetiana from Dnipro activated the special offer",
-          "Viktor from Vinnytsia just became PRO",
-          "Maryna from Poltava saved ₴490"
+          "Андрій з Харкова щойно активував PRO",
+          "Олена з Києва отримала знижку -50%",
+          "Максим з Одеси підключив 5-й сайт",
+          "Ігор зі Львова перейшов на PRO план",
+          "Тетяна з Дніпра активувала спецпропозицію",
+          "Віктор з Вінниці щойно став PRO",
+          "Марина з Полтави заощадила ₴490"
         ];
 
         // ── Countdown end time (2 hours for real urgency, persists in session)
@@ -3933,9 +3811,9 @@
           const title = document.getElementById('promoModalTitle');
           if (title) {
             if (trigger === 'exit') {
-              title.innerHTML = 'Leaving?<br>Take <em>-50%</em><br>with you';
+              title.innerHTML = 'Вже йдете?<br>Заберіть <em>-50%</em><br>із собою';
             } else {
-              title.innerHTML = 'Special<br>offer — <em>-50%</em>';
+              title.innerHTML = 'Спеціальна<br>пропозиція — <em>-50%</em>';
             }
           }
           overlay.classList.add('active');
@@ -3993,7 +3871,7 @@
           };
         }
 
-        // ── Trigger 4: TIME — 35 seconds
+        // ── Trigger 4: TIME — 35 секунд
         setTimeout(function () {
           showPopup('time');
         }, 35000);
@@ -4008,7 +3886,7 @@
         const rMin = document.getElementById('rMin');
 
         function fmt(n) {
-          if (n >= 1000) return (n / 1000).toFixed(1).replace('.0', '') + 'k';
+          if (n >= 1000) return (n / 1000).toFixed(1).replace('.0', '') + 'к';
           return Math.round(n).toLocaleString('uk');
         }
         function fmtMoney(n) {
@@ -4030,20 +3908,20 @@
           document.getElementById('valPages').textContent = fmt(pages);
           document.getElementById('valNew').textContent = fmt(newPg);
           document.getElementById('valRate').textContent = fmt(rate) + ' ₴';
-          document.getElementById('valMin').textContent = minsPer + ' min';
+          document.getElementById('valMin').textContent = minsPer + ' хв';
 
           // Update fills
           [rPages, rNew, rRate, rMin].forEach(updateFill);
 
           // Calculations
-          const savedMins = newPg * minsPer;          // minutes per month
+          const savedMins = newPg * minsPer;          // хвилин на місяць
           const savedHours = savedMins / 60;
           const savedMoney = savedHours * rate;
           const proCost = 499;
           const profit = savedMoney - proCost;
 
-          document.getElementById('resSavedTime').textContent = savedHours >= 1 ? savedHours.toFixed(1) + ' hrs' : savedMins + ' min';
-          document.getElementById('resSavedTimeSub').textContent = savedHours >= 1 ? 'hours per month' : 'minutes per month';
+          document.getElementById('resSavedTime').textContent = savedHours >= 1 ? savedHours.toFixed(1) + ' год' : savedMins + ' хв';
+          document.getElementById('resSavedTimeSub').textContent = savedHours >= 1 ? 'годин щомісяця' : 'хвилин щомісяця';
           document.getElementById('resSavedMoney').textContent = fmtMoney(savedMoney);
 
           const profitEl = document.getElementById('resProfit');
@@ -4051,11 +3929,11 @@
           if (profit > 0) {
             profitEl.textContent = fmtMoney(profit);
             profitEl.style.color = 'var(--green)';
-            profitSub.textContent = 'net profit per month';
+            profitSub.textContent = 'чистого прибутку на місяць';
           } else {
             profitEl.textContent = fmtMoney(Math.abs(profit));
             profitEl.style.color = '#ff9955';
-            profitSub.textContent = 'difference (consider PRO with larger volume)';
+            profitSub.textContent = 'різниця (розгляньте PRO при більшому обсязі)';
           }
         }
 
@@ -4122,5 +4000,4 @@
     });
   </script>
 </body>
-
 </html>
