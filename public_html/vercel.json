@@ -113,5 +113,5 @@
       "destination": "/app/index.html"
     }
   ],
-  "trailingSlash": false
+  "trailingSlash": true
 }
