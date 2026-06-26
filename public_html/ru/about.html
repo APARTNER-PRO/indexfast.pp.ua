@@ -122,15 +122,38 @@
   </style>
 </head>
 <body>
-<nav>
-  <a href="/ru/" class="logo">Index<span>Fast</span></a>
-  <div class="nav-right">
-    <a href="/ru/" class="nav-link">Главная</a>
-    <a href="/blog/" class="nav-link">Блог</a>
-    <a href="/app/login" class="nav-login">Войти</a>
-    <a href="/app/register" class="nav-cta">Попробовать бесплатно</a>
-  </div>
-</nav>
+<nav id="navbar" role="navigation" aria-label="Головне меню">
+    <a href="/ru/" class="logo" aria-label="IndexFast">Index<span>Fast</span></a>
+    <ul class="nav-links">
+      <li><a href="/ru/#how-it-works">Как это работает</a></li>
+      <li><a href="/ru/#for-whom">Для кого</a></li>
+      <li><a href="/ru/#features">Преимущества</a></li>
+      <li><a href="/ru/#pricing">Цены</a></li>
+      <li><a href="/ru/#faq">FAQ</a></li>
+      <li class="mobile-auth">
+        <a href="/app/login" class="mobile-login">Войти</a>
+        <a href="/app/register" class="mobile-register">Попробовать бесплатно →</a>
+      </li>
+    </ul>
+    <div class="nav-actions">
+      <div class="nav-lang-dropdown">
+      <button class="nav-lang-btn">RU ▾</button>
+      <div class="nav-lang-menu">
+        <a href="/" >English</a>
+        <a href="/uk/" >Українська</a>
+        <a href="/es/" >Español</a>
+        <a href="/pt/" >Português</a>
+        <a href="/ru/" class="active">Русский</a>
+        <a href="/de/" >Deutsch</a>
+        <a href="/fr/" >Français</a>
+        <a href="/pl/" >Polski</a>
+      </div>
+    </div>
+      <a href="/app/login" class="nav-login">Войти</a>
+      <a href="/app/register" class="nav-cta">Попробовать бесплатно →</a>
+      <button class="mobile-menu-btn" onclick="document.querySelector('.nav-links').classList.toggle('active')" aria-label="Відкрити меню">☰</button>
+    </div>
+  </nav>
 
 <section class="about-hero">
   <div class="hero-bg"></div>
