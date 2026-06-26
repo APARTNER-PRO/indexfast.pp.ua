@@ -1390,7 +1390,7 @@
     }
 
     .pricing-card.featured::before {
-      content: 'Популярний';
+      content: 'Sobrecocôlaрnósй';
       position: absolute;
       top: 20px;
       right: 20px;
@@ -2533,7 +2533,7 @@
       transform: translateY(0);
     }
 
-    /* Fallback: якщо JS не спрацював — показуємо через 1.5с */
+    /* Fallback: comoO que JS não comAvenidacontaeuvocêem — sobrekaderecipientenoErez 1.5com */
 
     .reveal-delay-1 {
       transition-delay: 0.1s;
@@ -2731,6 +2731,66 @@
       color: var(--white, #f0f0f8);
       border-color: rgba(255, 255, 255, 0.25);
     }
+  
+    /* ─── LANGUAGE DROPDOWN ─── */
+    .nav-lang-dropdown {
+      position: relative;
+      display: inline-block;
+      margin-right: 16px;
+    }
+    .nav-lang-btn {
+      background: none;
+      border: none;
+      color: var(--muted);
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 0.875rem;
+      cursor: pointer;
+      padding: 8px 0;
+      transition: color 0.2s;
+    }
+    .nav-lang-btn:hover {
+      color: var(--white);
+    }
+    .nav-lang-menu {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 8px 0;
+      min-width: 140px;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(10px);
+      transition: all 0.2s;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+      z-index: 1000;
+    }
+    .nav-lang-dropdown:hover .nav-lang-menu {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+    .nav-lang-menu a {
+      display: block;
+      padding: 8px 20px;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.875rem;
+      transition: background 0.2s, color 0.2s;
+    }
+    .nav-lang-menu a:hover {
+      background: rgba(255,255,255,0.05);
+      color: var(--white);
+    }
+    .nav-lang-menu a.active {
+      color: var(--green);
+      font-weight: 600;
+      background: rgba(0,255,136,0.05);
+    }
+
   </style>
 </head>
 
@@ -2738,9 +2798,9 @@
 
 
   <!-- PROMO POPUP (exit intent / scroll) -->
-  <div class="promo-overlay" id="promoOverlay" aria-modal="true" role="dialog" aria-label="Спеціальна пропозиція">
+  <div class="promo-overlay" id="promoOverlay" aria-modal="true" role="dialog" aria-label="SPetc.eueuнe Sr.rosobreziцsim">
     <div class="promo-modal" id="promoModal">
-      <button class="promo-modal-close" onclick="closePromoPopup()" aria-label="Закрити">×</button>
+      <button class="promo-modal-close" onclick="closePromoPopup()" aria-label="PorCrevocê">×</button>
 
       <div class="promo-modal-left">
         <div class="promo-modal-glow"></div>
@@ -2760,7 +2820,7 @@
           </div>
         </div>
 
-        <a href="https://t.me/indexfastgoogle?text=Хочу%20PRO%20за%20₴249%20(промо)" target="_blank"
+        <a href="https://t.me/indexfastgoogle?text=Hoouvir%20PRO%20por%20₴249%20(Avenidaohmno)" target="_blank"
           class="promo-modal-btn" onclick="closePromoPopup(); markCtaClicked();">
           Quero PRO por ₴249 →
         </a>
@@ -2797,7 +2857,7 @@
       <span>as páginas estão atualmente na fila para indexação</span>
     </div>
     <button class="ticker-close" onclick="closeLiveTicker()"
-      aria-label="Закрити">×</button>
+      aria-label="PorCrevocê">×</button>
   </div>
 
   <!-- Cursor -->
@@ -2807,8 +2867,8 @@
   <!-- ═══════════════════════════════════════════
      NAV
 ════════════════════════════════════════════ -->
-  <nav id="navbar" role="navigation" aria-label="Головне меню">
-    <a href="/" class="logo" aria-label="IndexFast — Головна">Index<span>Fast</span></a>
+  <nav id="navbar" role="navigation" aria-label="Irlolramale-mpteu">
+    <a href="/" class="logo" aria-label="IndexFast — Irlolramale">Index<span>Fast</span></a>
     <ul class="nav-links">
       <li><a href="#how-it-works">Como funciona</a></li>
       <li><a href="#for-whom">Para quem</a></li>
@@ -2821,10 +2881,18 @@
       </li>
     </ul>
     <div class="nav-actions">
-      <a href="/" class="nav-lang" style="color:var(--muted); text-decoration:none; margin-right:16px; font-weight:600; transition:color 0.2s;" onmouseover="this.style.color='var(--white)'" onmouseout="this.style.color='var(--muted)'">EN</a>
+      <div class="nav-lang-dropdown">
+      <button class="nav-lang-btn">PT ▾</button>
+      <div class="nav-lang-menu">
+        <a href="/">English</a>
+        <a href="/uk/">Українська</a>
+        <a href="/es/">Español</a>
+        <a href="/pt/" class="active">Português</a>
+      </div>
+    </div>
       <a href="/app/login" class="nav-login">Entrar</a>
       <a href="/app/register" class="nav-cta">Comece gratuitamente →</a>
-      <button class="mobile-menu-btn" onclick="document.querySelector('.nav-links').classList.toggle('active')" aria-label="Відкрити меню">☰</button>
+      <button class="mobile-menu-btn" onclick="document.querySelector('.nav-links').classList.toggle('active')" aria-label="VocêdCrevocê мpteu">☰</button>
     </div>
   </nav>
 
@@ -2834,7 +2902,7 @@
   <header class="hero" role="banner">
     <div class="hero-grid" aria-hidden="true"></div>
 
-    <div class="hero-badge" aria-label="Нова технологія">⚡ Google Indexing API & IndexNow</div>
+    <div class="hero-badge" aria-label="Masvocê queo queridooláohsim">⚡ Google Indexing API & IndexNow</div>
 
     <h1>
       Seu site no Google e Bing<br>
@@ -2851,12 +2919,12 @@
       <a href="/app/register" class="btn-primary" aria-label="Comece gratuitamente">
         🚀 Comece gratuitamente
       </a>
-      <a href="#how-it-works" class="btn-secondary" aria-label="Дивитись як це працює">
+      <a href="#how-it-works" class="btn-secondary" aria-label="Divocêvocêaqui como isto Avenidacontaé">
         Veja como funciona ↓
       </a>
     </div>
 
-    <div class="hero-stats" aria-label="Статистика сервісу">
+    <div class="hero-stats" aria-label="Сevocêcomvocêparae comEreméem">
       <div class="stat">
         <div class="stat-num" id="counter1">0</div>
         <div class="stat-label">O URL está indexado</div>
@@ -3044,7 +3112,7 @@
   <!-- ═══════════════════════════════════════════
      INTEGRATIONS
 ════════════════════════════════════════════ -->
-  <section class="integrations-section" aria-label="Підтримувані платформи">
+  <section class="integrations-section" aria-label="PidtRymuvocêNão m²noparasalae">
     <p class="integrations-label reveal">Funciona com qualquer plataforma</p>
 
     <div class="integrations-track-wrap reveal">
@@ -3447,7 +3515,7 @@
             <li class="disabled">Acesso à API</li>
             <li class="disabled">Suporte prioritário</li>
           </ul>
-          <a href="https://t.me/indexfastgoogle?text=Хочу%20придбати%20PRO%20за%20₴499" target="_blank"
+          <a href="https://t.me/indexfastgoogle?text=Hoouvir%20AvenidaEU IAbavocê%20PRO%20por%20₴499" target="_blank"
             class="btn-plan btn-plan-solid">Compre PRO →</a>
         </div>
 
@@ -3466,7 +3534,7 @@
             <li>Acesso completo à API</li>
             <li>Suporte prioritário 24 horas por dia, 7 dias por semana</li>
           </ul>
-          <a href="https://t.me/indexfastgoogle?text=Хочу%20тариф%20Agência%20за%20₴2999" target="_blank"
+          <a href="https://t.me/indexfastgoogle?text=Hoouvir%20eRyf%20Agência%20por%20₴2999" target="_blank"
             class="btn-plan btn-plan-solid">Comprar →</a>
         </div>
       </div>
@@ -3492,7 +3560,7 @@
               <label class="roi-field-name" for="rPages">Páginas do site</label>
               <span class="roi-field-val" id="valPages">500</span>
             </div>
-            <input type="range" class="roi-range" id="rPages" min="50" max="5000" step="50" value="500" aria-label="Кількість сторінок на сайті">
+            <input type="range" class="roi-range" id="rPages" min="50" max="5000" step="50" value="500" aria-label="КFigoьQuemArteéentãorimassabee comAiaqueles">
           </div>
 
           <div class="roi-field reveal">
@@ -3508,7 +3576,7 @@
               <label class="roi-field-name" for="rRate">Sua taxa (₴/hora)</label>
               <span class="roi-field-val" id="valRate">500 ₴</span>
             </div>
-            <input type="range" class="roi-range" id="rRate" min="100" max="3000" step="50" value="500" aria-label="Ваша ставка за horasину">
+            <input type="range" class="roi-range" id="rRate" min="100" max="3000" step="50" value="500" aria-label="Váшe comeemparae come horasemem">
           </div>
 
           <div class="roi-field reveal">
@@ -3516,7 +3584,7 @@
               <label class="roi-field-name" for="rMin">Minutos para indexar manualmente 1 URL</label>
               <span class="roi-field-val" id="valMin">3 minutos</span>
             </div>
-            <input type="range" class="roi-range" id="rMin" min="1" max="10" step="1" value="3" aria-label="Хвилин на ручну індексацію">
+            <input type="range" class="roi-range" id="rMin" min="1" max="10" step="1" value="3" aria-label="Mínimodoenteem sobre ruchndentro eнondePadrecontaeeu">
           </div>
         </div>
 
@@ -3792,7 +3860,7 @@
       <a href="/terms.html">Condições</a>
     </div>
   </div>
-  <button id="backToTop" class="back-to-top" aria-label="Вгору">
+  <button id="backToTop" class="back-to-top" aria-label="Hgnoru">
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
   </button>
 </footer>
@@ -3849,7 +3917,7 @@
       }, { threshold: 0.05, rootMargin: '0px 0px -40px 0px' });
 
       document.querySelectorAll('.reveal').forEach(el => {
-        // Елементи що вже у viewport при завантаженні — одразу показуємо
+        // Eelesptvocê O que aparentementee em viewport Avenidae comevocêнeжptNão — unidaderade sobrekaderecipienteno
         const rect = el.getBoundingClientRect();
         if (rect.top < window.innerHeight && rect.bottom > 0) {
           el.classList.add('visible');
@@ -3858,7 +3926,7 @@
         }
       });
 
-      // Додатковий fallback — показати всі невидимі елементи через 2 Segundoунди
+      // Дunidadeeobrigadoaho fallback — sobrekaporvocê todose nEuedмe eлelesptтe hErez 2 SegundoUniversidaded
       setTimeout(() => {
         document.querySelectorAll('.reveal:not(.visible)').forEach(el => el.classList.add('visible'));
       }, 2000);
@@ -3870,12 +3938,11 @@
 
         const recentActivations = [
           "Andriy de Kharkiv acaba de ativar o PRO",
-          "Олена з Києва отримала знижку -50%",
-          "Максим з Одеси підключив 5-й сайт",
-          "Ігор зі Львова перейшов на Plano PRO",
-          "Тетяна з Дніпра активувала спецпропозицію",
-          "Віктор з Вінниці щойно став PRO",
-          "Марина з Полтави заощадила ₴490"
+          "Olpte com KyEue sobretrnomeado apóstudoe comnósÁrea residencialem -50%",
+          "MãePadrenomeado após com Oondevocê é piDr.lolч4 5-eAit",
+          "Euohcome euemahe Sr.ErEio quePousadae Plano PRO",
+          "Queelaнe com ДNãoAvenidae umkt4UVtudoe comпetc.AvenidaOp.noziesses4simentãocom Vocênnissoe etc.Ohmas comeem PRO",
+          "Mãeрeme com Sobreлeeme comeaiedлe ₴490"
         ];
 
         // ── Countdown end time (2 hours for real urgency, persists in session)
@@ -3953,9 +4020,9 @@
           const title = document.getElementById('promoModalTitle');
           if (title) {
             if (trigger === 'exit') {
-              title.innerHTML = 'Вже йдете?<br>Remover <em>-50%</em><br>comigo mesmo';
+              title.innerHTML = 'Vereondeque?<br>Remover <em>-50%</em><br>comigo mesmo';
             } else {
-              title.innerHTML = 'Спеціальна<br>пропозиція — <em>-50%</em>';
+              title.innerHTML = 'SPetc.eueusobre<br>AvenidaOp.noziцsim — <em>-50%</em>';
             }
           }
           overlay.classList.add('active');
@@ -4013,7 +4080,7 @@
           };
         }
 
-        // ── Trigger 4: TIME — 35 Segundoунд
+        // ── Trigger 4: TIME — 35 Segundoemsol
         setTimeout(function () {
           showPopup('time');
         }, 35000);
@@ -4028,7 +4095,7 @@
         const rMin = document.getElementById('rMin');
 
         function fmt(n) {
-          if (n >= 1000) return (n / 1000).toFixed(1).replace('.0', '') + 'к';
+          if (n >= 1000) return (n / 1000).toFixed(1).replace('.0', '') + 'para';
           return Math.round(n).toLocaleString('uk');
         }
         function fmtMoney(n) {
@@ -4056,14 +4123,14 @@
           [rPages, rNew, rRate, rMin].forEach(updateFill);
 
           // Calculations
-          const savedMins = newPg * minsPer;          // minилин por mês
+          const savedMins = newPg * minsPer;          // mindoenteem por mês
           const savedHours = savedMins / 60;
           const savedMoney = savedHours * rate;
           const proCost = 499;
           const profit = savedMoney - proCost;
 
           document.getElementById('resSavedTime').textContent = savedHours >= 1 ? savedHours.toFixed(1) + ' horas' : savedMins + ' min';
-          document.getElementById('resSavedTimeSub').textContent = savedHours >= 1 ? 'horasин щомісяця' : 'minилин щомісяця';
+          document.getElementById('resSavedTimeSub').textContent = savedHours >= 1 ? 'horasem щohméяEste' : 'mindoenteem щohméяEste';
           document.getElementById('resSavedMoney').textContent = fmtMoney(savedMoney);
 
           const profitEl = document.getElementById('resProfit');
@@ -4071,11 +4138,11 @@
           if (profit > 0) {
             profitEl.textContent = fmtMoney(profit);
             profitEl.style.color = 'var(--green)';
-            profitSub.textContent = 'чистого прибутку por mês';
+            profitSub.textContent = 'ouArteohsobre pRymasobrigadoem por mês';
           } else {
             profitEl.textContent = fmtMoney(Math.abs(profit));
             profitEl.style.color = '#ff9955';
-            profitSub.textContent = 'різниця (розгляньте PRO при більшому обсязі)';
+            profitSub.textContent = 'riзnósцeu (blagoгlaньque PRO Avenidae bFigoshhohmem oBobagemlinguageme)';
           }
         }
 
