@@ -69,8 +69,13 @@
     .about-hero {
       position: relative; overflow: hidden;
       padding: 120px 60px 100px; min-height: 60vh;
-      display: flex; align-items: center;
+      display: flex; align-items: center; justify-content: center;
     }
+    .about-hero-inner {
+      max-width: 1200px; width: 100%;
+      position: relative; z-index: 1;
+    }
+
     .hero-bg {
       position: absolute; inset: 0; pointer-events: none;
       background:
@@ -85,7 +90,7 @@
       background-size: 60px 60px;
       mask-image: radial-gradient(ellipse 100% 100% at 80% 50%, black 0%, transparent 70%);
     }
-    .hero-content { position: relative; z-index: 1; max-width: 700px; }
+    .hero-content { max-width: 700px; }
     .hero-eyebrow {
       display: inline-flex; align-items: center; gap: 8px;
       background: rgba(0,255,136,0.07); border: 1px solid rgba(0,255,136,0.2);
@@ -496,7 +501,7 @@
     <a href="/" class="nav-link">Головна</a>
     <a href="/blog/" class="nav-link">Блог</a>
     <a href="/app/login" class="nav-login">Увійти</a>
-    <a href="/app/register"" class="nav-cta">Спробувати безкоштовно</a>
+    <a href="/app/register" class="nav-cta">Спробувати безкоштовно</a>
   </div>
 </nav>
 
@@ -504,8 +509,6 @@
 <section class="about-hero">
   <div class="hero-bg"></div>
   <div class="hero-grid-lines"></div>
-  <div class="hero-content">
-    <div class="hero-eyebrow">🇺🇦 Зроблено в Україні</div>
     <h1>
       Ми робимо<br>
       <em>індексацію</em><br>
@@ -580,7 +583,7 @@
             <span class="tl-card-date">Липень 2024</span>
           </div>
           <h3>«Чому моя стаття не індексується вже 3 тижні?»</h3>
-          <p>Саме з цього питання все почалось. Засновник IndexFast вів SEO-блог і щоразу чекав тижнями, поки Google помітить нові матеріали.</p>
+          <p>Саме з цього питання все почалось. Засновник IndexFast Роман Матвій вів SEO-блог і щоразу чекав тижнями, поки Google помітить нові матеріали.</p>
         </div>
       </div>
     </div>
