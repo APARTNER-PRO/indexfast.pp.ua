@@ -193,6 +193,19 @@
       .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
       .footer-bottom { flex-direction: column; gap: 12px; text-align: center; } footer { padding: 40px 20px; }
     }
+  
+    .back-to-top {
+      position: fixed; bottom: 30px; right: 30px;
+      width: 50px; height: 50px; background: var(--card);
+      border: 1px solid var(--border); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--muted); cursor: pointer;
+      opacity: 0; visibility: hidden; transform: translateY(20px);
+      transition: all 0.3s; z-index: 100;
+    }
+    .back-to-top.visible { opacity: 1; visibility: visible; transform: translateY(0); }
+    .back-to-top:hover { background: var(--green); color: var(--black); border-color: var(--green); }
+
   </style>
 </head>
 <body>
@@ -308,14 +321,50 @@
   <div class="cta-btns reveal"><a href="/#pricing" class="btn-green">🚀 Zacznij za darmo</a><a href="/blog/" class="btn-ghost">Czytaj blog →</a></div>
 </section>
 
-<footer>
+<footer role="contentinfo">
   <div class="footer-grid">
-    <div class="footer-brand"><a href="/pl/" class="logo">Index<span>Fast</span></a><p>Serwis automatycznej indeksacji stron internetowych w Google przez oficjalne Google Indexing API.</p></div>
-    <div class="footer-col"><p class="footer-title">Produkt</p><ul><li><a href="/pl/#how-it-works">Jak to działa</a></li><li><a href="/pl/#features">Zalety</a></li><li><a href="/pl/#pricing">Cennik</a></li></ul></div>
-    <div class="footer-col"><p class="footer-title">Firma</p><ul><li><a href="/pl/about.html">O nas</a></li><li><a href="/blog/">Blog</a></li><li><a href="/contacts.html">Kontakt</a></li></ul></div>
-    <div class="footer-col"><p class="footer-title">Wsparcie</p><ul><li><a href="https://t.me/indexfastgoogle" target="_blank" rel="noopener noreferrer">Telegram</a></li><li><a href="mailto:indexfastapp@gmail.com">Email</a></li><li><a href="/status.html">Status</a></li></ul></div>
+    <div class="footer-brand">
+      <a href="/pl/" class="logo">Index<span>Fast</span></a>
+      <p>Usługa automatycznej indeksacji stron w Google za pośrednictwem oficjalnego API Google Indexing.</p>
+    </div>
+    <div class="footer-col">
+      <p class="footer-title">Produkt</p>
+      <ul>
+        <li><a href="/pl/#how-it-works">Jak to działa</a></li>
+        <li><a href="/pl/#features">Zalety</a></li>
+        <li><a href="/pl/#pricing">Taryfy</a></li>
+        <li><a href="/docs/">Dokumentacja</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <p class="footer-title">Firma</p>
+      <ul>
+        <li><a href="/pl/about.html">O nas</a></li>
+        <li><a href="/blog/">Blog</a></li>
+        <li><a href="/affiliate.html">Program partnerski</a></li>
+        <li><a href="/contacts.html">Kontakty</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <p class="footer-title">Wsparcie</p>
+      <ul>
+        <li><a href="/pl/#faq">FAQ</a></li>
+        <li><a href="https://t.me/indexfastgoogle" target="_blank" rel="noopener noreferrer">Czat Telegram</a></li>
+        <li><a href="mailto:indexfastapp@gmail.com">Wsparcie e-mail</a></li>
+        <li><a href="/status.html">Status usługi</a></li>
+      </ul>
+    </div>
   </div>
-  <div class="footer-bottom"><span>© 2025 IndexFast. Wszelkie prawa zastrzeżone.</span><span><a href="/privacy-policy.html">Prywatność</a> · <a href="/terms.html">Regulamin</a></span></div>
+  <div class="footer-bottom">
+    <p>© 2026 IndexFast. Wszelkie prawa zastrzeżone.</p>
+    <div style="display:flex; gap:20px;">
+      <a href="/privacy-policy.html">Prywatność</a>
+      <a href="/terms.html">Warunki</a>
+    </div>
+  </div>
+  <button id="backToTop" class="back-to-top" aria-label="W górę">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+  </button>
 </footer>
 <script>
   const obs = new IntersectionObserver(es => es.forEach(e => { if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);} }), {threshold:0.1});
