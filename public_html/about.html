@@ -266,6 +266,19 @@
       .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
       footer { padding: 40px 20px; }
     }
+  
+    .back-to-top {
+      position: fixed; bottom: 30px; right: 30px;
+      width: 50px; height: 50px; background: var(--card);
+      border: 1px solid var(--border); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--muted); cursor: pointer;
+      opacity: 0; visibility: hidden; transform: translateY(20px);
+      transition: all 0.3s; z-index: 100;
+    }
+    .back-to-top.visible { opacity: 1; visibility: visible; transform: translateY(0); }
+    .back-to-top:hover { background: var(--green); color: var(--black); border-color: var(--green); }
+
   </style>
 </head>
 <body>
@@ -437,18 +450,19 @@
 </section>
 
 <!-- ════════════════════ FOOTER ════════════════════ -->
-<footer>
+<footer role="contentinfo">
   <div class="footer-grid">
     <div class="footer-brand">
       <a href="/" class="logo">Index<span>Fast</span></a>
-      <p>Automatic Google indexing service via the official Google Indexing API.</p>
+      <p>Service for automatic indexing of site pages in Google through the official Google Indexing API.</p>
     </div>
     <div class="footer-col">
       <p class="footer-title">Product</p>
       <ul>
         <li><a href="/#how-it-works">How it works</a></li>
         <li><a href="/#features">Advantages</a></li>
-        <li><a href="/#pricing">Prices</a></li>
+        <li><a href="/#pricing">Tariffs</a></li>
+        <li><a href="/docs/">Documentation</a></li>
       </ul>
     </div>
     <div class="footer-col">
@@ -456,26 +470,30 @@
       <ul>
         <li><a href="/about.html">About us</a></li>
         <li><a href="/blog/">Blog</a></li>
+        <li><a href="/affiliate.html">Partner program</a></li>
         <li><a href="/contacts.html">Contacts</a></li>
       </ul>
     </div>
     <div class="footer-col">
       <p class="footer-title">Support</p>
       <ul>
+        <li><a href="/#faq">FAQ</a></li>
         <li><a href="https://t.me/indexfastgoogle" target="_blank" rel="noopener noreferrer">Telegram chat</a></li>
         <li><a href="mailto:indexfastapp@gmail.com">Email support</a></li>
         <li><a href="/status.html">Service status</a></li>
       </ul>
     </div>
   </div>
-  
   <div class="footer-bottom">
-    <span>© 2025 IndexFast. All rights reserved.</span>
-    <span>
-      <a href="/privacy-policy.html">Privacy Policy</a> · 
-      <a href="/terms.html">Terms of Service</a>
-    </span>
+    <p>© 2026 IndexFast. All rights reserved.</p>
+    <div style="display:flex; gap:20px;">
+      <a href="/privacy-policy.html">Privacy</a>
+      <a href="/terms.html">Conditions</a>
+    </div>
   </div>
+  <button id="backToTop" class="back-to-top" aria-label="Up">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+  </button>
 </footer>
 
 <script>
