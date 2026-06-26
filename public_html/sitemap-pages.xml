@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
 
-  <!-- ══ ГОЛОВНА / MAIN PAGES ══ -->
+  <!-- === MAIN PAGES === -->
   <url>
     <loc>https://indexfast.pp.ua/</loc>
     <lastmod>2026-06-26</lastmod>
@@ -68,7 +68,7 @@
     <priority>1.0</priority>
   </url>
 
-  <!-- ══ ABOUT ══ -->
+  <!-- === ABOUT === -->
   <url>
     <loc>https://indexfast.pp.ua/about.html</loc>
     <lastmod>2026-06-26</lastmod>
@@ -134,7 +134,7 @@
     <priority>0.7</priority>
   </url>
 
-  <!-- ══ CONTACTS ══ -->
+  <!-- === CONTACTS === -->
   <url>
     <loc>https://indexfast.pp.ua/contacts.html</loc>
     <lastmod>2026-06-26</lastmod>
@@ -200,7 +200,7 @@
     <priority>0.7</priority>
   </url>
 
-  <!-- ══ ІНШІ СТОРІНКИ / OTHER PAGES ══ -->
+  <!-- === OTHER PAGES === -->
   <url>
     <loc>https://indexfast.pp.ua/affiliate.html</loc>
     <lastmod>2026-03-13</lastmod>
