@@ -110,6 +110,11 @@
       "source": "/blog/how-to-create-an-effective-design-portfolio",
       "destination": "/blog/how-to-create-an-effective-design-portfolio.html",
       "permanent": true
+    },
+    {
+      "source": "/blog/building-a-navigation-component",
+      "destination": "/blog/building-a-navigation-component.html",
+      "permanent": true
     }
   ],
   "rewrites": [
