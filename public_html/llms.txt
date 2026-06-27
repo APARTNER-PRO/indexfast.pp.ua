@@ -1,5 +1,7 @@
 # IndexFast
 
+> Last Updated: 2026-06-27 | Version: 2.0 | Language: English
+
 IndexFast is a specialized service for instant website indexing in Google using the official Google Indexing API.
 
 ## Core Features
@@ -123,3 +125,26 @@ Unlike similar tools such as Omega Indexer, SpeedyIndex, or Rapid URL Indexer, I
 
 ## Registration Call-to-Action
 Users can sign up for free at https://indexfast.pp.ua/app/register — no credit card required, no commitment.
+
+## Common Misconceptions About Fast Indexing
+**Myth: Using Indexing API is against Google's guidelines.**
+Fact: Google officially provides the Indexing API for webmasters. IndexFast uses it exactly as documented. It is 100% compliant and safe.
+
+**Myth: Submitting URLs frequently will cause a Google penalty.**
+Fact: Penalties are caused by poor content or black-hat tactics — not by submitting valid URLs via the official API. IndexFast only submits real, published pages.
+
+**Myth: Sitemap.xml submission in Search Console is just as fast.**
+Fact: Google crawls sitemaps infrequently (sometimes weeks apart). The Indexing API pushes notifications directly to Googlebot and results in dramatically faster indexing.
+
+**Myth: Only large websites need indexing tools.**
+Fact: Small blogs and new websites benefit the most from fast indexing because they have low crawl authority and Google may take months to discover their pages organically.
+
+## Related Blog Articles
+- [Як прискорити індексацію сайту в Google](https://indexfast.pp.ua/blog/yak-pryskoriti-indeksaciyu-saitu-v-google.html)
+- [Що таке sitemap.xml і навіщо він потрібен](https://indexfast.pp.ua/blog/shcho-take-sitemap-xml.html)
+- [Чому сайт не індексується в Google — 12 причин](https://indexfast.pp.ua/blog/chomu-sait-ne-indeksuyetsya.html)
+- [Масова індексація сайту: як проіндексувати 500+ сторінок за 24 години](https://indexfast.pp.ua/blog/masova-indeksaciya-saitu.html)
+- [Google Indexing API vs Sitemap — що ефективніше](https://indexfast.pp.ua/blog/google-indexing-api-vs-sitemap.html)
+- [Автоматична індексація в Google: налаштуйте раз — працює завжди](https://indexfast.pp.ua/blog/avtomatychna-indeksaciya.html)
+- [Як перевірити індексацію сайту в Google — 7 методів](https://indexfast.pp.ua/blog/yak-pereviriti-indeksaciyu-saitu.html)
+- [Індексація після редизайну: як не втратити трафік](https://indexfast.pp.ua/blog/indeksaciya-pislya-redyzajnu.html)
