@@ -95,6 +95,18 @@
       ]
     }
   ],
+  "redirects": [
+    {
+      "source": "/contact",
+      "destination": "/contacts.html",
+      "permanent": true
+    },
+    {
+      "source": "/blog/how-to-create-an-effective-design-portfolio",
+      "destination": "/blog/how-to-create-an-effective-design-portfolio.html",
+      "permanent": true
+    }
+  ],
   "rewrites": [
     {
       "source": "/api/:match*",
