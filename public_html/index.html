@@ -432,6 +432,7 @@
       overflow-x: hidden;
       cursor: none;
     }
+    body.popup-open { overflow: hidden; }
 
     /* ─── CURSOR ─── */
     .cursor {
@@ -4084,6 +4085,11 @@
             }
           };
         }
+
+        // ── Ensure scroll is restored on hash navigation (safety net)
+        window.addEventListener('hashchange', function () {
+          document.body.classList.remove('popup-open');
+        });
 
         // ── Trigger 4: TIME — 35 Secунд
         setTimeout(function () {
