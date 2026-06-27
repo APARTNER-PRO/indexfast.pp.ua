@@ -630,6 +630,49 @@
 
     <hr class="docs-hr">
 
+    <!-- ══════════════ REQUIREMENTS ══════════════ -->
+    <section class="docs-section" id="requirements">
+      <h2 class="docs-h2">✅ Вимоги</h2>
+      <p class="docs-p">Перед початком роботи переконайтеся, що у вас є:</p>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <strong>Акаунт Google</strong>
+            <p>Необхідний для доступу до Google Cloud Console та Google Search Console.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <strong>Сайт, підтверджений у Google Search Console</strong>
+            <p>Ваш домен має бути верифікований у <a href="https://search.google.com/search-console" target="_blank" rel="noreferrer">Google Search Console</a> будь-яким доступним методом.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <strong>Файл sitemap.xml</strong>
+            <p>Ваш сайт повинен мати публічно доступний <code>sitemap.xml</code>. IndexFast читає його для отримання списку URL для індексації.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <strong>JSON-ключ Service Account</strong>
+            <p>Завантажений з Google Cloud Console файл <code>.json</code> з правами на Web Search Indexing API.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout tip">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">Якщо вашого сайту ще немає у Search Console — спочатку додайте його і підтвердіть право власності. Детальна інструкція є на <a href="https://support.google.com/webmasters/answer/9008080" target="_blank" rel="noreferrer">сайті Google</a>.</div>
+      </div>
+    </section>
+
+    <hr class="docs-hr">
+
     <!-- ══════════════ GOOGLE CLOUD ══════════════ -->
     <section class="docs-section" id="google-cloud">
       <h2 class="docs-h2">☁️ Налаштування Google Cloud</h2>
@@ -750,6 +793,37 @@
 
     <hr class="docs-hr">
 
+    <!-- ══════════════ SITEMAP ══════════════ -->
+    <section class="docs-section" id="sitemap">
+      <h2 class="docs-h2">🗺 Sitemap.xml</h2>
+      <p class="docs-p">IndexFast читає ваш <code>sitemap.xml</code> для отримання URL-адрес, які потрібно відправити на індексацію. Підтримуються всі формати.</p>
+
+      <h3 class="docs-h3">Підтримувані формати</h3>
+      <ul style="list-style:none; display:flex; flex-direction:column; gap:8px; margin-bottom:20px;">
+        <li style="color:rgba(238,238,246,0.72); font-size:0.95rem;">✅ <code>sitemap.xml</code> — стандартний файл з URL</li>
+        <li style="color:rgba(238,238,246,0.72); font-size:0.95rem;">✅ <code>sitemap_index.xml</code> — батьківський файл з посиланнями на дочірні sitemap (будь-яка глибина вкладеності)</li>
+        <li style="color:rgba(238,238,246,0.72); font-size:0.95rem;">✅ Sitemap з тегами <code>&lt;lastmod&gt;</code> — фільтрація за датою оновлення</li>
+      </ul>
+
+      <h3 class="docs-h3">Де знайти URL sitemap</h3>
+      <div class="platform-tags">
+        <span class="ptag"><span class="ptag-dot" style="background:#00ff88"></span>Стандарт: <code>/sitemap.xml</code></span>
+        <span class="ptag"><span class="ptag-dot" style="background:#21759B"></span>WordPress (Yoast): <code>/sitemap_index.xml</code></span>
+        <span class="ptag"><span class="ptag-dot" style="background:#96BF48"></span>Shopify: <code>/sitemap.xml</code></span>
+        <span class="ptag"><span class="ptag-dot" style="background:#FF2D20"></span>Laravel: <code>/sitemap.xml</code></span>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">⚠️</span>
+        <div class="callout-body">
+          <strong>Важливо</strong>
+          Sitemap має бути публічно доступний без авторизації. Перевірте, що файл відкривається у браузері без логіну. Якщо він закритий — IndexFast не зможе його прочитати.
+        </div>
+      </div>
+    </section>
+
+    <hr class="docs-hr">
+
     <!-- ══════════════ PHP SCRIPT ══════════════ -->
     <section class="docs-section" id="php-script">
       <h2 class="docs-h2">⚙️ Як працює сервіс</h2>
@@ -820,6 +894,67 @@
             <p>Натисніть <strong>«▶ Запуск»</strong> — і IndexFast негайно відправить URL з sitemap в межах залишку денного ліміту. Зручно після публікації нових сторінок.</p>
           </div>
         </div>
+      </div>
+    </section>
+
+    <hr class="docs-hr">
+
+    <!-- ══════════════ MANUAL ══════════════ -->
+    <section class="docs-section" id="manual">
+      <h2 class="docs-h2">🖱 Ручна індексація</h2>
+      <p class="docs-p">Крім автоматичного режиму, IndexFast дозволяє запустити індексацію вручну в будь-який момент — прямо з особистого кабінету.</p>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <strong>Відкрийте кабінет</strong>
+            <p>Перейдіть на <a href="/app/dashboard">indexfast.pp.ua/app/dashboard</a> та знайдіть потрібний сайт у списку.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <strong>Натисніть «▶ Запуск»</strong>
+            <p>IndexFast миттєво зчитає sitemap і відправить URL у межах залишку денного ліміту.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <strong>Перегляньте результати в логах</strong>
+            <p>Відповіді від Google API з'являються у вкладці «Логи» протягом 1–2 хвилин. Ви бачите статус кожного URL: <code>200 OK</code>, <code>403</code>, або іншу відповідь.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">ℹ️</span>
+        <div class="callout-body">Ручна індексація витрачає той самий денний ліміт, що й автоматична. Якщо ліміт вичерпаний — IndexFast поставить URL у чергу на наступний день.</div>
+      </div>
+    </section>
+
+    <hr class="docs-hr">
+
+    <!-- ══════════════ LIMITS ══════════════ -->
+    <section class="docs-section" id="limits">
+      <h2 class="docs-h2">📊 Ліміти API</h2>
+      <p class="docs-p">Google безкоштовно надає ліміт у <strong>200 URL на добу</strong> на один Service Account. IndexFast автоматично відстежує ліміт і зупиняється при його вичерпанні.</p>
+
+      <table class="docs-table">
+        <thead>
+          <tr><th>План</th><th>URL / день</th><th>Сайтів</th><th>Service Accounts</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Старт (безкоштовно)</td><td>10</td><td>1</td><td>1</td></tr>
+          <tr><td>PRO</td><td>100</td><td>до 5</td><td>1</td></tr>
+          <tr><td>Агенція</td><td>1000</td><td>до 50</td><td>необмежено</td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout tip">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">Денний ліміт оновлюється щодня о <strong>00:00 UTC</strong>. Якщо у вас багато сайтів, ліміт автоматично розподіляється між ними рівномірно.</div>
       </div>
     </section>
 
@@ -990,6 +1125,38 @@ Authorization: Bearer <span class="v">{ACCESS_TOKEN}</span></pre>
       <h3 class="docs-h3">v1.0 — Вересень 2024</h3>
       <p class="docs-p">— Перший публічний реліз<br>— Базова відправка URL через Google Indexing API</p>
     </section>
+
+    <!-- ══════════════ SUPPORT ══════════════ -->
+    <section class="docs-section" id="support">
+      <h2 class="docs-h2">💬 Підтримка</h2>
+      <p class="docs-p">Якщо у вас є питання або виникли проблеми — ми готові допомогти:</p>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">📱</div>
+          <div class="step-body">
+            <strong>Telegram чат</strong>
+            <p>Найшвидший спосіб отримати відповідь — <a href="https://t.me/indexfastgoogle" target="_blank" rel="noopener noreferrer">t.me/indexfastgoogle</a>. Середній час відповіді — до 2 годин.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">✉️</div>
+          <div class="step-body">
+            <strong>Email підтримка</strong>
+            <p>Напишіть на <a href="mailto:indexfastapp@gmail.com">indexfastapp@gmail.com</a>. Відповідаємо протягом одного робочого дня.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">❓</div>
+          <div class="step-body">
+            <strong>FAQ</strong>
+            <p>Перегляньте розділ <a href="#faq">FAQ</a> — там є відповіді на найпоширеніші питання.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="docs-hr">
 
     <!-- PREV / NEXT -->
     <div class="docs-nav-btns">
