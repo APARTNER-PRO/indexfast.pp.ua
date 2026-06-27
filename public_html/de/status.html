@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
   <meta charset="UTF-8">
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
@@ -24,27 +24,27 @@
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     "itemListElement": [
-      {"@type": "ListItem", "position": 1, "name": "Main", "item": "https://indexfast.pp.ua/"},
+      {"@type": "ListItem", "position": 1, "name": "Hauptsächlich", "item": "https://indexfast.pp.ua/"},
       {"@type": "ListItem", "position": 2, "name": "Status", "item": "https://indexfast.pp.ua/status.html"}
     ]
   }
   </script>
-  <title>Service status — IndexFast</title>
-  <meta name="description" content="The current status of the IndexFast service. Check availability of API, website and other components.">
+  <title>Dienststatus – IndexFast</title>
+  <meta name="description" content="Der aktuelle Status des IndexFast-Dienstes. Überprüfen Sie die Verfügbarkeit von API, Website und anderen Komponenten.">
   <link rel="canonical" href="https://indexfast.pp.ua/status.html">
   <meta name="robots" content="noindex, follow">
     <meta property="og:type" content="website">
   <meta property="og:url" content="https://indexfast.pp.ua/status.html">
-  <meta property="og:title" content="Service status — IndexFast">
-  <meta property="og:description" content="Current status of IndexFast: uptime API, website and all components.">
+  <meta property="og:title" content="Dienststatus – IndexFast">
+  <meta property="og:description" content="Aktueller Status von IndexFast: Uptime API, Website und alle Komponenten.">
   <meta property="og:image" content="https://indexfast.pp.ua/og-image.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:locale" content="uk_UA">
   <meta property="og:site_name" content="IndexFast">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Service status — IndexFast">
-  <meta name="twitter:description" content="Current status of IndexFast: uptime API, website and all components.">
+  <meta name="twitter:title" content="Dienststatus – IndexFast">
+  <meta name="twitter:description" content="Aktueller Status von IndexFast: Uptime API, Website und alle Komponenten.">
   <meta name="twitter:image" content="https://indexfast.pp.ua/og-image.jpg">
 
     <link rel="preload" as="style" crossorigin href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap">
@@ -559,16 +559,16 @@
 
 <!-- NAV -->
 <nav id="navbar" role="navigation" aria-label="Головне меню">
-  <a href="/" class="logo" aria-label="IndexFast — Main">Index<span>Fast</span></a>
+  <a href="/" class="logo" aria-label="IndexFast — Hauptsächlich">Index<span>Fast</span></a>
   <ul class="nav-links">
-    <li><a href="/#how-it-works">How it works</a></li>
-    <li><a href="/#for-whom">For whom</a></li>
-    <li><a href="/#features">Advantages</a></li>
-    <li><a href="/#pricing">Tariffs</a></li>
+    <li><a href="/#how-it-works">Wie es funktioniert</a></li>
+    <li><a href="/#for-whom">Für wen</a></li>
+    <li><a href="/#features">Vorteile</a></li>
+    <li><a href="/#pricing">Tarife</a></li>
     <li><a href="/#faq">FAQ</a></li>
     <li class="mobile-auth">
-      <a href="/app/login" class="mobile-login">Sign in</a>
-      <a href="/app/register" class="mobile-register">Try it for free →</a>
+      <a href="/app/login" class="mobile-login">anmelden</a>
+      <a href="/app/register" class="mobile-register">Probieren Sie es kostenlos aus →</a>
     </li>
   </ul>
   <div class="nav-actions">
@@ -576,17 +576,17 @@
       <button class="nav-lang-btn">UK ▾</button>
       <div class="nav-lang-menu">
         <a href="/en/">English</a>
-        <a href="/" class="active">Ukrainian</a>
+        <a href="/" class="active">ukrainisch</a>
         <a href="/es/">Español</a>
         <a href="/pt/">Português</a>
-        <a href="/ru/">Russian</a>
+        <a href="/ru/">Russisch</a>
         <a href="/de/">Deutsch</a>
         <a href="/fr/">Français</a>
         <a href="/pl/">Polski</a>
       </div>
     </div>
-    <a href="/app/login" class="nav-login">Sign in</a>
-    <a href="/app/register" class="nav-cta">Start →</a>
+    <a href="/app/login" class="nav-login">anmelden</a>
+    <a href="/app/register" class="nav-cta">Starten →</a>
     <button class="mobile-menu-btn" onclick="document.querySelector('.nav-links').classList.toggle('active')" aria-label="Відкрити меню">☰</button>
   </div>
 </nav>
@@ -595,28 +595,28 @@
 <div class="status-hero">
   <div class="overall-badge">
     <div class="overall-dot"></div>
-    <span class="overall-text">All systems go</span>
+    <span class="overall-text">Alle Systeme gehen</span>
   </div>
-  <h1>Service status</h1>
-  <p>Current status of all IndexFast components</p>
-  <p class="last-updated">Updated: <span id="lastUpdated">—</span></p>
+  <h1>Servicestatus</h1>
+  <p>Aktueller Status aller IndexFast-Komponenten</p>
+  <p class="last-updated">Aktualisiert: <span id="lastUpdated">—</span></p>
 
   <div class="metrics-row">
     <div class="metric">
       <div class="metric-val green">99.98%</div>
-      <div class="metric-label">Uptime for 90 days</div>
+      <div class="metric-label">Betriebszeit für 90 Tage</div>
     </div>
     <div class="metric">
       <div class="metric-val green" id="apiLatency">—</div>
-      <div class="metric-label">API latency</div>
+      <div class="metric-label">API-Latenz</div>
     </div>
     <div class="metric">
       <div class="metric-val green">0</div>
-      <div class="metric-label">Active incidents</div>
+      <div class="metric-label">Aktive Vorfälle</div>
     </div>
     <div class="metric">
-      <div class="metric-val yellow">14 days</div>
-      <div class="metric-label">Since the last crash</div>
+      <div class="metric-val yellow">14 Tage</div>
+      <div class="metric-label">Seit dem letzten Absturz</div>
     </div>
   </div>
 </div>
@@ -625,7 +625,7 @@
 <div class="main">
 
   <!-- CURRENT STATUS -->
-  <p class="block-title">Current status of components</p>
+  <p class="block-title">Aktueller Status der Komponenten</p>
   <div class="services-list">
 
     <div class="service-row">
@@ -633,12 +633,12 @@
         <div class="service-icon">🌐</div>
         <div>
           <div class="service-name">Website indexfast.pp.ua</div>
-          <div class="service-desc">Home page and landing page</div>
+          <div class="service-desc">Startseite und Landingpage</div>
         </div>
       </div>
       <div class="service-right">
-        <div class="service-ping">Ping: <span id="p1">—</span></div>
-        <div class="status-pill pill-green"><div class="dot"></div>Works</div>
+        <div class="service-ping">Klingeln: <span id="p1">—</span></div>
+        <div class="status-pill pill-green"><div class="dot"></div>Funktioniert</div>
       </div>
     </div>
 
@@ -647,12 +647,12 @@
         <div class="service-icon">⚡</div>
         <div>
           <div class="service-name">Google Indexing API</div>
-          <div class="service-desc">Submitting URLs for indexing</div>
+          <div class="service-desc">Einreichen von URLs zur Indexierung</div>
         </div>
       </div>
       <div class="service-right">
-        <div class="service-ping">Ping: <span id="p2">—</span></div>
-        <div class="status-pill pill-green"><div class="dot"></div>Works</div>
+        <div class="service-ping">Klingeln: <span id="p2">—</span></div>
+        <div class="status-pill pill-green"><div class="dot"></div>Funktioniert</div>
       </div>
     </div>
 
@@ -660,13 +660,13 @@
       <div class="service-left">
         <div class="service-icon">🔐</div>
         <div>
-          <div class="service-name">Authentication</div>
+          <div class="service-name">Authentifizierung</div>
           <div class="service-desc">OAuth 2.0 / Service Account</div>
         </div>
       </div>
       <div class="service-right">
-        <div class="service-ping">Ping: <span id="p3">—</span></div>
-        <div class="status-pill pill-green"><div class="dot"></div>Works</div>
+        <div class="service-ping">Klingeln: <span id="p3">—</span></div>
+        <div class="status-pill pill-green"><div class="dot"></div>Funktioniert</div>
       </div>
     </div>
 
@@ -674,13 +674,13 @@
       <div class="service-left">
         <div class="service-icon">🗺️</div>
         <div>
-          <div class="service-name">Sitemap parser</div>
-          <div class="service-desc">Reading and processing sitemap.xml</div>
+          <div class="service-name">Sitemap-Parser</div>
+          <div class="service-desc">sitemap.xml lesen und verarbeiten</div>
         </div>
       </div>
       <div class="service-right">
-        <div class="service-ping">Ping: <span id="p4">—</span></div>
-        <div class="status-pill pill-green"><div class="dot"></div>Works</div>
+        <div class="service-ping">Klingeln: <span id="p4">—</span></div>
+        <div class="status-pill pill-green"><div class="dot"></div>Funktioniert</div>
       </div>
     </div>
 
@@ -688,13 +688,13 @@
       <div class="service-left">
         <div class="service-icon">📊</div>
         <div>
-          <div class="service-name">Analytics and reports</div>
-          <div class="service-desc">Dashboard and statistics</div>
+          <div class="service-name">Analysen und Berichte</div>
+          <div class="service-desc">Dashboard und Statistiken</div>
         </div>
       </div>
       <div class="service-right">
-        <div class="service-ping">Ping: <span id="p5">—</span></div>
-        <div class="status-pill pill-green"><div class="dot"></div>Works</div>
+        <div class="service-ping">Klingeln: <span id="p5">—</span></div>
+        <div class="status-pill pill-green"><div class="dot"></div>Funktioniert</div>
       </div>
     </div>
 
@@ -702,13 +702,13 @@
       <div class="service-left">
         <div class="service-icon">📧</div>
         <div>
-          <div class="service-name">Email notification</div>
-          <div class="service-desc">Transaction letters and alerts</div>
+          <div class="service-name">E-Mail-Benachrichtigung</div>
+          <div class="service-desc">Transaktionsbriefe und Benachrichtigungen</div>
         </div>
       </div>
       <div class="service-right">
-        <div class="service-ping">Ping: <span id="p6">—</span></div>
-        <div class="status-pill pill-green"><div class="dot"></div>Works</div>
+        <div class="service-ping">Klingeln: <span id="p6">—</span></div>
+        <div class="status-pill pill-green"><div class="dot"></div>Funktioniert</div>
       </div>
     </div>
 
@@ -716,13 +716,13 @@
       <div class="service-left">
         <div class="service-icon">💳</div>
         <div>
-          <div class="service-name">Payment gateway</div>
-          <div class="service-desc">LiqPay — subscription processing</div>
+          <div class="service-name">Zahlungsgateway</div>
+          <div class="service-desc">LiqPay – Abonnementverarbeitung</div>
         </div>
       </div>
       <div class="service-right">
-        <div class="service-ping">Ping: <span id="p7">—</span></div>
-        <div class="status-pill pill-green"><div class="dot"></div>Works</div>
+        <div class="service-ping">Klingeln: <span id="p7">—</span></div>
+        <div class="status-pill pill-green"><div class="dot"></div>Funktioniert</div>
       </div>
     </div>
 
@@ -731,12 +731,12 @@
         <div class="service-icon">🔗</div>
         <div>
           <div class="service-name">REST API</div>
-          <div class="service-desc">External API for integrations</div>
+          <div class="service-desc">Externe API für Integrationen</div>
         </div>
       </div>
       <div class="service-right">
-        <div class="service-ping">Ping: <span id="p8">—</span></div>
-        <div class="status-pill pill-green"><div class="dot"></div>Works</div>
+        <div class="service-ping">Klingeln: <span id="p8">—</span></div>
+        <div class="status-pill pill-green"><div class="dot"></div>Funktioniert</div>
       </div>
     </div>
 
@@ -744,7 +744,7 @@
 
   <!-- UPTIME HISTORY -->
   <div class="uptime-section">
-    <p class="block-title">Uptime for the last 90 days</p>
+    <p class="block-title">Betriebszeit für die letzten 90 Tage</p>
 
     <div class="uptime-row" id="uptimeWebsite"></div>
     <div class="uptime-row" id="uptimeApi"></div>
@@ -754,17 +754,17 @@
 
   <!-- INCIDENTS -->
   <div class="incidents-section">
-    <p class="block-title">History of incidents</p>
+    <p class="block-title">Geschichte der Vorfälle</p>
 
     <!-- Resolved minor -->
     <div class="incident-card" id="inc1">
       <div class="incident-header">
         <div class="incident-title-wrap">
-          <span class="incident-severity sev-minor">Minor</span>
-          <span class="incident-title">Indexing API slowdown</span>
+          <span class="incident-severity sev-minor">Unerheblich</span>
+          <span class="incident-title">Verlangsamung der Indexierungs-API</span>
         </div>
         <div style="display:flex; align-items:center; gap:12px;">
-          <span class="incident-date">February 25, 2025</span>
+          <span class="incident-date">25. Februar 2025</span>
           <button class="incident-toggle" onclick="toggleIncident('inc1')">+</button>
         </div>
       </div>
@@ -773,33 +773,33 @@
           <div class="timeline-item">
             <div class="tl-dot-wrap"><div class="tl-dot green"></div><div class="tl-line"></div></div>
             <div class="tl-content">
-              <div class="tl-status green">It has been resolved</div>
-              <div class="tl-msg">All requests to the Google Indexing API are processed normally. Delays have been eliminated.</div>
-              <div class="tl-time">February 25, 2025, 2:32 p.m</div>
+              <div class="tl-status green">Es wurde gelöst</div>
+              <div class="tl-msg">Alle Anfragen an die Google Indexing API werden normal verarbeitet. Verzögerungen wurden beseitigt.</div>
+              <div class="tl-time">25. Februar 2025, 14:32 Uhr</div>
             </div>
           </div>
           <div class="timeline-item">
             <div class="tl-dot-wrap"><div class="tl-dot yellow"></div><div class="tl-line"></div></div>
             <div class="tl-content">
-              <div class="tl-status yellow">Monitoring</div>
-              <div class="tl-msg">The fix has been applied. We are observing the stabilization of the API response time.</div>
-              <div class="tl-time">February 25, 2025, 1:15 p.m</div>
+              <div class="tl-status yellow">Überwachung</div>
+              <div class="tl-msg">Der Fix wurde angewendet. Wir beobachten eine Stabilisierung der API-Antwortzeit.</div>
+              <div class="tl-time">25. Februar 2025, 13:15 Uhr</div>
             </div>
           </div>
           <div class="timeline-item">
             <div class="tl-dot-wrap"><div class="tl-dot yellow"></div><div class="tl-line"></div></div>
             <div class="tl-content">
-              <div class="tl-status yellow">Investigation</div>
-              <div class="tl-msg">An increase in delays was detected when sending requests to the Google API. Average response time increased from 320ms to 1800ms. The reason is a temporary load on Google's side.</div>
-              <div class="tl-time">February 25, 2025, 11:47</div>
+              <div class="tl-status yellow">Untersuchung</div>
+              <div class="tl-msg">Beim Senden von Anfragen an die Google API wurde ein Anstieg der Verzögerungen festgestellt. Die durchschnittliche Reaktionszeit wurde von 320 ms auf 1800 ms erhöht. Der Grund ist eine vorübergehende Belastung auf Google-Seite.</div>
+              <div class="tl-time">25. Februar 2025, 11:47</div>
             </div>
           </div>
           <div class="timeline-item">
             <div class="tl-dot-wrap"><div class="tl-dot muted"></div></div>
             <div class="tl-content">
-              <div class="tl-status" style="color:var(--muted)">Detected</div>
-              <div class="tl-msg">Anomalous response time has been detected by the automatic monitoring system.</div>
-              <div class="tl-time">February 25, 2025, 11:30 am</div>
+              <div class="tl-status" style="color:var(--muted)">Erkannt</div>
+              <div class="tl-msg">Das automatische Überwachungssystem hat eine ungewöhnliche Reaktionszeit festgestellt.</div>
+              <div class="tl-time">25. Februar 2025, 11:30 Uhr</div>
             </div>
           </div>
         </div>
@@ -810,11 +810,11 @@
     <div class="incident-card" id="inc2">
       <div class="incident-header">
         <div class="incident-title-wrap">
-          <span class="incident-severity sev-major">Critical</span>
-          <span class="incident-title">Unavailability of the indexing service</span>
+          <span class="incident-severity sev-major">Kritisch</span>
+          <span class="incident-title">Nichtverfügbarkeit des Indexierungsdienstes</span>
         </div>
         <div style="display:flex; align-items:center; gap:12px;">
-          <span class="incident-date">February 14, 2025</span>
+          <span class="incident-date">14. Februar 2025</span>
           <button class="incident-toggle" onclick="toggleIncident('inc2')">+</button>
         </div>
       </div>
@@ -823,33 +823,33 @@
           <div class="timeline-item">
             <div class="tl-dot-wrap"><div class="tl-dot green"></div><div class="tl-line"></div></div>
             <div class="tl-content">
-              <div class="tl-status green">It has been resolved</div>
-              <div class="tl-msg">The service has been fully restored. Delays in the indexing queue are compensated - all accumulated URLs have been sent successfully.</div>
-              <div class="tl-time">February 14, 2025, 09:41</div>
+              <div class="tl-status green">Es wurde gelöst</div>
+              <div class="tl-msg">Der Dienst wurde vollständig wiederhergestellt. Verzögerungen in der Indexierungswarteschlange werden ausgeglichen – alle angesammelten URLs wurden erfolgreich gesendet.</div>
+              <div class="tl-time">14. Februar 2025, 09:41</div>
             </div>
           </div>
           <div class="timeline-item">
             <div class="tl-dot-wrap"><div class="tl-dot yellow"></div><div class="tl-line"></div></div>
             <div class="tl-content">
-              <div class="tl-status yellow">Restoration</div>
-              <div class="tl-msg">The server was restored after a planned database migration. We check the integrity of the data and restore the queue of tasks.</div>
-              <div class="tl-time">February 14, 2025, 08:55</div>
+              <div class="tl-status yellow">Wiederherstellung</div>
+              <div class="tl-msg">Der Server wurde nach einer geplanten Datenbankmigration wiederhergestellt. Wir überprüfen die Integrität der Daten und stellen die Aufgabenwarteschlange wieder her.</div>
+              <div class="tl-time">14. Februar 2025, 08:55</div>
             </div>
           </div>
           <div class="timeline-item">
             <div class="tl-dot-wrap"><div class="tl-dot red"></div><div class="tl-line"></div></div>
             <div class="tl-content">
-              <div class="tl-status red">failure</div>
-              <div class="tl-msg">The indexing service is unavailable. The reason is an unexpected error during routine database maintenance. The team is working on recovery.</div>
-              <div class="tl-time">February 14, 2025, 06:12</div>
+              <div class="tl-status red">Versagen</div>
+              <div class="tl-msg">Der Indexierungsdienst ist nicht verfügbar. Der Grund ist ein unerwarteter Fehler bei der routinemäßigen Datenbankwartung. Das Team arbeitet an der Genesung.</div>
+              <div class="tl-time">14. Februar 2025, 06:12</div>
             </div>
           </div>
           <div class="timeline-item">
             <div class="tl-dot-wrap"><div class="tl-dot muted"></div></div>
             <div class="tl-content">
-              <div class="tl-status" style="color:var(--muted)">Detected</div>
-              <div class="tl-msg">An alert was received about the unavailability of the service.</div>
-              <div class="tl-time">February 14, 2025, 06:00</div>
+              <div class="tl-status" style="color:var(--muted)">Erkannt</div>
+              <div class="tl-msg">Es wurde eine Benachrichtigung über die Nichtverfügbarkeit des Dienstes erhalten.</div>
+              <div class="tl-time">14. Februar 2025, 06:00 Uhr</div>
             </div>
           </div>
         </div>
@@ -861,10 +861,10 @@
       <div class="incident-header">
         <div class="incident-title-wrap">
           <span class="incident-severity sev-none">Info</span>
-          <span class="incident-title">Scheduled maintenance</span>
+          <span class="incident-title">Geplante Wartung</span>
         </div>
         <div style="display:flex; align-items:center; gap:12px;">
-          <span class="incident-date">February 1, 2025</span>
+          <span class="incident-date">1. Februar 2025</span>
           <button class="incident-toggle" onclick="toggleIncident('inc3')">+</button>
         </div>
       </div>
@@ -873,9 +873,9 @@
           <div class="timeline-item">
             <div class="tl-dot-wrap"><div class="tl-dot green"></div></div>
             <div class="tl-content">
-              <div class="tl-status green">Completed</div>
-              <div class="tl-msg">Scheduled maintenance successfully completed. The infrastructure has been updated to the new version. Expect a 15-20% performance improvement.</div>
-              <div class="tl-time">February 1, 2025, 04:00</div>
+              <div class="tl-status green">Vollendet</div>
+              <div class="tl-msg">Geplante Wartung erfolgreich abgeschlossen. Die Infrastruktur wurde auf die neue Version aktualisiert. Erwarten Sie eine Leistungssteigerung von 15–20 %.</div>
+              <div class="tl-time">1. Februar 2025, 04:00 Uhr</div>
             </div>
           </div>
         </div>
@@ -887,12 +887,12 @@
   <!-- SUBSCRIBE -->
   <div class="subscribe-block">
     <div>
-      <h3>Sign up for status updates</h3>
-      <p>Receive instant incident and service alerts by email</p>
+      <h3>Melden Sie sich für Statusaktualisierungen an</h3>
+      <p>Erhalten Sie sofortige Vorfall- und Servicebenachrichtigungen per E-Mail</p>
     </div>
     <div class="subscribe-form">
       <input class="subscribe-input" type="email" placeholder="your@email.com" id="subEmail" aria-label="Ваш email для підписки">
-      <button class="subscribe-btn" onclick="handleSubscribe()">Sign up</button>
+      <button class="subscribe-btn" onclick="handleSubscribe()">Melden Sie sich an</button>
     </div>
   </div>
 
@@ -903,41 +903,41 @@
   <div class="footer-grid">
     <div class="footer-brand">
       <a href="/" class="logo">Index<span>Fast</span></a>
-      <p>Service for automatic indexing of site pages in Google through the official Google Indexing API.</p>
+      <p>Dienst zur automatischen Indexierung von Website-Seiten in Google über die offizielle Google Indexing API.</p>
     </div>
     <div class="footer-col">
-      <p class="footer-title">Product</p>
+      <p class="footer-title">Produkt</p>
       <ul>
-        <li><a href="/#how-it-works">How it works</a></li>
-        <li><a href="/#features">Advantages</a></li>
-        <li><a href="/#pricing">Tariffs</a></li>
-        <li><a href="/docs/">Documentation</a></li>
+        <li><a href="/#how-it-works">Wie es funktioniert</a></li>
+        <li><a href="/#features">Vorteile</a></li>
+        <li><a href="/#pricing">Tarife</a></li>
+        <li><a href="/docs/">Dokumentation</a></li>
       </ul>
     </div>
     <div class="footer-col">
-      <p class="footer-title">Company</p>
+      <p class="footer-title">Unternehmen</p>
       <ul>
-        <li><a href="/about.html">About us</a></li>
+        <li><a href="/about.html">Über uns</a></li>
         <li><a href="/blog/">Blog</a></li>
-        <li><a href="/affiliate.html">Partner program</a></li>
-        <li><a href="/contacts.html">Contacts</a></li>
+        <li><a href="/affiliate.html">Partnerprogramm</a></li>
+        <li><a href="/contacts.html">Kontakte</a></li>
       </ul>
     </div>
     <div class="footer-col">
-      <p class="footer-title">Support</p>
+      <p class="footer-title">Unterstützung</p>
       <ul>
         <li><a href="/#faq">FAQ</a></li>
-        <li><a href="https://t.me/indexfastgoogle" target="_blank" rel="noopener noreferrer">Telegram chat</a></li>
-        <li><a href="mailto:indexfastapp@gmail.com">Email support</a></li>
-        <li><a href="/status.html">Service status</a></li>
+        <li><a href="https://t.me/indexfastgoogle" target="_blank" rel="noopener noreferrer">Telegram-Chat</a></li>
+        <li><a href="mailto:indexfastapp@gmail.com">E-Mail-Support</a></li>
+        <li><a href="/status.html">Servicestatus</a></li>
       </ul>
     </div>
   </div>
   <div class="footer-bottom">
-    <p>© 2026 IndexFast. All rights reserved.</p>
+    <p>© 2026 IndexFast. Alle Rechte vorbehalten.</p>
     <div style="display:flex; gap:20px;">
-      <a href="/privacy-policy.html">Privacy</a>
-      <a href="/terms.html">Conditions</a>
+      <a href="/privacy-policy.html">Privatsphäre</a>
+      <a href="/terms.html">Bedingungen</a>
     </div>
   </div>
   <button id="backToTop" class="back-to-top" aria-label="Вгору">
@@ -994,7 +994,7 @@
 
   buildUptimeRow('uptimeWebsite', 'Вебсайт', '99.98', [64, 65]);
   buildUptimeRow('uptimeApi',     'Google Indexing API', '99.91', [64, 65, 27, 28]);
-  buildUptimeRow('uptimeSitemap', 'Sitemap parser', '100.00', []);
+  buildUptimeRow('uptimeSitemap', 'Sitemap-Parser', '100.00', []);
 
   // ── Incidents toggle
   function toggleIncident(id) {
@@ -1009,13 +1009,13 @@
     if (!email || !email.includes('@')) {
       btn.textContent = '⚠️ Введіть email';
       btn.style.background = 'var(--yellow)';
-      setTimeout(() => { btn.textContent = 'Sign up'; btn.style.background = ''; }, 2000);
+      setTimeout(() => { btn.textContent = 'Melden Sie sich an'; btn.style.background = ''; }, 2000);
       return;
     }
     btn.textContent = '✓ Підписано!';
     btn.style.background = 'var(--green)';
     document.getElementById('subEmail').value = '';
-    setTimeout(() => { btn.textContent = 'Sign up'; btn.style.background = ''; }, 3000);
+    setTimeout(() => { btn.textContent = 'Melden Sie sich an'; btn.style.background = ''; }, 3000);
   }
 
   // Back to Top
