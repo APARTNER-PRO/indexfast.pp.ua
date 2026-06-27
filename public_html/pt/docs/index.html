@@ -1,0 +1,1344 @@
+﻿<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DocumentaГ§ГЈo - IndexFast</title>
+  <meta name="description" content="DocumentaГ§ГЈo completa do IndexFast: inГ­cio rГЎpido, configuraГ§Гµes da API de indexaГ§ГЈo do Google, automaГ§ГЈo, referГЄncia da API e exemplos de integraГ§Гµes.">
+  
+
+    <meta property="og:type" content="website">
+  <meta property="og:url" content="https://indexfast.pp.ua/docs/">
+  <meta property="og:title" content="DocumentaГ§ГЈo - IndexFast">
+  <meta property="og:description" content="DocumentaГ§ГЈo completa do IndexFast: inГ­cio rГЎpido, configuraГ§Гµes da API de indexaГ§ГЈo do Google, automaГ§ГЈo, referГЄncia da API e exemplos de integraГ§Гµes.">
+  <meta property="og:image" content="https://indexfast.pp.ua/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="uk_UA">
+  <meta property="og:site_name" content="IndexFast">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="DocumentaГ§ГЈo - IndexFast">
+  <meta name="twitter:description" content="DocumentaГ§ГЈo completa do IndexFast: inГ­cio rГЎpido, configuraГ§Гµes da API de indexaГ§ГЈo do Google, automaГ§ГЈo, referГЄncia da API e exemplos de integraГ§Гµes.">
+  <meta name="twitter:image" content="https://indexfast.pp.ua/og-image.jpg">
+
+    <link rel="preload" as="style" crossorigin href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=JetBrains+Mono:wght@400;500&display=swap">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --black:   #050508;
+      --dark:    #0c0c14;
+      --card:    #111119;
+      --card2:   #16161f;
+      --border:  rgba(255,255,255,0.07);
+      --border2: rgba(255,255,255,0.04);
+      --green:   #00ff88;
+      --green-d: #00c96a;
+      --blue:    #4db8ff;
+      --yellow:  #ffd060;
+      --red:     #ff6b6b;
+      --white:   #eeeef6;
+      --muted:   #72728a;
+      --font-ui:   'Syne', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --nav-h: 60px;
+      --sidebar-w: 260px;
+    }
+
+    html { scroll-behavior: smooth; scroll-padding-top: 88px; }
+    body { background: var(--black); color: var(--white); font-family: var(--font-body); font-weight: 300; line-height: 1.7; overflow-x: hidden; }
+
+    /* в”Ђв”Ђ TOP NAV в”Ђв”Ђ */
+    .top-nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 300;
+      height: var(--nav-h); padding: 0 28px;
+      display: flex; align-items: center; justify-content: space-between;
+      background: rgba(5,5,8,0.96); backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-left { display: flex; align-items: center; gap: 20px; }
+    .logo { font-family: var(--font-ui); font-size: 1.25rem; font-weight: 800; letter-spacing: -0.03em; color: var(--white); text-decoration: none; }
+    .logo span { color: var(--green); }
+    .nav-divider { width: 1px; height: 18px; background: var(--border); }
+    .nav-badge { font-size: 0.72rem; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; font-weight: 500; }
+    .nav-right { display: flex; align-items: center; gap: 16px; }
+    .nav-link { color: var(--muted); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
+    .nav-link:hover { color: var(--white); }
+    .nav-cta { background: var(--green); color: var(--black); padding: 7px 18px; border-radius: 100px; font-family: var(--font-ui); font-weight: 700; font-size: 0.8rem; text-decoration: none; transition: box-shadow 0.2s; }
+    .nav-cta:hover { box-shadow: 0 0 20px rgba(0,255,136,0.4); }
+
+    /* в”Ђв”Ђ SEARCH BAR в”Ђв”Ђ */
+    .search-wrap {
+      position: fixed; top: var(--nav-h); left: var(--sidebar-w); right: 0; z-index: 200;
+      padding: 10px 28px;
+      background: rgba(5,5,8,0.94); backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border2);
+      transition: left 0.3s;
+    }
+    .search-inner { max-width: 640px; position: relative; }
+    .search-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--muted); font-size: 0.9rem; pointer-events: none; }
+    .search-input {
+      width: 100%; background: var(--card); border: 1px solid var(--border);
+      border-radius: 10px; padding: 9px 14px 9px 38px;
+      color: var(--white); font-family: var(--font-body); font-size: 0.875rem;
+      outline: none; transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-input::placeholder { color: var(--muted); }
+    .search-input:focus { border-color: rgba(0,255,136,0.3); box-shadow: 0 0 0 3px rgba(0,255,136,0.07); }
+    .search-kbd { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); display: flex; gap: 3px; }
+    .kbd { background: var(--card2); border: 1px solid var(--border); border-radius: 5px; padding: 2px 6px; font-family: var(--font-mono); font-size: 0.65rem; color: var(--muted); }
+
+    /* в”Ђв”Ђ LAYOUT в”Ђв”Ђ */
+    .docs-layout {
+      display: flex;
+      min-height: 100vh;
+      padding-top: var(--nav-h);
+    }
+
+    /* в”Ђв”Ђ SIDEBAR в”Ђв”Ђ */
+    .sidebar {
+      position: fixed;
+      top: var(--nav-h);
+      left: 0;
+      width: var(--sidebar-w);
+      height: calc(100vh - var(--nav-h));
+      overflow-y: auto;
+      padding: 52px 0 60px;
+      border-right: 1px solid var(--border);
+      flex-shrink: 0;
+      scrollbar-width: thin;
+      scrollbar-color: var(--border) transparent;
+    }
+    .sidebar::-webkit-scrollbar { width: 4px; }
+    .sidebar::-webkit-scrollbar-track { background: transparent; }
+    .sidebar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+    .sidebar-group { margin-bottom: 28px; }
+    .sidebar-group-title {
+      font-family: var(--font-ui); font-size: 0.67rem; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted);
+      padding: 0 20px; margin-bottom: 6px;
+    }
+    .sidebar-link {
+      display: flex; align-items: center; gap: 8px;
+      padding: 6px 20px; color: var(--muted); text-decoration: none;
+      font-size: 0.855rem; transition: color 0.15s, background 0.15s;
+      border-left: 2px solid transparent; margin-left: -1px;
+      position: relative;
+    }
+    .sidebar-link:hover { color: var(--white); background: rgba(255,255,255,0.03); }
+    .sidebar-link.active { color: var(--green); border-left-color: var(--green); background: rgba(0,255,136,0.05); }
+    .sidebar-link .badge {
+      margin-left: auto; font-size: 0.6rem; padding: 1px 6px; border-radius: 100px;
+      font-family: var(--font-ui); font-weight: 700; letter-spacing: 0.06em;
+    }
+    .badge-new { background: rgba(0,255,136,0.15); color: var(--green); }
+    .badge-soon { background: rgba(255,255,255,0.07); color: var(--muted); }
+
+    /* в”Ђв”Ђ MAIN CONTENT в”Ђв”Ђ */
+    .docs-main {
+      min-width: 0;
+      flex: 1;
+      margin-left: var(--sidebar-w);
+      padding: 96px 60px 100px 52px;
+      max-width: calc(var(--sidebar-w) + 860px);
+    }
+
+    /* в”Ђв”Ђ TOC (right) в”Ђв”Ђ */
+    .toc-aside {
+      position: fixed;
+      top: calc(var(--nav-h) + 60px);
+      right: 28px;
+      width: 200px;
+    }
+    .toc-title { font-size: 0.67rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); font-weight: 700; margin-bottom: 10px; font-family: var(--font-ui); }
+    .toc-list { list-style: none; display: flex; flex-direction: column; gap: 2px; }
+    .toc-list a { font-size: 0.8rem; color: var(--muted); text-decoration: none; padding: 3px 0 3px 10px; border-left: 1px solid var(--border); display: block; transition: color 0.2s, border-color 0.2s; line-height: 1.4; }
+    .toc-list a:hover, .toc-list a.active { color: var(--green); border-left-color: var(--green); }
+
+    /* в”Ђв”Ђ TYPOGRAPHY в”Ђв”Ђ */
+    .docs-section { margin-bottom: 72px; }
+    .docs-section:last-child { margin-bottom: 0; }
+
+    .section-eyebrow { font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--green); font-weight: 600; font-family: var(--font-ui); margin-bottom: 10px; }
+    h1.docs-h1 { font-family: var(--font-ui); font-size: 2.4rem; font-weight: 800; letter-spacing: -0.04em; line-height: 1.05; margin-bottom: 16px; }
+    h2.docs-h2 { font-family: var(--font-ui); font-size: 1.5rem; font-weight: 700; letter-spacing: -0.03em; margin-bottom: 16px; scroll-margin-top: 88px; padding-top: 40px; }
+    h2.docs-h2:first-child { padding-top: 0; }
+    h3.docs-h3 { font-family: var(--font-ui); font-size: 1.05rem; font-weight: 700; margin-bottom: 12px; scroll-margin-top: 88px; padding-top: 24px; color: rgba(238,238,246,0.9); }
+    .docs-lead { font-size: 1.05rem; color: rgba(238,238,246,0.7); line-height: 1.75; margin-bottom: 32px; max-width: 580px; }
+    .docs-p { color: rgba(238,238,246,0.72); line-height: 1.8; margin-bottom: 16px; font-size: 0.95rem; }
+    .docs-p:last-child { margin-bottom: 0; }
+    .docs-p a { color: var(--green); text-decoration: none; border-bottom: 1px solid rgba(0,255,136,0.3); transition: border-color 0.2s; }
+    .docs-p a:hover { border-bottom-color: var(--green); }
+
+    strong { font-weight: 600; color: var(--white); }
+    code { font-family: var(--font-mono); font-size: 0.82em; background: rgba(255,255,255,0.07); border: 1px solid var(--border); border-radius: 5px; padding: 1px 6px; color: var(--green); }
+
+    /* в”Ђв”Ђ DIVIDER в”Ђв”Ђ */
+    .docs-hr { border: none; border-top: 1px solid var(--border); margin: 48px 0; }
+
+    /* в”Ђв”Ђ CALLOUTS в”Ђв”Ђ */
+    .callout {
+      display: flex; gap: 14px; padding: 16px 20px;
+      border-radius: 12px; margin: 20px 0; font-size: 0.9rem;
+    }
+    .callout-icon { font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
+    .callout-body { line-height: 1.65; }
+    .callout-body strong { display: block; margin-bottom: 4px; font-size: 0.9rem; }
+    .callout.tip { background: rgba(0,255,136,0.05); border: 1px solid rgba(0,255,136,0.15); }
+    .callout.tip .callout-body { color: rgba(238,238,246,0.8); }
+    .callout.warn { background: rgba(255,208,96,0.05); border: 1px solid rgba(255,208,96,0.2); }
+    .callout.warn .callout-body { color: rgba(238,238,246,0.8); }
+    .callout.info { background: rgba(77,184,255,0.05); border: 1px solid rgba(77,184,255,0.15); }
+    .callout.info .callout-body { color: rgba(238,238,246,0.8); }
+
+    /* в”Ђв”Ђ CODE BLOCKS в”Ђв”Ђ */
+    .code-block {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 14px; overflow: hidden; margin: 20px 0;
+    }
+    .code-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 16px; border-bottom: 1px solid var(--border);
+      background: var(--card2);
+    }
+    .code-lang { font-family: var(--font-mono); font-size: 0.72rem; color: var(--muted); letter-spacing: 0.06em; }
+    .code-filename { font-family: var(--font-mono); font-size: 0.72rem; color: var(--muted); }
+    .copy-btn {
+      background: none; border: 1px solid var(--border); color: var(--muted); cursor: pointer;
+      font-size: 0.72rem; padding: 3px 10px; border-radius: 6px; font-family: var(--font-body);
+      transition: all 0.2s; letter-spacing: 0.04em;
+    }
+    .copy-btn:hover { border-color: var(--green); color: var(--green); }
+    .copy-btn.copied { border-color: var(--green); color: var(--green); }
+    pre {
+      padding: 20px; overflow-x: auto; font-family: var(--font-mono);
+      font-size: 0.82rem; line-height: 1.8; color: rgba(238,238,246,0.85);
+    }
+    pre .c  { color: var(--muted); font-style: italic; }
+    pre .k  { color: #c792ea; }
+    pre .s  { color: #c3e88d; }
+    pre .n  { color: var(--blue); }
+    pre .v  { color: var(--yellow); }
+    pre .g  { color: var(--green); }
+    pre .r  { color: var(--red); }
+    pre .p  { color: rgba(238,238,246,0.5); }
+
+    /* в”Ђв”Ђ STEPS в”Ђв”Ђ */
+    .steps { display: flex; flex-direction: column; gap: 0; margin: 24px 0; counter-reset: steps; }
+    .step {
+      display: flex; gap: 16px; counter-increment: steps;
+      padding: 20px 0; border-bottom: 1px solid var(--border2);
+    }
+    .step:last-child { border-bottom: none; }
+    .step-num {
+      width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
+      background: rgba(0,255,136,0.08); border: 1px solid rgba(0,255,136,0.2);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-ui); font-weight: 800; font-size: 0.78rem; color: var(--green);
+      margin-top: 2px;
+    }
+    .step-body strong { display: block; font-size: 0.95rem; margin-bottom: 6px; color: var(--white); }
+    .step-body p { color: var(--muted); font-size: 0.875rem; line-height: 1.65; }
+    .step-body code { font-size: 0.78em; }
+
+    /* в”Ђв”Ђ TABS в”Ђв”Ђ */
+    .tabs { margin: 20px 0; }
+    .tab-nav { display: flex; gap: 0; border-bottom: 1px solid var(--border); margin-bottom: 0; }
+    .tab-btn {
+      padding: 9px 18px; background: none; border: none; border-bottom: 2px solid transparent;
+      color: var(--muted); cursor: pointer; font-family: var(--font-body); font-size: 0.85rem;
+      transition: color 0.2s, border-color 0.2s; margin-bottom: -1px;
+    }
+    .tab-btn.active { color: var(--green); border-bottom-color: var(--green); }
+    .tab-pane { display: none; }
+    .tab-pane.active { display: block; }
+
+    /* в”Ђв”Ђ TABLE в”Ђв”Ђ */
+    .docs-table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 0.875rem; }
+    .docs-table th { background: var(--card2); color: var(--muted); font-family: var(--font-ui); font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 10px 14px; text-align: left; border: 1px solid var(--border); }
+    .docs-table td { padding: 10px 14px; border: 1px solid var(--border2); color: rgba(238,238,246,0.75); vertical-align: top; line-height: 1.5; }
+    .docs-table tr:hover td { background: rgba(255,255,255,0.015); }
+    .docs-table td code { font-size: 0.78em; }
+    .required { color: var(--red); font-size: 0.7rem; font-family: var(--font-mono); }
+    .optional { color: var(--muted); font-size: 0.7rem; font-family: var(--font-mono); }
+
+    /* в”Ђв”Ђ BREADCRUMB в”Ђв”Ђ */
+    .breadcrumb { display: flex; align-items: center; gap: 6px; margin-bottom: 24px; font-size: 0.8rem; color: var(--muted); }
+    .breadcrumb a { color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .breadcrumb a:hover { color: var(--white); }
+    .breadcrumb-sep { opacity: 0.4; }
+
+    /* в”Ђв”Ђ PREV / NEXT в”Ђв”Ђ */
+    .docs-nav-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 64px; }
+    .docs-nav-btn {
+      background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+      padding: 18px 20px; text-decoration: none; color: var(--white);
+      transition: border-color 0.2s, transform 0.2s;
+      display: flex; flex-direction: column; gap: 4px;
+    }
+    .docs-nav-btn:hover { border-color: rgba(0,255,136,0.25); transform: translateY(-2px); }
+    .docs-nav-btn.next { text-align: right; }
+    .dnb-label { font-size: 0.72rem; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; }
+    .dnb-title { font-family: var(--font-ui); font-weight: 700; font-size: 0.95rem; }
+
+    /* в”Ђв”Ђ QUICK START CARDS в”Ђв”Ђ */
+    .qs-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 24px 0; }
+    .qs-card {
+      background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+      padding: 20px; text-decoration: none; color: var(--white);
+      transition: border-color 0.25s, transform 0.25s;
+      display: flex; flex-direction: column; gap: 10px;
+    }
+    .qs-card:hover { border-color: rgba(0,255,136,0.25); transform: translateY(-3px); }
+    .qs-icon { font-size: 1.5rem; }
+    .qs-title { font-family: var(--font-ui); font-weight: 700; font-size: 0.9rem; }
+    .qs-desc { font-size: 0.8rem; color: var(--muted); line-height: 1.5; }
+    .qs-link { font-size: 0.78rem; color: var(--green); margin-top: auto; }
+
+    /* в”Ђв”Ђ PLATFORM TAGS в”Ђв”Ђ */
+    .platform-tags { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0; }
+    .ptag {
+      display: flex; align-items: center; gap: 6px;
+      background: var(--card); border: 1px solid var(--border);
+      padding: 5px 12px; border-radius: 8px; font-size: 0.8rem; color: rgba(238,238,246,0.75);
+    }
+    .ptag-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+
+    /* в”Ђв”Ђ FOOTER в”Ђв”Ђ */
+    footer {
+      background: var(--dark);
+      border-top: 1px solid var(--border);
+      padding: 60px 40px 40px;
+      margin-left: var(--sidebar-w);
+      transition: margin-left 0.3s;
+    }
+    .footer-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 60px;
+    }
+    .footer-brand p {
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.7;
+      margin-top: 16px;
+      max-width: 280px;
+    }
+    .footer-col .footer-title {
+      font-family: var(--font-ui);
+      font-weight: 700;
+      margin-bottom: 20px;
+      font-size: 0.9rem;
+      letter-spacing: 0.05em;
+      color: var(--white);
+    }
+    .footer-col ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .footer-col ul a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+    .footer-col ul a:hover {
+      color: var(--white);
+    }
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 48px auto 0;
+      padding-top: 28px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    .footer-bottom a {
+      color: var(--muted);
+      text-decoration: none;
+    }
+    .footer-bottom a:hover {
+      color: var(--white);
+    }
+
+    /* в”Ђв”Ђв”Ђ BACK TO TOP в”Ђв”Ђв”Ђ */
+    .back-to-top {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 50px;
+      height: 50px;
+      background: rgba(0, 255, 136, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(0, 255, 136, 0.3);
+      color: var(--green);
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+    .back-to-top.visible {
+      opacity: 1;
+      visibility: visible;
+      bottom: 40px;
+    }
+    .back-to-top:hover {
+      background: var(--green);
+      color: var(--black);
+      transform: translateY(-5px);
+      box-shadow: 0 0 30px rgba(0, 255, 136, 0.4);
+    }
+
+    /* в”Ђв”Ђ MOBILE в”Ђв”Ђ */
+    .mob-sidebar-toggle { display: none; background: var(--card); border: 1px solid var(--border); color: var(--white); padding: 7px 12px; border-radius: 8px; cursor: pointer; font-size: 0.85rem; }
+
+    @media (max-width: 1200px) { .toc-aside { display: none; } }
+    @media (max-width: 860px) {
+      :root { --sidebar-w: 0px; }
+      .sidebar {
+        display: none; width: 260px; z-index: 250;
+        background: var(--dark); top: var(--nav-h);
+        height: calc(100vh - var(--nav-h));
+        box-shadow: 4px 0 40px rgba(0,0,0,0.5);
+      }
+      .sidebar.open { display: block; }
+      .search-wrap { left: 0; padding: 10px 16px; }
+      .docs-main { margin-left: 0; padding: 86px 20px 80px; }
+      .qs-grid { grid-template-columns: 1fr; }
+      .docs-nav-btns { grid-template-columns: 1fr; }
+      .mob-sidebar-toggle { display: block; }
+      .top-nav { padding: 0 16px; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+      .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+      footer { padding: 40px 20px; margin-left: 0; }
+    }
+      .nav-login {
+      color: var(--muted, #7a7a95);
+      font-size: 0.875rem;
+      text-decoration: none;
+      padding: 7px 16px;
+      border-radius: 100px;
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .nav-login:hover {
+      color: var(--white, #f0f0f8);
+      border-color: rgba(255,255,255,0.25);
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+        {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Р“РѕР»РѕРІРЅР°",
+            "item": "https://indexfast.pp.ua/"
+        },
+        {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Р”РѕРєСѓРјРµРЅС‚Р°С†С–СЏ",
+            "item": "https://indexfast.pp.ua/docs/"
+        }
+    ]
+}
+  </script>
+
+  <link rel="alternate" hreflang="en" href="https://indexfast.pp.ua/docs/" />
+  <link rel="alternate" hreflang="uk" href="https://indexfast.pp.ua/uk/docs/" />
+  <link rel="alternate" hreflang="ru" href="https://indexfast.pp.ua/ru/docs/" />
+  <link rel="alternate" hreflang="de" href="https://indexfast.pp.ua/de/docs/" />
+  <link rel="alternate" hreflang="es" href="https://indexfast.pp.ua/es/docs/" />
+  <link rel="alternate" hreflang="fr" href="https://indexfast.pp.ua/fr/docs/" />
+  <link rel="alternate" hreflang="pl" href="https://indexfast.pp.ua/pl/docs/" />
+  <link rel="alternate" hreflang="pt" href="https://indexfast.pp.ua/pt/docs/" />
+  <link rel="alternate" hreflang="x-default" href="https://indexfast.pp.ua/docs/" />
+  <link rel="canonical" href="https://indexfast.pp.ua/pt/docs/" />
+</head>
+<body>
+
+<!-- TOP NAV -->
+<nav class="top-nav">
+  <a href="/" class="logo">ГЌndice<span>RГЎpido</span></a>
+  <div class="nav-right">
+    <a href="/" class="nav-link">Principal</a>
+    <a href="/docs/" class="nav-link active">DocumentaГ§ГЈo</a>
+    <a href="/blog/" class="nav-link">Blogue</a>
+    <a href="/app/login" class="nav-login">Entrar</a>
+    <a href="/app/register" class="nav-cta">Experimente gratuitamente</a>
+    <button class="mob-sidebar-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open')">в°</button>
+  </div>
+</nav>
+
+<!-- SEARCH -->
+<div class="search-wrap">
+  <div class="search-inner">
+    <span class="search-icon">рџ”Ќ</span>
+    <input type="search" class="search-input" placeholder="РџРѕС€СѓРє РїРѕ РґРѕРєСѓРјРµРЅС‚Р°С†С–С—..." id="docsSearch">
+    <div class="search-kbd"><span class="kbd">вЊ</span><span class="kbd">K</span></div>
+  </div>
+</div>
+
+<div class="docs-layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+
+    <div class="sidebar-group">
+      <div class="sidebar-group-title">InГ­cio do trabalho</div>
+      <a href="#overview" class="sidebar-link active">рџ“– RevisГЈo</a>
+      <a href="#quickstart" class="sidebar-link">вљЎ InГ­cio rГЎpido</a>
+      <a href="#requirements" class="sidebar-link">вњ… Requisitos</a>
+    </div>
+
+    <div class="sidebar-group">
+      <div class="sidebar-group-title">ConfiguraГ§Гµes</div>
+      <a href="#google-cloud" class="sidebar-link">вЃпёЏ Google Nuvem</a>
+      <a href="#service-account" class="sidebar-link">рџ”‘ Conta de serviГ§o</a>
+      <a href="#search-console" class="sidebar-link">рџ”—Console de pesquisa</a>
+      <a href="#sitemap" class="sidebar-link">рџ—є sitemap.xml</a>
+    </div>
+
+    <div class="sidebar-group">
+      <div class="sidebar-group-title">Usando</div>
+      <a href="#php-script" class="sidebar-link">вљ™пёЏ Como funciona o serviГ§o</a>
+      <a href="#manual" class="sidebar-link">рџ–± IndexaГ§ГЈo manual</a>
+      <a href="#automation" class="sidebar-link">рџ¤– Agendamento automГЎtico</a>
+      <a href="#limits" class="sidebar-link">рџ“Љ Limites de API</a>
+    </div>
+
+    <div class="sidebar-group">
+      <div class="sidebar-group-title">IntegraГ§ГЈo</div>
+      <a href="#wordpress" class="sidebar-link">рџџ¦ WordPress</a>
+      <a href="#shopify" class="sidebar-link">рџџ© Shopify</a>
+      <a href="#laravel" class="sidebar-link">рџџҐLaravel</a>
+      <a href="#other" class="sidebar-link">рџ”§ Outras plataformas</a>
+    </div>
+
+    <div class="sidebar-group">
+      <div class="sidebar-group-title">ReferГЄncia de API</div>
+      <a href="#api-auth" class="sidebar-link">рџ”ђ AutorizaГ§ГЈo</a>
+      <a href="#api-submit" class="sidebar-link">рџ“¤ URL de envio <span class="badge badge-new">NOVO</span></a>
+      <a href="#api-status" class="sidebar-link">рџ“Ў Status do URL</a>
+      <a href="#api-errors" class="sidebar-link">вљ пёЏ Erros</a>
+    </div>
+
+    <div class="sidebar-group">
+      <div class="sidebar-group-title">Adicionalmente</div>
+      <a href="#faq" class="sidebar-link">вќ“ Perguntas frequentes</a>
+      <a href="#changelog" class="sidebar-link">рџ“‹ Registro de alteraГ§Гµes <span class="badge badge-new">v2.1</span></a>
+      <a href="#support" class="sidebar-link">рџ’¬ Suporte</a>
+    </div>
+
+  </aside>
+
+  <!-- MAIN -->
+  <main class="docs-main" id="docsMain">
+
+    <!-- BREADCRUMB -->
+    <div class="breadcrumb">
+      <a href="/">ГЌndiceRГЎpido</a>
+      <span class="breadcrumb-sep">/</span>
+      <span>DocumentaГ§ГЈo</span>
+    </div>
+
+    <!-- в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ OVERVIEW в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ -->
+    <section class="docs-section" id="overview">
+      <p class="section-eyebrow">DocumentaГ§ГЈo</p>
+      <h1 class="docs-h1">Como funciona o IndexFast</h1>
+      <p class="docs-lead">Um guia completo para configurar e usar IndexFast, desde a obtenГ§ГЈo de sua chave de API atГ© a indexaГ§ГЈo diГЎria automГЎtica.</p>
+
+      <div class="qs-grid">
+        <a href="#quickstart" class="qs-card">
+          <div class="qs-icon">вљЎ</div>
+          <div class="qs-title">InГ­cio rГЎpido</div>
+          <div class="qs-desc">Configure e envie seus primeiros URLs em 10 minutos</div>
+          <div class="qs-link">Leia в†’</div>
+        </a>
+        <a href="#php-script" class="qs-card">
+          <div class="qs-icon">рџђ</div>
+          <div class="qs-title">script PHP</div>
+          <div class="qs-desc">Script pronto para indexaГ§ГЈo automГЎtica com mapa do site</div>
+          <div class="qs-link">Leia в†’</div>
+        </a>
+        <a href="#api-submit" class="qs-card">
+          <div class="qs-icon">рџ“Ў</div>
+          <div class="qs-title">ReferГЄncia de API</div>
+          <div class="qs-desc">DocumentaГ§ГЈo completa da API de indexaГ§ГЈo do Google</div>
+          <div class="qs-link">Leia в†’</div>
+        </a>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">в„№пёЏ</span>
+        <div class="callout-body">
+          <strong>O que Г© a API de indexaГ§ГЈo do Google?</strong>
+          Ferramenta oficial do Google para notificar o usuГЎrio sobre pГЎginas novas ou atualizadas. Permite enviar para <strong>200 URLs por dia</strong> gratuitamente e receba uma resposta dentro de 24 a 48 horas.
+        </div>
+      </div>
+    </section>
+
+    <hr class="docs-hr">
+
+    <!-- в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ QUICKSTART в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ -->
+    <section class="docs-section" id="quickstart">
+      <h2 class="docs-h2">вљЎ InГ­cio rГЎpido</h2>
+      <p class="docs-p">Para comeГ§ar a usar o IndexFast, vocГЄ precisa concluir 3 etapas. Todo o processo leva cerca de 10 a 15 minutos.</p>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <strong>Crie uma conta de serviГ§o no Google Cloud</strong>
+            <p>VГЎ para <a href="https://console.cloud.google.com" target="_blank" rel="noreferrer">console.cloud.google.com</a>, crie um novo projeto (ou selecione um existente) e ative-o <code>API de indexaГ§ГЈo de pesquisa na Web</code>. Crie uma conta de serviГ§o e carregue uma chave JSON.</p>
+            <p>InstruГ§Гµes detalhadas estГЈo na seГ§ГЈo <a href="#service-account">рџ”‘ Conta de serviГ§o</a>.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <strong>Adicionar conta de serviГ§o ao Search Console</strong>
+            <p>РЈ <a href="https://search.google.com/search-console" target="_blank" rel="noreferrer">Console de pesquisa do Google</a> adicione o e-mail da sua conta de serviГ§o como delegado <strong>o proprietГЎrio</strong> site</p>
+            <p>InstruГ§Гµes detalhadas estГЈo na seГ§ГЈo <a href="#search-console">рџ”—Console de pesquisa</a>.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <strong>Conecte o site em sua conta pessoal</strong>
+            <p>Cadastre-se ou faГ§a login <a href="/app/dashboard">Gabinete IndexFast</a>. Adicione o site, insira a chave JSON da conta de serviГ§o e a indexaГ§ГЈo comeГ§arГЎ automaticamente.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="docs-hr">
+
+    <!-- в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ REQUIREMENTS в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ -->
+    <section class="docs-section" id="requirements">
+      <h2 class="docs-h2">вњ… Requisitos</h2>
+      <p class="docs-p">Antes de comeГ§ar, certifique-se de ter:</p>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <strong>Conta do Google</strong>
+            <p>NecessГЎrio para acessar o Google Cloud Console e o Google Search Console.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <strong>Site verificado no Google Search Console</strong>
+            <p>Seu domГ­nio deve ser verificado em <a href="https://search.google.com/search-console" target="_blank" rel="noreferrer">Console de pesquisa do Google</a> por qualquer mГ©todo disponГ­vel.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <strong>O arquivo sitemap.xml</strong>
+            <p>Seu site deve ter disponГ­vel publicamente <code>mapa do site.xml</code>. IndexFast lГЄ para obter uma lista de URLs para indexar.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <strong>Chave JSON da conta de serviГ§o</strong>
+            <p>Arquivo baixado do Console do Google Cloud <code>.json</code> com direitos para a API de indexaГ§ГЈo de pesquisa na Web.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout tip">
+        <span class="callout-icon">рџ’Ў</span>
+        <div class="callout-body">Se o seu site ainda nГЈo estiver no Search Console, adicione-o primeiro e confirme a propriedade. InstruГ§Гµes detalhadas estГЈo disponГ­veis em <a href="https://support.google.com/webmasters/answer/9008080" target="_blank" rel="noreferrer">Site do Google</a>.</div>
+      </div>
+    </section>
+
+    <hr class="docs-hr">
+
+    <!-- в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ GOOGLE CLOUD в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ -->
+    <section class="docs-section" id="google-cloud">
+      <h2 class="docs-h2">вЃпёЏ ConfiguraГ§Гµes do Google Cloud</h2>
+
+      <h3 class="docs-h3">AtivaГ§ГЈo de API</h3>
+      <p class="docs-p">Acesse o Console do Google Cloud в†’ <strong>APIs e serviГ§os в†’ Biblioteca</strong>. Encontre <strong>"API de indexaГ§ГЈo de pesquisa na Web"</strong> e pressione <em>Habilitar</em>.</p>
+
+      <div class="callout warn">
+        <span class="callout-icon">вљ пёЏ</span>
+        <div class="callout-body">
+          <strong>Importante</strong>
+          A API deve estar habilitada no projeto ao qual sua conta de serviГ§o estГЎ vinculada. Se a API nГЈo estiver ativada, vocГЄ receberГЎ um erro <code>403 acessoNГЈoConfigurado</code>.
+        </div>
+      </div>
+
+      <h3 class="docs-h3" id="service-account">Criando uma conta de serviГ§o</h3>
+      <p class="docs-p">Uma conta de serviГ§o Г© uma conta tГ©cnica sem senha que IndexFast usa para autorizar APIs do Google. Para criГЎ-lo, vocГЄ precisa de um projeto no Google Cloud.</p>
+
+      <div class="callout tip">
+        <span class="callout-icon">рџ› </span>
+        <div class="callout-body">Antes de comeГ§ar, habilite a API Indexing em seu projeto via <a href="https://console.developers.google.com/apis/library/indexing.googleapis.com" target="_blank" rel="noreferrer">ferramenta de ajuste</a>. Sem esta etapa, vocГЄ receberГЎ um erro <code>403 acessoNГЈoConfigurado</code>.</div>
+      </div>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <strong>Abra a seГ§ГЈo Contas de serviГ§o</strong>
+            <p>VГЎ para <a href="https://console.cloud.google.com/iam-admin/serviceaccounts" target="_blank" rel="noreferrer">Console do Google Cloud в†’ IAM e administrador в†’ Contas de serviГ§o</a>. Se necessГЎrio, selecione o projeto desejado.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <strong>Clique em "Criar uma conta de serviГ§o"</strong>
+            <p>Digite um nome, por exemplo <code>IndexFast-bot</code>e descriГ§ГЈo. O identificador pode ser deixado automГЎtico. Clique <em>"Criar e continuar"</em>.</p>
+            <p>SeГ§ГЈo <em>"Direitos de acesso"</em> nГЈo Г© necessГЎrio preencher - clique <em>"Continuar"</em>, entГЈo <em>"Feito"</em>.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <strong>Crie uma chave JSON</strong>
+            <p>Abra a conta recГ©m-criada в†’ guia <em>Chaves</em> в†’ <em>Adicionar chave в†’ Criar nova chave</em>. Escolha um formato <strong>JSON</strong> e pressione <em>"Criar"</em>.</p>
+            <p>O arquivo serГЎ baixado automaticamente para o seu computador вЂ“ esta Г© a Гєnica cГіpia da chave. Mantenha-o em um local seguro e nunca publique-o no Git ou em repositГіrios pГєblicos.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout tip">
+        <span class="callout-icon">рџ’Ў</span>
+        <div class="callout-body">O arquivo JSON deve ficar assim - se a estrutura for diferente, a chave foi gerada incorretamente.</div>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">JSON</span>
+          <span class="code-filename">conta de serviГ§o.json</span>
+          <button class="copy-btn" onclick="copyCode(this)">CГіpia</button>
+        </div>
+        <pre>{
+  <span class="s">tipo</span>: <span class="s">"conta_de_serviГ§o"</span>,
+  <span class="s">"projeto_id"</span>: <span class="s">"seu-id-do-projeto"</span>,
+  <span class="s">"private_key_id"</span>: <span class="s">"abc123..."</span>,
+  <span class="s">"chave_privada"</span>: <span class="s">"-----INICIAR CHAVE PRIVADA RSA-----\n..."</span>,
+  <span class="s">"cliente_e-mail"</span>: <span class="s">"<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f69f9892938e90978582db949982b68f998384db8684999c939582d89f979bd891859384809f959397959599839882d895999b">[e-mail protegido]</a>"</span>,
+  <span class="s">"id_cliente"</span>: <span class="s">"123456789"</span>,
+  <span class="s">"auth_uri"</span>: <span class="s">"https://accounts.google.com/o/oauth2/auth"</span>,
+  <span class="s">"token_uri"</span>: <span class="s">"https://oauth2.googleapis.com/token"</span>
+}</pre>
+      </div>
+    </section>
+
+    <hr class="docs-hr">
+
+    <!-- в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ SEARCH CONSOLE в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ -->
+    <section class="docs-section" id="search-console">
+      <h2 class="docs-h2">рџ”— ConexГЈo do Search Console</h2>
+      <p class="docs-p">Sem esta etapa, a API retornarГЎ um erro <code>403 Proibido</code> mesmo com a chave correta. A conta de serviГ§o deve receber o status de proprietГЎrio do site no Google Search Console.</p>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <strong>Verifique a propriedade do site</strong>
+            <p>VГЎ para <a href="https://search.google.com/search-console" target="_blank" rel="noreferrer">Console de pesquisa do Google</a> e verifique se o site Г© seu - por qualquer meio disponГ­vel (registro DNS, arquivo HTML, etc.).</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <strong>Copie o e-mail da conta de serviГ§o</strong>
+            <p>Abra o arquivo JSON baixado e localize o campo <code>email_cliente</code>. O e-mail Г© assim:</p>
+            <p><code>nome-da-conta@nome-do-projeto.iam.gserviceaccount.com</code></p>
+            <p>Por exemplo: <code><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="c5acaba1a0bda3a4b6b1e8a7aab185a8bce8b5b7aaafa0a6b1e8f4f7f6ebaca4a8eba2b6a0b7b3aca6a0a4a6a6aab0abb1eba6aaa8">[e-mail protegido]</a></code></p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <strong>Adicione a conta de serviГ§o como proprietГЎria delegada</strong>
+            <p>No Search Console, selecione seu site в†’ <em>ConfiguraГ§Гµes в†’ ProprietГЎrios verificados в†’ Adicionar proprietГЎrio</em>. Insira o e-mail da conta de serviГ§o e confirme.</p>
+            <div class="callout warning" style="margin-top:12px;">
+              <span class="callout-icon">вљ пёЏ</span>
+              <div class="callout-body">A funГ§ГЈo Г© exatamente o que Г© necessГЎrio <strong>ProprietГЎrio</strong> (nГЈo "Acesso total"). Sem isso, a API retornarГЎ <code>403 Proibido</code>.</div>
+            </div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <strong>Aguarde 1-2 minutos</strong>
+            <p>Os direitos nГЈo sГЈo aplicados instantaneamente. Depois disso, IndexFast poderГЎ enviar URLs para indexaГ§ГЈo atravГ©s do seu site.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="docs-hr">
+
+    <!-- в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ SITEMAP в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ -->
+    <section class="docs-section" id="sitemap">
+      <h2 class="docs-h2">рџ—є sitemap.xml</h2>
+      <p class="docs-p">IndexFast lГЄ seu <code>mapa do site.xml</code> para obter URLs para enviar para indexaГ§ГЈo. Todos os formatos sГЈo suportados.</p>
+
+      <h3 class="docs-h3">Formatos suportados</h3>
+      <ul style="list-style:none; display:flex; flex-direction:column; gap:8px; margin-bottom:20px;">
+        <li style="color:rgba(238,238,246,0.72); font-size:0.95rem;">вњ… <code>mapa do site.xml</code> вЂ” um arquivo padrГЈo com uma URL</li>
+        <li style="color:rgba(238,238,246,0.72); font-size:0.95rem;">вњ… <code>sitemap_index.xml</code> вЂ” arquivo pai com links para o mapa do site filho (qualquer profundidade de aninhamento)</li>
+        <li style="color:rgba(238,238,246,0.72); font-size:0.95rem;">вњ… Mapa do site com tags <code><Гєltimo mod></code> вЂ” filtragem por data de atualizaГ§ГЈo</li>
+      </ul>
+
+      <h3 class="docs-h3">Onde encontrar o URL do mapa do site</h3>
+      <div class="platform-tags">
+        <span class="ptag"><span class="ptag-dot" style="background:#00ff88"></span>PadrГЈo: <code>/sitemap.xml</code></span>
+        <span class="ptag"><span class="ptag-dot" style="background:#21759B"></span>WordPress (Yoast): <code>/sitemap_index.xml</code></span>
+        <span class="ptag"><span class="ptag-dot" style="background:#96BF48"></span>Comprar: <code>/sitemap.xml</code></span>
+        <span class="ptag"><span class="ptag-dot" style="background:#FF2D20"></span>Laravel: <code>/sitemap.xml</code></span>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">вљ пёЏ</span>
+        <div class="callout-body">
+          <strong>Importante</strong>
+          O mapa do site deve ser acessГ­vel publicamente sem autorizaГ§ГЈo. Verifique se o arquivo abre em um navegador sem login. Se estiver fechado, IndexFast nГЈo poderГЎ lГЄ-lo.
+        </div>
+      </div>
+    </section>
+
+    <hr class="docs-hr">
+
+    <!-- в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ PHP SCRIPT в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ -->
+    <section class="docs-section" id="php-script">
+      <h2 class="docs-h2">вљ™пёЏ Como funciona o serviГ§o</h2>
+      <p class="docs-p">IndexFast lГЄ automaticamente o seu <code>mapa do site.xml</code> e envia o URL por meio da API de indexaГ§ГЈo do Google. Nenhum script precisa ser instalado вЂ“ todas as operaГ§Гµes sГЈo executadas em servidores IndexFast.</p>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <strong>VocГЄ adiciona um site ao gabinete</strong>
+            <p>Especifique o domГ­nio, URL sitemap.xml e insira a chave JSON da conta de serviГ§o. IndexFast verifica a disponibilidade do mapa do site e salva as configuraГ§Гµes.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <strong>IndexFast lГЄ o mapa do site</strong>
+            <p>O serviГ§o oferece suporte a mapas de sites regulares e <strong>ГЌndice do mapa do site</strong> (anexos de qualquer profundidade). Os URLs sГЈo enfileirados automaticamente de acordo com o limite diГЎrio do seu plano.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <strong>URLs sГЈo enviados ao Google</strong>
+            <p>O serviГ§o usa sua conta de serviГ§o para autorizaГ§ГЈo e envia o URL por meio da API oficial de indexaГ§ГЈo do Google. VocГЄ vГЄ o resultado em tempo real na sua conta pessoal.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout tip">
+        <span class="callout-icon">рџ“Љ</span>
+        <div class="callout-body">Os limites dependem do plano: InГ­cio вЂ” 10 URLs/dia, PRO вЂ” 100 URLs/dia, AgГЄncia вЂ” 1000 URLs/dia. O limite Г© atualizado todos os dias Г s 00h00.</div>
+      </div>
+    </section>
+
+    <hr class="docs-hr">
+
+    <!-- в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ AUTOMATION в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ -->
+    <section class="docs-section" id="automation">
+      <h2 class="docs-h2">рџ¤– Agendamento automГЎtico</h2>
+      <p class="docs-p">IndexFast inicia a indexaГ§ГЈo automaticamente вЂ” nГЈo hГЎ necessidade de configurar o cron ou manter um servidor. O serviГ§o funciona 24 horas por dia no lado IndexFast.</p>
+
+      <div class="callout tip">
+        <span class="callout-icon">рџ’Ў</span>
+        <div class="callout-body">Para iniciar a indexaГ§ГЈo manualmente, pressione <strong>"в–¶ LanГ§amento"</strong> em sua conta pessoal ao lado do site desejado. O resultado aparecerГЎ nos logs em um minuto.</div>
+      </div>
+
+      <h3 class="docs-h3">Como gerenciar a indexaГ§ГЈo</h3>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <strong>Modo ativo</strong>
+            <p>Site com status <em>Ativo</em> envia URLs automaticamente dentro do limite diГЎrio. O limite Г© dividido igualmente entre todos os sites ativos da conta.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <strong>Pausa</strong>
+            <p>Se vocГЄ precisar interromper temporariamente a indexaГ§ГЈo do site - clique <strong>"вЏё"</strong> no escritГіrio O limite diГЎrio nГЈo Г© gasto. VocГЄ pode restaurar a qualquer momento.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <strong>InГ­cio manual</strong>
+            <p>Clique <strong>"в–¶ LanГ§amento"</strong> вЂ“ e IndexFast enviarГЎ imediatamente o URL do mapa do site dentro do restante do limite diГЎrio. Conveniente apГіs a publicaГ§ГЈo de novas pГЎginas.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="docs-hr">
+
+    <!-- в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ MANUAL в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ -->
+    <section class="docs-section" id="manual">
+      <h2 class="docs-h2">рџ–± IndexaГ§ГЈo manual</h2>
+      <p class="docs-p">AlГ©m do modo automГЎtico, IndexFast permite iniciar a indexaГ§ГЈo manualmente a qualquer momento - diretamente de sua conta pessoal.</p>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <strong>Abra o gabinete</strong>
+            <p>VГЎ para <a href="/app/dashboard">IndexFast.pp.ua/app/dashboard</a> e encontre o site desejado na lista.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <strong>Clique em "в–¶ Iniciar"</strong>
+            <p>IndexFast lerГЎ instantaneamente o mapa do site e enviarГЎ o URL dentro do limite diГЎrio restante.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <strong>Veja os resultados nos registros</strong>
+            <p>As respostas da API do Google aparecem na guia Logs dentro de 1 a 2 minutos. VocГЄ pode ver o status de cada URL: <code>200 OK</code>, <code>403</code>, ou outra resposta.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">в„№пёЏ</span>
+        <div class="callout-body">A indexaГ§ГЈo manual usa o mesmo limite diГЎrio da indexaГ§ГЈo automГЎtica. Se o limite for atingido, o IndexFast colocarГЎ a URL na fila para o dia seguinte.</div>
+      </div>
+    </section>
+
+    <hr class="docs-hr">
+
+    <!-- в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ LIMITS в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ -->
+    <section class="docs-section" id="limits">
+      <h2 class="docs-h2">рџ“Љ Limites de API</h2>
+      <p class="docs-p">O Google fornece um limite de y gratuitamente <strong>200 URLs por dia</strong> por conta de serviГ§o. IndexFast monitora automaticamente o limite e para quando ele Г© atingido.</p>
+
+      <table class="docs-table">
+        <thead>
+          <tr><th>Plano</th><th>URL/dia</th><th>Locais</th><th>Contas de serviГ§o</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Iniciar (grГЎtis)</td><td>10</td><td>1</td><td>1</td></tr>
+          <tr><td>PRГ“</td><td>100</td><td>para 5</td><td>1</td></tr>
+          <tr><td>AgГЄncia</td><td>1000</td><td>atГ© 50</td><td>ilimitado</td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout tip">
+        <span class="callout-icon">рџ’Ў</span>
+        <div class="callout-body">O limite diГЎrio Г© atualizado diariamente <strong>00:00 UTC</strong>. Se vocГЄ tiver muitos sites, o limite serГЎ automaticamente distribuГ­do uniformemente entre eles.</div>
+      </div>
+    </section>
+
+    <hr class="docs-hr">
+
+    <!-- в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ INTEGRATIONS в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ -->
+    <section class="docs-section" id="wordpress">
+      <h2 class="docs-h2">рџ”§ IntegraГ§Гµes com plataformas</h2>
+
+      <h3 class="docs-h3" id="wordpress">WordPress</h3>
+      <p class="docs-p">Se vocГЄ usar <strong>Yoast SEO</strong> ou <strong>ClassificaГ§ГЈo matemГЎtica</strong> вЂ” o mapa do site jГЎ estГЎ pronto:</p>
+      <div class="platform-tags">
+        <span class="ptag"><span class="ptag-dot" style="background:#21759B"></span>Yoast SEOв†’ <code>/sitemap_index.xml</code></span>
+        <span class="ptag"><span class="ptag-dot" style="background:#f72a2a"></span>Classificar matemГЎtica в†’ <code>/sitemap_index.xml</code></span>
+        <span class="ptag"><span class="ptag-dot" style="background:#1e7c42"></span>Tudo em um SEO в†’ <code>/sitemap.xml</code></span>
+      </div>
+      <div class="callout tip">
+        <span class="callout-icon">вњ…</span>
+        <div class="callout-body">Na sua conta IndexFast pessoal, insira o URL do seu mapa do site: <code>https://seu-site.com/sitemap_index.xml</code> вЂ” o serviГ§o descompactarГЎ automaticamente todos os arquivos anexados.</div>
+      </div>
+      <p class="docs-p" style="margin-top:12px; font-size:0.85rem;">Precisa de ajuda com integraГ§ГЈo? Inscreva-se em <a href="https://indexfast.pp.ua/docs/#support">apoiar</a>.</p>
+
+      <h3 class="docs-h3" id="shopify">Shopify</h3>
+      <p class="docs-p">Shopify gera automaticamente um mapa do site em <code>/sitemap.xml</code>. Inclui pГЎginas, produtos, coleГ§Гµes e postagens de blog.</p>
+      <div class="callout tip">
+        <span class="callout-icon">вњ…</span>
+        <div class="callout-body">Na sua conta IndexFast pessoal, insira o URL do seu mapa do site: <code>https://sua-loja.myShopify.com/sitemap.xml</code> вЂ” e a indexaГ§ГЈo comeГ§arГЎ automaticamente.</div>
+      </div>
+      <p class="docs-p" style="margin-top:12px; font-size:0.85rem;">Precisa de ajuda com integraГ§ГЈo? Inscreva-se em <a href="https://indexfast.pp.ua/docs/#support">apoiar</a>.</p>
+
+      <h3 class="docs-h3" id="laravel">Laravel</h3>
+      <p class="docs-p">Recomendamos o pacote para geraГ§ГЈo de Sitemap no Laravel <code>mapa do site spatie/Laravel</code>:</p>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">BASH</span><button class="copy-btn" onclick="copyCode(this)">CГіpia</button></div>
+        <pre>compositor requer spatie/Laravel-Sitemap</pre>
+      </div>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">PHP</span><button class="copy-btn" onclick="copyCode(this)">CГіpia</button></div>
+        <pre><span class="k">usar</span> <span class="n">EspaГ§o\Sitemap\SitemapGenerator</span>;
+
+SitemapGenerator::criar(<span class="s">'https://seu-site.com'</span>)
+    ->writeToFile(caminho_publico(<span class="s">'sitemap.xml'</span>));</pre>
+      </div>
+      <p class="docs-p" style="margin-top:12px; font-size:0.85rem;">Precisa de ajuda com integraГ§ГЈo? Inscreva-se em <a href="https://indexfast.pp.ua/docs/#support">apoiar</a>.</p>
+
+      <h3 class="docs-h3" id="other">Outras plataformas</h3>
+      <div class="platform-tags">
+        <span class="ptag"><span class="ptag-dot" style="background:#DF0067"></span>PrestaShop в†’ <code>/sitemap.xml</code></span>
+        <span class="ptag"><span class="ptag-dot" style="background:#23ADEF"></span>OpenCart в†’ MГіdulo SEO Sitemap</span>
+        <span class="ptag"><span class="ptag-dot" style="background:#FAAD00"></span>Wixв†’ <code>/sitemap.xml</code></span>
+        <span class="ptag"><span class="ptag-dot" style="background:#4353FF"></span>Fluxo da Web в†’ <code>/sitemap.xml</code></span>
+        <span class="ptag"><span class="ptag-dot" style="background:#F44321"></span>Joomla в†’ Plug-in OSMap</span>
+      </div>
+      <div class="callout tip">
+        <span class="callout-icon">рџ’Ў</span>
+        <div class="callout-body">IndexFast funciona com qualquer plataforma que gere um valor vГЎlido <code>mapa do site.xml</code>. Verifique o arquivo no endereГ§o <code>https://seu-site.com/sitemap.xml</code>.</div>
+      </div>
+      <p class="docs-p" style="margin-top:12px; font-size:0.85rem;">Precisa de ajuda com integraГ§ГЈo? Inscreva-se em <a href="https://indexfast.pp.ua/docs/#support">apoiar</a>.</p>
+    </section>
+
+    <hr class="docs-hr">
+
+    <!-- в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ API REFERENCE в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ -->
+    <section class="docs-section" id="api-auth">
+      <h2 class="docs-h2">рџ“Ў ReferГЄncia da API</h2>
+
+      <h3 class="docs-h3">AutorizaГ§ГЈo</h3>
+      <p class="docs-p">A API de indexaГ§ГЈo do Google usa <strong>OAuth 2.0</strong> atravГ©s da conta de serviГ§o. IndexFast lida com a autorizaГ§ГЈo automaticamente вЂ“ vocГЄ sГі precisa da chave JSON.</p>
+      <p class="docs-p">Endpoint para receber um token:</p>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">HTTP</span><button class="copy-btn" onclick="copyCode(this)">CГіpia</button></div>
+        <pre><span class="k">PUBLICAR</span> https://oauth2.googleapis.com/token
+
+Tipo de conteГєdo: aplicativo/x-www-form-urlencoded
+
+<span class="n">tipo_de_concessГЈo</span>=urna:ietf:params:oauth:grant-type:jwt-bearer
+<span class="n">&afirmaГ§ГЈo</span>=<span class="v">{JWT_TOKEN}</span></pre>
+      </div>
+
+      <h3 class="docs-h3" id="api-submit">Envio de URLs para indexaГ§ГЈo</h3>
+
+      <table class="docs-table">
+        <thead>
+          <tr><th>ParГўmetro</th><th>Tipo</th><th>ObrigatГіrio</th><th>DescriГ§ГЈo</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>url</code></td><td>corda</td><td><span class="required">obrigatГіrio</span></td><td>URL completo com https://</td></tr>
+          <tr><td><code>tipo</code></td><td>enumeraГ§ГЈo</td><td><span class="required">obrigatГіrio</span></td><td><code>URL_ATUALIZADO</code> ou <code>URL_DELETED</code></td></tr>
+        </tbody>
+      </table>
+
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">HTTP</span><button class="copy-btn" onclick="copyCode(this)">CГіpia</button></div>
+        <pre><span class="k">PUBLICAR</span> https://indexing.googleapis.com/v3/urlNotifications:publicar
+
+AutorizaГ§ГЈo: Portador <span class="v">{ACCESS_TOKEN}</span>
+Content-Type: application/json
+
+{
+  <span class="s">"URL"</span>: <span class="s">"https://seu-site.com/new-page"</span>,
+  <span class="s">tipo</span>: <span class="s">"URL_ATUALIZADO"</span>
+}</pre>
+      </div>
+
+      <p class="docs-p">Resposta bem sucedida:</p>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">JSON</span><button class="copy-btn" onclick="copyCode(this)">CГіpia</button></div>
+        <pre>{
+  <span class="s">"urlNotificaГ§ГЈoMetadados"</span>: {
+    <span class="s">"URL"</span>: <span class="s">"https://seu-site.com/new-page"</span>,
+    <span class="s">"Гєltima atualizaГ§ГЈo"</span>: {
+      <span class="s">"URL"</span>: <span class="s">"https://seu-site.com/new-page"</span>,
+      <span class="s">tipo</span>: <span class="s">"URL_ATUALIZADO"</span>,
+      <span class="s">"notificarHora"</span>: <span class="s">"2026-01-20T10:30:00Z"</span>
+    }
+  }
+}</pre>
+      </div>
+
+      <h3 class="docs-h3" id="api-status">VerificaГ§ГЈo do status do URL</h3>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">HTTP</span><button class="copy-btn" onclick="copyCode(this)">CГіpia</button></div>
+        <pre><span class="k">PEGAR</span> https://indexing.googleapis.com/v3/urlNotifications/metadata
+    ?url=https://seu-site.com/page
+
+AutorizaГ§ГЈo: Portador <span class="v">{ACCESS_TOKEN}</span></pre>
+      </div>
+
+      <h3 class="docs-h3" id="api-errors">CГіdigos de erro</h3>
+      <table class="docs-table">
+        <thead><tr><th>CГіdigo</th><th>RazГЈo</th><th>SoluГ§ГЈo</th></tr></thead>
+        <tbody>
+          <tr><td><code>400</code></td><td>URL ou tipo invГЎlido</td><td>Verifique o formato e o valor do URL <code>tipo</code></td></tr>
+          <tr><td><code>403</code></td><td>Sem direitos ou API nГЈo ativada</td><td>Adicione a conta de serviГ§o como proprietГЎria no Search Console</td></tr>
+          <tr><td><code>429</code></td><td>Limite diГЎrio excedido</td><td>Espere atГ© o dia seguinte ou entre em contato com o Google</td></tr>
+          <tr><td><code>500</code></td><td>Erro do lado do Google</td><td>Tente novamente em alguns minutos</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <hr class="docs-hr">
+
+    <!-- в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ FAQ в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ -->
+    <section class="docs-section" id="faq">
+      <h2 class="docs-h2">вќ“ Perguntas frequentes</h2>
+
+      <h3 class="docs-h3">Quanto tempo leva a indexaГ§ГЈo apГіs o envio?</h3>
+      <p class="docs-p">O Google geralmente processa solicitaГ§Гµes dentro <strong>24вЂ“48 horas</strong>. Na maioria dos casos, as pГЎginas aparecem na pesquisa na manhГЈ seguinte ao envio.</p>
+
+      <h3 class="docs-h3">Г‰ possГ­vel enviar mais de 200 URLs por dia?</h3>
+      <p class="docs-p">200 URLs Г© o limite gratuito padrГЈo do Google. Se necessГЎrio, vocГЄ pode solicitar um aumento de limite por meio do Console do Google Cloud. IndexFast para automaticamente quando o limite Г© atingido e retoma no dia seguinte.</p>
+
+      <h3 class="docs-h3">Г‰ seguro para SEO usar a API de indexaГ§ГЈo?</h3>
+      <p class="docs-p">Г‰ sim <strong>oficial</strong> mГ©todo recomendado pelo prГіprio Google. NГЈo hГЎ risco de penalizaГ§ГЈo ou rebaixamento вЂ“ pelo contrГЎrio, uma indexaГ§ГЈo mais rГЎpida melhora a competitividade.</p>
+
+      <h3 class="docs-h3">ГЌndice do Sitemap ou Sitemap normal?</h3>
+      <p class="docs-p">IndexFast oferece suporte a ambos os tipos. Se vocГЄ passar o link para <code>sitemap_index.xml</code> вЂ” o script ignorarГЎ automaticamente todos os arquivos anexados e salvarГЎ todos os URLs.</p>
+    </section>
+
+    <hr class="docs-hr">
+
+    <!-- в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ CHANGELOG в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ -->
+    <section class="docs-section" id="changelog">
+      <h2 class="docs-h2">рџ“‹ Registro de alteraГ§Гµes</h2>
+
+      <h3 class="docs-h3">v2.4 вЂ“ junho de 2026</h3>
+      <p class="docs-p">вЂ” <strong>IntegraГ§ГЈo com IndexNow</strong>: envio automГЎtico de URL para Bing, Naver, Seznam.cz e Yep.<br>вЂ” LanГ§ado programa de afiliados (Programa de Afiliados).<br>вЂ” Adicionada uma calculadora interativa de ROI Г  pГЎgina principal.</p>
+
+      <h3 class="docs-h3">v2.3 вЂ“ marГ§o de 2026</h3>
+      <p class="docs-p">вЂ” <strong>AutorizaГ§ГЈo via Google (OAuth)</strong>: faГ§a login com um clique sem senhas.<br>- Multilinguismo: Adicionado suporte para 8 novos idiomas.<br>вЂ” A tarifa foi lanГ§ada <strong>AgГЄncia</strong> com suporte para atГ© 50 sites e relatГіrios de marca branca.</p>
+
+      <h3 class="docs-h3">v2.2 вЂ“ janeiro de 2026</h3>
+      <p class="docs-p">вЂ” Suporte para Sitemap Index (travessia automГЎtica de arquivos anexados de qualquer profundidade).<br>вЂ” API REST pГєblica para desenvolvedores.<br>вЂ” Registro e exibiГ§ГЈo aprimorados de status 200/403 em tempo real.</p>
+
+      <h3 class="docs-h3">v2.0 - dezembro de 2024</h3>
+      <p class="docs-p">вЂ” LanГ§amento de uma plataforma cloud SaaS (anteriormente o serviГ§o funcionava como script local).<br>вЂ” Agendador diГЎrio automГЎtico com gerenciamento de limites.</p>
+
+      <h3 class="docs-h3">v1.0 - setembro de 2024</h3>
+      <p class="docs-p">вЂ” O primeiro lanГ§amento do serviГ§o.<br>вЂ” Envio bГЎsico de URL por meio da API de indexaГ§ГЈo do Google.</p>
+    </section>
+
+    <!-- в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ SUPPORT в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ -->
+    <section class="docs-section" id="support">
+      <h2 class="docs-h2">рџ’¬ Suporte</h2>
+      <p class="docs-p">Se vocГЄ tiver alguma dГєvida ou problema, estamos prontos para ajudar:</p>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">рџ“±</div>
+          <div class="step-body">
+            <strong>Bate-papo por telegrama</strong>
+            <p>A maneira mais rГЎpida de obter uma resposta Г© <a href="https://t.me/indexfastgoogle" target="_blank" rel="noopener noreferrer">t.me/IndexFastgoogle</a>. O tempo mГ©dio de resposta Г© de atГ© 2 horas.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">вњ‰пёЏ</div>
+          <div class="step-body">
+            <strong>Suporte por e-mail</strong>
+            <p>Escreva para <a href="mailto:indexfastapp@gmail.com">IndexFastapp@gmail.com</a>. Respondemos dentro de um dia Гєtil.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">вќ“</div>
+          <div class="step-body">
+            <strong>Perguntas frequentes</strong>
+            <p>Confira a seГ§ГЈo <a href="#faq">Perguntas frequentes</a> вЂ” hГЎ respostas para as perguntas mais comuns.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">рџ‘ЁвЂЌрџ’»</div>
+          <div class="step-body">
+            <strong>Ajuda com desenvolvimento e SEO</strong>
+            <p>Precisa de integraГ§ГЈo, auditoria ou suporte local? Entre em contato <a href="https://devroman.dev" target="_blank" rel="noopener noreferrer">devroman.dev</a> ou <a href="https://devroman.pp.ua" target="_blank" rel="noopener noreferrer">devroman.pp.ua</a>. Um desenvolvedor e especialista em SEO ajudarГЎ na personalizaГ§ГЈo ou desenvolvimento de novas funcionalidades prontas para uso (do design Г  API REST). Pilha de tecnologia: PHP, Laravel, PrestaShop, Next.js, React, Node.js, Docker, Vue, Nuxt, Yii2, WordPress, WooCommerce, etc. Custo: US$ 25/hora.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="docs-hr">
+
+    <!-- PREV / NEXT -->
+    <div class="docs-nav-btns">
+      <a href="#overview" class="docs-nav-btn">
+        <span class="dnb-label">в†ђ Voltar</span>
+        <span class="dnb-title">AnГЎlise</span>
+      </a>
+      <a href="/blog/" class="docs-nav-btn next">
+        <span class="dnb-label">PrГіximo в†’</span>
+        <span class="dnb-title">Blogue</span>
+      </a>
+    </div>
+
+  </main>
+
+</div>
+
+<!-- FOOTER -->
+<footer role="contentinfo">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="/" class="logo">ГЌndice<span>RГЎpido</span></a>
+      <p>ServiГ§o de indexaГ§ГЈo automГЎtica de pГЎginas de sites no Google por meio da API oficial de indexaГ§ГЈo do Google.</p>
+    </div>
+    <div class="footer-col">
+      <p class="footer-title">Produto</p>
+      <ul>
+        <li><a href="/#how-it-works">Como funciona</a></li>
+        <li><a href="/#features">Vantagens</a></li>
+        <li><a href="/#pricing">Tarifas</a></li>
+        <li><a href="/docs/">DocumentaГ§ГЈo</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <p class="footer-title">Empresa</p>
+      <ul>
+        <li><a href="/about.html">Sobre nГіs</a></li>
+        <li><a href="/blog/">Blogue</a></li>
+        <li><a href="/affiliate.html">Programa de parceria</a></li>
+        <li><a href="/contacts.html">Contatos</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <p class="footer-title">Apoiar</p>
+      <ul>
+        <li><a href="/#faq">Perguntas frequentes</a></li>
+        <li><a href="https://t.me/indexfastgoogle" target="_blank" rel="noopener noreferrer">Bate-papo por telegrama</a></li>
+        <li><a href="mailto:indexfastapp@gmail.com">Suporte por e-mail</a></li>
+        <li><a href="/status.html">Status do serviГ§o</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>В© 2026 IndexFast. Todos os direitos reservados.</p>
+    <div style="display:flex; gap:20px;">
+      <a href="/privacy-policy.html">Privacidade</a>
+      <a href="/terms.html">CondiГ§Гµes</a>
+    </div>
+  </div>
+  <button id="backToTop" class="back-to-top" aria-label="Р’РіРѕСЂСѓ">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+  </button>
+</footer>
+
+<script>
+  // в”Ђв”Ђ Tabs
+  function switchTab(containerId, idx) {
+    const container = document.getElementById(containerId);
+    container.querySelectorAll('.tab-btn').forEach((b, i) => b.classList.toggle('active', i === idx));
+    container.querySelectorAll('.tab-pane').forEach((p, i) => p.classList.toggle('active', i === idx));
+  }
+
+  // в”Ђв”Ђ Copy code
+  function copyCode(btn) {
+    const pre = btn.closest('.code-block').querySelector('pre');
+    const text = pre.innerText || pre.textContent;
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = 'РЎРєРѕРїС–Р№РѕРІР°РЅРѕ!';
+      btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = 'РљРѕРїС–СЋРІР°С‚Рё'; btn.classList.remove('copied'); }, 2000);
+    }).catch(() => {
+      const ta = document.createElement('textarea');
+      ta.value = text; document.body.appendChild(ta); ta.select();
+      document.execCommand('copy'); document.body.removeChild(ta);
+      btn.textContent = 'РЎРєРѕРїС–Р№РѕРІР°РЅРѕ!';
+      setTimeout(() => { btn.textContent = 'РљРѕРїС–СЋРІР°С‚Рё'; }, 2000);
+    });
+  }
+
+  // в”Ђв”Ђ Active sidebar link on scroll
+  const sections = document.querySelectorAll('section[id], h2[id], h3[id]');
+  const sideLinks = document.querySelectorAll('.sidebar-link');
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        sideLinks.forEach(l => {
+          l.classList.toggle('active', l.getAttribute('href') === '#' + id);
+        });
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '-80px 0px -50% 0px' });
+
+  sections.forEach(s => observer.observe(s));
+
+  // в”Ђв”Ђ Search functionality
+  const searchInput = document.getElementById('docsSearch');
+  if (searchInput) {
+    searchInput.addEventListener('input', (e) => {
+      const query = e.target.value.toLowerCase().trim();
+      const docsSections = document.querySelectorAll('.docs-section');
+      
+      docsSections.forEach(section => {
+        if (!query) {
+          section.style.display = '';
+          return;
+        }
+        const text = section.innerText.toLowerCase();
+        section.style.display = text.includes(query) ? '' : 'none';
+      });
+    });
+
+    // Keyboard shortcut Cmd+K or Ctrl+K
+    window.addEventListener('keydown', (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        searchInput.focus();
+      }
+    });
+  }
+
+  // Mobile sidebar auto-close on link click
+  document.querySelectorAll('.sidebar-link').forEach(link => {
+    link.addEventListener('click', () => {
+      document.querySelector('.sidebar').classList.remove('open');
+    });
+  });
+
+  // Back to Top
+  const backToTop = document.getElementById('backToTop');
+  if (backToTop) {
+    window.addEventListener('scroll', () => {
+      if (window.pageYOffset > 500) {
+        backToTop.classList.add('visible');
+      } else {
+        backToTop.classList.remove('visible');
+      }
+    });
+    backToTop.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+</script>
+</body>
+</html>
+
