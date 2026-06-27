@@ -1,0 +1,1343 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dokumentation - IndexFast</title>
+  <meta name="description" content="Vollständige IndexFast-Dokumentation: Schnellstart, Google Indexing API-Einstellungen, Automatisierung, API-Referenz und Beispiele für Integrationen.">
+  
+
+    <meta property="og:type" content="website">
+  <meta property="og:url" content="https://indexfast.pp.ua/docs/">
+  <meta property="og:title" content="Документація — IndexFast">
+  <meta property="og:description" content="Повна документація IndexFast: швидкий старт, налаштування Google Indexing API, PHP скрипт, автоматизація та API reference.">
+  <meta property="og:image" content="https://indexfast.pp.ua/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="uk_UA">
+  <meta property="og:site_name" content="IndexFast">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Документація — IndexFast">
+  <meta name="twitter:description" content="Повна документація IndexFast: швидкий старт, налаштування Google Indexing API, PHP скрипт, автоматизація та API reference.">
+  <meta name="twitter:image" content="https://indexfast.pp.ua/og-image.jpg">
+
+    <link rel="preload" as="style" crossorigin href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=JetBrains+Mono:wght@400;500&display=swap">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --black:   #050508;
+      --dark:    #0c0c14;
+      --card:    #111119;
+      --card2:   #16161f;
+      --border:  rgba(255,255,255,0.07);
+      --border2: rgba(255,255,255,0.04);
+      --green:   #00ff88;
+      --green-d: #00c96a;
+      --blue:    #4db8ff;
+      --yellow:  #ffd060;
+      --red:     #ff6b6b;
+      --white:   #eeeef6;
+      --muted:   #72728a;
+      --font-ui:   'Syne', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --nav-h: 60px;
+      --sidebar-w: 260px;
+    }
+
+    html { scroll-behavior: smooth; scroll-padding-top: 88px; }
+    body { background: var(--black); color: var(--white); font-family: var(--font-body); font-weight: 300; line-height: 1.7; overflow-x: hidden; }
+
+    /* ── TOP NAV ── */
+    .top-nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 300;
+      height: var(--nav-h); padding: 0 28px;
+      display: flex; align-items: center; justify-content: space-between;
+      background: rgba(5,5,8,0.96); backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-left { display: flex; align-items: center; gap: 20px; }
+    .logo { font-family: var(--font-ui); font-size: 1.25rem; font-weight: 800; letter-spacing: -0.03em; color: var(--white); text-decoration: none; }
+    .logo span { color: var(--green); }
+    .nav-divider { width: 1px; height: 18px; background: var(--border); }
+    .nav-badge { font-size: 0.72rem; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; font-weight: 500; }
+    .nav-right { display: flex; align-items: center; gap: 16px; }
+    .nav-link { color: var(--muted); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
+    .nav-link:hover { color: var(--white); }
+    .nav-cta { background: var(--green); color: var(--black); padding: 7px 18px; border-radius: 100px; font-family: var(--font-ui); font-weight: 700; font-size: 0.8rem; text-decoration: none; transition: box-shadow 0.2s; }
+    .nav-cta:hover { box-shadow: 0 0 20px rgba(0,255,136,0.4); }
+
+    /* ── SEARCH BAR ── */
+    .search-wrap {
+      position: fixed; top: var(--nav-h); left: var(--sidebar-w); right: 0; z-index: 200;
+      padding: 10px 28px;
+      background: rgba(5,5,8,0.94); backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border2);
+      transition: left 0.3s;
+    }
+    .search-inner { max-width: 640px; position: relative; }
+    .search-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--muted); font-size: 0.9rem; pointer-events: none; }
+    .search-input {
+      width: 100%; background: var(--card); border: 1px solid var(--border);
+      border-radius: 10px; padding: 9px 14px 9px 38px;
+      color: var(--white); font-family: var(--font-body); font-size: 0.875rem;
+      outline: none; transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-input::placeholder { color: var(--muted); }
+    .search-input:focus { border-color: rgba(0,255,136,0.3); box-shadow: 0 0 0 3px rgba(0,255,136,0.07); }
+    .search-kbd { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); display: flex; gap: 3px; }
+    .kbd { background: var(--card2); border: 1px solid var(--border); border-radius: 5px; padding: 2px 6px; font-family: var(--font-mono); font-size: 0.65rem; color: var(--muted); }
+
+    /* ── LAYOUT ── */
+    .docs-layout {
+      display: flex;
+      min-height: 100vh;
+      padding-top: var(--nav-h);
+    }
+
+    /* ── SIDEBAR ── */
+    .sidebar {
+      position: fixed;
+      top: var(--nav-h);
+      left: 0;
+      width: var(--sidebar-w);
+      height: calc(100vh - var(--nav-h));
+      overflow-y: auto;
+      padding: 52px 0 60px;
+      border-right: 1px solid var(--border);
+      flex-shrink: 0;
+      scrollbar-width: thin;
+      scrollbar-color: var(--border) transparent;
+    }
+    .sidebar::-webkit-scrollbar { width: 4px; }
+    .sidebar::-webkit-scrollbar-track { background: transparent; }
+    .sidebar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+    .sidebar-group { margin-bottom: 28px; }
+    .sidebar-group-title {
+      font-family: var(--font-ui); font-size: 0.67rem; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted);
+      padding: 0 20px; margin-bottom: 6px;
+    }
+    .sidebar-link {
+      display: flex; align-items: center; gap: 8px;
+      padding: 6px 20px; color: var(--muted); text-decoration: none;
+      font-size: 0.855rem; transition: color 0.15s, background 0.15s;
+      border-left: 2px solid transparent; margin-left: -1px;
+      position: relative;
+    }
+    .sidebar-link:hover { color: var(--white); background: rgba(255,255,255,0.03); }
+    .sidebar-link.active { color: var(--green); border-left-color: var(--green); background: rgba(0,255,136,0.05); }
+    .sidebar-link .badge {
+      margin-left: auto; font-size: 0.6rem; padding: 1px 6px; border-radius: 100px;
+      font-family: var(--font-ui); font-weight: 700; letter-spacing: 0.06em;
+    }
+    .badge-new { background: rgba(0,255,136,0.15); color: var(--green); }
+    .badge-soon { background: rgba(255,255,255,0.07); color: var(--muted); }
+
+    /* ── MAIN CONTENT ── */
+    .docs-main {
+      min-width: 0;
+      flex: 1;
+      margin-left: var(--sidebar-w);
+      padding: 96px 60px 100px 52px;
+      max-width: calc(var(--sidebar-w) + 860px);
+    }
+
+    /* ── TOC (right) ── */
+    .toc-aside {
+      position: fixed;
+      top: calc(var(--nav-h) + 60px);
+      right: 28px;
+      width: 200px;
+    }
+    .toc-title { font-size: 0.67rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); font-weight: 700; margin-bottom: 10px; font-family: var(--font-ui); }
+    .toc-list { list-style: none; display: flex; flex-direction: column; gap: 2px; }
+    .toc-list a { font-size: 0.8rem; color: var(--muted); text-decoration: none; padding: 3px 0 3px 10px; border-left: 1px solid var(--border); display: block; transition: color 0.2s, border-color 0.2s; line-height: 1.4; }
+    .toc-list a:hover, .toc-list a.active { color: var(--green); border-left-color: var(--green); }
+
+    /* ── TYPOGRAPHY ── */
+    .docs-section { margin-bottom: 72px; }
+    .docs-section:last-child { margin-bottom: 0; }
+
+    .section-eyebrow { font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--green); font-weight: 600; font-family: var(--font-ui); margin-bottom: 10px; }
+    h1.docs-h1 { font-family: var(--font-ui); font-size: 2.4rem; font-weight: 800; letter-spacing: -0.04em; line-height: 1.05; margin-bottom: 16px; }
+    h2.docs-h2 { font-family: var(--font-ui); font-size: 1.5rem; font-weight: 700; letter-spacing: -0.03em; margin-bottom: 16px; scroll-margin-top: 88px; padding-top: 40px; }
+    h2.docs-h2:first-child { padding-top: 0; }
+    h3.docs-h3 { font-family: var(--font-ui); font-size: 1.05rem; font-weight: 700; margin-bottom: 12px; scroll-margin-top: 88px; padding-top: 24px; color: rgba(238,238,246,0.9); }
+    .docs-lead { font-size: 1.05rem; color: rgba(238,238,246,0.7); line-height: 1.75; margin-bottom: 32px; max-width: 580px; }
+    .docs-p { color: rgba(238,238,246,0.72); line-height: 1.8; margin-bottom: 16px; font-size: 0.95rem; }
+    .docs-p:last-child { margin-bottom: 0; }
+    .docs-p a { color: var(--green); text-decoration: none; border-bottom: 1px solid rgba(0,255,136,0.3); transition: border-color 0.2s; }
+    .docs-p a:hover { border-bottom-color: var(--green); }
+
+    strong { font-weight: 600; color: var(--white); }
+    code { font-family: var(--font-mono); font-size: 0.82em; background: rgba(255,255,255,0.07); border: 1px solid var(--border); border-radius: 5px; padding: 1px 6px; color: var(--green); }
+
+    /* ── DIVIDER ── */
+    .docs-hr { border: none; border-top: 1px solid var(--border); margin: 48px 0; }
+
+    /* ── CALLOUTS ── */
+    .callout {
+      display: flex; gap: 14px; padding: 16px 20px;
+      border-radius: 12px; margin: 20px 0; font-size: 0.9rem;
+    }
+    .callout-icon { font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
+    .callout-body { line-height: 1.65; }
+    .callout-body strong { display: block; margin-bottom: 4px; font-size: 0.9rem; }
+    .callout.tip { background: rgba(0,255,136,0.05); border: 1px solid rgba(0,255,136,0.15); }
+    .callout.tip .callout-body { color: rgba(238,238,246,0.8); }
+    .callout.warn { background: rgba(255,208,96,0.05); border: 1px solid rgba(255,208,96,0.2); }
+    .callout.warn .callout-body { color: rgba(238,238,246,0.8); }
+    .callout.info { background: rgba(77,184,255,0.05); border: 1px solid rgba(77,184,255,0.15); }
+    .callout.info .callout-body { color: rgba(238,238,246,0.8); }
+
+    /* ── CODE BLOCKS ── */
+    .code-block {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 14px; overflow: hidden; margin: 20px 0;
+    }
+    .code-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 16px; border-bottom: 1px solid var(--border);
+      background: var(--card2);
+    }
+    .code-lang { font-family: var(--font-mono); font-size: 0.72rem; color: var(--muted); letter-spacing: 0.06em; }
+    .code-filename { font-family: var(--font-mono); font-size: 0.72rem; color: var(--muted); }
+    .copy-btn {
+      background: none; border: 1px solid var(--border); color: var(--muted); cursor: pointer;
+      font-size: 0.72rem; padding: 3px 10px; border-radius: 6px; font-family: var(--font-body);
+      transition: all 0.2s; letter-spacing: 0.04em;
+    }
+    .copy-btn:hover { border-color: var(--green); color: var(--green); }
+    .copy-btn.copied { border-color: var(--green); color: var(--green); }
+    pre {
+      padding: 20px; overflow-x: auto; font-family: var(--font-mono);
+      font-size: 0.82rem; line-height: 1.8; color: rgba(238,238,246,0.85);
+    }
+    pre .c  { color: var(--muted); font-style: italic; }
+    pre .k  { color: #c792ea; }
+    pre .s  { color: #c3e88d; }
+    pre .n  { color: var(--blue); }
+    pre .v  { color: var(--yellow); }
+    pre .g  { color: var(--green); }
+    pre .r  { color: var(--red); }
+    pre .p  { color: rgba(238,238,246,0.5); }
+
+    /* ── STEPS ── */
+    .steps { display: flex; flex-direction: column; gap: 0; margin: 24px 0; counter-reset: steps; }
+    .step {
+      display: flex; gap: 16px; counter-increment: steps;
+      padding: 20px 0; border-bottom: 1px solid var(--border2);
+    }
+    .step:last-child { border-bottom: none; }
+    .step-num {
+      width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
+      background: rgba(0,255,136,0.08); border: 1px solid rgba(0,255,136,0.2);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-ui); font-weight: 800; font-size: 0.78rem; color: var(--green);
+      margin-top: 2px;
+    }
+    .step-body strong { display: block; font-size: 0.95rem; margin-bottom: 6px; color: var(--white); }
+    .step-body p { color: var(--muted); font-size: 0.875rem; line-height: 1.65; }
+    .step-body code { font-size: 0.78em; }
+
+    /* ── TABS ── */
+    .tabs { margin: 20px 0; }
+    .tab-nav { display: flex; gap: 0; border-bottom: 1px solid var(--border); margin-bottom: 0; }
+    .tab-btn {
+      padding: 9px 18px; background: none; border: none; border-bottom: 2px solid transparent;
+      color: var(--muted); cursor: pointer; font-family: var(--font-body); font-size: 0.85rem;
+      transition: color 0.2s, border-color 0.2s; margin-bottom: -1px;
+    }
+    .tab-btn.active { color: var(--green); border-bottom-color: var(--green); }
+    .tab-pane { display: none; }
+    .tab-pane.active { display: block; }
+
+    /* ── TABLE ── */
+    .docs-table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 0.875rem; }
+    .docs-table th { background: var(--card2); color: var(--muted); font-family: var(--font-ui); font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 10px 14px; text-align: left; border: 1px solid var(--border); }
+    .docs-table td { padding: 10px 14px; border: 1px solid var(--border2); color: rgba(238,238,246,0.75); vertical-align: top; line-height: 1.5; }
+    .docs-table tr:hover td { background: rgba(255,255,255,0.015); }
+    .docs-table td code { font-size: 0.78em; }
+    .required { color: var(--red); font-size: 0.7rem; font-family: var(--font-mono); }
+    .optional { color: var(--muted); font-size: 0.7rem; font-family: var(--font-mono); }
+
+    /* ── BREADCRUMB ── */
+    .breadcrumb { display: flex; align-items: center; gap: 6px; margin-bottom: 24px; font-size: 0.8rem; color: var(--muted); }
+    .breadcrumb a { color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .breadcrumb a:hover { color: var(--white); }
+    .breadcrumb-sep { opacity: 0.4; }
+
+    /* ── PREV / NEXT ── */
+    .docs-nav-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 64px; }
+    .docs-nav-btn {
+      background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+      padding: 18px 20px; text-decoration: none; color: var(--white);
+      transition: border-color 0.2s, transform 0.2s;
+      display: flex; flex-direction: column; gap: 4px;
+    }
+    .docs-nav-btn:hover { border-color: rgba(0,255,136,0.25); transform: translateY(-2px); }
+    .docs-nav-btn.next { text-align: right; }
+    .dnb-label { font-size: 0.72rem; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; }
+    .dnb-title { font-family: var(--font-ui); font-weight: 700; font-size: 0.95rem; }
+
+    /* ── QUICK START CARDS ── */
+    .qs-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 24px 0; }
+    .qs-card {
+      background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+      padding: 20px; text-decoration: none; color: var(--white);
+      transition: border-color 0.25s, transform 0.25s;
+      display: flex; flex-direction: column; gap: 10px;
+    }
+    .qs-card:hover { border-color: rgba(0,255,136,0.25); transform: translateY(-3px); }
+    .qs-icon { font-size: 1.5rem; }
+    .qs-title { font-family: var(--font-ui); font-weight: 700; font-size: 0.9rem; }
+    .qs-desc { font-size: 0.8rem; color: var(--muted); line-height: 1.5; }
+    .qs-link { font-size: 0.78rem; color: var(--green); margin-top: auto; }
+
+    /* ── PLATFORM TAGS ── */
+    .platform-tags { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0; }
+    .ptag {
+      display: flex; align-items: center; gap: 6px;
+      background: var(--card); border: 1px solid var(--border);
+      padding: 5px 12px; border-radius: 8px; font-size: 0.8rem; color: rgba(238,238,246,0.75);
+    }
+    .ptag-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--dark);
+      border-top: 1px solid var(--border);
+      padding: 60px 40px 40px;
+      margin-left: var(--sidebar-w);
+      transition: margin-left 0.3s;
+    }
+    .footer-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 60px;
+    }
+    .footer-brand p {
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.7;
+      margin-top: 16px;
+      max-width: 280px;
+    }
+    .footer-col .footer-title {
+      font-family: var(--font-ui);
+      font-weight: 700;
+      margin-bottom: 20px;
+      font-size: 0.9rem;
+      letter-spacing: 0.05em;
+      color: var(--white);
+    }
+    .footer-col ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .footer-col ul a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+    .footer-col ul a:hover {
+      color: var(--white);
+    }
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 48px auto 0;
+      padding-top: 28px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    .footer-bottom a {
+      color: var(--muted);
+      text-decoration: none;
+    }
+    .footer-bottom a:hover {
+      color: var(--white);
+    }
+
+    /* ─── BACK TO TOP ─── */
+    .back-to-top {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 50px;
+      height: 50px;
+      background: rgba(0, 255, 136, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(0, 255, 136, 0.3);
+      color: var(--green);
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+    .back-to-top.visible {
+      opacity: 1;
+      visibility: visible;
+      bottom: 40px;
+    }
+    .back-to-top:hover {
+      background: var(--green);
+      color: var(--black);
+      transform: translateY(-5px);
+      box-shadow: 0 0 30px rgba(0, 255, 136, 0.4);
+    }
+
+    /* ── MOBILE ── */
+    .mob-sidebar-toggle { display: none; background: var(--card); border: 1px solid var(--border); color: var(--white); padding: 7px 12px; border-radius: 8px; cursor: pointer; font-size: 0.85rem; }
+
+    @media (max-width: 1200px) { .toc-aside { display: none; } }
+    @media (max-width: 860px) {
+      :root { --sidebar-w: 0px; }
+      .sidebar {
+        display: none; width: 260px; z-index: 250;
+        background: var(--dark); top: var(--nav-h);
+        height: calc(100vh - var(--nav-h));
+        box-shadow: 4px 0 40px rgba(0,0,0,0.5);
+      }
+      .sidebar.open { display: block; }
+      .search-wrap { left: 0; padding: 10px 16px; }
+      .docs-main { margin-left: 0; padding: 86px 20px 80px; }
+      .qs-grid { grid-template-columns: 1fr; }
+      .docs-nav-btns { grid-template-columns: 1fr; }
+      .mob-sidebar-toggle { display: block; }
+      .top-nav { padding: 0 16px; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+      .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+      footer { padding: 40px 20px; margin-left: 0; }
+    }
+      .nav-login {
+      color: var(--muted, #7a7a95);
+      font-size: 0.875rem;
+      text-decoration: none;
+      padding: 7px 16px;
+      border-radius: 100px;
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .nav-login:hover {
+      color: var(--white, #f0f0f8);
+      border-color: rgba(255,255,255,0.25);
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+        {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Головна",
+            "item": "https://indexfast.pp.ua/"
+        },
+        {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Документація",
+            "item": "https://indexfast.pp.ua/docs/"
+        }
+    ]
+}
+  </script>
+
+  <link rel="alternate" hreflang="en" href="https://indexfast.pp.ua/docs/" />
+  <link rel="alternate" hreflang="uk" href="https://indexfast.pp.ua/uk/docs/" />
+  <link rel="alternate" hreflang="ru" href="https://indexfast.pp.ua/ru/docs/" />
+  <link rel="alternate" hreflang="de" href="https://indexfast.pp.ua/de/docs/" />
+  <link rel="alternate" hreflang="es" href="https://indexfast.pp.ua/es/docs/" />
+  <link rel="alternate" hreflang="fr" href="https://indexfast.pp.ua/fr/docs/" />
+  <link rel="alternate" hreflang="pl" href="https://indexfast.pp.ua/pl/docs/" />
+  <link rel="alternate" hreflang="pt" href="https://indexfast.pp.ua/pt/docs/" />
+  <link rel="alternate" hreflang="x-default" href="https://indexfast.pp.ua/docs/" />
+  <link rel="canonical" href="https://indexfast.pp.ua/de/docs/" />
+</head>
+<body>
+
+<!-- TOP NAV -->
+<nav class="top-nav">
+  <a href="/" class="logo">Index<span>Schnell</span></a>
+  <div class="nav-right">
+    <a href="/" class="nav-link">Hauptsächlich</a>
+    <a href="/docs/" class="nav-link active">Dokumentation</a>
+    <a href="/blog/" class="nav-link">Blog</a>
+    <a href="/app/login" class="nav-login">anmelden</a>
+    <a href="/app/register" class="nav-cta">Probieren Sie es kostenlos aus</a>
+    <button class="mob-sidebar-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open')">☰</button>
+  </div>
+</nav>
+
+<!-- SEARCH -->
+<div class="search-wrap">
+  <div class="search-inner">
+    <span class="search-icon">🔍</span>
+    <input type="search" class="search-input" placeholder="Пошук по документації..." id="docsSearch">
+    <div class="search-kbd"><span class="kbd">⌘</span><span class="kbd">K</span></div>
+  </div>
+</div>
+
+<div class="docs-layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+
+    <div class="sidebar-group">
+      <div class="sidebar-group-title">Arbeitsbeginn</div>
+      <a href="#overview" class="sidebar-link active">📖 Rezension</a>
+      <a href="#quickstart" class="sidebar-link">⚡ Schnellstart</a>
+      <a href="#requirements" class="sidebar-link">✅ Anforderungen</a>
+    </div>
+
+    <div class="sidebar-group">
+      <div class="sidebar-group-title">Einstellungen</div>
+      <a href="#google-cloud" class="sidebar-link">☁️ Google Cloud</a>
+      <a href="#service-account" class="sidebar-link">🔑 Dienstkonto</a>
+      <a href="#search-console" class="sidebar-link">🔗 Suchkonsole</a>
+      <a href="#sitemap" class="sidebar-link">🗺 sitemap.xml</a>
+    </div>
+
+    <div class="sidebar-group">
+      <div class="sidebar-group-title">Benutzen</div>
+      <a href="#php-script" class="sidebar-link">⚙️ So funktioniert der Service</a>
+      <a href="#manual" class="sidebar-link">🖱 Manuelle Indizierung</a>
+      <a href="#automation" class="sidebar-link">🤖 Automatischer Zeitplan</a>
+      <a href="#limits" class="sidebar-link">📊 API-Grenzwerte</a>
+    </div>
+
+    <div class="sidebar-group">
+      <div class="sidebar-group-title">Integration</div>
+      <a href="#wordpress" class="sidebar-link">🟦 WordPress</a>
+      <a href="#shopify" class="sidebar-link">🟩 Shopify</a>
+      <a href="#laravel" class="sidebar-link">🟥 Laravel</a>
+      <a href="#other" class="sidebar-link">🔧 Andere Plattformen</a>
+    </div>
+
+    <div class="sidebar-group">
+      <div class="sidebar-group-title">API-Referenz</div>
+      <a href="#api-auth" class="sidebar-link">🔐 Autorisierung</a>
+      <a href="#api-submit" class="sidebar-link">📤 URL senden <span class="badge badge-new">NEU</span></a>
+      <a href="#api-status" class="sidebar-link">📡 URL-Status</a>
+      <a href="#api-errors" class="sidebar-link">⚠️ Fehler</a>
+    </div>
+
+    <div class="sidebar-group">
+      <div class="sidebar-group-title">Zusätzlich</div>
+      <a href="#faq" class="sidebar-link">❓FAQ</a>
+      <a href="#changelog" class="sidebar-link">📋 Änderungsprotokoll <span class="badge badge-new">v2.1</span></a>
+      <a href="#support" class="sidebar-link">💬 Unterstützung</a>
+    </div>
+
+  </aside>
+
+  <!-- MAIN -->
+  <main class="docs-main" id="docsMain">
+
+    <!-- BREADCRUMB -->
+    <div class="breadcrumb">
+      <a href="/">IndexFast</a>
+      <span class="breadcrumb-sep">/</span>
+      <span>Dokumentation</span>
+    </div>
+
+    <!-- ══════════════ OVERVIEW ══════════════ -->
+    <section class="docs-section" id="overview">
+      <p class="section-eyebrow">Dokumentation</p>
+      <h1 class="docs-h1">So funktioniert IndexFast</h1>
+      <p class="docs-lead">Eine vollständige Anleitung zum Einrichten und Verwenden von IndexFast, vom Abrufen Ihres API-Schlüssels bis zur automatischen täglichen Indizierung.</p>
+
+      <div class="qs-grid">
+        <a href="#quickstart" class="qs-card">
+          <div class="qs-icon">⚡</div>
+          <div class="qs-title">Schnellstart</div>
+          <div class="qs-desc">Richten Sie Ihre ersten URLs in 10 Minuten ein und senden Sie sie</div>
+          <div class="qs-link">Lesen Sie →</div>
+        </a>
+        <a href="#php-script" class="qs-card">
+          <div class="qs-icon">🐘</div>
+          <div class="qs-title">PHP-Skript</div>
+          <div class="qs-desc">Vorgefertigtes Skript zur automatischen Indexierung mit Sitemap</div>
+          <div class="qs-link">Lesen Sie →</div>
+        </a>
+        <a href="#api-submit" class="qs-card">
+          <div class="qs-icon">📡</div>
+          <div class="qs-title">API-Referenz</div>
+          <div class="qs-desc">Vollständige Dokumentation zur Google Indexing API</div>
+          <div class="qs-link">Lesen Sie →</div>
+        </a>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">ℹ️</span>
+        <div class="callout-body">
+          <strong>Was ist die Google Indexing API?</strong>
+          Das offizielle Tool von Google zur Benachrichtigung des Suchenden über neue oder aktualisierte Seiten. Ermöglicht das Senden an <strong>200 URLs pro Tag</strong> kostenlos und erhalten Sie innerhalb von 24–48 Stunden eine Antwort.
+        </div>
+      </div>
+    </section>
+
+    <hr class="docs-hr">
+
+    <!-- ══════════════ QUICKSTART ══════════════ -->
+    <section class="docs-section" id="quickstart">
+      <h2 class="docs-h2">⚡ Schnellstart</h2>
+      <p class="docs-p">Um mit IndexFast zu beginnen, müssen Sie drei Schritte ausführen. Der gesamte Vorgang dauert etwa 10-15 Minuten.</p>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <strong>Erstellen Sie ein Dienstkonto in Google Cloud</strong>
+            <p>Gehe zu <a href="https://console.cloud.google.com" target="_blank" rel="noreferrer">console.cloud.google.com</a>, erstellen Sie ein neues Projekt (oder wählen Sie ein vorhandenes aus) und aktivieren Sie es <code>Indexierungs-API für die Websuche</code>. Erstellen Sie ein Dienstkonto und laden Sie einen JSON-Schlüssel hoch.</p>
+            <p>Detaillierte Anweisungen finden Sie im Abschnitt <a href="#service-account">🔑 Dienstkonto</a>.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <strong>Dienstkonto zur Search Console hinzufügen</strong>
+            <p>У <a href="https://search.google.com/search-console" target="_blank" rel="noreferrer">Google Search Console</a> Fügen Sie die E-Mail-Adresse Ihres Dienstkontos als Delegierter hinzu <strong>der Besitzer</strong> Website</p>
+            <p>Detaillierte Anweisungen finden Sie im Abschnitt <a href="#search-console">🔗 Suchkonsole</a>.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <strong>Verbinden Sie die Website mit Ihrem persönlichen Konto</strong>
+            <p>Melden Sie sich an oder melden Sie sich an <a href="/app/dashboard">IndexFast-Schrank</a>. Fügen Sie die Site hinzu, geben Sie den JSON-Schlüssel des Dienstkontos ein und die Indizierung wird automatisch gestartet.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="docs-hr">
+
+    <!-- ══════════════ REQUIREMENTS ══════════════ -->
+    <section class="docs-section" id="requirements">
+      <h2 class="docs-h2">✅ Anforderungen</h2>
+      <p class="docs-p">Bevor Sie beginnen, stellen Sie sicher, dass Sie Folgendes haben:</p>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <strong>Google-Konto</strong>
+            <p>Erforderlich für den Zugriff auf die Google Cloud Console und die Google Search Console.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <strong>Website in der Google Search Console überprüft</strong>
+            <p>Ihre Domain muss unter verifiziert werden <a href="https://search.google.com/search-console" target="_blank" rel="noreferrer">Google Search Console</a> mit jeder verfügbaren Methode.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <strong>Die sitemap.xml-Datei</strong>
+            <p>Ihre Website muss öffentlich zugänglich sein <code>sitemap.xml</code>. IndexFast liest es, um eine Liste der zu indizierenden URLs zu erhalten.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <strong>JSON-Schlüssel des Dienstkontos</strong>
+            <p>Von der Google Cloud Console heruntergeladene Datei <code>.json</code> mit Rechten an der Web Search Indexing API.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout tip">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">Wenn Ihre Website noch nicht in der Search Console vorhanden ist, fügen Sie sie zuerst hinzu und bestätigen Sie den Besitz. Eine ausführliche Anleitung finden Sie unter <a href="https://support.google.com/webmasters/answer/9008080" target="_blank" rel="noreferrer">Google-Website</a>.</div>
+      </div>
+    </section>
+
+    <hr class="docs-hr">
+
+    <!-- ══════════════ GOOGLE CLOUD ══════════════ -->
+    <section class="docs-section" id="google-cloud">
+      <h2 class="docs-h2">☁️ Google Cloud-Einstellungen</h2>
+
+      <h3 class="docs-h3">API-Aktivierung</h3>
+      <p class="docs-p">Gehen Sie zur Google Cloud Console → <strong>APIs & Dienste → Bibliothek</strong>. Finden Sie es <strong>„Web Search Indexing API“</strong> und drücken <em>Aktivieren</em>.</p>
+
+      <div class="callout warn">
+        <span class="callout-icon">⚠️</span>
+        <div class="callout-body">
+          <strong>Wichtig</strong>
+          Die API muss in dem Projekt aktiviert sein, mit dem Ihr Dienstkonto verknüpft ist. Wenn die API nicht aktiviert ist, erhalten Sie eine Fehlermeldung <code>403 accessNotConfigured</code>.
+        </div>
+      </div>
+
+      <h3 class="docs-h3" id="service-account">Erstellen eines Dienstkontos</h3>
+      <p class="docs-p">Ein Dienstkonto ist ein passwortloses technisches Konto, das IndexFast zur Autorisierung von Google APIs verwendet. Um es zu erstellen, benötigen Sie ein Projekt in Google Cloud.</p>
+
+      <div class="callout tip">
+        <span class="callout-icon">🛠</span>
+        <div class="callout-body">Bevor Sie beginnen, aktivieren Sie die Indexierungs-API in Ihrem Projekt über <a href="https://console.developers.google.com/apis/library/indexing.googleapis.com" target="_blank" rel="noreferrer">Tuning-Tool</a>. Ohne diesen Schritt erhalten Sie eine Fehlermeldung <code>403 accessNotConfigured</code>.</div>
+      </div>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <strong>Öffnen Sie den Abschnitt Dienstkonten</strong>
+            <p>Gehe zu <a href="https://console.cloud.google.com/iam-admin/serviceaccounts" target="_blank" rel="noreferrer">Google Cloud Console → IAM & Admin → Dienstkonten</a>. Wählen Sie ggf. das gewünschte Projekt aus.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <strong>Klicken Sie auf „Dienstkonto erstellen“</strong>
+            <p>Geben Sie beispielsweise einen Namen ein <code>IndexFast-bot</code>und Beschreibung. Die Kennung kann automatisch belassen werden. Klicken <em>„Erstellen und fortfahren“</em>.</p>
+            <p>Abschnitt <em>„Zugriffsrechte“</em> Ein Ausfüllen ist nicht erforderlich – klicken Sie <em>"Weitermachen"</em>, Dann <em>"Erledigt"</em>.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <strong>Erstellen Sie einen JSON-Schlüssel</strong>
+            <p>Öffnen Sie das neu erstellte Konto → Registerkarte <em>Schlüssel</em> → <em>Schlüssel hinzufügen → Neuen Schlüssel erstellen</em>. Wählen Sie ein Format <strong>JSON</strong> und drücken <em>"Erstellen"</em>.</p>
+            <p>Die Datei wird automatisch auf Ihren Computer heruntergeladen – dies ist die einzige Kopie des Schlüssels. Bewahren Sie es an einem sicheren Ort auf und veröffentlichen Sie es niemals auf Git oder öffentlichen Repositorys.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout tip">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">Die JSON-Datei sollte so aussehen – wenn die Struktur anders ist, wurde der Schlüssel falsch generiert.</div>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">JSON</span>
+          <span class="code-filename">service-account.json</span>
+          <button class="copy-btn" onclick="copyCode(this)">Kopie</button>
+        </div>
+        <pre>{
+  <span class="s">Typ</span>: <span class="s">„service_account“</span>,
+  <span class="s">„Projekt_ID“</span>: <span class="s">„Ihre-Projekt-ID“</span>,
+  <span class="s">„private_key_id“</span>: <span class="s">„abc123…“</span>,
+  <span class="s">„private_key“</span>: <span class="s">„-----BEGIN RSA PRIVATE KEY-----\n…“</span>,
+  <span class="s">„client_email“</span>: <span class="s">"<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f69f9892938e90978582db949982b68f998384db8684999c939582d89f979bd891859384809f959397959599839882d895999b">[email protected]</a>"</span>,
+  <span class="s">„client_id“</span>: <span class="s">„123456789“</span>,
+  <span class="s">„auth_uri“</span>: <span class="s">„https://accounts.google.com/o/oauth2/auth“</span>,
+  <span class="s">„token_uri“</span>: <span class="s">„https://oauth2.googleapis.com/token“</span>
+}</pre>
+      </div>
+    </section>
+
+    <hr class="docs-hr">
+
+    <!-- ══════════════ SEARCH CONSOLE ══════════════ -->
+    <section class="docs-section" id="search-console">
+      <h2 class="docs-h2">🔗 Search Console-Verbindung</h2>
+      <p class="docs-p">Ohne diesen Schritt gibt die API einen Fehler zurück <code>403 Verboten</code> auch mit dem richtigen Schlüssel. Das Dienstkonto muss den Status des Websitebesitzers in der Google Search Console erhalten.</p>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <strong>Bestätigen Sie die Eigentümerschaft der Website</strong>
+            <p>Gehe zu <a href="https://search.google.com/search-console" target="_blank" rel="noreferrer">Google Search Console</a> und stellen Sie sicher, dass die Website Ihnen gehört – mit allen verfügbaren Mitteln (DNS-Eintrag, HTML-Datei usw.).</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <strong>Kopieren Sie die E-Mail-Adresse des Dienstkontos</strong>
+            <p>Öffnen Sie die heruntergeladene JSON-Datei und suchen Sie das Feld <code>client_email</code>. E-Mail sieht so aus:</p>
+            <p><code>Kontoname@Projektname.iam.gserviceaccount.com</code></p>
+            <p>Zum Beispiel: <code><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="c5acaba1a0bda3a4b6b1e8a7aab185a8bce8b5b7aaafa0a6b1e8f4f7f6ebaca4a8eba2b6a0b7b3aca6a0a4a6a6aab0abb1eba6aaa8">[email protected]</a></code></p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <strong>Fügen Sie das Dienstkonto als delegierter Eigentümer hinzu</strong>
+            <p>Wählen Sie in der Search Console Ihre Website aus → <em>Einstellungen → Verifizierte Besitzer → Besitzer hinzufügen</em>. Geben Sie die E-Mail-Adresse des Dienstkontos ein und bestätigen Sie.</p>
+            <div class="callout warning" style="margin-top:12px;">
+              <span class="callout-icon">⚠️</span>
+              <div class="callout-body">Die Rolle ist genau das, was benötigt wird <strong>Eigentümer</strong> (nicht „Vollzugriff“). Ohne dies kehrt die API zurück <code>403 Verboten</code>.</div>
+            </div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <strong>Warten Sie 1-2 Minuten</strong>
+            <p>Rechte werden nicht sofort angewendet. Danach kann IndexFast URLs zur Indexierung über Ihre Website senden.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="docs-hr">
+
+    <!-- ══════════════ SITEMAP ══════════════ -->
+    <section class="docs-section" id="sitemap">
+      <h2 class="docs-h2">🗺 sitemap.xml</h2>
+      <p class="docs-p">IndexFast liest Ihre <code>sitemap.xml</code> um URLs zu erhalten, die zur Indexierung übermittelt werden sollen. Alle Formate werden unterstützt.</p>
+
+      <h3 class="docs-h3">Unterstützte Formate</h3>
+      <ul style="list-style:none; display:flex; flex-direction:column; gap:8px; margin-bottom:20px;">
+        <li style="color:rgba(238,238,246,0.72); font-size:0.95rem;">✅ <code>sitemap.xml</code> – eine Standarddatei mit einer URL</li>
+        <li style="color:rgba(238,238,246,0.72); font-size:0.95rem;">✅ <code>sitemap_index.xml</code> — übergeordnete Datei mit Links zur untergeordneten Sitemap (beliebige Verschachtelungstiefe)</li>
+        <li style="color:rgba(238,238,246,0.72); font-size:0.95rem;">✅ Sitemap mit Tags <code><lastmod></code> — Filterung nach Aktualisierungsdatum</li>
+      </ul>
+
+      <h3 class="docs-h3">Wo finde ich die Sitemap-URL?</h3>
+      <div class="platform-tags">
+        <span class="ptag"><span class="ptag-dot" style="background:#00ff88"></span>Standard: <code>/sitemap.xml</code></span>
+        <span class="ptag"><span class="ptag-dot" style="background:#21759B"></span>WordPress (Yoast): <code>/sitemap_index.xml</code></span>
+        <span class="ptag"><span class="ptag-dot" style="background:#96BF48"></span>Shopify: <code>/sitemap.xml</code></span>
+        <span class="ptag"><span class="ptag-dot" style="background:#FF2D20"></span>Laravel: <code>/sitemap.xml</code></span>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">⚠️</span>
+        <div class="callout-body">
+          <strong>Wichtig</strong>
+          Die Sitemap muss ohne Genehmigung öffentlich zugänglich sein. Überprüfen Sie, ob die Datei in einem Browser ohne Anmeldung geöffnet wird. Wenn es geschlossen ist, kann IndexFast es nicht lesen.
+        </div>
+      </div>
+    </section>
+
+    <hr class="docs-hr">
+
+    <!-- ══════════════ PHP SCRIPT ══════════════ -->
+    <section class="docs-section" id="php-script">
+      <h2 class="docs-h2">⚙️ So funktioniert der Service</h2>
+      <p class="docs-p">IndexFast liest Ihre automatisch <code>sitemap.xml</code> und sendet die URL über die Google Indexing API. Es muss kein Skript installiert werden – alle Vorgänge werden auf IndexFast-Servern ausgeführt.</p>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <strong>Sie fügen eine Site im Schrank hinzu</strong>
+            <p>Geben Sie die Domäne und die sitemap.xml-URL an und fügen Sie den JSON-Schlüssel des Dienstkontos ein. IndexFast prüft die Verfügbarkeit der Sitemap und speichert die Einstellungen.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <strong>IndexFast liest die Sitemap</strong>
+            <p>Der Dienst unterstützt reguläre Sitemaps und <strong>Sitemap-Index</strong> (Anhänge beliebiger Tiefe). URLs werden automatisch entsprechend dem Tageslimit Ihres Plans in die Warteschlange gestellt.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <strong>URLs werden an Google gesendet</strong>
+            <p>Der Dienst verwendet Ihr Dienstkonto zur Autorisierung und sendet die URL über die offizielle Google Indexing API. Das Ergebnis sehen Sie in Echtzeit in Ihrem persönlichen Konto.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout tip">
+        <span class="callout-icon">📊</span>
+        <div class="callout-body">Die Beschränkungen hängen vom Plan ab: Start – 10 URLs/Tag, PRO – 100 URLs/Tag, Agentur – 1000 URLs/Tag. Das Limit wird täglich um 00:00 Uhr aktualisiert.</div>
+      </div>
+    </section>
+
+    <hr class="docs-hr">
+
+    <!-- ══════════════ AUTOMATION ══════════════ -->
+    <section class="docs-section" id="automation">
+      <h2 class="docs-h2">🤖 Automatischer Zeitplan</h2>
+      <p class="docs-p">IndexFast startet die Indizierung automatisch – keine Notwendigkeit, Cron zu konfigurieren oder einen Server zu warten. Der Dienst ist auf der IndexFast-Seite rund um die Uhr verfügbar.</p>
+
+      <div class="callout tip">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">Um die Indizierung manuell zu starten, drücken Sie <strong>„▶ Starten“</strong> in Ihrem persönlichen Konto neben der gewünschten Seite. Das Ergebnis erscheint innerhalb einer Minute in den Protokollen.</div>
+      </div>
+
+      <h3 class="docs-h3">So verwalten Sie die Indizierung</h3>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <strong>Aktiver Modus</strong>
+            <p>Site mit Status <em>Aktiv</em> sendet automatisch URLs innerhalb des Tageslimits. Das Limit wird zu gleichen Teilen auf alle aktiven Seiten des Kontos aufgeteilt.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <strong>Pause</strong>
+            <p>Wenn Sie die Indizierung für die Site vorübergehend stoppen müssen, klicken Sie auf <strong>„⏸“</strong> im Büro Das Tageslimit wird nicht ausgegeben. Sie können jederzeit wiederherstellen.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <strong>Manueller Start</strong>
+            <p>Klicken <strong>„▶ Starten“</strong> – und IndexFast sendet innerhalb des verbleibenden Tageslimits sofort die URL aus der Sitemap. Praktisch nach der Veröffentlichung neuer Seiten.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="docs-hr">
+
+    <!-- ══════════════ MANUAL ══════════════ -->
+    <section class="docs-section" id="manual">
+      <h2 class="docs-h2">🖱 Manuelle Indizierung</h2>
+      <p class="docs-p">Zusätzlich zum automatischen Modus können Sie mit IndexFast die Indizierung jederzeit manuell starten – direkt von Ihrem persönlichen Konto aus.</p>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <strong>Öffne den Schrank</strong>
+            <p>Gehe zu <a href="/app/dashboard">IndexFast.pp.ua/app/dashboard</a> und suchen Sie die gewünschte Site in der Liste.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <strong>Klicken Sie auf „▶ Start“</strong>
+            <p>IndexFast liest die Sitemap sofort und sendet die URL innerhalb des verbleibenden Tageslimits.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <strong>Sehen Sie sich die Ergebnisse in den Protokollen an</strong>
+            <p>Google API-Antworten werden innerhalb von 1–2 Minuten auf der Registerkarte „Protokolle“ angezeigt. Sie können den Status jeder URL sehen: <code>200 OK</code>, <code>403</code>, oder eine andere Antwort.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">ℹ️</span>
+        <div class="callout-body">Bei der manuellen Indizierung gilt dasselbe Tageslimit wie bei der automatischen Indizierung. Wenn das Limit erreicht ist, stellt IndexFast die URL für den nächsten Tag in die Warteschlange.</div>
+      </div>
+    </section>
+
+    <hr class="docs-hr">
+
+    <!-- ══════════════ LIMITS ══════════════ -->
+    <section class="docs-section" id="limits">
+      <h2 class="docs-h2">📊 API-Grenzwerte</h2>
+      <p class="docs-p">Google stellt ein kostenloses Limit von y zur Verfügung <strong>200 URLs pro Tag</strong> pro Dienstkonto. IndexFast überwacht automatisch das Limit und stoppt, wenn es erreicht ist.</p>
+
+      <table class="docs-table">
+        <thead>
+          <tr><th>Planen</th><th>URL/Tag</th><th>Websites</th><th>Dienstkonten</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Start (kostenlos)</td><td>10</td><td>1</td><td>1</td></tr>
+          <tr><td>PRO</td><td>100</td><td>bis 5</td><td>1</td></tr>
+          <tr><td>Agentur</td><td>1000</td><td>bis 50</td><td>unbegrenzt</td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout tip">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">Das Tageslimit wird täglich aktualisiert <strong>00:00 UTC</strong>. Wenn Sie viele Websites haben, wird das Limit automatisch gleichmäßig auf diese verteilt.</div>
+      </div>
+    </section>
+
+    <hr class="docs-hr">
+
+    <!-- ══════════════ INTEGRATIONS ══════════════ -->
+    <section class="docs-section" id="wordpress">
+      <h2 class="docs-h2">🔧 Integrationen mit Plattformen</h2>
+
+      <h3 class="docs-h3" id="wordpress">WordPress</h3>
+      <p class="docs-p">Wenn Sie verwenden <strong>Yoast SEO</strong> oder <strong>Rang Mathe</strong> — die Sitemap ist bereits fertig:</p>
+      <div class="platform-tags">
+        <span class="ptag"><span class="ptag-dot" style="background:#21759B"></span>Yoast SEO → <code>/sitemap_index.xml</code></span>
+        <span class="ptag"><span class="ptag-dot" style="background:#f72a2a"></span>Rang Mathematik → <code>/sitemap_index.xml</code></span>
+        <span class="ptag"><span class="ptag-dot" style="background:#1e7c42"></span>Alles in einem SEO → <code>/sitemap.xml</code></span>
+      </div>
+      <div class="callout tip">
+        <span class="callout-icon">✅</span>
+        <div class="callout-body">Geben Sie in Ihrem persönlichen IndexFast-Konto die URL Ihrer Sitemap ein: <code>https://your-site.com/sitemap_index.xml</code> — Der Dienst entpackt automatisch alle angehängten Dateien.</div>
+      </div>
+      <p class="docs-p" style="margin-top:12px; font-size:0.85rem;">Brauchen Sie Hilfe bei der Integration? Gelten <a href="https://indexfast.pp.ua/docs/#support">Unterstützung</a>.</p>
+
+      <h3 class="docs-h3" id="shopify">Shopify</h3>
+      <p class="docs-p">Shopify generiert automatisch eine Sitemap unter <code>/sitemap.xml</code>. Es umfasst Seiten, Produkte, Sammlungen und Blogbeiträge.</p>
+      <div class="callout tip">
+        <span class="callout-icon">✅</span>
+        <div class="callout-body">Geben Sie in Ihrem persönlichen IndexFast-Konto die URL Ihrer Sitemap ein: <code>https://your-store.myShopify.com/sitemap.xml</code> — und die Indizierung wird automatisch gestartet.</div>
+      </div>
+      <p class="docs-p" style="margin-top:12px; font-size:0.85rem;">Brauchen Sie Hilfe bei der Integration? Gelten <a href="https://indexfast.pp.ua/docs/#support">Unterstützung</a>.</p>
+
+      <h3 class="docs-h3" id="laravel">Laravel</h3>
+      <p class="docs-p">Wir empfehlen das Paket zur Sitemap-Generierung in Laravel <code>spatie/Laravel-Sitemap</code>:</p>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">BASH</span><button class="copy-btn" onclick="copyCode(this)">Kopie</button></div>
+        <pre>Composer benötigt Spatie/Laravel-Sitemap</pre>
+      </div>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">PHP</span><button class="copy-btn" onclick="copyCode(this)">Kopie</button></div>
+        <pre><span class="k">verwenden</span> <span class="n">Spatie\Sitemap\SitemapGenerator</span>;
+
+SitemapGenerator::create(<span class="s">„https://your-site.com“</span>)
+    ->writeToFile(public_path(<span class="s">'sitemap.xml'</span>));</pre>
+      </div>
+      <p class="docs-p" style="margin-top:12px; font-size:0.85rem;">Brauchen Sie Hilfe bei der Integration? Gelten <a href="https://indexfast.pp.ua/docs/#support">Unterstützung</a>.</p>
+
+      <h3 class="docs-h3" id="other">Andere Plattformen</h3>
+      <div class="platform-tags">
+        <span class="ptag"><span class="ptag-dot" style="background:#DF0067"></span>PrestaShop → <code>/sitemap.xml</code></span>
+        <span class="ptag"><span class="ptag-dot" style="background:#23ADEF"></span>OpenCart → SEO Sitemap-Modul</span>
+        <span class="ptag"><span class="ptag-dot" style="background:#FAAD00"></span>Wix → <code>/sitemap.xml</code></span>
+        <span class="ptag"><span class="ptag-dot" style="background:#4353FF"></span>Webflow → <code>/sitemap.xml</code></span>
+        <span class="ptag"><span class="ptag-dot" style="background:#F44321"></span>Joomla → OSMap-Plugin</span>
+      </div>
+      <div class="callout tip">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">IndexFast funktioniert mit jeder Plattform, die eine gültige generiert <code>sitemap.xml</code>. Suchen Sie nach der Datei unter der Adresse <code>https://your-site.com/sitemap.xml</code>.</div>
+      </div>
+      <p class="docs-p" style="margin-top:12px; font-size:0.85rem;">Brauchen Sie Hilfe bei der Integration? Gelten <a href="https://indexfast.pp.ua/docs/#support">Unterstützung</a>.</p>
+    </section>
+
+    <hr class="docs-hr">
+
+    <!-- ══════════════ API REFERENCE ══════════════ -->
+    <section class="docs-section" id="api-auth">
+      <h2 class="docs-h2">📡 API-Referenz</h2>
+
+      <h3 class="docs-h3">Genehmigung</h3>
+      <p class="docs-p">Google Indexing API verwendet <strong>OAuth 2.0</strong> über das Dienstkonto. IndexFast übernimmt die Autorisierung automatisch – Sie benötigen nur den JSON-Schlüssel.</p>
+      <p class="docs-p">Endpunkt zum Empfangen eines Tokens:</p>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">HTTP</span><button class="copy-btn" onclick="copyCode(this)">Kopie</button></div>
+        <pre><span class="k">POST</span> https://oauth2.googleapis.com/token
+
+Inhaltstyp: application/x-www-form-urlencoded
+
+<span class="n">grant_type</span>=urn:ietf:params:oauth:grant-type:jwt-bearer
+<span class="n">&Behauptung</span>=<span class="v">{JWT_TOKEN}</span></pre>
+      </div>
+
+      <h3 class="docs-h3" id="api-submit">Einreichen von URLs zur Indexierung</h3>
+
+      <table class="docs-table">
+        <thead>
+          <tr><th>Parameter</th><th>Typ</th><th>Obligatorisch</th><th>Beschreibung</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>URL</code></td><td>Zeichenfolge</td><td><span class="required">erforderlich</span></td><td>Vollständige URL mit https://</td></tr>
+          <tr><td><code>Typ</code></td><td>Aufzählung</td><td><span class="required">erforderlich</span></td><td><code>URL_UPDATED</code> oder <code>URL_DELETED</code></td></tr>
+        </tbody>
+      </table>
+
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">HTTP</span><button class="copy-btn" onclick="copyCode(this)">Kopie</button></div>
+        <pre><span class="k">POST</span> https://indexing.googleapis.com/v3/urlNotifications:publish
+
+Autorisierung: Inhaber <span class="v">{ACCESS_TOKEN}</span>
+Content-Type: application/json
+
+{
+  <span class="s">„URL“</span>: <span class="s">„https://your-site.com/new-page“</span>,
+  <span class="s">Typ</span>: <span class="s">„URL_UPDATED“</span>
+}</pre>
+      </div>
+
+      <p class="docs-p">Erfolgreiche Antwort:</p>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">JSON</span><button class="copy-btn" onclick="copyCode(this)">Kopie</button></div>
+        <pre>{
+  <span class="s">„urlNotificationMetadata“</span>: {
+    <span class="s">„URL“</span>: <span class="s">„https://your-site.com/new-page“</span>,
+    <span class="s">„latestUpdate“</span>: {
+      <span class="s">„URL“</span>: <span class="s">„https://your-site.com/new-page“</span>,
+      <span class="s">Typ</span>: <span class="s">„URL_UPDATED“</span>,
+      <span class="s">„notifyTime“</span>: <span class="s">„2026-01-20T10:30:00Z“</span>
+    }
+  }
+}</pre>
+      </div>
+
+      <h3 class="docs-h3" id="api-status">Überprüfung des URL-Status</h3>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">HTTP</span><button class="copy-btn" onclick="copyCode(this)">Kopie</button></div>
+        <pre><span class="k">ERHALTEN</span> https://indexing.googleapis.com/v3/urlNotifications/metadata
+    ?url=https://your-site.com/page
+
+Autorisierung: Inhaber <span class="v">{ACCESS_TOKEN}</span></pre>
+      </div>
+
+      <h3 class="docs-h3" id="api-errors">Fehlercodes</h3>
+      <table class="docs-table">
+        <thead><tr><th>Code</th><th>Grund</th><th>Lösung</th></tr></thead>
+        <tbody>
+          <tr><td><code>400</code></td><td>Ungültige URL oder ungültiger Typ</td><td>Überprüfen Sie das URL-Format und den Wert <code>Typ</code></td></tr>
+          <tr><td><code>403</code></td><td>Keine Rechte oder API nicht aktiviert</td><td>Fügen Sie das Dienstkonto als Besitzer in der Search Console hinzu</td></tr>
+          <tr><td><code>429</code></td><td>Tageslimit überschritten</td><td>Warten Sie bis zum nächsten Tag oder wenden Sie sich an Google</td></tr>
+          <tr><td><code>500</code></td><td>Fehler auf Googles Seite</td><td>Versuchen Sie es in ein paar Minuten noch einmal</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <hr class="docs-hr">
+
+    <!-- ══════════════ FAQ ══════════════ -->
+    <section class="docs-section" id="faq">
+      <h2 class="docs-h2">❓FAQ</h2>
+
+      <h3 class="docs-h3">Wie lange dauert die Indizierung nach der Einreichung?</h3>
+      <p class="docs-p">Google verarbeitet Anfragen in der Regel innerhalb von <strong>24–48 Stunden</strong>. In den meisten Fällen erscheinen Seiten bereits am nächsten Morgen nach dem Absenden in der Suche.</p>
+
+      <h3 class="docs-h3">Ist es möglich, mehr als 200 URLs pro Tag einzureichen?</h3>
+      <p class="docs-p">200 URLs ist das standardmäßige kostenlose Limit von Google. Bei Bedarf können Sie über die Google Cloud Console eine Limiterhöhung beantragen. IndexFast stoppt automatisch, wenn das Limit erreicht ist, und wird am nächsten Tag fortgesetzt.</p>
+
+      <h3 class="docs-h3">Ist es für SEO sicher, die Indexierungs-API zu verwenden?</h3>
+      <p class="docs-p">Ja, das ist es <strong>offiziell</strong> Von Google selbst empfohlene Methode. Es besteht kein Risiko einer Strafe oder Herabstufung – im Gegenteil: Eine schnellere Indexierung verbessert die Wettbewerbsfähigkeit.</p>
+
+      <h3 class="docs-h3">Sitemap-Index oder normale Sitemap?</h3>
+      <p class="docs-p">IndexFast unterstützt beide Typen. Wenn Sie den Link an weitergeben <code>sitemap_index.xml</code> — Das Skript umgeht automatisch alle angehängten Dateien und speichert alle URLs.</p>
+    </section>
+
+    <hr class="docs-hr">
+
+    <!-- ══════════════ CHANGELOG ══════════════ -->
+    <section class="docs-section" id="changelog">
+      <h2 class="docs-h2">📋 Änderungsprotokoll</h2>
+
+      <h3 class="docs-h3">v2.4 – Juni 2026</h3>
+      <p class="docs-p">— <strong>Integration mit IndexNow</strong>: Automatische URL-Übermittlung an Bing, Naver, Seznam.cz und Yep.<br>— Partnerprogramm (Partnerprogramm) gestartet.<br>— Der Hauptseite wurde ein interaktiver ROI-Rechner hinzugefügt.</p>
+
+      <h3 class="docs-h3">v2.3 – März 2026</h3>
+      <p class="docs-p">— <strong>Autorisierung über Google (OAuth)</strong>: Melden Sie sich mit einem Klick ohne Passwörter an.<br>- Mehrsprachigkeit: Unterstützung für 8 neue Sprachen hinzugefügt.<br>— Der Tarif wurde eingeführt <strong>Agentur</strong> mit Unterstützung für bis zu 50 Websites und White-Label-Berichten.</p>
+
+      <h3 class="docs-h3">v2.2 – Januar 2026</h3>
+      <p class="docs-p">— Unterstützung für den Sitemap-Index (automatisches Durchsuchen angehängter Dateien beliebiger Tiefe).<br>– Öffentliche REST-API für Entwickler.<br>— Verbesserte Protokollierung und Anzeige von 200/403-Status in Echtzeit.</p>
+
+      <h3 class="docs-h3">v2.0 – Dezember 2024</h3>
+      <p class="docs-p">— Einführung einer SaaS-Cloud-Plattform (zuvor funktionierte der Dienst als lokales Skript).<br>— Automatischer Tagesplaner mit Limitverwaltung.</p>
+
+      <h3 class="docs-h3">v1.0 – September 2024</h3>
+      <p class="docs-p">— Der erste Start des Dienstes.<br>– Einfache URL-Übermittlung über die Google Indexing API.</p>
+    </section>
+
+    <!-- ══════════════ SUPPORT ══════════════ -->
+    <section class="docs-section" id="support">
+      <h2 class="docs-h2">💬 Unterstützung</h2>
+      <p class="docs-p">Bei Fragen oder Problemen stehen wir Ihnen gerne zur Verfügung:</p>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">📱</div>
+          <div class="step-body">
+            <strong>Telegram-Chat</strong>
+            <p>Der schnellste Weg, eine Antwort zu erhalten, ist <a href="https://t.me/indexfastgoogle" target="_blank" rel="noopener noreferrer">t.me/IndexFastgoogle</a>. Die durchschnittliche Reaktionszeit beträgt bis zu 2 Stunden.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">✉️</div>
+          <div class="step-body">
+            <strong>E-Mail-Support</strong>
+            <p>Schreiben Sie an <a href="mailto:indexfastapp@gmail.com">IndexFastapp@gmail.com</a>. Wir antworten innerhalb eines Werktages.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">❓</div>
+          <div class="step-body">
+            <strong>FAQ</strong>
+            <p>Schauen Sie sich den Abschnitt an <a href="#faq">FAQ</a> — es gibt Antworten auf die häufigsten Fragen.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">👨‍💻</div>
+          <div class="step-body">
+            <strong>Hilfe bei Entwicklung und SEO</strong>
+            <p>Benötigen Sie Integration, Prüfung oder Site-Unterstützung? Bitte kontaktieren Sie uns <a href="https://devroman.dev" target="_blank" rel="noopener noreferrer">devroman.dev</a> oder <a href="https://devroman.pp.ua" target="_blank" rel="noopener noreferrer">devroman.pp.ua</a>. Ein Entwickler und SEO-Spezialist hilft bei der Anpassung oder Entwicklung neuer schlüsselfertiger Funktionen (vom Design bis zur REST-API). Technologie-Stack: PHP, Laravel, PrestaShop, Next.js, React, Node.js, Docker, Vue, Nuxt, Yii2, WordPress, WooCommerce usw. Kosten: 25 $/Stunde.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="docs-hr">
+
+    <!-- PREV / NEXT -->
+    <div class="docs-nav-btns">
+      <a href="#overview" class="docs-nav-btn">
+        <span class="dnb-label">← Zurück</span>
+        <span class="dnb-title">Rezension</span>
+      </a>
+      <a href="/blog/" class="docs-nav-btn next">
+        <span class="dnb-label">Weiter →</span>
+        <span class="dnb-title">Blog</span>
+      </a>
+    </div>
+
+  </main>
+
+</div>
+
+<!-- FOOTER -->
+<footer role="contentinfo">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="/" class="logo">Index<span>Schnell</span></a>
+      <p>Dienst zur automatischen Indexierung von Website-Seiten in Google über die offizielle Google Indexing API.</p>
+    </div>
+    <div class="footer-col">
+      <p class="footer-title">Produkt</p>
+      <ul>
+        <li><a href="/#how-it-works">Wie es funktioniert</a></li>
+        <li><a href="/#features">Vorteile</a></li>
+        <li><a href="/#pricing">Tarife</a></li>
+        <li><a href="/docs/">Dokumentation</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <p class="footer-title">Unternehmen</p>
+      <ul>
+        <li><a href="/about.html">Über uns</a></li>
+        <li><a href="/blog/">Blog</a></li>
+        <li><a href="/affiliate.html">Partnerprogramm</a></li>
+        <li><a href="/contacts.html">Kontakte</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <p class="footer-title">Unterstützung</p>
+      <ul>
+        <li><a href="/#faq">FAQ</a></li>
+        <li><a href="https://t.me/indexfastgoogle" target="_blank" rel="noopener noreferrer">Telegram-Chat</a></li>
+        <li><a href="mailto:indexfastapp@gmail.com">E-Mail-Support</a></li>
+        <li><a href="/status.html">Servicestatus</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 IndexFast. Alle Rechte vorbehalten.</p>
+    <div style="display:flex; gap:20px;">
+      <a href="/privacy-policy.html">Privatsphäre</a>
+      <a href="/terms.html">Bedingungen</a>
+    </div>
+  </div>
+  <button id="backToTop" class="back-to-top" aria-label="Вгору">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+  </button>
+</footer>
+
+<script>
+  // ── Tabs
+  function switchTab(containerId, idx) {
+    const container = document.getElementById(containerId);
+    container.querySelectorAll('.tab-btn').forEach((b, i) => b.classList.toggle('active', i === idx));
+    container.querySelectorAll('.tab-pane').forEach((p, i) => p.classList.toggle('active', i === idx));
+  }
+
+  // ── Copy code
+  function copyCode(btn) {
+    const pre = btn.closest('.code-block').querySelector('pre');
+    const text = pre.innerText || pre.textContent;
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = 'Скопійовано!';
+      btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = 'Копіювати'; btn.classList.remove('copied'); }, 2000);
+    }).catch(() => {
+      const ta = document.createElement('textarea');
+      ta.value = text; document.body.appendChild(ta); ta.select();
+      document.execCommand('copy'); document.body.removeChild(ta);
+      btn.textContent = 'Скопійовано!';
+      setTimeout(() => { btn.textContent = 'Копіювати'; }, 2000);
+    });
+  }
+
+  // ── Active sidebar link on scroll
+  const sections = document.querySelectorAll('section[id], h2[id], h3[id]');
+  const sideLinks = document.querySelectorAll('.sidebar-link');
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        sideLinks.forEach(l => {
+          l.classList.toggle('active', l.getAttribute('href') === '#' + id);
+        });
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '-80px 0px -50% 0px' });
+
+  sections.forEach(s => observer.observe(s));
+
+  // ── Search functionality
+  const searchInput = document.getElementById('docsSearch');
+  if (searchInput) {
+    searchInput.addEventListener('input', (e) => {
+      const query = e.target.value.toLowerCase().trim();
+      const docsSections = document.querySelectorAll('.docs-section');
+      
+      docsSections.forEach(section => {
+        if (!query) {
+          section.style.display = '';
+          return;
+        }
+        const text = section.innerText.toLowerCase();
+        section.style.display = text.includes(query) ? '' : 'none';
+      });
+    });
+
+    // Keyboard shortcut Cmd+K or Ctrl+K
+    window.addEventListener('keydown', (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        searchInput.focus();
+      }
+    });
+  }
+
+  // Mobile sidebar auto-close on link click
+  document.querySelectorAll('.sidebar-link').forEach(link => {
+    link.addEventListener('click', () => {
+      document.querySelector('.sidebar').classList.remove('open');
+    });
+  });
+
+  // Back to Top
+  const backToTop = document.getElementById('backToTop');
+  if (backToTop) {
+    window.addEventListener('scroll', () => {
+      if (window.pageYOffset > 500) {
+        backToTop.classList.add('visible');
+      } else {
+        backToTop.classList.remove('visible');
+      }
+    });
+    backToTop.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+</script>
+</body>
+</html>
