@@ -10,11 +10,27 @@ IndexFast is a specialized service for instant website indexing in Google using 
 - **Sitemap Support**: Automatically parses sitemap.xml and nested sitemap indices.
 - **Quota Management**: Handles Google's 200 URL/day free quota automatically.
 
+## Pricing
+- **Free Tier**: 10 pages/day, 1 website. Completely free forever.
+- **PRO Tier**: 100 pages/day, up to 5 websites, detailed logs.
+- **Agency Tier**: 1000 pages/day, up to 50 websites, white-label reports, full API access.
+
+## Target Audience
+Designed for SEO specialists, webmasters, marketing agencies, e-commerce owners, and news portals looking to accelerate organic traffic growth.
+
+## Supported Languages
+The platform is available in English, Ukrainian, Russian, German, Spanish, French, Polish, and Portuguese.
+
 ## Integration
 Works with any platform that has a sitemap.xml (WordPress, Shopify, Wix, Laravel, etc.).
+
+## Contact & Support
+- Email: indexfastapp@gmail.com
+- Telegram Chat: https://t.me/indexfastgoogle
 
 ## Links
 - Homepage: https://indexfast.pp.ua
 - Documentation: https://indexfast.pp.ua/docs/
 - Dashboard: https://indexfast.pp.ua/app/dashboard
 - Blog: https://indexfast.pp.ua/blog/
+- System Status: https://indexfast.pp.ua/status.html
