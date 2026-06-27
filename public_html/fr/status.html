@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "IndexFast",
+    "url": "https://indexfast.pp.ua",
+    "logo": "https://indexfast.pp.ua/logo.png"
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {"@type": "ListItem", "position": 1, "name": "Principal", "item": "https://indexfast.pp.ua/"},
+      {"@type": "ListItem", "position": 2, "name": "Statut", "item": "https://indexfast.pp.ua/status.html"}
+    ]
+  }
+  </script>
+  <title>État du service — IndexFast</title>
+  <meta name="description" content="L'état actuel du service IndexFast. Vérifiez la disponibilité de l'API, du site Web et d'autres composants.">
+  <link rel="canonical" href="https://indexfast.pp.ua/status.html">
+  <meta name="robots" content="noindex, follow">
+    <meta property="og:type" content="website">
+  <meta property="og:url" content="https://indexfast.pp.ua/status.html">
+  <meta property="og:title" content="État du service — IndexFast">
+  <meta property="og:description" content="État actuel d'IndexFast : API de disponibilité, site Web et tous les composants.">
+  <meta property="og:image" content="https://indexfast.pp.ua/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="uk_UA">
+  <meta property="og:site_name" content="IndexFast">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="État du service — IndexFast">
+  <meta name="twitter:description" content="État actuel d'IndexFast : API de disponibilité, site Web et tous les composants.">
+  <meta name="twitter:image" content="https://indexfast.pp.ua/og-image.jpg">
+
+    <link rel="preload" as="style" crossorigin href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --black:  #050508;
+      --dark:   #0d0d14;
+      --card:   #12121c;
+      --border: rgba(255,255,255,0.07);
+      --green:  #00ff88;
+      --yellow: #ffcc00;
+      --red:    #ff4455;
+      --white:  #f0f0f8;
+      --muted:  #7a7a95;
+      --font-display: 'Syne', sans-serif;
+      --font-body:    'DM Sans', sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--black); color: var(--white); font-family: var(--font-body); font-weight: 300; min-height: 100vh; }
+
+    /* ── NAV ── */
+    nav {
+      padding: 20px 60px; display: flex; align-items: center; justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+      background: rgba(5,5,8,0.95); backdrop-filter: blur(12px);
+      position: sticky; top: 0; z-index: 100;
+    }
+    .logo { font-family: var(--font-display); font-size: 1.4rem; font-weight: 800; letter-spacing: -0.03em; color: var(--white); text-decoration: none; }
+    .logo span { color: var(--green); }
+    .nav-back { color: var(--muted); text-decoration: none; font-size: 0.875rem; transition: color 0.2s; }
+    .nav-back:hover { color: var(--white); }
+
+    /* ── HERO STATUS ── */
+    .status-hero {
+      padding: 72px 40px 64px; text-align: center;
+      background: radial-gradient(ellipse 70% 50% at 50% 0%, rgba(0,255,136,0.07) 0%, transparent 70%);
+      border-bottom: 1px solid var(--border);
+    }
+    .overall-badge {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: rgba(0,255,136,0.08); border: 1px solid rgba(0,255,136,0.25);
+      padding: 10px 24px; border-radius: 100px; margin-bottom: 28px;
+    }
+    .overall-dot {
+      width: 10px; height: 10px; border-radius: 50%; background: var(--green);
+      box-shadow: 0 0 10px var(--green);
+      animation: pulse-dot 2s infinite;
+    }
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; box-shadow: 0 0 10px var(--green); }
+      50% { opacity: 0.6; box-shadow: 0 0 20px var(--green); }
+    }
+    .overall-text { font-family: var(--font-display); font-weight: 700; font-size: 1rem; color: var(--green); }
+
+    .status-hero h1 {
+      font-family: var(--font-display); font-size: clamp(2.2rem, 4vw, 3.2rem);
+      font-weight: 800; letter-spacing: -0.03em; margin-bottom: 12px;
+    }
+    .status-hero p { color: var(--muted); font-size: 1rem; }
+    .last-updated { margin-top: 8px; font-size: 0.82rem; color: var(--muted); }
+    .last-updated span { color: var(--green); font-weight: 500; }
+
+    /* ── METRICS ROW ── */
+    .metrics-row {
+      display: flex; justify-content: center; gap: 0;
+      max-width: 900px; margin: 48px auto 0;
+      background: var(--card); border: 1px solid var(--border); border-radius: 20px;
+      overflow: hidden;
+    }
+    .metric {
+      flex: 1; padding: 28px 24px; text-align: center;
+      border-right: 1px solid var(--border);
+    }
+    .metric:last-child { border-right: none; }
+    .metric-val {
+      font-family: var(--font-display); font-size: 2rem; font-weight: 800;
+      letter-spacing: -0.03em; line-height: 1; margin-bottom: 6px;
+    }
+    .metric-val.green { color: var(--green); }
+    .metric-val.yellow { color: var(--yellow); }
+    .metric-label { font-size: 0.78rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+
+    /* ── MAIN LAYOUT ── */
+    .main { max-width: 900px; margin: 0 auto; padding: 60px 40px 100px; }
+
+    /* ── SECTION TITLE ── */
+    .block-title {
+      font-family: var(--font-display); font-size: 0.75rem; font-weight: 600;
+      letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted);
+      margin-bottom: 16px; margin-top: 56px;
+    }
+    .block-title:first-child { margin-top: 0; }
+
+    /* ── SERVICE ROWS ── */
+    .services-list { display: flex; flex-direction: column; gap: 3px; }
+    .service-row {
+      display: flex; align-items: center; justify-content: space-between;
+      background: var(--card); border: 1px solid var(--border);
+      padding: 18px 24px; border-radius: 12px;
+      transition: border-color 0.2s;
+    }
+    .service-row:hover { border-color: rgba(255,255,255,0.12); }
+    .service-left { display: flex; align-items: center; gap: 14px; }
+    .service-icon { font-size: 1.1rem; width: 24px; text-align: center; flex-shrink: 0; }
+    .service-name { font-weight: 500; font-size: 0.95rem; }
+    .service-desc { font-size: 0.8rem; color: var(--muted); margin-top: 2px; }
+    .service-right { display: flex; align-items: center; gap: 16px; flex-shrink: 0; }
+    .service-ping { font-size: 0.8rem; color: var(--muted); font-family: var(--font-display); }
+    .service-ping span { font-weight: 600; }
+    .status-pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 5px 12px; border-radius: 100px; font-size: 0.78rem; font-weight: 600;
+      font-family: var(--font-display);
+    }
+    .status-pill .dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+    .pill-green { background: rgba(0,255,136,0.1); color: var(--green); border: 1px solid rgba(0,255,136,0.2); }
+    .pill-green .dot { background: var(--green); box-shadow: 0 0 6px var(--green); animation: pulse-dot 2s infinite; }
+    .pill-yellow { background: rgba(255,204,0,0.1); color: var(--yellow); border: 1px solid rgba(255,204,0,0.2); }
+    .pill-yellow .dot { background: var(--yellow); }
+    .pill-red { background: rgba(255,68,85,0.1); color: var(--red); border: 1px solid rgba(255,68,85,0.2); }
+    .pill-red .dot { background: var(--red); }
+
+    /* ── UPTIME BARS ── */
+    .uptime-section { margin-top: 56px; }
+    .uptime-row { margin-bottom: 24px; }
+    .uptime-row-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 10px; }
+    .uptime-name { font-size: 0.9rem; font-weight: 500; }
+    .uptime-pct { font-family: var(--font-display); font-size: 0.85rem; font-weight: 700; color: var(--green); }
+    .uptime-bars { display: flex; gap: 3px; }
+    .uptime-bar {
+      flex: 1; height: 32px; border-radius: 4px;
+      background: rgba(0,255,136,0.15); border: 1px solid rgba(0,255,136,0.1);
+      position: relative; cursor: default;
+      transition: transform 0.15s;
+    }
+    .uptime-bar:hover { transform: scaleY(1.1); }
+    .uptime-bar.ok { background: rgba(0,255,136,0.2); border-color: rgba(0,255,136,0.25); }
+    .uptime-bar.warn { background: rgba(255,204,0,0.2); border-color: rgba(255,204,0,0.25); }
+    .uptime-bar.down { background: rgba(255,68,85,0.2); border-color: rgba(255,68,85,0.25); }
+    .uptime-legend { display: flex; justify-content: space-between; margin-top: 6px; }
+    .uptime-legend span { font-size: 0.72rem; color: var(--muted); }
+
+    /* ── INCIDENTS ── */
+    .incidents-section { margin-top: 56px; }
+    .incident-card {
+      background: var(--card); border: 1px solid var(--border); border-radius: 16px;
+      overflow: hidden; margin-bottom: 12px;
+    }
+    .incident-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 24px; border-bottom: 1px solid var(--border);
+    }
+    .incident-title-wrap { display: flex; align-items: center; gap: 10px; }
+    .incident-severity {
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 3px 10px; border-radius: 100px; font-family: var(--font-display);
+    }
+    .sev-none { background: rgba(0,255,136,0.1); color: var(--green); border: 1px solid rgba(0,255,136,0.2); }
+    .sev-minor { background: rgba(255,204,0,0.1); color: var(--yellow); border: 1px solid rgba(255,204,0,0.2); }
+    .sev-major { background: rgba(255,68,85,0.1); color: var(--red); border: 1px solid rgba(255,68,85,0.2); }
+    .incident-title { font-family: var(--font-display); font-weight: 700; font-size: 0.95rem; }
+    .incident-date { font-size: 0.8rem; color: var(--muted); flex-shrink: 0; }
+    .incident-body { padding: 0; max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.3s; }
+    .incident-card.open .incident-body { max-height: 400px; padding: 20px 24px; }
+    .incident-toggle {
+      background: none; border: none; color: var(--muted); cursor: pointer;
+      font-size: 1.1rem; transition: transform 0.3s, color 0.2s; padding: 0 0 0 12px;
+      flex-shrink: 0;
+    }
+    .incident-card.open .incident-toggle { transform: rotate(45deg); color: var(--green); }
+    .incident-toggle:hover { color: var(--white); }
+    .timeline { display: flex; flex-direction: column; gap: 16px; }
+    .timeline-item { display: flex; gap: 14px; }
+    .tl-dot-wrap { display: flex; flex-direction: column; align-items: center; gap: 0; flex-shrink: 0; }
+    .tl-dot { width: 10px; height: 10px; border-radius: 50%; margin-top: 4px; flex-shrink: 0; }
+    .tl-dot.green { background: var(--green); box-shadow: 0 0 6px var(--green); }
+    .tl-dot.yellow { background: var(--yellow); }
+    .tl-dot.red { background: var(--red); }
+    .tl-dot.muted { background: var(--muted); }
+    .tl-line { flex: 1; width: 1px; background: var(--border); margin-top: 4px; min-height: 20px; }
+    .tl-content {}
+    .tl-status { font-size: 0.78rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px; font-family: var(--font-display); }
+    .tl-status.green { color: var(--green); }
+    .tl-status.yellow { color: var(--yellow); }
+    .tl-status.red { color: var(--red); }
+    .tl-msg { font-size: 0.875rem; color: rgba(240,240,248,0.8); line-height: 1.5; }
+    .tl-time { font-size: 0.75rem; color: var(--muted); margin-top: 4px; }
+
+    /* ── SUBSCRIBE ── */
+    .subscribe-block {
+      margin-top: 56px; background: var(--card); border: 1px solid var(--border);
+      border-radius: 20px; padding: 36px; display: flex; align-items: center;
+      justify-content: space-between; gap: 32px; flex-wrap: wrap;
+    }
+    .subscribe-block h3 { font-family: var(--font-display); font-size: 1.2rem; font-weight: 700; margin-bottom: 6px; }
+    .subscribe-block p { color: var(--muted); font-size: 0.9rem; }
+    .subscribe-form { display: flex; gap: 10px; flex-shrink: 0; }
+    .subscribe-input {
+      background: rgba(255,255,255,0.05); border: 1px solid var(--border); color: var(--white);
+      padding: 12px 20px; border-radius: 100px; font-family: var(--font-body); font-size: 0.9rem;
+      outline: none; transition: border-color 0.2s; width: 240px;
+    }
+    .subscribe-input:focus { border-color: rgba(0,255,136,0.4); }
+    .subscribe-input::placeholder { color: var(--muted); }
+    .subscribe-btn {
+      background: var(--green); color: var(--black); border: none;
+      padding: 12px 24px; border-radius: 100px; font-family: var(--font-display);
+      font-weight: 700; font-size: 0.9rem; cursor: pointer;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+    .subscribe-btn:hover { box-shadow: 0 0 24px rgba(0,255,136,0.4); transform: translateY(-2px); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--dark);
+      border-top: 1px solid var(--border);
+      padding: 60px 40px 40px;
+      text-align: left;
+    }
+    .footer-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 60px;
+    }
+    .footer-brand p {
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.7;
+      margin-top: 16px;
+      max-width: 280px;
+    }
+    .footer-title { font-family: var(--font-display); font-weight: 700; margin-bottom: 20px; font-size: 0.9rem; letter-spacing: 0.05em; color: var(--white); }
+    .footer-col ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .footer-col ul a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+    .footer-col ul a:hover {
+      color: var(--white);
+    }
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 48px auto 0;
+      padding-top: 28px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    .footer-bottom a {
+      color: var(--muted);
+      text-decoration: none;
+    }
+    .footer-bottom a:hover {
+      color: var(--white);
+    }
+
+    /* ─── BACK TO TOP ─── */
+    .back-to-top {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 50px;
+      height: 50px;
+      background: rgba(0, 255, 136, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(0, 255, 136, 0.3);
+      color: var(--green);
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+    .back-to-top.visible {
+      opacity: 1;
+      visibility: visible;
+      bottom: 40px;
+    }
+    .back-to-top:hover {
+      background: var(--green);
+      color: var(--black);
+      transform: translateY(-5px);
+      box-shadow: 0 0 30px rgba(0, 255, 136, 0.4);
+    }
+
+    /* ── MOBILE ── */
+    @media (max-width: 900px) {
+      nav { padding: 0 20px; }
+      .status-hero { padding: 48px 20px 36px; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+      .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+      footer { padding: 40px 20px; }
+    }
+
+    @media (max-width: 700px) {
+      nav { padding: 16px 20px; }
+      .status-hero { padding: 48px 20px 40px; }
+      .metrics-row { flex-direction: column; }
+      .metric { border-right: none; border-bottom: 1px solid var(--border); }
+      .metric:last-child { border-bottom: none; }
+      .main { padding: 40px 20px 60px; }
+      .service-right { gap: 10px; }
+      .service-ping { display: none; }
+      .subscribe-block { flex-direction: column; }
+      .subscribe-form { width: 100%; flex-wrap: wrap; }
+      .subscribe-input { width: 100%; }
+      footer { padding: 24px 20px; }
+    }
+    .nav-login {
+      color: var(--muted, #7a7a95);
+      font-size: 0.875rem;
+      text-decoration: none;
+      padding: 7px 16px;
+      border-radius: 100px;
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .nav-login:hover {
+      color: var(--white, #f0f0f8);
+      border-color: rgba(255,255,255,0.25);
+    }
+    
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.875rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--white); }
+    .nav-cta {
+      background: var(--green);
+      color: var(--black);
+      padding: 10px 24px;
+      border-radius: 100px;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 0.875rem;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+    }
+    .nav-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 40px rgba(0, 255, 136, 0.5);
+    }
+    .mobile-auth { display: none !important; }
+    
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+    
+    .nav-lang-dropdown {
+      position: relative;
+      display: inline-block;
+      margin-right: 16px;
+    }
+    .nav-lang-btn {
+      background: none;
+      border: none;
+      color: var(--muted);
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 0.875rem;
+      cursor: pointer;
+      padding: 8px 0;
+      transition: color 0.2s;
+    }
+    .nav-lang-btn:hover { color: var(--white); }
+    .nav-lang-menu {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 8px 0;
+      min-width: 140px;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(10px);
+      transition: all 0.2s;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+      z-index: 1000;
+    }
+    .nav-lang-dropdown:hover .nav-lang-menu {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+    .nav-lang-menu a {
+      display: block;
+      padding: 8px 16px;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.875rem;
+      transition: all 0.2s;
+    }
+    .nav-lang-menu a:hover {
+      background: rgba(255,255,255,0.05);
+      color: var(--white);
+    }
+    .nav-lang-menu a.active {
+      color: var(--green);
+      font-weight: 600;
+    }
+    
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--white);
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 0;
+      line-height: 1;
+    }
+
+    @media (max-width: 1100px) {
+      .mobile-menu-btn { display: block; }
+      .nav-actions { gap: 12px; }
+      .nav-login { padding: 7px 12px; }
+      .nav-cta { padding: 8px 16px; font-size: 0.8rem; }
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        gap: 0;
+        position: fixed;
+        top: 58px;
+        left: 0;
+        right: 0;
+        background: rgba(5, 5, 8, 0.98);
+        backdrop-filter: blur(14px);
+        padding: 16px 20px 24px;
+        border-bottom: 1px solid var(--border);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        z-index: 499;
+      }
+      .nav-links.active { display: flex; }
+      .nav-links li {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      }
+      .nav-links li:last-child {
+        border-bottom: none;
+      }
+      .nav-links a {
+        display: block;
+        padding: 16px 0;
+        font-size: 1.1rem;
+      }
+      .mobile-auth {
+        display: flex !important;
+        flex-direction: column;
+        gap: 12px;
+        margin-top: 16px;
+        padding-top: 16px;
+      }
+      .mobile-auth a {
+        text-align: center;
+        padding: 14px;
+        border-radius: 100px;
+        font-size: 1rem;
+        letter-spacing: normal;
+        text-transform: none;
+      }
+      .mobile-login {
+        border: 1px solid var(--border);
+      }
+      .mobile-register {
+        background: var(--green);
+        color: var(--black) !important;
+        font-family: var(--font-display);
+        font-weight: 700;
+      }
+      nav .nav-login, nav .nav-cta {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar" role="navigation" aria-label="Головне меню">
+  <a href="/" class="logo" aria-label="IndexFast — Principal">Index<span>Fast</span></a>
+  <ul class="nav-links">
+    <li><a href="/#how-it-works">Comment ça marche</a></li>
+    <li><a href="/#for-whom">Pour qui</a></li>
+    <li><a href="/#features">Avantages</a></li>
+    <li><a href="/#pricing">Tarifs</a></li>
+    <li><a href="/#faq">FAQ</a></li>
+    <li class="mobile-auth">
+      <a href="/app/login" class="mobile-login">Se connecter</a>
+      <a href="/app/register" class="mobile-register">Essayez-le gratuitement →</a>
+    </li>
+  </ul>
+  <div class="nav-actions">
+    <div class="nav-lang-dropdown">
+      <button class="nav-lang-btn">UK ▾</button>
+      <div class="nav-lang-menu">
+        <a href="/en/">English</a>
+        <a href="/" class="active">ukrainien</a>
+        <a href="/es/">Español</a>
+        <a href="/pt/">Português</a>
+        <a href="/ru/">russe</a>
+        <a href="/de/">Deutsch</a>
+        <a href="/fr/">Français</a>
+        <a href="/pl/">Polski</a>
+      </div>
+    </div>
+    <a href="/app/login" class="nav-login">Se connecter</a>
+    <a href="/app/register" class="nav-cta">Démarrer →</a>
+    <button class="mobile-menu-btn" onclick="document.querySelector('.nav-links').classList.toggle('active')" aria-label="Відкрити меню">☰</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="status-hero">
+  <div class="overall-badge">
+    <div class="overall-dot"></div>
+    <span class="overall-text">Tous les systèmes fonctionnent</span>
+  </div>
+  <h1>Statut des services</h1>
+  <p>État actuel de tous les composants IndexFast</p>
+  <p class="last-updated">Mis à jour: <span id="lastUpdated">—</span></p>
+
+  <div class="metrics-row">
+    <div class="metric">
+      <div class="metric-val green">99.98%</div>
+      <div class="metric-label">Disponibilité pendant 90 jours</div>
+    </div>
+    <div class="metric">
+      <div class="metric-val green" id="apiLatency">—</div>
+      <div class="metric-label">Latence de l'API</div>
+    </div>
+    <div class="metric">
+      <div class="metric-val green">0</div>
+      <div class="metric-label">Incidents actifs</div>
+    </div>
+    <div class="metric">
+      <div class="metric-val yellow">14 jours</div>
+      <div class="metric-label">Depuis le dernier crash</div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- CURRENT STATUS -->
+  <p class="block-title">État actuel des composants</p>
+  <div class="services-list">
+
+    <div class="service-row">
+      <div class="service-left">
+        <div class="service-icon">🌐</div>
+        <div>
+          <div class="service-name">Site Web indexfast.pp.ua</div>
+          <div class="service-desc">Page d'accueil et page de destination</div>
+        </div>
+      </div>
+      <div class="service-right">
+        <div class="service-ping">Ping : <span id="p1">—</span></div>
+        <div class="status-pill pill-green"><div class="dot"></div>Travaux</div>
+      </div>
+    </div>
+
+    <div class="service-row">
+      <div class="service-left">
+        <div class="service-icon">⚡</div>
+        <div>
+          <div class="service-name">Google Indexing API</div>
+          <div class="service-desc">Soumission d'URL pour l'indexation</div>
+        </div>
+      </div>
+      <div class="service-right">
+        <div class="service-ping">Ping : <span id="p2">—</span></div>
+        <div class="status-pill pill-green"><div class="dot"></div>Travaux</div>
+      </div>
+    </div>
+
+    <div class="service-row">
+      <div class="service-left">
+        <div class="service-icon">🔐</div>
+        <div>
+          <div class="service-name">Authentification</div>
+          <div class="service-desc">OAuth 2.0 / Service Account</div>
+        </div>
+      </div>
+      <div class="service-right">
+        <div class="service-ping">Ping : <span id="p3">—</span></div>
+        <div class="status-pill pill-green"><div class="dot"></div>Travaux</div>
+      </div>
+    </div>
+
+    <div class="service-row">
+      <div class="service-left">
+        <div class="service-icon">🗺️</div>
+        <div>
+          <div class="service-name">Analyseur de plan de site</div>
+          <div class="service-desc">Lecture et traitement du sitemap.xml</div>
+        </div>
+      </div>
+      <div class="service-right">
+        <div class="service-ping">Ping : <span id="p4">—</span></div>
+        <div class="status-pill pill-green"><div class="dot"></div>Travaux</div>
+      </div>
+    </div>
+
+    <div class="service-row">
+      <div class="service-left">
+        <div class="service-icon">📊</div>
+        <div>
+          <div class="service-name">Analyses et rapports</div>
+          <div class="service-desc">Tableau de bord et statistiques</div>
+        </div>
+      </div>
+      <div class="service-right">
+        <div class="service-ping">Ping : <span id="p5">—</span></div>
+        <div class="status-pill pill-green"><div class="dot"></div>Travaux</div>
+      </div>
+    </div>
+
+    <div class="service-row">
+      <div class="service-left">
+        <div class="service-icon">📧</div>
+        <div>
+          <div class="service-name">Notification par courrier électronique</div>
+          <div class="service-desc">Lettres et alertes de transaction</div>
+        </div>
+      </div>
+      <div class="service-right">
+        <div class="service-ping">Ping : <span id="p6">—</span></div>
+        <div class="status-pill pill-green"><div class="dot"></div>Travaux</div>
+      </div>
+    </div>
+
+    <div class="service-row">
+      <div class="service-left">
+        <div class="service-icon">💳</div>
+        <div>
+          <div class="service-name">Passerelle de paiement</div>
+          <div class="service-desc">LiqPay — traitement des abonnements</div>
+        </div>
+      </div>
+      <div class="service-right">
+        <div class="service-ping">Ping : <span id="p7">—</span></div>
+        <div class="status-pill pill-green"><div class="dot"></div>Travaux</div>
+      </div>
+    </div>
+
+    <div class="service-row">
+      <div class="service-left">
+        <div class="service-icon">🔗</div>
+        <div>
+          <div class="service-name">REST API</div>
+          <div class="service-desc">API externe pour les intégrations</div>
+        </div>
+      </div>
+      <div class="service-right">
+        <div class="service-ping">Ping : <span id="p8">—</span></div>
+        <div class="status-pill pill-green"><div class="dot"></div>Travaux</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- UPTIME HISTORY -->
+  <div class="uptime-section">
+    <p class="block-title">Disponibilité au cours des 90 derniers jours</p>
+
+    <div class="uptime-row" id="uptimeWebsite"></div>
+    <div class="uptime-row" id="uptimeApi"></div>
+    <div class="uptime-row" id="uptimeSitemap"></div>
+
+  </div>
+
+  <!-- INCIDENTS -->
+  <div class="incidents-section">
+    <p class="block-title">Historique des incidents</p>
+
+    <!-- Resolved minor -->
+    <div class="incident-card" id="inc1">
+      <div class="incident-header">
+        <div class="incident-title-wrap">
+          <span class="incident-severity sev-minor">Mineure</span>
+          <span class="incident-title">Ralentissement de l'API d'indexation</span>
+        </div>
+        <div style="display:flex; align-items:center; gap:12px;">
+          <span class="incident-date">25 février 2025</span>
+          <button class="incident-toggle" onclick="toggleIncident('inc1')">+</button>
+        </div>
+      </div>
+      <div class="incident-body">
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="tl-dot-wrap"><div class="tl-dot green"></div><div class="tl-line"></div></div>
+            <div class="tl-content">
+              <div class="tl-status green">Il a été résolu</div>
+              <div class="tl-msg">Toutes les requêtes adressées à l'API d'indexation Google sont traitées normalement. Les retards ont été éliminés.</div>
+              <div class="tl-time">25 février 2025, 14h32</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="tl-dot-wrap"><div class="tl-dot yellow"></div><div class="tl-line"></div></div>
+            <div class="tl-content">
+              <div class="tl-status yellow">Surveillance</div>
+              <div class="tl-msg">Le correctif a été appliqué. Nous observons la stabilisation du temps de réponse des API.</div>
+              <div class="tl-time">25 février 2025, 13h15</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="tl-dot-wrap"><div class="tl-dot yellow"></div><div class="tl-line"></div></div>
+            <div class="tl-content">
+              <div class="tl-status yellow">Enquête</div>
+              <div class="tl-msg">Une augmentation des délais a été détectée lors de l'envoi des requêtes à l'API Google. Le temps de réponse moyen est passé de 320 ms à 1 800 ms. La raison est une charge temporaire du côté de Google.</div>
+              <div class="tl-time">25 février 2025, 11h47</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="tl-dot-wrap"><div class="tl-dot muted"></div></div>
+            <div class="tl-content">
+              <div class="tl-status" style="color:var(--muted)">Détecté</div>
+              <div class="tl-msg">Un temps de réponse anormal a été détecté par le système de surveillance automatique.</div>
+              <div class="tl-time">25 février 2025, 11h30</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Resolved major -->
+    <div class="incident-card" id="inc2">
+      <div class="incident-header">
+        <div class="incident-title-wrap">
+          <span class="incident-severity sev-major">Critique</span>
+          <span class="incident-title">Indisponibilité du service d'indexation</span>
+        </div>
+        <div style="display:flex; align-items:center; gap:12px;">
+          <span class="incident-date">14 février 2025</span>
+          <button class="incident-toggle" onclick="toggleIncident('inc2')">+</button>
+        </div>
+      </div>
+      <div class="incident-body">
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="tl-dot-wrap"><div class="tl-dot green"></div><div class="tl-line"></div></div>
+            <div class="tl-content">
+              <div class="tl-status green">Il a été résolu</div>
+              <div class="tl-msg">Le service a été entièrement rétabli. Les retards dans la file d'attente d'indexation sont compensés : toutes les URL accumulées ont été envoyées avec succès.</div>
+              <div class="tl-time">14 février 2025, 09:41</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="tl-dot-wrap"><div class="tl-dot yellow"></div><div class="tl-line"></div></div>
+            <div class="tl-content">
+              <div class="tl-status yellow">Restauration</div>
+              <div class="tl-msg">Le serveur a été restauré après une migration planifiée de la base de données. Nous vérifions l'intégrité des données et restaurons la file d'attente des tâches.</div>
+              <div class="tl-time">14 février 2025, 08h55</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="tl-dot-wrap"><div class="tl-dot red"></div><div class="tl-line"></div></div>
+            <div class="tl-content">
+              <div class="tl-status red">échec</div>
+              <div class="tl-msg">Le service d'indexation n'est pas disponible. La raison est une erreur inattendue lors de la maintenance de routine de la base de données. L'équipe travaille à la récupération.</div>
+              <div class="tl-time">14 février 2025, 06:12</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="tl-dot-wrap"><div class="tl-dot muted"></div></div>
+            <div class="tl-content">
+              <div class="tl-status" style="color:var(--muted)">Détecté</div>
+              <div class="tl-msg">Une alerte a été reçue concernant l'indisponibilité du service.</div>
+              <div class="tl-time">14 février 2025, 06h00</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- All good before -->
+    <div class="incident-card" id="inc3">
+      <div class="incident-header">
+        <div class="incident-title-wrap">
+          <span class="incident-severity sev-none">Informations</span>
+          <span class="incident-title">Entretien programmé</span>
+        </div>
+        <div style="display:flex; align-items:center; gap:12px;">
+          <span class="incident-date">1 février 2025</span>
+          <button class="incident-toggle" onclick="toggleIncident('inc3')">+</button>
+        </div>
+      </div>
+      <div class="incident-body">
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="tl-dot-wrap"><div class="tl-dot green"></div></div>
+            <div class="tl-content">
+              <div class="tl-status green">Complété</div>
+              <div class="tl-msg">Maintenance planifiée terminée avec succès. L'infrastructure a été mise à jour vers la nouvelle version. Attendez-vous à une amélioration des performances de 15 à 20 %.</div>
+              <div class="tl-time">1er février 2025, 04h00</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- SUBSCRIBE -->
+  <div class="subscribe-block">
+    <div>
+      <h3>Inscrivez-vous pour les mises à jour de statut</h3>
+      <p>Recevez des alertes instantanées d'incident et de service par e-mail</p>
+    </div>
+    <div class="subscribe-form">
+      <input class="subscribe-input" type="email" placeholder="your@email.com" id="subEmail" aria-label="Ваш email для підписки">
+      <button class="subscribe-btn" onclick="handleSubscribe()">S'inscrire</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer role="contentinfo">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="/" class="logo">Index<span>Fast</span></a>
+      <p>Service d'indexation automatique des pages du site dans Google via l'API officielle d'indexation de Google.</p>
+    </div>
+    <div class="footer-col">
+      <p class="footer-title">Produit</p>
+      <ul>
+        <li><a href="/#how-it-works">Comment ça marche</a></li>
+        <li><a href="/#features">Avantages</a></li>
+        <li><a href="/#pricing">Tarifs</a></li>
+        <li><a href="/docs/">Documentation</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <p class="footer-title">Entreprise</p>
+      <ul>
+        <li><a href="/about.html">À propos de nous</a></li>
+        <li><a href="/blog/">Blogue</a></li>
+        <li><a href="/affiliate.html">Programme partenaire</a></li>
+        <li><a href="/contacts.html">Contacts</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <p class="footer-title">Soutien</p>
+      <ul>
+        <li><a href="/#faq">FAQ</a></li>
+        <li><a href="https://t.me/indexfastgoogle" target="_blank" rel="noopener noreferrer">Chat par télégramme</a></li>
+        <li><a href="mailto:indexfastapp@gmail.com">Assistance par e-mail</a></li>
+        <li><a href="/status.html">Statut des services</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 IndexFast. Tous droits réservés.</p>
+    <div style="display:flex; gap:20px;">
+      <a href="/privacy-policy.html">Confidentialité</a>
+      <a href="/terms.html">Conditions</a>
+    </div>
+  </div>
+  <button id="backToTop" class="back-to-top" aria-label="Вгору">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+  </button>
+</footer>
+
+<script>
+  // ── Оновлення часу
+  function updateTime() {
+    const now = new Date();
+    const pad = n => String(n).padStart(2, '0');
+    document.getElementById('lastUpdated').textContent =
+      `${pad(now.getDate())}.${pad(now.getMonth()+1)}.${now.getFullYear()} ${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
+  }
+  updateTime();
+  setInterval(updateTime, 1000);
+
+  // ── Генерація реалістичних пінгів
+  const pingEls = ['p1','p2','p3','p4','p5','p6','p7','p8'];
+  const basePings = [42, 187, 95, 61, 78, 130, 210, 54];
+  function updatePings() {
+    pingEls.forEach((id, i) => {
+      const jitter = Math.floor((Math.random() - 0.5) * 30);
+      const val = basePings[i] + jitter;
+      const el = document.getElementById(id);
+      if (el) el.textContent = val + 'мс';
+    });
+    const avgApi = basePings[1] + Math.floor((Math.random()-0.5)*40);
+    document.getElementById('apiLatency').textContent = avgApi + 'мс';
+  }
+  updatePings();
+  setInterval(updatePings, 3000);
+
+  // ── Генерація uptime bars
+  function buildUptimeRow(containerId, label, pct, badDays) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    const days = 90;
+    let bars = '';
+    for (let i = 0; i < days; i++) {
+      const cls = badDays.includes(i) ? (Math.random() > 0.5 ? 'warn' : 'down') : 'ok';
+      bars += `<div class="uptime-bar ${cls}" title="День ${days - i} тому"></div>`;
+    }
+    container.innerHTML = `
+      <div class="uptime-row-head">
+        <span class="uptime-name">${label}</span>
+        <span class="uptime-pct">${pct}% uptime</span>
+      </div>
+      <div class="uptime-bars">${bars}</div>
+      <div class="uptime-legend"><span>90 днів тому</span><span>Сьогодні</span></div>
+    `;
+  }
+
+  buildUptimeRow('uptimeWebsite', 'Вебсайт', '99.98', [64, 65]);
+  buildUptimeRow('uptimeApi',     'Google Indexing API', '99.91', [64, 65, 27, 28]);
+  buildUptimeRow('uptimeSitemap', 'Analyseur de plan de site', '100.00', []);
+
+  // ── Incidents toggle
+  function toggleIncident(id) {
+    const card = document.getElementById(id);
+    card.classList.toggle('open');
+  }
+
+  // ── Subscribe
+  function handleSubscribe() {
+    const email = document.getElementById('subEmail').value;
+    const btn = document.querySelector('.subscribe-btn');
+    if (!email || !email.includes('@')) {
+      btn.textContent = '⚠️ Введіть email';
+      btn.style.background = 'var(--yellow)';
+      setTimeout(() => { btn.textContent = 'S'inscrire'; btn.style.background = ''; }, 2000);
+      return;
+    }
+    btn.textContent = '✓ Підписано!';
+    btn.style.background = 'var(--green)';
+    document.getElementById('subEmail').value = '';
+    setTimeout(() => { btn.textContent = 'S'inscrire'; btn.style.background = ''; }, 3000);
+  }
+
+  // Back to Top
+  const backToTop = document.getElementById('backToTop');
+  window.addEventListener('scroll', () => {
+    if (window.pageYOffset > 500) {
+      backToTop.classList.add('visible');
+    } else {
+      backToTop.classList.remove('visible');
+    }
+  });
+  backToTop.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+</script>
+</body>
+</html>
