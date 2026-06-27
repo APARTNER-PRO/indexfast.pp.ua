@@ -2,8 +2,11 @@
 <html lang="uk">
 <head>
   <meta charset="UTF-8">
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23050508'/><text x='16' y='22' font-family='system-ui,sans-serif' font-size='15' font-weight='800' fill='%2300ff88' text-anchor='middle'>IF</text></svg>">
-  <link rel="apple-touch-icon" sizes="180x180" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23050508'/><text x='16' y='22' font-family='system-ui,sans-serif' font-size='15' font-weight='800' fill='%2300ff88' text-anchor='middle'>IF</text></svg>">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Документація — IndexFast</title>
   <meta name="description" content="Повна документація IndexFast: швидкий старт, налаштування Google Indexing API, автоматизація, API reference та приклади інтеграцій.">
@@ -472,17 +475,14 @@
 
 <!-- TOP NAV -->
 <nav class="top-nav">
-  <div class="nav-left">
-    <a href="/" class="logo">Index<span>Fast</span></a>
-    <div class="nav-divider"></div>
-    <span class="nav-badge">Документація</span>
-    <button class="mob-sidebar-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open')">☰ Меню</button>
-  </div>
+  <a href="/" class="logo">Index<span>Fast</span></a>
   <div class="nav-right">
     <a href="/" class="nav-link">Головна</a>
+    <a href="/docs/" class="nav-link active">Документація</a>
     <a href="/blog/" class="nav-link">Блог</a>
     <a href="/app/login" class="nav-login">Увійти</a>
     <a href="/app/register" class="nav-cta">Спробувати безкоштовно</a>
+    <button class="mob-sidebar-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open')">☰</button>
   </div>
 </nav>
 
