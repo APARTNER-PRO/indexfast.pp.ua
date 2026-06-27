@@ -1,0 +1,1344 @@
+﻿<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dokumentacja - IndexFast</title>
+  <meta name="description" content="PeЕ‚na dokumentacja IndexFast: szybki start, ustawienia Google Indexing API, automatyzacja, referencje API i przykЕ‚ady integracji.">
+  
+
+    <meta property="og:type" content="website">
+  <meta property="og:url" content="https://indexfast.pp.ua/docs/">
+  <meta property="og:title" content="Dokumentacja - IndexFast">
+  <meta property="og:description" content="PeЕ‚na dokumentacja IndexFast: szybki start, ustawienia Google Indexing API, automatyzacja, referencje API i przykЕ‚ady integracji.">
+  <meta property="og:image" content="https://indexfast.pp.ua/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="uk_UA">
+  <meta property="og:site_name" content="IndexFast">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Dokumentacja - IndexFast">
+  <meta name="twitter:description" content="PeЕ‚na dokumentacja IndexFast: szybki start, ustawienia Google Indexing API, automatyzacja, referencje API i przykЕ‚ady integracji.">
+  <meta name="twitter:image" content="https://indexfast.pp.ua/og-image.jpg">
+
+    <link rel="preload" as="style" crossorigin href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=JetBrains+Mono:wght@400;500&display=swap">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --black:   #050508;
+      --dark:    #0c0c14;
+      --card:    #111119;
+      --card2:   #16161f;
+      --border:  rgba(255,255,255,0.07);
+      --border2: rgba(255,255,255,0.04);
+      --green:   #00ff88;
+      --green-d: #00c96a;
+      --blue:    #4db8ff;
+      --yellow:  #ffd060;
+      --red:     #ff6b6b;
+      --white:   #eeeef6;
+      --muted:   #72728a;
+      --font-ui:   'Syne', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --nav-h: 60px;
+      --sidebar-w: 260px;
+    }
+
+    html { scroll-behavior: smooth; scroll-padding-top: 88px; }
+    body { background: var(--black); color: var(--white); font-family: var(--font-body); font-weight: 300; line-height: 1.7; overflow-x: hidden; }
+
+    /* в”Ђв”Ђ TOP NAV в”Ђв”Ђ */
+    .top-nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 300;
+      height: var(--nav-h); padding: 0 28px;
+      display: flex; align-items: center; justify-content: space-between;
+      background: rgba(5,5,8,0.96); backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-left { display: flex; align-items: center; gap: 20px; }
+    .logo { font-family: var(--font-ui); font-size: 1.25rem; font-weight: 800; letter-spacing: -0.03em; color: var(--white); text-decoration: none; }
+    .logo span { color: var(--green); }
+    .nav-divider { width: 1px; height: 18px; background: var(--border); }
+    .nav-badge { font-size: 0.72rem; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; font-weight: 500; }
+    .nav-right { display: flex; align-items: center; gap: 16px; }
+    .nav-link { color: var(--muted); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
+    .nav-link:hover { color: var(--white); }
+    .nav-cta { background: var(--green); color: var(--black); padding: 7px 18px; border-radius: 100px; font-family: var(--font-ui); font-weight: 700; font-size: 0.8rem; text-decoration: none; transition: box-shadow 0.2s; }
+    .nav-cta:hover { box-shadow: 0 0 20px rgba(0,255,136,0.4); }
+
+    /* в”Ђв”Ђ SEARCH BAR в”Ђв”Ђ */
+    .search-wrap {
+      position: fixed; top: var(--nav-h); left: var(--sidebar-w); right: 0; z-index: 200;
+      padding: 10px 28px;
+      background: rgba(5,5,8,0.94); backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border2);
+      transition: left 0.3s;
+    }
+    .search-inner { max-width: 640px; position: relative; }
+    .search-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--muted); font-size: 0.9rem; pointer-events: none; }
+    .search-input {
+      width: 100%; background: var(--card); border: 1px solid var(--border);
+      border-radius: 10px; padding: 9px 14px 9px 38px;
+      color: var(--white); font-family: var(--font-body); font-size: 0.875rem;
+      outline: none; transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-input::placeholder { color: var(--muted); }
+    .search-input:focus { border-color: rgba(0,255,136,0.3); box-shadow: 0 0 0 3px rgba(0,255,136,0.07); }
+    .search-kbd { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); display: flex; gap: 3px; }
+    .kbd { background: var(--card2); border: 1px solid var(--border); border-radius: 5px; padding: 2px 6px; font-family: var(--font-mono); font-size: 0.65rem; color: var(--muted); }
+
+    /* в”Ђв”Ђ LAYOUT в”Ђв”Ђ */
+    .docs-layout {
+      display: flex;
+      min-height: 100vh;
+      padding-top: var(--nav-h);
+    }
+
+    /* в”Ђв”Ђ SIDEBAR в”Ђв”Ђ */
+    .sidebar {
+      position: fixed;
+      top: var(--nav-h);
+      left: 0;
+      width: var(--sidebar-w);
+      height: calc(100vh - var(--nav-h));
+      overflow-y: auto;
+      padding: 52px 0 60px;
+      border-right: 1px solid var(--border);
+      flex-shrink: 0;
+      scrollbar-width: thin;
+      scrollbar-color: var(--border) transparent;
+    }
+    .sidebar::-webkit-scrollbar { width: 4px; }
+    .sidebar::-webkit-scrollbar-track { background: transparent; }
+    .sidebar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+    .sidebar-group { margin-bottom: 28px; }
+    .sidebar-group-title {
+      font-family: var(--font-ui); font-size: 0.67rem; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted);
+      padding: 0 20px; margin-bottom: 6px;
+    }
+    .sidebar-link {
+      display: flex; align-items: center; gap: 8px;
+      padding: 6px 20px; color: var(--muted); text-decoration: none;
+      font-size: 0.855rem; transition: color 0.15s, background 0.15s;
+      border-left: 2px solid transparent; margin-left: -1px;
+      position: relative;
+    }
+    .sidebar-link:hover { color: var(--white); background: rgba(255,255,255,0.03); }
+    .sidebar-link.active { color: var(--green); border-left-color: var(--green); background: rgba(0,255,136,0.05); }
+    .sidebar-link .badge {
+      margin-left: auto; font-size: 0.6rem; padding: 1px 6px; border-radius: 100px;
+      font-family: var(--font-ui); font-weight: 700; letter-spacing: 0.06em;
+    }
+    .badge-new { background: rgba(0,255,136,0.15); color: var(--green); }
+    .badge-soon { background: rgba(255,255,255,0.07); color: var(--muted); }
+
+    /* в”Ђв”Ђ MAIN CONTENT в”Ђв”Ђ */
+    .docs-main {
+      min-width: 0;
+      flex: 1;
+      margin-left: var(--sidebar-w);
+      padding: 96px 60px 100px 52px;
+      max-width: calc(var(--sidebar-w) + 860px);
+    }
+
+    /* в”Ђв”Ђ TOC (right) в”Ђв”Ђ */
+    .toc-aside {
+      position: fixed;
+      top: calc(var(--nav-h) + 60px);
+      right: 28px;
+      width: 200px;
+    }
+    .toc-title { font-size: 0.67rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); font-weight: 700; margin-bottom: 10px; font-family: var(--font-ui); }
+    .toc-list { list-style: none; display: flex; flex-direction: column; gap: 2px; }
+    .toc-list a { font-size: 0.8rem; color: var(--muted); text-decoration: none; padding: 3px 0 3px 10px; border-left: 1px solid var(--border); display: block; transition: color 0.2s, border-color 0.2s; line-height: 1.4; }
+    .toc-list a:hover, .toc-list a.active { color: var(--green); border-left-color: var(--green); }
+
+    /* в”Ђв”Ђ TYPOGRAPHY в”Ђв”Ђ */
+    .docs-section { margin-bottom: 72px; }
+    .docs-section:last-child { margin-bottom: 0; }
+
+    .section-eyebrow { font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--green); font-weight: 600; font-family: var(--font-ui); margin-bottom: 10px; }
+    h1.docs-h1 { font-family: var(--font-ui); font-size: 2.4rem; font-weight: 800; letter-spacing: -0.04em; line-height: 1.05; margin-bottom: 16px; }
+    h2.docs-h2 { font-family: var(--font-ui); font-size: 1.5rem; font-weight: 700; letter-spacing: -0.03em; margin-bottom: 16px; scroll-margin-top: 88px; padding-top: 40px; }
+    h2.docs-h2:first-child { padding-top: 0; }
+    h3.docs-h3 { font-family: var(--font-ui); font-size: 1.05rem; font-weight: 700; margin-bottom: 12px; scroll-margin-top: 88px; padding-top: 24px; color: rgba(238,238,246,0.9); }
+    .docs-lead { font-size: 1.05rem; color: rgba(238,238,246,0.7); line-height: 1.75; margin-bottom: 32px; max-width: 580px; }
+    .docs-p { color: rgba(238,238,246,0.72); line-height: 1.8; margin-bottom: 16px; font-size: 0.95rem; }
+    .docs-p:last-child { margin-bottom: 0; }
+    .docs-p a { color: var(--green); text-decoration: none; border-bottom: 1px solid rgba(0,255,136,0.3); transition: border-color 0.2s; }
+    .docs-p a:hover { border-bottom-color: var(--green); }
+
+    strong { font-weight: 600; color: var(--white); }
+    code { font-family: var(--font-mono); font-size: 0.82em; background: rgba(255,255,255,0.07); border: 1px solid var(--border); border-radius: 5px; padding: 1px 6px; color: var(--green); }
+
+    /* в”Ђв”Ђ DIVIDER в”Ђв”Ђ */
+    .docs-hr { border: none; border-top: 1px solid var(--border); margin: 48px 0; }
+
+    /* в”Ђв”Ђ CALLOUTS в”Ђв”Ђ */
+    .callout {
+      display: flex; gap: 14px; padding: 16px 20px;
+      border-radius: 12px; margin: 20px 0; font-size: 0.9rem;
+    }
+    .callout-icon { font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
+    .callout-body { line-height: 1.65; }
+    .callout-body strong { display: block; margin-bottom: 4px; font-size: 0.9rem; }
+    .callout.tip { background: rgba(0,255,136,0.05); border: 1px solid rgba(0,255,136,0.15); }
+    .callout.tip .callout-body { color: rgba(238,238,246,0.8); }
+    .callout.warn { background: rgba(255,208,96,0.05); border: 1px solid rgba(255,208,96,0.2); }
+    .callout.warn .callout-body { color: rgba(238,238,246,0.8); }
+    .callout.info { background: rgba(77,184,255,0.05); border: 1px solid rgba(77,184,255,0.15); }
+    .callout.info .callout-body { color: rgba(238,238,246,0.8); }
+
+    /* в”Ђв”Ђ CODE BLOCKS в”Ђв”Ђ */
+    .code-block {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 14px; overflow: hidden; margin: 20px 0;
+    }
+    .code-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 16px; border-bottom: 1px solid var(--border);
+      background: var(--card2);
+    }
+    .code-lang { font-family: var(--font-mono); font-size: 0.72rem; color: var(--muted); letter-spacing: 0.06em; }
+    .code-filename { font-family: var(--font-mono); font-size: 0.72rem; color: var(--muted); }
+    .copy-btn {
+      background: none; border: 1px solid var(--border); color: var(--muted); cursor: pointer;
+      font-size: 0.72rem; padding: 3px 10px; border-radius: 6px; font-family: var(--font-body);
+      transition: all 0.2s; letter-spacing: 0.04em;
+    }
+    .copy-btn:hover { border-color: var(--green); color: var(--green); }
+    .copy-btn.copied { border-color: var(--green); color: var(--green); }
+    pre {
+      padding: 20px; overflow-x: auto; font-family: var(--font-mono);
+      font-size: 0.82rem; line-height: 1.8; color: rgba(238,238,246,0.85);
+    }
+    pre .c  { color: var(--muted); font-style: italic; }
+    pre .k  { color: #c792ea; }
+    pre .s  { color: #c3e88d; }
+    pre .n  { color: var(--blue); }
+    pre .v  { color: var(--yellow); }
+    pre .g  { color: var(--green); }
+    pre .r  { color: var(--red); }
+    pre .p  { color: rgba(238,238,246,0.5); }
+
+    /* в”Ђв”Ђ STEPS в”Ђв”Ђ */
+    .steps { display: flex; flex-direction: column; gap: 0; margin: 24px 0; counter-reset: steps; }
+    .step {
+      display: flex; gap: 16px; counter-increment: steps;
+      padding: 20px 0; border-bottom: 1px solid var(--border2);
+    }
+    .step:last-child { border-bottom: none; }
+    .step-num {
+      width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
+      background: rgba(0,255,136,0.08); border: 1px solid rgba(0,255,136,0.2);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-ui); font-weight: 800; font-size: 0.78rem; color: var(--green);
+      margin-top: 2px;
+    }
+    .step-body strong { display: block; font-size: 0.95rem; margin-bottom: 6px; color: var(--white); }
+    .step-body p { color: var(--muted); font-size: 0.875rem; line-height: 1.65; }
+    .step-body code { font-size: 0.78em; }
+
+    /* в”Ђв”Ђ TABS в”Ђв”Ђ */
+    .tabs { margin: 20px 0; }
+    .tab-nav { display: flex; gap: 0; border-bottom: 1px solid var(--border); margin-bottom: 0; }
+    .tab-btn {
+      padding: 9px 18px; background: none; border: none; border-bottom: 2px solid transparent;
+      color: var(--muted); cursor: pointer; font-family: var(--font-body); font-size: 0.85rem;
+      transition: color 0.2s, border-color 0.2s; margin-bottom: -1px;
+    }
+    .tab-btn.active { color: var(--green); border-bottom-color: var(--green); }
+    .tab-pane { display: none; }
+    .tab-pane.active { display: block; }
+
+    /* в”Ђв”Ђ TABLE в”Ђв”Ђ */
+    .docs-table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 0.875rem; }
+    .docs-table th { background: var(--card2); color: var(--muted); font-family: var(--font-ui); font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 10px 14px; text-align: left; border: 1px solid var(--border); }
+    .docs-table td { padding: 10px 14px; border: 1px solid var(--border2); color: rgba(238,238,246,0.75); vertical-align: top; line-height: 1.5; }
+    .docs-table tr:hover td { background: rgba(255,255,255,0.015); }
+    .docs-table td code { font-size: 0.78em; }
+    .required { color: var(--red); font-size: 0.7rem; font-family: var(--font-mono); }
+    .optional { color: var(--muted); font-size: 0.7rem; font-family: var(--font-mono); }
+
+    /* в”Ђв”Ђ BREADCRUMB в”Ђв”Ђ */
+    .breadcrumb { display: flex; align-items: center; gap: 6px; margin-bottom: 24px; font-size: 0.8rem; color: var(--muted); }
+    .breadcrumb a { color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .breadcrumb a:hover { color: var(--white); }
+    .breadcrumb-sep { opacity: 0.4; }
+
+    /* в”Ђв”Ђ PREV / NEXT в”Ђв”Ђ */
+    .docs-nav-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 64px; }
+    .docs-nav-btn {
+      background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+      padding: 18px 20px; text-decoration: none; color: var(--white);
+      transition: border-color 0.2s, transform 0.2s;
+      display: flex; flex-direction: column; gap: 4px;
+    }
+    .docs-nav-btn:hover { border-color: rgba(0,255,136,0.25); transform: translateY(-2px); }
+    .docs-nav-btn.next { text-align: right; }
+    .dnb-label { font-size: 0.72rem; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; }
+    .dnb-title { font-family: var(--font-ui); font-weight: 700; font-size: 0.95rem; }
+
+    /* в”Ђв”Ђ QUICK START CARDS в”Ђв”Ђ */
+    .qs-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 24px 0; }
+    .qs-card {
+      background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+      padding: 20px; text-decoration: none; color: var(--white);
+      transition: border-color 0.25s, transform 0.25s;
+      display: flex; flex-direction: column; gap: 10px;
+    }
+    .qs-card:hover { border-color: rgba(0,255,136,0.25); transform: translateY(-3px); }
+    .qs-icon { font-size: 1.5rem; }
+    .qs-title { font-family: var(--font-ui); font-weight: 700; font-size: 0.9rem; }
+    .qs-desc { font-size: 0.8rem; color: var(--muted); line-height: 1.5; }
+    .qs-link { font-size: 0.78rem; color: var(--green); margin-top: auto; }
+
+    /* в”Ђв”Ђ PLATFORM TAGS в”Ђв”Ђ */
+    .platform-tags { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0; }
+    .ptag {
+      display: flex; align-items: center; gap: 6px;
+      background: var(--card); border: 1px solid var(--border);
+      padding: 5px 12px; border-radius: 8px; font-size: 0.8rem; color: rgba(238,238,246,0.75);
+    }
+    .ptag-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+
+    /* в”Ђв”Ђ FOOTER в”Ђв”Ђ */
+    footer {
+      background: var(--dark);
+      border-top: 1px solid var(--border);
+      padding: 60px 40px 40px;
+      margin-left: var(--sidebar-w);
+      transition: margin-left 0.3s;
+    }
+    .footer-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 60px;
+    }
+    .footer-brand p {
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.7;
+      margin-top: 16px;
+      max-width: 280px;
+    }
+    .footer-col .footer-title {
+      font-family: var(--font-ui);
+      font-weight: 700;
+      margin-bottom: 20px;
+      font-size: 0.9rem;
+      letter-spacing: 0.05em;
+      color: var(--white);
+    }
+    .footer-col ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .footer-col ul a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+    .footer-col ul a:hover {
+      color: var(--white);
+    }
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 48px auto 0;
+      padding-top: 28px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    .footer-bottom a {
+      color: var(--muted);
+      text-decoration: none;
+    }
+    .footer-bottom a:hover {
+      color: var(--white);
+    }
+
+    /* в”Ђв”Ђв”Ђ BACK TO TOP в”Ђв”Ђв”Ђ */
+    .back-to-top {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 50px;
+      height: 50px;
+      background: rgba(0, 255, 136, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(0, 255, 136, 0.3);
+      color: var(--green);
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+    .back-to-top.visible {
+      opacity: 1;
+      visibility: visible;
+      bottom: 40px;
+    }
+    .back-to-top:hover {
+      background: var(--green);
+      color: var(--black);
+      transform: translateY(-5px);
+      box-shadow: 0 0 30px rgba(0, 255, 136, 0.4);
+    }
+
+    /* в”Ђв”Ђ MOBILE в”Ђв”Ђ */
+    .mob-sidebar-toggle { display: none; background: var(--card); border: 1px solid var(--border); color: var(--white); padding: 7px 12px; border-radius: 8px; cursor: pointer; font-size: 0.85rem; }
+
+    @media (max-width: 1200px) { .toc-aside { display: none; } }
+    @media (max-width: 860px) {
+      :root { --sidebar-w: 0px; }
+      .sidebar {
+        display: none; width: 260px; z-index: 250;
+        background: var(--dark); top: var(--nav-h);
+        height: calc(100vh - var(--nav-h));
+        box-shadow: 4px 0 40px rgba(0,0,0,0.5);
+      }
+      .sidebar.open { display: block; }
+      .search-wrap { left: 0; padding: 10px 16px; }
+      .docs-main { margin-left: 0; padding: 86px 20px 80px; }
+      .qs-grid { grid-template-columns: 1fr; }
+      .docs-nav-btns { grid-template-columns: 1fr; }
+      .mob-sidebar-toggle { display: block; }
+      .top-nav { padding: 0 16px; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+      .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+      footer { padding: 40px 20px; margin-left: 0; }
+    }
+      .nav-login {
+      color: var(--muted, #7a7a95);
+      font-size: 0.875rem;
+      text-decoration: none;
+      padding: 7px 16px;
+      border-radius: 100px;
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .nav-login:hover {
+      color: var(--white, #f0f0f8);
+      border-color: rgba(255,255,255,0.25);
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+        {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Р“РѕР»РѕРІРЅР°",
+            "item": "https://indexfast.pp.ua/"
+        },
+        {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Р”РѕРєСѓРјРµРЅС‚Р°С†С–СЏ",
+            "item": "https://indexfast.pp.ua/docs/"
+        }
+    ]
+}
+  </script>
+
+  <link rel="alternate" hreflang="en" href="https://indexfast.pp.ua/docs/" />
+  <link rel="alternate" hreflang="uk" href="https://indexfast.pp.ua/uk/docs/" />
+  <link rel="alternate" hreflang="ru" href="https://indexfast.pp.ua/ru/docs/" />
+  <link rel="alternate" hreflang="de" href="https://indexfast.pp.ua/de/docs/" />
+  <link rel="alternate" hreflang="es" href="https://indexfast.pp.ua/es/docs/" />
+  <link rel="alternate" hreflang="fr" href="https://indexfast.pp.ua/fr/docs/" />
+  <link rel="alternate" hreflang="pl" href="https://indexfast.pp.ua/pl/docs/" />
+  <link rel="alternate" hreflang="pt" href="https://indexfast.pp.ua/pt/docs/" />
+  <link rel="alternate" hreflang="x-default" href="https://indexfast.pp.ua/docs/" />
+  <link rel="canonical" href="https://indexfast.pp.ua/pl/docs/" />
+</head>
+<body>
+
+<!-- TOP NAV -->
+<nav class="top-nav">
+  <a href="/" class="logo">Indeks<span>Szybko</span></a>
+  <div class="nav-right">
+    <a href="/" class="nav-link">GЕ‚Гіwny</a>
+    <a href="/docs/" class="nav-link active">Dokumentacja</a>
+    <a href="/blog/" class="nav-link">Bloga</a>
+    <a href="/app/login" class="nav-login">ZalogowaД‡ siД™</a>
+    <a href="/app/register" class="nav-cta">WyprГіbuj za darmo</a>
+    <button class="mob-sidebar-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open')">в°</button>
+  </div>
+</nav>
+
+<!-- SEARCH -->
+<div class="search-wrap">
+  <div class="search-inner">
+    <span class="search-icon">рџ”Ќ</span>
+    <input type="search" class="search-input" placeholder="РџРѕС€СѓРє РїРѕ РґРѕРєСѓРјРµРЅС‚Р°С†С–С—..." id="docsSearch">
+    <div class="search-kbd"><span class="kbd">вЊ</span><span class="kbd">K</span></div>
+  </div>
+</div>
+
+<div class="docs-layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+
+    <div class="sidebar-group">
+      <div class="sidebar-group-title">PoczД…tek pracy</div>
+      <a href="#overview" class="sidebar-link active">рџ“– Recenzja</a>
+      <a href="#quickstart" class="sidebar-link">вљЎ Szybki start</a>
+      <a href="#requirements" class="sidebar-link">вњ…Wymagania</a>
+    </div>
+
+    <div class="sidebar-group">
+      <div class="sidebar-group-title">Ustawienia</div>
+      <a href="#google-cloud" class="sidebar-link">вЃпёЏ Chmura Google</a>
+      <a href="#service-account" class="sidebar-link">рџ”‘ Konto serwisowe</a>
+      <a href="#search-console" class="sidebar-link">рџ”— Konsola wyszukiwania</a>
+      <a href="#sitemap" class="sidebar-link">рџ—є Mapa witryny.xml</a>
+    </div>
+
+    <div class="sidebar-group">
+      <div class="sidebar-group-title">UЕјywanie</div>
+      <a href="#php-script" class="sidebar-link">вљ™пёЏJak dziaЕ‚a usЕ‚uga</a>
+      <a href="#manual" class="sidebar-link">рџ–± RД™czne indeksowanie</a>
+      <a href="#automation" class="sidebar-link">рџ¤– Automatyczny harmonogram</a>
+      <a href="#limits" class="sidebar-link">рџ“Љ Limity API</a>
+    </div>
+
+    <div class="sidebar-group">
+      <div class="sidebar-group-title">Integracja</div>
+      <a href="#wordpress" class="sidebar-link">рџџ¦ WordPressa</a>
+      <a href="#shopify" class="sidebar-link">рџџ© Kupuj</a>
+      <a href="#laravel" class="sidebar-link">рџџҐ Laravel</a>
+      <a href="#other" class="sidebar-link">рџ”§ Inne platformy</a>
+    </div>
+
+    <div class="sidebar-group">
+      <div class="sidebar-group-title">Dokumentacja API</div>
+      <a href="#api-auth" class="sidebar-link">рџ”ђ Autoryzacja</a>
+      <a href="#api-submit" class="sidebar-link">рџ“¤ WysyЕ‚am adres URL <span class="badge badge-new">NOWY</span></a>
+      <a href="#api-status" class="sidebar-link">рџ“Ў Stan adresu URL</a>
+      <a href="#api-errors" class="sidebar-link">вљ пёЏBЕ‚Д™dy</a>
+    </div>
+
+    <div class="sidebar-group">
+      <div class="sidebar-group-title">Dodatkowo</div>
+      <a href="#faq" class="sidebar-link">вќ“ CzД™sto zadawane pytania</a>
+      <a href="#changelog" class="sidebar-link">рџ“‹ Lista zmian <span class="badge badge-new">wersja 2.1</span></a>
+      <a href="#support" class="sidebar-link">рџ’¬ Wsparcie</a>
+    </div>
+
+  </aside>
+
+  <!-- MAIN -->
+  <main class="docs-main" id="docsMain">
+
+    <!-- BREADCRUMB -->
+    <div class="breadcrumb">
+      <a href="/">Indeks Szybki</a>
+      <span class="breadcrumb-sep">/</span>
+      <span>Dokumentacja</span>
+    </div>
+
+    <!-- в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ OVERVIEW в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ -->
+    <section class="docs-section" id="overview">
+      <p class="section-eyebrow">Dokumentacja</p>
+      <h1 class="docs-h1">Jak dziaЕ‚a IndexFast</h1>
+      <p class="docs-lead">Kompletny przewodnik po konfiguracji i korzystaniu z IndexFast, od uzyskania klucza API po automatyczne codzienne indeksowanie.</p>
+
+      <div class="qs-grid">
+        <a href="#quickstart" class="qs-card">
+          <div class="qs-icon">вљЎ</div>
+          <div class="qs-title">Szybki start</div>
+          <div class="qs-desc">Skonfiguruj i wyЕ›lij pierwsze adresy URL w 10 minut</div>
+          <div class="qs-link">Przeczytaj в†’</div>
+        </a>
+        <a href="#php-script" class="qs-card">
+          <div class="qs-icon">рџђ</div>
+          <div class="qs-title">Skrypt PHP</div>
+          <div class="qs-desc">Gotowy skrypt do automatycznego indeksowania z mapД… witryny</div>
+          <div class="qs-link">Przeczytaj в†’</div>
+        </a>
+        <a href="#api-submit" class="qs-card">
+          <div class="qs-icon">рџ“Ў</div>
+          <div class="qs-title">Dokumentacja API</div>
+          <div class="qs-desc">PeЕ‚na dokumentacja interfejsu API indeksowania Google</div>
+          <div class="qs-link">Przeczytaj в†’</div>
+        </a>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">в„№пёЏ</span>
+        <div class="callout-body">
+          <strong>Co to jest interfejs API indeksowania Google?</strong>
+          Oficjalne narzД™dzie Google do powiadamiania wyszukiwarki o nowych lub zaktualizowanych stronach. UmoЕјliwia wysЕ‚anie do <strong>200 adresГіw URL dziennie</strong> za darmo i uzyskaj odpowiedЕє w ciД…gu 24-48 godzin.
+        </div>
+      </div>
+    </section>
+
+    <hr class="docs-hr">
+
+    <!-- в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ QUICKSTART в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ -->
+    <section class="docs-section" id="quickstart">
+      <h2 class="docs-h2">вљЎ Szybki start</h2>
+      <p class="docs-p">Aby rozpoczД…Д‡ korzystanie z IndexFast, musisz wykonaД‡ 3 kroki. CaЕ‚y proces trwa okoЕ‚o 10-15 minut.</p>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <strong>UtwГіrz konto usЕ‚ugi w Google Cloud</strong>
+            <p>IdЕє do <a href="https://console.cloud.google.com" target="_blank" rel="noreferrer">konsola.cloud.google.com</a>, utwГіrz nowy projekt (lub wybierz istniejД…cy) i wЕ‚Д…cz go <code>Interfejs API indeksowania wyszukiwania internetowego</code>. UtwГіrz konto usЕ‚ugi i przeЕ›lij klucz JSON.</p>
+            <p>SzczegГіЕ‚owe instrukcje znajdujД… siД™ w dziale <a href="#service-account">рџ”‘ Konto serwisowe</a>.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <strong>Dodaj konto usЕ‚ugi do Search Console</strong>
+            <p>РЈ <a href="https://search.google.com/search-console" target="_blank" rel="noreferrer">Konsola wyszukiwania Google</a> dodaj swГіj adres e-mail konta usЕ‚ugi jako peЕ‚nomocnika <strong>wЕ‚aЕ›ciciel</strong> strona</p>
+            <p>SzczegГіЕ‚owe instrukcje znajdujД… siД™ w dziale <a href="#search-console">рџ”— Konsola wyszukiwania</a>.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <strong>PoЕ‚Д…cz witrynД™ ze swoim kontem osobistym</strong>
+            <p>Zarejestruj siД™ lub zaloguj <a href="/app/dashboard">Szafka IndexFast</a>. Dodaj witrynД™, wstaw klucz JSON konta usЕ‚ugi, a indeksowanie rozpocznie siД™ automatycznie.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="docs-hr">
+
+    <!-- в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ REQUIREMENTS в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ -->
+    <section class="docs-section" id="requirements">
+      <h2 class="docs-h2">вњ…Wymagania</h2>
+      <p class="docs-p">Zanim zaczniesz, upewnij siД™, Ејe masz:</p>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <strong>Konto Google</strong>
+            <p>Wymagane, aby uzyskaД‡ dostД™p do Google Cloud Console i Google Search Console.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <strong>Witryna zweryfikowana w Google Search Console</strong>
+            <p>Twoja domena musi zostaД‡ zweryfikowana pod adresem <a href="https://search.google.com/search-console" target="_blank" rel="noreferrer">Konsola wyszukiwania Google</a> dowolnД… dostД™pnД… metodД….</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <strong>Plik sitemap.xml</strong>
+            <p>Twoja witryna musi byД‡ publicznie dostД™pna <code>mapa witryny.xml</code>. IndexFast odczytuje go, aby uzyskaД‡ listД™ adresГіw URL do zaindeksowania.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <strong>Klucz JSON konta usЕ‚ugi</strong>
+            <p>Plik pobrany z Google Cloud Console <code>.json</code> z prawami do interfejsu Web Search Indexing API.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout tip">
+        <span class="callout-icon">рџ’Ў</span>
+        <div class="callout-body">JeЕ›li Twojej witryny nie ma jeszcze w Search Console, dodaj jД… najpierw i potwierdЕє wЕ‚asnoЕ›Д‡. SzczegГіЕ‚owa instrukcja dostД™pna jest pod adresem <a href="https://support.google.com/webmasters/answer/9008080" target="_blank" rel="noreferrer">witryna GoogleвЂ™a</a>.</div>
+      </div>
+    </section>
+
+    <hr class="docs-hr">
+
+    <!-- в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ GOOGLE CLOUD в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ -->
+    <section class="docs-section" id="google-cloud">
+      <h2 class="docs-h2">вЃпёЏ Ustawienia Google Cloud</h2>
+
+      <h3 class="docs-h3">WЕ‚Д…czenie API</h3>
+      <p class="docs-p">PrzejdЕє do konsoli Google Cloud в†’ <strong>Interfejsy API i usЕ‚ugi в†’ Biblioteka</strong>. ZnajdЕє to <strong>вЂћAPI indeksowania wyszukiwania internetowegoвЂќ</strong> i naciЕ›nij <em>WЕ‚Д…czaД‡</em>.</p>
+
+      <div class="callout warn">
+        <span class="callout-icon">вљ пёЏ</span>
+        <div class="callout-body">
+          <strong>Co waЕјne</strong>
+          API musi byД‡ wЕ‚Д…czone w projekcie, z ktГіrym poЕ‚Д…czone jest Twoje Konto UsЕ‚ugi. JeЕ›li API nie zostanie aktywowane, pojawi siД™ bЕ‚Д…d <code>403 dostД™pNieskonfigurowany</code>.
+        </div>
+      </div>
+
+      <h3 class="docs-h3" id="service-account">Tworzenie konta usЕ‚ugi</h3>
+      <p class="docs-p">Konto usЕ‚ugi to konto techniczne niewymagajД…ce hasЕ‚a, ktГіrego IndexFast uЕјywa do autoryzacji interfejsГіw API Google. Aby go utworzyД‡, potrzebujesz projektu w Google Cloud.</p>
+
+      <div class="callout tip">
+        <span class="callout-icon">рџ› </span>
+        <div class="callout-body">Zanim zaczniesz, wЕ‚Д…cz Indexing API w swoim projekcie poprzez <a href="https://console.developers.google.com/apis/library/indexing.googleapis.com" target="_blank" rel="noreferrer">narzД™dzie do strojenia</a>. Bez tego kroku pojawi siД™ bЕ‚Д…d <code>403 dostД™pNieskonfigurowany</code>.</div>
+      </div>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <strong>OtwГіrz sekcjД™ Konta usЕ‚ug</strong>
+            <p>IdЕє do <a href="https://console.cloud.google.com/iam-admin/serviceaccounts" target="_blank" rel="noreferrer">Google Cloud Console в†’ IAM i administrator в†’ Konta usЕ‚ug</a>. W razie potrzeby wybierz ЕјД…dany projekt.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <strong>Kliknij вЂћUtwГіrz konto usЕ‚ugiвЂќ</strong>
+            <p>Wpisz nazwД™, np <code>IndexFast-bot</code>i opis. Identyfikator moЕјna pozostawiД‡ automatyczny. Trzask <em>вЂћUtwГіrz i kontynuujвЂќ</em>.</p>
+            <p>Sekcja <em>вЂћPrawa dostД™puвЂќ</em> nie trzeba wypeЕ‚niaД‡ - kliknij <em>"KontynuowaД‡"</em>, NastД™pnie <em>"Zrobione"</em>.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <strong>UtwГіrz klucz JSON</strong>
+            <p>OtwГіrz nowo utworzone konto в†’ zakЕ‚adka <em>Klawiatura</em> в†’ <em>Dodaj klucz в†’ UtwГіrz nowy klucz</em>. Wybierz format <strong>JSON</strong> i naciЕ›nij <em>"TworzyД‡"</em>.</p>
+            <p>Plik zostanie automatycznie pobrany na TwГіj komputer вЂ” jest to jedyna kopia klucza. Przechowuj go w bezpiecznym miejscu i nigdy nie publikuj go w Git ani w publicznych repozytoriach.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout tip">
+        <span class="callout-icon">рџ’Ў</span>
+        <div class="callout-body">Plik JSON powinien wyglД…daД‡ tak - jeЕјeli struktura jest inna oznacza to, Ејe klucz zostaЕ‚ wygenerowany niepoprawnie.</div>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">JSON</span>
+          <span class="code-filename">konto-usЕ‚ugi.json</span>
+          <button class="copy-btn" onclick="copyCode(this)">Kopia</button>
+        </div>
+        <pre>{
+  <span class="s">typ</span>: <span class="s">вЂћkonto_usЕ‚ugiвЂќ</span>,
+  <span class="s">вЂћid_projektuвЂќ</span>: <span class="s">вЂћidentyfikator-twojego projektuвЂќ</span>,
+  <span class="s">вЂћid_klucza_prywatnegoвЂќ</span>: <span class="s">вЂћabc123вЂ¦вЂќ</span>,
+  <span class="s">вЂћklucz_prywatnyвЂќ</span>: <span class="s">"-----ROZPOCZNIJ KLUCZ PRYWATNY RSA-----\n..."</span>,
+  <span class="s">вЂћe-mail_klientaвЂќ</span>: <span class="s">"<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f69f9892938e90978582db949982b68f998384db8684999c939582d89f979bd891859384809f959397959599839882d895999b">[e-mail chroniony]</a>"</span>,
+  <span class="s">вЂћid_klientaвЂќ</span>: <span class="s">вЂћ123456789вЂќ</span>,
+  <span class="s">"auth_uri"</span>: <span class="s">вЂћhttps://accounts.google.com/o/oauth2/authвЂќ</span>,
+  <span class="s">вЂћtoken_uriвЂќ</span>: <span class="s">вЂћhttps://oauth2.googleapis.com/tokenвЂќ</span>
+}</pre>
+      </div>
+    </section>
+
+    <hr class="docs-hr">
+
+    <!-- в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ SEARCH CONSOLE в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ -->
+    <section class="docs-section" id="search-console">
+      <h2 class="docs-h2">рџ”— PoЕ‚Д…czenie z Search Console</h2>
+      <p class="docs-p">Bez tego kroku interfejs API zwrГіci bЕ‚Д…d <code>403 Zabronione</code> nawet z wЕ‚aЕ›ciwym kluczem. Konto UsЕ‚ugi musi otrzymaД‡ status wЕ‚aЕ›ciciela witryny w Google Search Console.</p>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <strong>Zweryfikuj wЕ‚asnoЕ›Д‡ witryny</strong>
+            <p>IdЕє do <a href="https://search.google.com/search-console" target="_blank" rel="noreferrer">Konsola wyszukiwania Google</a> i sprawdЕє, czy witryna naleЕјy do Ciebie - w dowolny dostД™pny sposГіb (rekord DNS, plik HTML itp.).</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <strong>Skopiuj adres e-mail konta usЕ‚ugi</strong>
+            <p>OtwГіrz pobrany plik JSON i zlokalizuj pole <code>e-mail_klienta</code>. E-mail wyglД…da tak:</p>
+            <p><code>nazwa-konta@nazwa-projektu.iam.gserviceaccount.com</code></p>
+            <p>Na przykЕ‚ad: <code><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="c5acaba1a0bda3a4b6b1e8a7aab185a8bce8b5b7aaafa0a6b1e8f4f7f6ebaca4a8eba2b6a0b7b3aca6a0a4a6a6aab0abb1eba6aaa8">[e-mail chroniony]</a></code></p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <strong>Dodaj konto usЕ‚ugi jako wyznaczonego wЕ‚aЕ›ciciela</strong>
+            <p>W Search Console wybierz swojД… witrynД™ в†’ <em>Ustawienia в†’ Zweryfikowani wЕ‚aЕ›ciciele в†’ Dodaj wЕ‚aЕ›ciciela</em>. Wpisz adres e-mail konta usЕ‚ugi i potwierdЕє.</p>
+            <div class="callout warning" style="margin-top:12px;">
+              <span class="callout-icon">вљ пёЏ</span>
+              <div class="callout-body">Rola jest dokЕ‚adnie taka, jaka jest potrzebna <strong>WЕ‚aЕ›ciciel</strong> (nie вЂћPeЕ‚ny dostД™pвЂќ). Bez tego interfejs API powrГіci <code>403 Zabronione</code>.</div>
+            </div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <strong>Poczekaj 1-2 minuty</strong>
+            <p>Prawa nie sД… stosowane natychmiast. NastД™pnie IndexFast bД™dzie mГіgЕ‚ wysyЕ‚aД‡ adresy URL do indeksowania w Twojej witrynie.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="docs-hr">
+
+    <!-- в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ SITEMAP в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ -->
+    <section class="docs-section" id="sitemap">
+      <h2 class="docs-h2">рџ—є Mapa witryny.xml</h2>
+      <p class="docs-p">IndexFast odczytuje Twoje <code>mapa witryny.xml</code> aby uzyskaД‡ adresy URL do przesЕ‚ania do indeksowania. ObsЕ‚ugiwane sД… wszystkie formaty.</p>
+
+      <h3 class="docs-h3">ObsЕ‚ugiwane formaty</h3>
+      <ul style="list-style:none; display:flex; flex-direction:column; gap:8px; margin-bottom:20px;">
+        <li style="color:rgba(238,238,246,0.72); font-size:0.95rem;">вњ… <code>mapa witryny.xml</code> вЂ” standardowy plik z adresem URL</li>
+        <li style="color:rgba(238,238,246,0.72); font-size:0.95rem;">вњ… <code>sitemap_index.xml</code> вЂ” plik nadrzД™dny z linkami do mapy witryny podrzД™dnej (dowolna gЕ‚Д™bokoЕ›Д‡ zagnieЕјdЕјenia)</li>
+        <li style="color:rgba(238,238,246,0.72); font-size:0.95rem;">вњ… Mapa witryny z tagami <code><lastmod></code> вЂ” filtrowanie wedЕ‚ug daty aktualizacji</li>
+      </ul>
+
+      <h3 class="docs-h3">Gdzie znaleЕєД‡ adres URL mapy witryny</h3>
+      <div class="platform-tags">
+        <span class="ptag"><span class="ptag-dot" style="background:#00ff88"></span>Standard: <code>/sitemap.xml</code></span>
+        <span class="ptag"><span class="ptag-dot" style="background:#21759B"></span>WordPress (Yoast): <code>/sitemap_index.xml</code></span>
+        <span class="ptag"><span class="ptag-dot" style="background:#96BF48"></span>Shopify: <code>/sitemap.xml</code></span>
+        <span class="ptag"><span class="ptag-dot" style="background:#FF2D20"></span>Laravel: <code>/sitemap.xml</code></span>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">вљ пёЏ</span>
+        <div class="callout-body">
+          <strong>Co waЕјne</strong>
+          Mapa witryny musi byД‡ publicznie dostД™pna bez autoryzacji. SprawdЕє, czy plik otwiera siД™ w przeglД…darce bez logowania. JeЕ›li jest zamkniД™ty, IndexFast nie bД™dzie mГіgЕ‚ go odczytaД‡.
+        </div>
+      </div>
+    </section>
+
+    <hr class="docs-hr">
+
+    <!-- в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ PHP SCRIPT в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ -->
+    <section class="docs-section" id="php-script">
+      <h2 class="docs-h2">вљ™пёЏJak dziaЕ‚a usЕ‚uga</h2>
+      <p class="docs-p">IndexFast automatycznie odczytuje Twoje <code>mapa witryny.xml</code> i wysyЕ‚a adres URL za poЕ›rednictwem interfejsu Google Indexing API. Nie trzeba instalowaД‡ Ејadnego skryptu - wszystkie operacje wykonywane sД… na serwerach IndexFast.</p>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <strong>Dodajesz witrynД™ do szafki</strong>
+            <p>Podaj domenД™, adres URL mapy witryny.xml i wstaw klucz JSON konta usЕ‚ugi. IndexFast sprawdza dostД™pnoЕ›Д‡ mapy witryny i zapisuje ustawienia.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <strong>IndexFast odczytuje mapД™ witryny</strong>
+            <p>UsЕ‚uga obsЕ‚uguje zwykЕ‚e mapy witryn i <strong>Indeks mapy witryny</strong> (przystawki o dowolnej gЕ‚Д™bokoЕ›ci). Adresy URL sД… automatycznie umieszczane w kolejce zgodnie z dziennym limitem Twojego planu.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <strong>Adresy URL sД… wysyЕ‚ane do Google</strong>
+            <p>UsЕ‚uga wykorzystuje Twoje konto usЕ‚ugi do autoryzacji i wysyЕ‚a adres URL za poЕ›rednictwem oficjalnego interfejsu API Google Indexing. Wynik widzisz w czasie rzeczywistym na swoim koncie osobistym.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout tip">
+        <span class="callout-icon">рџ“Љ</span>
+        <div class="callout-body">Limity zaleЕјД… od planu: Start вЂ“ 10 adresГіw URL/dzieЕ„, PRO вЂ“ 100 adresГіw URL/dzieЕ„, Agencja вЂ“ 1000 adresГіw URL/dzieЕ„. Limit jest aktualizowany codziennie o godzinie 00:00.</div>
+      </div>
+    </section>
+
+    <hr class="docs-hr">
+
+    <!-- в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ AUTOMATION в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ -->
+    <section class="docs-section" id="automation">
+      <h2 class="docs-h2">рџ¤– Automatyczny harmonogram</h2>
+      <p class="docs-p">IndexFast rozpoczyna indeksowanie automatycznie вЂ” nie ma potrzeby konfigurowania cron ani utrzymywania serwera. UsЕ‚uga dziaЕ‚a caЕ‚odobowo po stronie IndexFast.</p>
+
+      <div class="callout tip">
+        <span class="callout-icon">рџ’Ў</span>
+        <div class="callout-body">Aby rozpoczД…Д‡ indeksowanie rД™cznie, naciЕ›nij <strong>вЂћв–¶ UruchomвЂќ</strong> na swoim koncie osobistym obok wybranej witryny. Wynik pojawi siД™ w logach w ciД…gu minuty.</div>
+      </div>
+
+      <h3 class="docs-h3">Jak zarzД…dzaД‡ indeksowaniem</h3>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <strong>Tryb aktywny</strong>
+            <p>Strona ze statusem <em>Aktywny</em> automatycznie wysyЕ‚a adresy URL w ramach dziennego limitu. Limit jest dzielony rГіwno pomiД™dzy wszystkie aktywne strony konta.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <strong>Pauza</strong>
+            <p>JeЕ›li chcesz tymczasowo zatrzymaД‡ indeksowanie witryny - kliknij <strong>вЂћвЏёвЂќ</strong> w biurze Limit dzienny nie jest wykorzystany. MoЕјesz przywrГіciД‡ w dowolnym momencie.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <strong>Uruchomienie rД™czne</strong>
+            <p>Trzask <strong>вЂћв–¶ UruchomвЂќ</strong> вЂ” a IndexFast natychmiast wyЕ›le вЂ‹вЂ‹adres URL z mapy witryny w ramach pozostaЕ‚ego dziennego limitu. Wygodne po opublikowaniu nowych stron.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="docs-hr">
+
+    <!-- в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ MANUAL в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ -->
+    <section class="docs-section" id="manual">
+      <h2 class="docs-h2">рџ–± RД™czne indeksowanie</h2>
+      <p class="docs-p">OprГіcz trybu automatycznego IndexFast umoЕјliwia w kaЕјdej chwili rozpoczД™cie indeksowania rД™cznego вЂ“ bezpoЕ›rednio z konta osobistego.</p>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <strong>OtwГіrz szafkД™</strong>
+            <p>IdЕє do <a href="/app/dashboard">IndexFast.pp.ua/app/dashboard</a> i znajdЕє ЕјД…danД… witrynД™ na liЕ›cie.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <strong>Kliknij вЂћв–¶ StartвЂќ</strong>
+            <p>IndexFast natychmiast odczyta mapД™ witryny i wyЕ›le вЂ‹вЂ‹adres URL w ramach pozostaЕ‚ego dziennego limitu.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <strong>Zobacz wyniki w logach</strong>
+            <p>Odpowiedzi Google API pojawiajД… siД™ w zakЕ‚adce Logi w ciД…gu 1-2 minut. MoЕјesz zobaczyД‡ stan kaЕјdego adresu URL: <code>200 OK</code>, <code>403</code>lub innД… odpowiedЕє.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">в„№пёЏ</span>
+        <div class="callout-body">Indeksowanie rД™czne wykorzystuje ten sam dzienny limit, co indeksowanie automatyczne. JeЕ›li limit zostanie osiД…gniД™ty, IndexFast umieЕ›ci adres URL w kolejce na nastД™pny dzieЕ„.</div>
+      </div>
+    </section>
+
+    <hr class="docs-hr">
+
+    <!-- в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ LIMITS в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ -->
+    <section class="docs-section" id="limits">
+      <h2 class="docs-h2">рџ“Љ Limity API</h2>
+      <p class="docs-p">Google zapewnia bezpЕ‚atny limit y <strong>200 adresГіw URL dziennie</strong> na konto usЕ‚ugi. IndexFast automatycznie monitoruje limit i zatrzymuje siД™ po jego osiД…gniД™ciu.</p>
+
+      <table class="docs-table">
+        <thead>
+          <tr><th>Plan</th><th>Adres URL / dzieЕ„</th><th>Witryny</th><th>Konta usЕ‚ug</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Rozpocznij (bezpЕ‚atnie)</td><td>10</td><td>1</td><td>1</td></tr>
+          <tr><td>ZAWODOWIEC</td><td>100</td><td>do 5</td><td>1</td></tr>
+          <tr><td>Agencja</td><td>1000</td><td>do 50</td><td>nieograniczony</td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout tip">
+        <span class="callout-icon">рџ’Ў</span>
+        <div class="callout-body">Limit dzienny jest aktualizowany codziennie <strong>00:00 UTC</strong>. JeЕ›li masz wiele witryn, limit jest automatycznie rozdzielany rГіwnomiernie miД™dzy nimi.</div>
+      </div>
+    </section>
+
+    <hr class="docs-hr">
+
+    <!-- в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ INTEGRATIONS в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ -->
+    <section class="docs-section" id="wordpress">
+      <h2 class="docs-h2">рџ”§ Integracje z platformami</h2>
+
+      <h3 class="docs-h3" id="wordpress">WordPressa</h3>
+      <p class="docs-p">JeЕ›li uЕјywasz <strong>Yoast SEO</strong> Lub <strong>Ranking matematyki</strong> вЂ” mapa witryny jest juЕј gotowa:</p>
+      <div class="platform-tags">
+        <span class="ptag"><span class="ptag-dot" style="background:#21759B"></span>Yoast SEO в†’ <code>/sitemap_index.xml</code></span>
+        <span class="ptag"><span class="ptag-dot" style="background:#f72a2a"></span>Ranga Matematyka в†’ <code>/sitemap_index.xml</code></span>
+        <span class="ptag"><span class="ptag-dot" style="background:#1e7c42"></span>Wszystko w jednym SEO в†’ <code>/sitemap.xml</code></span>
+      </div>
+      <div class="callout tip">
+        <span class="callout-icon">вњ…</span>
+        <div class="callout-body">Na swoim osobistym koncie IndexFast wprowadЕє adres URL mapy witryny: <code>https://twoja-site.com/sitemap_index.xml</code> вЂ” usЕ‚uga automatycznie rozpakuje wszystkie zaЕ‚Д…czone pliki.</div>
+      </div>
+      <p class="docs-p" style="margin-top:12px; font-size:0.85rem;">Potrzebujesz pomocy w integracji? Zastosuj do <a href="https://indexfast.pp.ua/docs/#support">wsparcie</a>.</p>
+
+      <h3 class="docs-h3" id="shopify">Shopify</h3>
+      <p class="docs-p">Shopify automatycznie generuje mapД™ witryny pod adresem <code>/sitemap.xml</code>. Obejmuje strony, produkty, kolekcje i wpisy na blogu.</p>
+      <div class="callout tip">
+        <span class="callout-icon">вњ…</span>
+        <div class="callout-body">Na swoim osobistym koncie IndexFast wprowadЕє adres URL mapy witryny: <code>https://your-store.myShopify.com/sitemap.xml</code> вЂ” a indeksowanie rozpocznie siД™ automatycznie.</div>
+      </div>
+      <p class="docs-p" style="margin-top:12px; font-size:0.85rem;">Potrzebujesz pomocy w integracji? Zastosuj do <a href="https://indexfast.pp.ua/docs/#support">wsparcie</a>.</p>
+
+      <h3 class="docs-h3" id="laravel">Laravel</h3>
+      <p class="docs-p">Polecamy pakiet do generowania mapy witryny w Laravel <code>spatie/Laravel-Sitemap</code>:</p>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">GRZMOTNД„Д†</span><button class="copy-btn" onclick="copyCode(this)">Kopia</button></div>
+        <pre>kompozytor wymaga mapy witryny spatie/Laravel</pre>
+      </div>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">PHP</span><button class="copy-btn" onclick="copyCode(this)">Kopia</button></div>
+        <pre><span class="k">uЕјywaД‡</span> <span class="n">Spatie\Sitemap\SitemapGenerator</span>;
+
+SitemapGenerator::create(<span class="s">вЂћhttps://twoja-witryna.comвЂќ</span>)
+    ->zapisz do pliku (Е›cieЕјka_publiczna (<span class="s">вЂћmapa witryny.xmlвЂќ</span>));</pre>
+      </div>
+      <p class="docs-p" style="margin-top:12px; font-size:0.85rem;">Potrzebujesz pomocy w integracji? Zastosuj do <a href="https://indexfast.pp.ua/docs/#support">wsparcie</a>.</p>
+
+      <h3 class="docs-h3" id="other">Inne platformy</h3>
+      <div class="platform-tags">
+        <span class="ptag"><span class="ptag-dot" style="background:#DF0067"></span>PrestaShop в†’ <code>/sitemap.xml</code></span>
+        <span class="ptag"><span class="ptag-dot" style="background:#23ADEF"></span>OpenCart в†’ ModuЕ‚ mapy witryny SEO</span>
+        <span class="ptag"><span class="ptag-dot" style="background:#FAAD00"></span>Wix в†’ <code>/sitemap.xml</code></span>
+        <span class="ptag"><span class="ptag-dot" style="background:#4353FF"></span>PrzepЕ‚yw sieci в†’ <code>/sitemap.xml</code></span>
+        <span class="ptag"><span class="ptag-dot" style="background:#F44321"></span>Joomla в†’ Wtyczka OSMap</span>
+      </div>
+      <div class="callout tip">
+        <span class="callout-icon">рџ’Ў</span>
+        <div class="callout-body">IndexFast wspГіЕ‚pracuje z kaЕјdД… platformД…, ktГіra generuje prawidЕ‚owy plik <code>mapa witryny.xml</code>. SprawdЕє plik pod adresem <code>https://twoja-site.com/sitemap.xml</code>.</div>
+      </div>
+      <p class="docs-p" style="margin-top:12px; font-size:0.85rem;">Potrzebujesz pomocy w integracji? Zastosuj do <a href="https://indexfast.pp.ua/docs/#support">wsparcie</a>.</p>
+    </section>
+
+    <hr class="docs-hr">
+
+    <!-- в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ API REFERENCE в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ -->
+    <section class="docs-section" id="api-auth">
+      <h2 class="docs-h2">рџ“Ў Dokumentacja API</h2>
+
+      <h3 class="docs-h3">UpowaЕјnienie</h3>
+      <p class="docs-p">UЕјywa Google Indexing API <strong>OAuth 2.0</strong> za poЕ›rednictwem konta usЕ‚ugi. IndexFast obsЕ‚uguje autoryzacjД™ automatycznie вЂ“ potrzebujesz jedynie klucza JSON.</p>
+      <p class="docs-p">Punkt koЕ„cowy, ktГіry ma otrzymaД‡ token:</p>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">HTTP</span><button class="copy-btn" onclick="copyCode(this)">Kopia</button></div>
+        <pre><span class="k">POST</span> https://oauth2.googleapis.com/token
+
+Typ zawartoЕ›ci: application/x-www-form-urlencoded
+
+<span class="n">typ_grantu</span>=urn:ietf:params:oauth:grant-type:jwt-bearer
+<span class="n">&twierdzenie</span>=<span class="v">{JWT_TOKEN}</span></pre>
+      </div>
+
+      <h3 class="docs-h3" id="api-submit">PrzesyЕ‚anie adresГіw URL do indeksowania</h3>
+
+      <table class="docs-table">
+        <thead>
+          <tr><th>Parametr</th><th>Typ</th><th>ObowiД…zkowy</th><th>Opis</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>adres URL</code></td><td>smyczkowy</td><td><span class="required">wymagany</span></td><td>PeЕ‚ny adres URL z https://</td></tr>
+          <tr><td><code>typ</code></td><td>wyliczenie</td><td><span class="required">wymagany</span></td><td><code>URL_AKTUALIZACJA</code> Lub <code>URL_USUNIДTY</code></td></tr>
+        </tbody>
+      </table>
+
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">HTTP</span><button class="copy-btn" onclick="copyCode(this)">Kopia</button></div>
+        <pre><span class="k">POST</span> https://indexing.googleapis.com/v3/urlNotifications:publikuj
+
+Autoryzacja: na okaziciela <span class="v">{ACCESS_TOKEN}</span>
+Content-Type: application/json
+
+{
+  <span class="s">вЂћadres URLвЂќ</span>: <span class="s">вЂћhttps://twoja-witryna.com/nowa-stronaвЂќ</span>,
+  <span class="s">typ</span>: <span class="s">вЂћURL_AKTUALIZACJAвЂќ</span>
+}</pre>
+      </div>
+
+      <p class="docs-p">PomyЕ›lna odpowiedЕє:</p>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">JSON</span><button class="copy-btn" onclick="copyCode(this)">Kopia</button></div>
+        <pre>{
+  <span class="s">вЂћurlNotificationMetadataвЂќ</span>: {
+    <span class="s">вЂћadres URLвЂќ</span>: <span class="s">вЂћhttps://twoja-witryna.com/nowa-stronaвЂќ</span>,
+    <span class="s">вЂћnajnowsza aktualizacjaвЂќ</span>: {
+      <span class="s">вЂћadres URLвЂќ</span>: <span class="s">вЂћhttps://twoja-witryna.com/nowa-stronaвЂќ</span>,
+      <span class="s">typ</span>: <span class="s">вЂћURL_AKTUALIZACJAвЂќ</span>,
+      <span class="s">вЂћpowiadomCzasвЂќ</span>: <span class="s">вЂћ2026-01-20T10:30:00ZвЂќ</span>
+    }
+  }
+}</pre>
+      </div>
+
+      <h3 class="docs-h3" id="api-status">Kontrola stanu adresu URL</h3>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">HTTP</span><button class="copy-btn" onclick="copyCode(this)">Kopia</button></div>
+        <pre><span class="k">DOSTAWAД†</span> https://indexing.googleapis.com/v3/urlNotifications/metadata
+    ?url=https://twoja-witryna.com/strona
+
+Autoryzacja: na okaziciela <span class="v">{ACCESS_TOKEN}</span></pre>
+      </div>
+
+      <h3 class="docs-h3" id="api-errors">Kody bЕ‚Д™dГіw</h3>
+      <table class="docs-table">
+        <thead><tr><th>Kod</th><th>PowГіd</th><th>RozwiД…zanie</th></tr></thead>
+        <tbody>
+          <tr><td><code>400</code></td><td>NieprawidЕ‚owy adres URL lub typ</td><td>SprawdЕє format i wartoЕ›Д‡ adresu URL <code>typ</code></td></tr>
+          <tr><td><code>403</code></td><td>Brak uprawnieЕ„ lub wyЕ‚Д…czony interfejs API</td><td>Dodaj konto usЕ‚ugi jako wЕ‚aЕ›ciciela w Search Console</td></tr>
+          <tr><td><code>429</code></td><td>Przekroczono dzienny limit</td><td>Poczekaj do nastД™pnego dnia lub skontaktuj siД™ z Google</td></tr>
+          <tr><td><code>500</code></td><td>BЕ‚Д…d po stronie Google</td><td>SprГіbuj ponownie za kilka minut</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <hr class="docs-hr">
+
+    <!-- в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ FAQ в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ -->
+    <section class="docs-section" id="faq">
+      <h2 class="docs-h2">вќ“ CzД™sto zadawane pytania</h2>
+
+      <h3 class="docs-h3">Jak dЕ‚ugo trwa indeksowanie po przesЕ‚aniu?</h3>
+      <p class="docs-p">Google zazwyczaj przetwarza ЕјД…dania w ramach <strong>24вЂ“48 godzin</strong>. W wiД™kszoЕ›ci przypadkГіw strony pojawiajД… siД™ w wyszukiwaniu juЕј nastД™pnego ranka po wysЕ‚aniu.</p>
+
+      <h3 class="docs-h3">Czy moЕјna przesЕ‚aД‡ wiД™cej niЕј 200 adresГіw URL dziennie?</h3>
+      <p class="docs-p">200 adresГіw URL to standardowy bezpЕ‚atny limit Google. W razie potrzeby moЕјesz zЕ‚oЕјyД‡ wniosek o zwiД™kszenie limitu poprzez Google Cloud Console. IndexFast automatycznie zatrzymuje siД™ po osiД…gniД™ciu limitu i wznawia nastД™pnego dnia.</p>
+
+      <h3 class="docs-h3">Czy korzystanie z interfejsu Indexing API jest bezpieczne dla SEO?</h3>
+      <p class="docs-p">Tak, to prawda <strong>urzД™dnik</strong> metoda zalecana przez samo Google. Brak ryzyka kary lub obniЕјenia ratingu вЂ“ wrД™cz przeciwnie, szybsza indeksacja poprawia konkurencyjnoЕ›Д‡.</p>
+
+      <h3 class="docs-h3">Indeks map witryn czy zwykЕ‚a mapa witryny?</h3>
+      <p class="docs-p">IndexFast obsЕ‚uguje oba typy. JeЕ›li przekaЕјesz link do <code>sitemap_index.xml</code> вЂ” skrypt automatycznie ominie wszystkie zaЕ‚Д…czone pliki i zapisze wszystkie adresy URL.</p>
+    </section>
+
+    <hr class="docs-hr">
+
+    <!-- в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ CHANGELOG в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ -->
+    <section class="docs-section" id="changelog">
+      <h2 class="docs-h2">рџ“‹ Lista zmian</h2>
+
+      <h3 class="docs-h3">wersja 2.4 вЂ” czerwiec 2026 r</h3>
+      <p class="docs-p">вЂ” <strong>Integracja z IndexNow</strong>: automatyczne przesyЕ‚anie adresu URL do Bing, Naver, Seznam.cz i Yep.<br>вЂ” Uruchomiony program partnerski (Program partnerski).<br>вЂ” Dodano interaktywny kalkulator ROI do strony gЕ‚Гіwnej.</p>
+
+      <h3 class="docs-h3">wersja 2.3 вЂ” marzec 2026 r</h3>
+      <p class="docs-p">вЂ” <strong>Autoryzacja przez Google (OAuth)</strong>: zaloguj siД™ jednym klikniД™ciem bez haseЕ‚.<br>- WielojД™zycznoЕ›Д‡: Dodano obsЕ‚ugД™ 8 nowych jД™zykГіw.<br>вЂ” Taryfa zostaЕ‚a uruchomiona <strong>Agencja</strong> z obsЕ‚ugД… do 50 witryn i raportami typu White-label.</p>
+
+      <h3 class="docs-h3">wersja 2.2 вЂ” styczeЕ„ 2026 r</h3>
+      <p class="docs-p">вЂ” ObsЕ‚uga indeksu map witryn (automatyczne przeglД…danie zaЕ‚Д…czonych plikГіw o dowolnej gЕ‚Д™bokoЕ›ci).<br>вЂ” Publiczny interfejs API REST dla programistГіw.<br>вЂ” Poprawione rejestrowanie i wyЕ›wietlanie statusГіw 200/403 w czasie rzeczywistym.</p>
+
+      <h3 class="docs-h3">wersja 2.0 вЂ“ grudzieЕ„ 2024</h3>
+      <p class="docs-p">вЂ” Uruchomienie platformy chmurowej SaaS (wczeЕ›niej usЕ‚uga dziaЕ‚aЕ‚a jako skrypt lokalny).<br>вЂ” Automatyczny harmonogram dzienny z zarzД…dzaniem limitami.</p>
+
+      <h3 class="docs-h3">wersja 1.0 вЂ“ wrzesieЕ„ 2024</h3>
+      <p class="docs-p">вЂ” Pierwsze uruchomienie usЕ‚ugi.<br>вЂ” Podstawowe przesyЕ‚anie adresu URL za poЕ›rednictwem interfejsu API Google Indexing.</p>
+    </section>
+
+    <!-- в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ SUPPORT в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ -->
+    <section class="docs-section" id="support">
+      <h2 class="docs-h2">рџ’¬ Wsparcie</h2>
+      <p class="docs-p">JeЕ›li masz jakieЕ› pytania lub problemy, jesteЕ›my gotowi pomГіc:</p>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">рџ“±</div>
+          <div class="step-body">
+            <strong>Czat telegramowy</strong>
+            <p>Najszybszym sposobem uzyskania odpowiedzi jest <a href="https://t.me/indexfastgoogle" target="_blank" rel="noopener noreferrer">t.me/IndexFastgoogle</a>. Ељredni czas reakcji wynosi do 2 godzin.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">вњ‰пёЏ</div>
+          <div class="step-body">
+            <strong>Wsparcie e-mailowe</strong>
+            <p>Napisz do <a href="mailto:indexfastapp@gmail.com">indeksfastapp@gmail.com</a>. Odpowiadamy w ciД…gu jednego dnia roboczego.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">вќ“</div>
+          <div class="step-body">
+            <strong>CzД™sto zadawane pytania</strong>
+            <p>SprawdЕє sekcjД™ <a href="#faq">CzД™sto zadawane pytania</a> вЂ” znajdujД… siД™ tam odpowiedzi na najczД™Е›ciej zadawane pytania.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">рџ‘ЁвЂЌрџ’»</div>
+          <div class="step-body">
+            <strong>Pomoc w rozwoju i SEO</strong>
+            <p>Potrzebujesz integracji, audytu lub wsparcia witryny? ProszД™ o kontakt <a href="https://devroman.dev" target="_blank" rel="noopener noreferrer">devroman.dev</a> Lub <a href="https://devroman.pp.ua" target="_blank" rel="noopener noreferrer">devroman.pp.ua</a>. Programista i specjalista SEO pomogД… w dostosowaniu lub opracowaniu nowej funkcjonalnoЕ›ci pod klucz (od projektu po REST API). Stos technologii: PHP, Laravel, PrestaShop, Next.js, React, Node.js, Docker, Vue, Nuxt, Yii2, WordPress, WooCommerce itp. Koszt: 25 USD/godz.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="docs-hr">
+
+    <!-- PREV / NEXT -->
+    <div class="docs-nav-btns">
+      <a href="#overview" class="docs-nav-btn">
+        <span class="dnb-label">в†ђ WrГіД‡</span>
+        <span class="dnb-title">Recenzja</span>
+      </a>
+      <a href="/blog/" class="docs-nav-btn next">
+        <span class="dnb-label">Dalej в†’</span>
+        <span class="dnb-title">Bloga</span>
+      </a>
+    </div>
+
+  </main>
+
+</div>
+
+<!-- FOOTER -->
+<footer role="contentinfo">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="/" class="logo">Indeks<span>Szybko</span></a>
+      <p>UsЕ‚uga automatycznego indeksowania stron witryn w Google za poЕ›rednictwem oficjalnego Google Indexing API.</p>
+    </div>
+    <div class="footer-col">
+      <p class="footer-title">Produkt</p>
+      <ul>
+        <li><a href="/#how-it-works">Jak to dziaЕ‚a</a></li>
+        <li><a href="/#features">Zalety</a></li>
+        <li><a href="/#pricing">Taryfy</a></li>
+        <li><a href="/docs/">Dokumentacja</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <p class="footer-title">Firma</p>
+      <ul>
+        <li><a href="/about.html">O nas</a></li>
+        <li><a href="/blog/">Bloga</a></li>
+        <li><a href="/affiliate.html">Program partnerski</a></li>
+        <li><a href="/contacts.html">ЕЃД…cznoЕ›Д‡</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <p class="footer-title">Wsparcie</p>
+      <ul>
+        <li><a href="/#faq">CzД™sto zadawane pytania</a></li>
+        <li><a href="https://t.me/indexfastgoogle" target="_blank" rel="noopener noreferrer">Czat telegramowy</a></li>
+        <li><a href="mailto:indexfastapp@gmail.com">Wsparcie e-mailowe</a></li>
+        <li><a href="/status.html">Stan usЕ‚ugi</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>В© 2026 IndexFast. Wszelkie prawa zastrzeЕјone.</p>
+    <div style="display:flex; gap:20px;">
+      <a href="/privacy-policy.html">PrywatnoЕ›Д‡</a>
+      <a href="/terms.html">Warunki</a>
+    </div>
+  </div>
+  <button id="backToTop" class="back-to-top" aria-label="Р’РіРѕСЂСѓ">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+  </button>
+</footer>
+
+<script>
+  // в”Ђв”Ђ Tabs
+  function switchTab(containerId, idx) {
+    const container = document.getElementById(containerId);
+    container.querySelectorAll('.tab-btn').forEach((b, i) => b.classList.toggle('active', i === idx));
+    container.querySelectorAll('.tab-pane').forEach((p, i) => p.classList.toggle('active', i === idx));
+  }
+
+  // в”Ђв”Ђ Copy code
+  function copyCode(btn) {
+    const pre = btn.closest('.code-block').querySelector('pre');
+    const text = pre.innerText || pre.textContent;
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = 'РЎРєРѕРїС–Р№РѕРІР°РЅРѕ!';
+      btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = 'РљРѕРїС–СЋРІР°С‚Рё'; btn.classList.remove('copied'); }, 2000);
+    }).catch(() => {
+      const ta = document.createElement('textarea');
+      ta.value = text; document.body.appendChild(ta); ta.select();
+      document.execCommand('copy'); document.body.removeChild(ta);
+      btn.textContent = 'РЎРєРѕРїС–Р№РѕРІР°РЅРѕ!';
+      setTimeout(() => { btn.textContent = 'РљРѕРїС–СЋРІР°С‚Рё'; }, 2000);
+    });
+  }
+
+  // в”Ђв”Ђ Active sidebar link on scroll
+  const sections = document.querySelectorAll('section[id], h2[id], h3[id]');
+  const sideLinks = document.querySelectorAll('.sidebar-link');
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        sideLinks.forEach(l => {
+          l.classList.toggle('active', l.getAttribute('href') === '#' + id);
+        });
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '-80px 0px -50% 0px' });
+
+  sections.forEach(s => observer.observe(s));
+
+  // в”Ђв”Ђ Search functionality
+  const searchInput = document.getElementById('docsSearch');
+  if (searchInput) {
+    searchInput.addEventListener('input', (e) => {
+      const query = e.target.value.toLowerCase().trim();
+      const docsSections = document.querySelectorAll('.docs-section');
+      
+      docsSections.forEach(section => {
+        if (!query) {
+          section.style.display = '';
+          return;
+        }
+        const text = section.innerText.toLowerCase();
+        section.style.display = text.includes(query) ? '' : 'none';
+      });
+    });
+
+    // Keyboard shortcut Cmd+K or Ctrl+K
+    window.addEventListener('keydown', (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        searchInput.focus();
+      }
+    });
+  }
+
+  // Mobile sidebar auto-close on link click
+  document.querySelectorAll('.sidebar-link').forEach(link => {
+    link.addEventListener('click', () => {
+      document.querySelector('.sidebar').classList.remove('open');
+    });
+  });
+
+  // Back to Top
+  const backToTop = document.getElementById('backToTop');
+  if (backToTop) {
+    window.addEventListener('scroll', () => {
+      if (window.pageYOffset > 500) {
+        backToTop.classList.add('visible');
+      } else {
+        backToTop.classList.remove('visible');
+      }
+    });
+    backToTop.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+</script>
+</body>
+</html>
+
