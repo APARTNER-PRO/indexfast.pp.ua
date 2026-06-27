@@ -115,6 +115,11 @@
       "source": "/blog/building-a-navigation-component",
       "destination": "/blog/building-a-navigation-component.html",
       "permanent": true
+    },
+    {
+      "source": "/blog/building-a-navigation-component/",
+      "destination": "/blog/building-a-navigation-component.html",
+      "permanent": true
     }
   ],
   "rewrites": [
