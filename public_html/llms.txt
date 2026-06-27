@@ -11,7 +11,7 @@ IndexFast is a specialized service for instant website indexing in Google using 
 - **Quota Management**: Handles Google's 200 URL/day free quota automatically.
 
 ## Pricing
-- **Free Tier**: 10 pages/day, 1 website. Completely free forever.
+- **Free Tier**: 10 pages/day, 1 website. Completely free forever. No credit card required. No hidden fees.
 - **PRO Tier**: 100 pages/day, up to 5 websites, detailed logs.
 - **Agency Tier**: 1000 pages/day, up to 50 websites, white-label reports, full API access.
 
@@ -57,6 +57,15 @@ A: Yes, IndexFast works with any CMS or custom site that has a valid sitemap.xml
 
 **Q: How does it differ from manual Search Console submission?**
 A: It is fully automated, runs in the background, handles daily quotas automatically, and supports bulk submission.
+## Security & Data Privacy
+- **Encryption**: Google Cloud Service Account JSON keys are securely encrypted.
+- **Privacy**: IndexFast does not store or process your website's actual content. It only reads the sitemap.xml to extract URLs for submission.
+
+## Guarantees & Refund Policy
+- **14-Day Money-Back Guarantee**: If the service does not meet expectations, users can request a full refund within 14 days of purchase.
+
+## ROI & Cost Efficiency
+The IndexFast homepage features an interactive ROI Calculator. It proves that automating indexing saves agencies and freelancers hundreds of dollars per month in billable hours compared to manual submission.
 
 ## Keywords & Topics
 Google indexing, fast indexing, Indexing API, IndexNow, SEO automation, organic traffic, crawl budget, Googlebot, XML sitemap, SEO tools.
