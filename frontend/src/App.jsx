@@ -5,10 +5,10 @@ import {
 } from "react";
 import { useNavigate } from "react-router-dom";
 import { useQueryClient }              from "@tanstack/react-query";
-import { useTranslation }              from "react-i18next";
 import { useStats, useDeleteSite, useToggleSite } from "./hooks/useStats.js";
 import { apiClient } from "./api/client.js";
 import { useToast }          from "./hooks/useToast.js";
+import i18n from "./i18n/index.js";
 import { AddSiteModal }      from "./components/AddSiteModal.jsx";
 import { GscImportModal }  from "./components/GscImportModal.jsx";
 import { RunModal }          from "./components/RunModal.jsx";
@@ -247,7 +247,15 @@ const Topbar = memo(function Topbar({ activePage, onRefresh, onAddSite, onImport
 // ══════════════════════════════════════════════
 export default function App() {
   const navigate = useNavigate();
-  const { t } = useTranslation();
+  const [, forceUpdate] = useState(0);
+  const t = i18n.t.bind(i18n);
+
+  // Re-render on language change so all t() calls pick up the new language
+  useEffect(() => {
+    const handler = () => forceUpdate(n => n + 1);
+    i18n.on("languageChanged", handler);
+    return () => i18n.off("languageChanged", handler);
+  }, []);
 
   // ── Email verified: показуємо toast при ?verified=1
   useEffect(() => {
