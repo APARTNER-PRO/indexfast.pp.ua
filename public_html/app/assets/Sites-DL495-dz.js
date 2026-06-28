@@ -1,4 +1,4 @@
-import{j as e}from"./vendor-query-BEUqgBPG.js";import{r as g}from"./vendor-router-nbMWPCiB.js";import{S as $,E as C}from"./EditSiteModal-CiyogIxv.js";import{u as T,a as R,B as b}from"./App-BVng47vr.js";import{C as r}from"./index-D8PmqlDr.js";import"./client-DbjFF3zR.js";const F=`
+import{j as e}from"./vendor-query-BEUqgBPG.js";import{r as g}from"./vendor-router-nbMWPCiB.js";import{S as $,E as C}from"./EditSiteModal-BWPYyli9.js";import{u as T,a as R,B as b}from"./App-Ceicg8I_.js";import{C as r}from"./index-6vzjThVz.js";import"./client-DbjFF3zR.js";const F=`
   @media (max-width: 640px) {
     .sites-limit-banner { flex-direction: column !important; align-items: flex-start !important; gap: 10px !important; }
     .sites-limit-banner .sites-limit-btn { width: 100%; }

@@ -21,11 +21,12 @@ export const PLAN_COLORS = {
   agency: C.gold,
 };
 
+// src/constants.js
 export const NAV_ITEMS = [
-  { id: "overview",  icon: "◈", label: "Огляд"           },
-  { id: "gsc",       icon: "◉", label: "GSC статистика"   },
-  { id: "sites",     icon: "⊞", label: "Мої сайти"        },
-  { id: "logs",      icon: "≡", label: "Логи"             },
-  { id: "billing",   icon: "◇", label: "Підписка"         },
-  { id: "profile",   icon: "◉", label: "Профіль"          },
+  { id: "overview",  icon: "◈", labelKey: "nav.overview" },
+  { id: "gsc",       icon: "◉", labelKey: "nav.gsc" },
+  { id: "sites",     icon: "⊞", labelKey: "nav.sites" },
+  { id: "logs",      icon: "≡", labelKey: "nav.logs" },
+  { id: "billing",   icon: "◇", labelKey: "nav.billing" },
+  { id: "profile",   icon: "◉", labelKey: "nav.profile" },
 ];
