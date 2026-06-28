@@ -449,8 +449,8 @@ export default function Auth() {
 
               {error && <ErrorAlert>{error}</ErrorAlert>}
 
-              <Field label="Email">
-                <Input type="email" value={forgotEmail} placeholder="your@email.com"
+              <Field label={t("auth.email")}>
+                <Input type="email" value={forgotEmail} placeholder={t("auth.emailPlaceholder")}
                   onChange={e => setForgotEmail(e.target.value)}/>
               </Field>
 

@@ -113,6 +113,11 @@ const translations = {
       currentPasswordPlaceholder: "Поточний пароль",
       or: "або",
       continueWithGoogle: "Продовжити з Google",
+      emailPlaceholder: "your@email.com",
+      passwordPlaceholder: "••••••••",
+      namePlaceholder: "Іван",
+      surnamePlaceholder: "Коваль",
+      passwordHint: "Мінімум 8 символів",
     },
     overview: {
       title: "Огляд",
