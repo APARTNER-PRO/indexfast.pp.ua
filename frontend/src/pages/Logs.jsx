@@ -235,7 +235,7 @@ export default memo(function Logs({ sites }) {
           <div style={{ maxHeight: "calc(100vh - 280px)", overflowY: "auto", overflowX: "auto",
             WebkitOverflowScrolling: "touch" }}>
             {logs.map((l, i) => (
-              <LogRow key={l.id ?? i} log={l} icons={icons} colors={colors}/>
+              <LogRow key={l.id ?? i} log={l} icons={icons} colors={colors} t={t}/>
             ))}
           </div>
         )}
@@ -281,7 +281,7 @@ export default memo(function Logs({ sites }) {
   );
 });
 
-const LogRow = memo(function LogRow({ log: l, icons, colors }) {
+const LogRow = memo(function LogRow({ log: l, icons, colors, t }) {
   const [copied, setCopied] = useState(false);
 
   function copyUrl() {
