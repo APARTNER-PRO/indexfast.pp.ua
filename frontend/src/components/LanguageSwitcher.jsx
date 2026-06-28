@@ -1,5 +1,5 @@
 // src/components/LanguageSwitcher.jsx
-import { useTranslation } from "react-i18next";
+import * as reactI18next from "react-i18next";
 
 const LANGS = [
   { code: "uk",  label: "UA", flag: "🇺🇦" },
@@ -13,6 +13,8 @@ const LANGS = [
 ];
 
 export default function LanguageSwitcher() {
+  console.log("REACT-I18NEXT EXPORTS:", reactI18next);
+  const { useTranslation } = reactI18next;
   const { i18n } = useTranslation();
 
   const switchTo = (code) => {
