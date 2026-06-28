@@ -408,15 +408,16 @@ export default function Billing() {
             if (!isMobile) {
               return (
                 <div style={{ display: 'flex', gap: 16, paddingTop: 20 }}>
-                  {planEntries.map(([id, p]) => {
+                      {planEntries.map(([id, p]) => {
                     const priceVal     = p[selPeriod] || 0;
                     const isEnterprise = !!p.enterprise;
                     const priceNum     = isEnterprise ? '' : (priceVal > 0 ? priceVal.toLocaleString('uk-UA') : '0');
+                    const priceUah     = isEnterprise ? 0 : (p[selPeriod + '_uah'] || 0);
                     const desc         = isEnterprise ? 'під ваші потреби' : (priceVal > 0 ? '/ ' + PERIOD_LABELS[selPeriod] : 'назавжди безкоштовно');
                     return (
                       <div key={id} style={{ flex: '1 1 0', minWidth: 260 }}>
                         <PlanCard
-                          plan={{ id, name: p.label, priceNum, desc,
+                          plan={{ id, name: p.label, priceNum, priceUah, desc,
                                   currency: data?.currency,
                                   popular: !!p.popular, enterprise: isEnterprise,
                                   features: p.features || [] }}
@@ -439,6 +440,7 @@ export default function Billing() {
             const priceVal     = p[selPeriod] || 0;
             const isEnterprise = !!p.enterprise;
             const priceNum     = isEnterprise ? '' : (priceVal > 0 ? priceVal.toLocaleString('uk-UA') : '0');
+            const priceUah     = isEnterprise ? 0 : (p[selPeriod + '_uah'] || 0);
             const desc         = isEnterprise ? 'під ваші потреби' : (priceVal > 0 ? '/ ' + PERIOD_LABELS[selPeriod] : 'назавжди безкоштовно');
 
             return (
@@ -451,9 +453,9 @@ export default function Billing() {
                 >
                   <PlanCard
                     key={id}
-                    plan={{ id, name: p.label, priceNum, desc,
-                            popular: !!p.popular, enterprise: isEnterprise,
+                    plan={{ id, name: p.label, priceNum, priceUah, desc,
                             currency: data?.currency,
+                            popular: !!p.popular, enterprise: isEnterprise,
                             features: p.features || [] }}
                     isCurrent={data?.current_plan === id}
                     isSelected={selPlan === id}
@@ -524,43 +526,50 @@ export default function Billing() {
             </h3>
 
             {plans[selPlan] && plans[selPlan][selPeriod] > 0 && (
-              <div style={{ display: 'flex', alignItems: 'baseline', gap: '12px', flexWrap: 'wrap', marginTop: '4px' }}>
-                {appliedPromo ? (
-                  <>
-                    {/* Стара ціна */}
-                    <span style={{ textDecoration: 'line-through', color: '#6a6a85', fontSize: '15px', fontWeight: 600 }}>
-                      {currencySymbol}{plans[selPlan][selPeriod].toLocaleString('uk-UA')}
-                    </span>
+              <div>
+                <div style={{ display: 'flex', alignItems: 'baseline', gap: '12px', flexWrap: 'wrap', marginTop: '4px' }}>
+                  {appliedPromo ? (
+                    <>
+                      {/* Стара ціна */}
+                      <span style={{ textDecoration: 'line-through', color: '#6a6a85', fontSize: '15px', fontWeight: 600 }}>
+                        {currencySymbol}{plans[selPlan][selPeriod].toLocaleString('uk-UA')}
+                      </span>
 
-                    {/* Нова ціна */}
-                    <span style={{ fontFamily: 'Syne, sans-serif', fontWeight: 900, fontSize: '32px', color: '#00ff88', lineHeight: 1 }}>
-                      {currencySymbol}{appliedPromo.final_amount.toLocaleString('uk-UA')}
-                    </span>
+                      {/* Нова ціна */}
+                      <span style={{ fontFamily: 'Syne, sans-serif', fontWeight: 900, fontSize: '32px', color: '#00ff88', lineHeight: 1 }}>
+                        {currencySymbol}{appliedPromo.final_amount.toLocaleString('uk-UA')}
+                      </span>
 
-                    {/* Період */}
-                    <span style={{ color: '#a0a0c0', fontSize: '14px', fontWeight: 600 }}>
-                      / {PERIOD_LABELS[selPeriod]}
-                    </span>
+                      {/* Період */}
+                      <span style={{ color: '#a0a0c0', fontSize: '14px', fontWeight: 600 }}>
+                        / {PERIOD_LABELS[selPeriod]}
+                      </span>
 
-                    {/* Бейдж знижки */}
-                    <span style={{ display: 'inline-block', background: 'rgba(0, 255, 136, 0.1)', color: '#00ff88',
-                                  border: '1px solid rgba(0, 255, 136, 0.2)', borderRadius: '100px',
-                                  padding: '4px 10px', fontSize: '12px', fontWeight: 700 }}>
-                      -{appliedPromo.discount_type === 'percentage' ? `${appliedPromo.discount_value}%` : `${currencySymbol}${appliedPromo.discount_value}`}
-                    </span>
-                  </>
-                ) : (
-                  <>
-                    {/* Стандартна ціна */}
-                    <span style={{ fontFamily: 'Syne, sans-serif', fontWeight: 900, fontSize: '32px', color: '#fff', lineHeight: 1 }}>
-                      {currencySymbol}{plans[selPlan][selPeriod].toLocaleString('uk-UA')}
-                    </span>
+                      {/* Бейдж знижки */}
+                      <span style={{ display: 'inline-block', background: 'rgba(0, 255, 136, 0.1)', color: '#00ff88',
+                                    border: '1px solid rgba(0, 255, 136, 0.2)', borderRadius: '100px',
+                                    padding: '4px 10px', fontSize: '12px', fontWeight: 700 }}>
+                        -{appliedPromo.discount_type === 'percentage' ? `${appliedPromo.discount_value}%` : `${currencySymbol}${appliedPromo.discount_value}`}
+                      </span>
+                    </>
+                  ) : (
+                    <>
+                      {/* Стандартна ціна */}
+                      <span style={{ fontFamily: 'Syne, sans-serif', fontWeight: 900, fontSize: '32px', color: '#fff', lineHeight: 1 }}>
+                        {currencySymbol}{plans[selPlan][selPeriod].toLocaleString('uk-UA')}
+                      </span>
 
-                    {/* Період */}
-                    <span style={{ color: '#a0a0c0', fontSize: '14px', fontWeight: 600 }}>
-                      / {PERIOD_LABELS[selPeriod]}
-                    </span>
-                  </>
+                      {/* Період */}
+                      <span style={{ color: '#a0a0c0', fontSize: '14px', fontWeight: 600 }}>
+                        / {PERIOD_LABELS[selPeriod]}
+                      </span>
+                    </>
+                  )}
+                </div>
+                {plans[selPlan] && plans[selPlan][selPeriod + '_uah'] > 0 && data?.currency !== 'UAH' && (
+                  <p style={{ fontSize: 12, color: '#6a6a85', marginTop: '8px' }}>
+                    ≈ ₴{plans[selPlan][selPeriod + '_uah'].toLocaleString('uk-UA')} / {PERIOD_LABELS[selPeriod]}
+                  </p>
                 )}
               </div>
             )}
@@ -755,6 +764,11 @@ export default function Billing() {
                 <span style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, color: '#fff', fontSize: 16 }}>
                   {currencySymbol}{manualAmount !== null ? manualAmount.toLocaleString('uk-UA') : plans[selPlan][selPeriod].toLocaleString('uk-UA')}
                 </span>
+                {data?.currency !== 'UAH' && plans[selPlan][selPeriod + '_uah'] > 0 && (
+                  <span style={{ color: '#6a6a85', fontSize: 12, marginLeft: 4, fontWeight: 600 }}>
+                    ₴{plans[selPlan][selPeriod + '_uah'].toLocaleString('uk-UA')}
+                  </span>
+                )}
               </>
             )}
           </div>
@@ -808,6 +822,11 @@ export default function Billing() {
                                    color: '#00ff88', letterSpacing: '-0.02em' }}>
                       {currencySymbol}{manualAmount !== null ? manualAmount.toLocaleString('uk-UA') : plans[selPlan][selPeriod].toLocaleString('uk-UA')}
                     </span>
+                    {plans[selPlan] && plans[selPlan][selPeriod + '_uah'] > 0 && data?.currency !== 'UAH' && (
+                      <span style={{ fontSize: 12, color: '#6a6a85', marginTop: 2, fontWeight: 600 }}>
+                        ≈ ₴{plans[selPlan][selPeriod + '_uah'].toLocaleString('uk-UA')}
+                      </span>
+                    )}
                   </div>
                 </div>
               )}
@@ -1219,7 +1238,7 @@ const PlanCard = ({ plan: p, isCurrent, isSelected, onSelect, onBuy, busy, metho
       </p>
 
       {/* Price — {CURRENCY_SYMBOLS[p.currency] || '₴'} маленька + велике число */}
-      <div style={{ display: 'flex', alignItems: 'flex-start', lineHeight: 1, marginBottom: 6 }}>
+      <div style={{ display: 'flex', alignItems: 'flex-start', lineHeight: 1, marginBottom: 4 }}>
         {!isEnterprise && (
           <span style={{ fontFamily: 'Syne, sans-serif', fontWeight: 700,
                          fontSize: 18, color: '#fff', marginTop: 4, marginRight: 2,
@@ -1231,6 +1250,11 @@ const PlanCard = ({ plan: p, isCurrent, isSelected, onSelect, onBuy, busy, metho
           {isEnterprise ? 'Індивідуально' : p.priceNum}
         </span>
       </div>
+      {!isEnterprise && p.priceUah > 0 && p.currency !== 'UAH' && (
+        <p style={{ fontSize: 11, color: '#6a6a85', marginBottom: 12, marginTop: -2 }}>
+          ≈ ₴{p.priceUah.toLocaleString('uk-UA')}
+        </p>
+      )}
 
       {/* Period */}
       <p style={{ fontSize: 13, color: '#4a4a68', marginBottom: 24 }}>{p.desc}</p>
