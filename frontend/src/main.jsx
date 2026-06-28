@@ -11,6 +11,9 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { C } from "./constants.js";
 import i18n from "./i18n/index.js";
 
+// Ensure i18n is initialized (import side-effect)
+console.log("[i18n] language:", i18n.language);
+
 // ── Lazy chunks
 const Auth          = lazy(() => import("./pages/Auth.jsx"));
 const ResetPassword = lazy(() => import("./pages/ResetPassword.jsx"));
