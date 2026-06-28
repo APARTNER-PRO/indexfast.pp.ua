@@ -31,10 +31,6 @@ export default defineConfig({
     emptyOutDir: true,
     rollupOptions: {
       output: {
-        manualChunks: {
-          "vendor-react":  ["react", "react-dom", "react-router-dom"],
-          "vendor-query":  ["@tanstack/react-query"],
-        },
         chunkFileNames: "assets/[name]-[hash].js",
         entryFileNames: "assets/[name]-[hash].js",
         assetFileNames: "assets/[name]-[hash][extname]",
