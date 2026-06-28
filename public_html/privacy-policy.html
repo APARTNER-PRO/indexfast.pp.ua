@@ -114,6 +114,122 @@
       background: rgba(0,255,136,0.05); border: 1px solid rgba(0,255,136,0.15);
       border-radius: 12px; padding: 20px 24px; margin: 20px 0;
       color: rgba(240,240,248,0.85); font-size: 0.9rem;
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "IndexFast",
+    "url": "https://indexfast.pp.ua",
+    "logo": "https://indexfast.pp.ua/logo.png"
+  }
+  </script>
+  <title>Політика конфіденційності — IndexFast</title>
+  <meta name="description" content="Політика конфіденційності сервісу IndexFast. Як ми збираємо, використовуємо та захищаємо ваші персональні дані.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://indexfast.pp.ua/privacy-policy.html">
+    <meta property="og:type" content="website">
+  <meta property="og:url" content="https://indexfast.pp.ua/privacy-policy.html">
+  <meta property="og:title" content="Політика конфіденційності — IndexFast">
+  <meta property="og:description" content="Як IndexFast збирає, зберігає та захищає ваші персональні дані.">
+  <meta property="og:image" content="https://indexfast.pp.ua/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="uk_UA">
+  <meta property="og:site_name" content="IndexFast">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Політика конфіденційності — IndexFast">
+  <meta name="twitter:description" content="Як IndexFast збирає, зберігає та захищає ваші персональні дані.">
+  <meta name="twitter:image" content="https://indexfast.pp.ua/og-image.jpg">
+
+    <link rel="preload" as="style" crossorigin href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --black: #050508; --dark: #0d0d14; --card: #12121c;
+      --border: rgba(255,255,255,0.07); --green: #00ff88;
+      --white: #f0f0f8; --muted: #7a7a95;
+      --font-display: 'Syne', sans-serif; --font-body: 'DM Sans', sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--black); color: var(--white); font-family: var(--font-body); font-weight: 300; line-height: 1.7; }
+
+    /* NAV */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      padding: 20px 60px; display: flex; align-items: center; justify-content: space-between;
+      background: rgba(5,5,8,0.95); backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+    }
+    .logo { font-family: var(--font-display); font-size: 1.4rem; font-weight: 800; letter-spacing: -0.03em; color: var(--white); text-decoration: none; }
+    .logo span { color: var(--green); }
+    .nav-back { color: var(--muted); text-decoration: none; font-size: 0.875rem; display: flex; align-items: center; gap: 6px; transition: color 0.2s; }
+    .nav-back:hover { color: var(--white); }
+
+    /* HERO */
+    .page-hero {
+      padding: 80px 40px 60px; text-align: center;
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(to bottom, rgba(0,255,136,0.04) 0%, transparent 100%);
+    }
+    .page-tag { font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--green); margin-bottom: 16px; }
+    .page-title { font-family: var(--font-display); font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; letter-spacing: -0.03em; margin-bottom: 16px; }
+    .page-meta { color: var(--muted); font-size: 0.9rem; }
+    .page-meta span { color: var(--green); }
+
+    /* LAYOUT */
+    .layout { display: grid; grid-template-columns: 260px 1fr; gap: 60px; max-width: 1100px; margin: 0 auto; padding: 60px 40px 100px; align-items: start; }
+
+    /* SIDEBAR */
+    .sidebar { position: sticky; top: 100px; }
+    .sidebar-title { font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 16px; }
+    .sidebar-nav { list-style: none; display: flex; flex-direction: column; gap: 4px; }
+    .sidebar-nav a {
+      display: block; padding: 8px 14px; border-radius: 8px; color: var(--muted);
+      text-decoration: none; font-size: 0.875rem; border-left: 2px solid transparent;
+      transition: all 0.2s;
+    }
+    .sidebar-nav a:hover, .sidebar-nav a.active { color: var(--white); border-left-color: var(--green); background: rgba(0,255,136,0.05); }
+
+    /* CONTENT */
+    .content { min-width: 0; }
+    .section { margin-bottom: 56px; padding-bottom: 56px; border-bottom: 1px solid var(--border); }
+    .section:last-child { border-bottom: none; }
+    .section h2 {
+      font-family: var(--font-display); font-size: 1.5rem; font-weight: 700;
+      margin-bottom: 20px; display: flex; align-items: center; gap: 12px;
+      scroll-margin-top: 120px;
+    }
+    .section h2 .icon { font-size: 1.2rem; }
+    .section p { color: rgba(240,240,248,0.8); margin-bottom: 16px; font-size: 0.975rem; }
+    .section p:last-child { margin-bottom: 0; }
+    .section ul, .section ol { padding-left: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
+    .section ul li, .section ol li {
+      display: flex; align-items: flex-start; gap: 10px;
+      color: rgba(240,240,248,0.8); font-size: 0.975rem;
+    }
+    .section ul li::before { content: '—'; color: var(--green); flex-shrink: 0; margin-top: 1px; }
+    .section ol { counter-reset: ol-counter; }
+    .section ol li { counter-increment: ol-counter; }
+    .section ol li::before { content: counter(ol-counter) '.'; color: var(--green); font-family: var(--font-display); font-weight: 700; flex-shrink: 0; min-width: 20px; }
+
+    .highlight-box {
+      background: rgba(0,255,136,0.05); border: 1px solid rgba(0,255,136,0.15);
+      border-radius: 12px; padding: 20px 24px; margin: 20px 0;
+      color: rgba(240,240,248,0.85); font-size: 0.9rem;
     }
     .highlight-box strong { color: var(--green); }
 
@@ -121,12 +237,16 @@
     a.inline-link:hover { border-bottom-color: var(--green); }
 
     /* FOOTER */
-    footer { background: var(--dark); border-top: 1px solid var(--border); padding: 32px 40px; text-align: center; }
-    .footer-links { display: flex; justify-content: center; gap: 32px; margin-bottom: 16px; flex-wrap: wrap; }
-    .footer-links a { color: var(--muted); text-decoration: none; font-size: 0.875rem; transition: color 0.2s; }
-    .footer-links a:hover { color: var(--white); }
-    .footer-links a.active { color: var(--green); }
-    footer p { color: var(--muted); font-size: 0.8rem; }
+    footer { background: var(--dark); border-top: 1px solid var(--border); padding: 60px 40px 40px; }
+    .footer-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 60px; text-align: left; }
+    .footer-brand p { color: var(--muted); font-size: 0.9rem; line-height: 1.7; margin-top: 16px; max-width: 280px; }
+    .footer-col .footer-title { font-family: var(--font-display); font-weight: 700; margin-bottom: 20px; font-size: 0.9rem; letter-spacing: 0.05em; color: var(--white); }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 12px; padding: 0; }
+    .footer-col ul a { color: var(--muted); text-decoration: none; font-size: 0.9rem; transition: color 0.2s; }
+    .footer-col ul a:hover { color: var(--white); }
+    .footer-bottom { max-width: 1200px; margin: 48px auto 0; padding-top: 28px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; color: var(--muted); }
+    .footer-bottom a { color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .footer-bottom a:hover { color: var(--white); }
 
     /* ─── BACK TO TOP ─── */
     .back-to-top {
@@ -167,7 +287,10 @@
       .page-hero { padding: 60px 20px 40px; }
       .layout { grid-template-columns: 1fr; padding: 40px 20px 60px; gap: 40px; }
       .sidebar { position: static; }
-      footer { padding: 24px 20px; }
+      .footer-grid { grid-template-columns: 1fr; gap: 40px; text-align: center; }
+      .footer-brand p { margin: 16px auto 0; }
+      .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+      footer { padding: 40px 20px; }
     }
       .nav-login {
       color: var(--muted, #7a7a95);
@@ -456,3 +579,5 @@
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 </script>
+</body>
+</html>
