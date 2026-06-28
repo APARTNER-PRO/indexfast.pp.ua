@@ -1,4 +1,4 @@
-import{j as e}from"./vendor-query-BEUqgBPG.js";import{r as w}from"./vendor-router-nbMWPCiB.js";import{u as L,B as h,S as _,a as I,P as F}from"./App-Dq7GkYW0.js";import{S as P,E as M}from"./EditSiteModal-Cwn6ck4K.js";import{C as i}from"./index-CajXtOrN.js";import"./client-DbjFF3zR.js";import"./useTranslation-_ojumEys.js";const O=`
+import{j as e}from"./vendor-query-BEUqgBPG.js";import{r as w}from"./vendor-router-nbMWPCiB.js";import{u as L,B as h,S as _,a as I,P as F}from"./App-CNi84-zk.js";import{S as P,E as M}from"./EditSiteModal-CktBXxXN.js";import{C as i}from"./index-CtXRKn0a.js";import"./client-DbjFF3zR.js";import"./useTranslation-zrKdeLaE.js";const O=`
   @media (max-width: 640px) {
     .ov-upgrade { flex-direction: column !important; align-items: flex-start !important; padding: 16px !important; gap: 12px !important; }
     .ov-upgrade .ov-upgrade-btn { width: 100%; }
