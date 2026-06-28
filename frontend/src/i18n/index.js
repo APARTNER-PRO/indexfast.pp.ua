@@ -14,9 +14,6 @@ i18n.use(initReactI18next).init({
   ns: ["translation"],
   defaultNS: "translation",
   resources,
-  // i18next v26: force synchronous init so useTranslation() works on first render
-  initImmediate: false,
-  compatibilityJSON: "v4",
 });
 
 export default i18n;
