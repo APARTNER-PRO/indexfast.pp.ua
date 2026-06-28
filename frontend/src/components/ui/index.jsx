@@ -1,5 +1,6 @@
 // src/components/ui/index.jsx
-import { memo, useEffect, useTranslation } from "react";
+import { memo, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { C, PLAN_COLORS }  from "../../constants.js";
 
 // ── Badge плану
