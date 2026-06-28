@@ -1,7 +1,7 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 
-throw new Error("I18N INITIALIZATION LOADED - THIS SHOULD CRASH THE APP");
+console.log("[I18N] index.js loaded - initializing with test translations");
 
 i18n.use(initReactI18next).init({
   lng: "uk",
@@ -15,5 +15,7 @@ i18n.use(initReactI18next).init({
     },
   },
 });
+
+console.log("[I18N] initialization complete");
 
 export default i18n;
