@@ -55,7 +55,8 @@ define('DB_CHARSET', 'utf8mb4');
 define('APP_NAME', 'IndexFast');
 define('APP_URL',  env('APP_URL',  'https://indexfast.pp.ua'));
 define('APP_ENV',  env('APP_ENV',  'production'));
-define('APP_EMAIL',  env('APP_EMAIL',  'indexfastapp@gmail.com'));
+define('APP_EMAIL', env('APP_EMAIL', 'indexfastapp@gmail.com'));
+define('DEFAULT_CURRENCY', env('DEFAULT_CURRENCY', 'USD'));
 define('DEBUG',    APP_ENV === 'development');
 
 if (DEBUG) {
