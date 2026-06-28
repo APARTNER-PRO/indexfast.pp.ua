@@ -340,8 +340,8 @@ export default function Auth() {
 
               <SubmitBtn loading={loading}>{t("auth.login")}</SubmitBtn>
 
-              <Divider/>
-              <GoogleBtn/>
+              <Divider t={t}/>
+              <GoogleBtn t={t}/>
             </form>
           )}
 
@@ -559,7 +559,7 @@ function SubmitBtn({ loading, children }) {
   );
 }
 
-function Divider() {
+function Divider({ t }) {
   return (
     <div style={{ display: "flex", alignItems: "center", gap: 12,
       margin: "20px 0", color: C.muted, fontSize: 12 }}>
@@ -570,7 +570,7 @@ function Divider() {
   );
 }
 
-function GoogleBtn({ onClick }) {
+function GoogleBtn({ onClick, t }) {
   const BASE = import.meta?.env?.VITE_API_URL ?? "/api";
   return (
     <button type="button"
