@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Organization","name":"IndexFast","url":"https://indexfast.pp.ua","logo":"https://indexfast.pp.ua/logo.png"}
+  </script>
+  <title>Условия использования — IndexFast</title>
+  <meta name="description" content="Условия использования сервиса IndexFast. Правила, тарифы и условия.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://indexfast.pp.ua/ru/terms.html">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://indexfast.pp.ua/ru/terms.html">
+  <meta property="og:title" content="Условия использования — IndexFast">
+  <meta property="og:description" content="Условия использования сервиса IndexFast. Правила, тарифы и условия.">
+  <meta property="og:image" content="https://indexfast.pp.ua/og-image.jpg">
+  <meta property="og:locale" content="ru_RU">
+  <meta property="og:site_name" content="IndexFast">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Условия использования — IndexFast">
+  <meta name="twitter:description" content="Условия использования сервиса IndexFast. Правила, тарифы и условия.">
+  <meta name="twitter:image" content="https://indexfast.pp.ua/og-image.jpg">
+  <link rel="preload" as="style" crossorigin href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --black: #050508; --dark: #0d0d14; --card: #12121c;
+      --border: rgba(255,255,255,0.07); --green: #00ff88;
+      --white: #f0f0f8; --muted: #7a7a95;
+      --font-display: 'Syne', sans-serif; --font-body: 'DM Sans', sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--black); color: var(--white); font-family: var(--font-body); font-weight: 300; line-height: 1.7; }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+      padding: 20px 60px; display: flex; align-items: center; justify-content: space-between;
+      background: linear-gradient(to bottom, rgba(5,5,8,0.95) 0%, transparent 100%);
+      backdrop-filter: blur(10px); border-bottom: 1px solid transparent; transition: border-color 0.3s;
+    }
+    nav.scrolled { background: rgba(5,5,8,0.98); border-bottom-color: var(--border); }
+    .logo { font-family: var(--font-display); font-size: 1.4rem; font-weight: 800; letter-spacing: -0.03em; color: var(--white); text-decoration: none; }
+    .logo span { color: var(--green); }
+    .nav-links { list-style: none; display: flex; gap: 32px; align-items: center; }
+    .nav-links a { color: var(--white); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--green); }
+    .nav-actions { display: flex; align-items: center; gap: 16px; }
+    .nav-login { color: var(--muted); font-size: 0.875rem; text-decoration: none; padding: 7px 16px; border-radius: 100px; border: 1px solid rgba(255,255,255,0.1); transition: color 0.2s, border-color 0.2s; }
+    .nav-login:hover { color: var(--white); border-color: rgba(255,255,255,0.25); }
+    .nav-cta { background: var(--green); color: var(--black); text-decoration: none; padding: 9px 20px; border-radius: 100px; font-family: var(--font-display); font-weight: 700; font-size: 0.875rem; transition: box-shadow 0.2s; }
+    .nav-cta:hover { box-shadow: 0 0 20px rgba(0,255,136,0.4); }
+    /* ─── LANGUAGE DROPDOWN ─── */
+    .nav-lang-dropdown { position: relative; display: inline-block; margin-right: 16px; }
+    .nav-lang-btn { background: none; border: none; color: var(--muted); font-family: var(--font-body); font-weight: 600; font-size: 0.875rem; cursor: pointer; padding: 8px 0; transition: color 0.2s; }
+    .nav-lang-btn:hover { color: var(--white); }
+    .nav-lang-menu { position: absolute; top: calc(100% + 8px); right: 0; background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 8px 0; min-width: 140px; opacity: 0; visibility: hidden; transform: translateY(10px); transition: all 0.2s; box-shadow: 0 10px 40px rgba(0,0,0,0.5); z-index: 1000; }
+    .nav-lang-dropdown:hover .nav-lang-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+    .nav-lang-menu a { display: block; padding: 8px 20px; color: var(--muted); text-decoration: none; font-size: 0.875rem; transition: background 0.2s, color 0.2s; }
+    .nav-lang-menu a:hover { background: rgba(255,255,255,0.05); color: var(--white); }
+    .nav-lang-menu a.active { color: var(--green); font-weight: 600; background: rgba(0,255,136,0.05); }
+    .mobile-menu-btn { display: none; background: none; border: none; color: var(--white); font-size: 1.5rem; cursor: pointer; padding: 0; line-height: 1; }
+    /* ─── HERO ─── */
+    .page-hero { padding: 140px 40px 60px; text-align: center; border-bottom: 1px solid var(--border); background: linear-gradient(to bottom, rgba(0,255,136,0.04) 0%, transparent 100%); }
+    .page-tag { font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--green); margin-bottom: 16px; }
+    .page-title { font-family: var(--font-display); font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; letter-spacing: -0.03em; margin-bottom: 16px; }
+    .page-meta { color: var(--muted); font-size: 0.9rem; }
+    .page-meta span { color: var(--green); }
+    /* ─── LAYOUT ─── */
+    .layout { display: grid; grid-template-columns: 260px 1fr; gap: 60px; max-width: 1100px; margin: 0 auto; padding: 60px 40px 100px; align-items: start; }
+    /* ─── SIDEBAR ─── */
+    .sidebar { position: sticky; top: 100px; }
+    .sidebar-title { font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 16px; }
+    .sidebar-nav { list-style: none; display: flex; flex-direction: column; gap: 4px; }
+    .sidebar-nav a { display: block; padding: 8px 14px; border-radius: 8px; color: var(--muted); text-decoration: none; font-size: 0.875rem; border-left: 2px solid transparent; transition: all 0.2s; }
+    .sidebar-nav a:hover, .sidebar-nav a.active { color: var(--white); border-left-color: var(--green); background: rgba(0,255,136,0.05); }
+    /* ─── CONTENT ─── */
+    .content { min-width: 0; }
+    .section { margin-bottom: 56px; padding-bottom: 56px; border-bottom: 1px solid var(--border); }
+    .section:last-child { border-bottom: none; }
+    .section h2 { font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; margin-bottom: 20px; display: flex; align-items: center; gap: 12px; scroll-margin-top: 120px; }
+    .section h2 .icon { font-size: 1.2rem; }
+    .section p { color: rgba(240,240,248,0.8); margin-bottom: 16px; font-size: 0.975rem; }
+    .section p:last-child { margin-bottom: 0; }
+    .section ul, .section ol { padding-left: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
+    .section ul li, .section ol li { display: flex; align-items: flex-start; gap: 10px; color: rgba(240,240,248,0.8); font-size: 0.975rem; }
+    .section ul li::before { content: '—'; color: var(--green); flex-shrink: 0; margin-top: 1px; }
+    .section ol { counter-reset: ol-counter; }
+    .section ol li { counter-increment: ol-counter; }
+    .section ol li::before { content: counter(ol-counter) '.'; color: var(--green); font-family: var(--font-display); font-weight: 700; flex-shrink: 0; min-width: 20px; }
+    .highlight-box { background: rgba(0,255,136,0.05); border: 1px solid rgba(0,255,136,0.15); border-radius: 12px; padding: 20px 24px; margin: 20px 0; color: rgba(240,240,248,0.85); font-size: 0.9rem; }
+    .highlight-box strong { color: var(--green); }
+    a.inline-link { color: var(--green); text-decoration: none; border-bottom: 1px solid rgba(0,255,136,0.3); transition: border-color 0.2s; }
+    a.inline-link:hover { border-bottom-color: var(--green); }
+    /* ─── FOOTER ─── */
+    footer { background: var(--dark); border-top: 1px solid var(--border); padding: 60px 40px 40px; }
+    .footer-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 60px; text-align: left; }
+    .footer-brand p { color: var(--muted); font-size: 0.9rem; line-height: 1.7; margin-top: 16px; max-width: 280px; }
+    .footer-col .footer-title { font-family: var(--font-display); font-weight: 700; margin-bottom: 20px; font-size: 0.9rem; letter-spacing: 0.05em; color: var(--white); }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 12px; padding: 0; }
+    .footer-col ul a { color: var(--muted); text-decoration: none; font-size: 0.9rem; transition: color 0.2s; }
+    .footer-col ul a:hover { color: var(--white); }
+    .footer-bottom { max-width: 1200px; margin: 48px auto 0; padding-top: 28px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; color: var(--muted); }
+    .footer-bottom a { color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .footer-bottom a:hover { color: var(--white); }
+    /* ─── BACK TO TOP ─── */
+    .back-to-top { position: fixed; bottom: 30px; right: 30px; width: 50px; height: 50px; background: rgba(0,255,136,0.1); backdrop-filter: blur(10px); border: 1px solid rgba(0,255,136,0.3); color: var(--green); border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 1000; opacity: 0; visibility: hidden; transition: all 0.3s cubic-bezier(0.4,0,0.2,1); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+    .back-to-top.visible { opacity: 1; visibility: visible; bottom: 40px; }
+    .back-to-top:hover { background: var(--green); color: var(--black); transform: translateY(-5px); box-shadow: 0 0 30px rgba(0,255,136,0.4); }
+    @media (max-width: 1100px) {
+      nav { padding: 16px 20px; }
+      .mobile-menu-btn { display: block; }
+      .nav-links { display: none; flex-direction: column; gap: 0; position: fixed; top: 58px; left: 0; right: 0; background: rgba(5,5,8,0.98); backdrop-filter: blur(14px); padding: 20px 0; border-bottom: 1px solid var(--border); }
+      .nav-links.active { display: flex; }
+      .nav-links li { width: 100%; text-align: center; }
+      .nav-links a { display: block; padding: 16px 20px; font-size: 1.1rem; }
+      .nav-lang-dropdown { margin-right: 0; }
+      .page-hero { padding: 100px 20px 40px; }
+      .layout { grid-template-columns: 1fr; padding: 40px 20px 60px; gap: 40px; }
+      .sidebar { position: static; }
+      .footer-grid { grid-template-columns: 1fr; gap: 40px; text-align: center; }
+      .footer-brand p { margin: 16px auto 0; }
+      .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+      footer { padding: 40px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav id="navbar" role="navigation" aria-label="Navigation">
+  <a href="/ru/" class="logo" aria-label="IndexFast">Index<span>Fast</span></a>
+  <ul class="nav-links">
+    <li><a href="/ru/#how-it-works">Как это работает</a></li>
+    <li><a href="/ru/#for-whom">Для кого</a></li>
+    <li><a href="/ru/#features">Преимущества</a></li>
+    <li><a href="/ru/#pricing">Тарифы</a></li>
+    <li><a href="/ru/#faq">FAQ</a></li>
+  </ul>
+  <div class="nav-actions">
+    <div class="nav-lang-dropdown">
+      <button class="nav-lang-btn">RU ▾</button>
+      <div class="nav-lang-menu">
+        <a href="/terms.html">English</a>
+        <a href="/uk/terms.html">Українська</a>
+        <a href="/es/terms.html">Español</a>
+        <a href="/pt/terms.html">Português</a>
+        <a href="/ru/terms.html" class="active">Русский</a>
+        <a href="/de/terms.html">Deutsch</a>
+        <a href="/fr/terms.html">Français</a>
+        <a href="/pl/terms.html">Polski</a>
+      </div>
+    </div>
+    <a href="/app/login" class="nav-login">Войти</a>
+    <a href="/app/register" class="nav-cta">Начать →</a>
+    <button class="mobile-menu-btn" onclick="document.querySelector('.nav-links').classList.toggle('active')" aria-label="Menu">☰</button>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <p class="page-tag">Юридический документ</p>
+  <h1 class="page-title">Условия использования</h1>
+  <p class="page-meta">Последнее обновление: <span>1 января 2025 года</span></p>
+</div>
+<div class="layout">
+  <aside class="sidebar">
+    <p class="sidebar-title">Оглавление</p>
+    <ul class="sidebar-nav">
+      <li><a href="#acceptance">1. Принятие условий</a></li>
+      <li><a href="#service">2. Описание сервиса</a></li>
+      <li><a href="#registration">3. Регистрация и аккаунт</a></li>
+      <li><a href="#plans">4. Тарифы и оплата</a></li>
+      <li><a href="#refund">5. Возврат средств</a></li>
+      <li><a href="#allowed">6. Разрешенное использование</a></li>
+      <li><a href="#prohibited">7. Запрещенное использование</a></li>
+      <li><a href="#ip">8. Интеллектуальная собственность</a></li>
+      <li><a href="#liability">9. Ограничение ответственности</a></li>
+      <li><a href="#termination">10. Прекращение доступа</a></li>
+      <li><a href="#changes">11. Изменения условий</a></li>
+      <li><a href="#law">12. Применимое право</a></li>
+      <li><a href="#contact">13. Контакты</a></li>
+    </ul>
+  </aside>
+  <main class="content">
+    <div class="section" id="acceptance">
+      <h2><span class="icon">✅</span> 1. Принятие условий</h2>
+      <p>Настоящие Условия регулируют отношения между вами и IndexFast.</p>
+    </div>
+    <div class="section" id="service">
+      <h2><span class="icon">🚀</span> 2. Описание сервиса</h2>
+      <p>IndexFast — инструмент для отправки URL-адресов на индексацию в Google.</p>
+    </div>
+    <div class="section" id="registration">
+      <h2><span class="icon">👤</span> 3. Регистрация и аккаунт</h2>
+      <p>Вы должны зарегистрироваться с действующим email и подключить Google Service Account.</p>
+    </div>
+    <div class="section" id="plans">
+      <h2><span class="icon">💳</span> 4. Тарифы и оплата</h2>
+      <p>Доступны тарифы Start, PRO и Agency. Оплата ежемесячно авансом.</p>
+    </div>
+    <div class="section" id="refund">
+      <h2><span class="icon">↩️</span> 5. Возврат средств</h2>
+      <p>Возврат возможен при технических сбоях или по запросу в течение 14 дней.</p>
+    </div>
+    <div class="section" id="allowed">
+      <h2><span class="icon">✔️</span> 6. Разрешенное использование</h2>
+      <p>Для ускорения индексации сайтов, которыми вы законно управляете.</p>
+    </div>
+    <div class="section" id="prohibited">
+      <h2><span class="icon">🚫</span> 7. Запрещенное использование</h2>
+      <p>Запрещается отправлять чужие URL или перепродавать доступ к IndexFast.</p>
+    </div>
+    <div class="section" id="ip">
+      <h2><span class="icon">©️</span> 8. Интеллектуальная собственность</h2>
+      <p>Все права на IndexFast принадлежат нам и защищены законом.</p>
+    </div>
+    <div class="section" id="liability">
+      <h2><span class="icon">⚖️</span> 9. Ограничение ответственности</h2>
+      <p>Сервис предоставляется "как есть". Мы не гарантируем конкретные сроки индексации.</p>
+    </div>
+    <div class="section" id="termination">
+      <h2><span class="icon">🔒</span> 10. Прекращение доступа</h2>
+      <p>Вы можете отменить подписку в любой момент. Мы можем закрыть доступ при нарушениях.</p>
+    </div>
+    <div class="section" id="changes">
+      <h2><span class="icon">🔄</span> 11. Изменения условий</h2>
+      <p>Мы уведомим о существенных изменениях за 14 дней.</p>
+    </div>
+    <div class="section" id="law">
+      <h2><span class="icon">🏛️</span> 12. Применимое право</h2>
+      <p>Условия регулируются законодательством Украины.</p>
+    </div>
+    <div class="section" id="contact">
+      <h2><span class="icon">✉️</span> 13. Контакты</h2>
+      <p>Email: <a href="mailto:indexfastapp@gmail.com" class="inline-link">indexfastapp@gmail.com</a></p>
+    </div>
+  </main>
+</div>
+
+<footer role="contentinfo">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="/" class="logo">Index<span>Fast</span></a>
+      <p>Сервис автоматической индексации страниц сайта в Google через официальный Google Indexing API.</p>
+    </div>
+    <div class="footer-col">
+      <p class="footer-title">Продукт</p>
+      <ul>
+        <li><a href="/#how-it-works">Как это работает</a></li>
+        <li><a href="/#features">Преимущества</a></li>
+        <li><a href="/#pricing">Тарифы</a></li>
+        <li><a href="/docs/">Документация</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <p class="footer-title">Компания</p>
+      <ul>
+        <li><a href="/about.html">О нас</a></li>
+        <li><a href="/blog/">Блог</a></li>
+        <li><a href="/affiliate.html">Партнёрская программа</a></li>
+        <li><a href="/contacts.html">Контакты</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <p class="footer-title">Поддержка</p>
+      <ul>
+        <li><a href="/#faq">FAQ</a></li>
+        <li><a href="https://t.me/indexfastgoogle" target="_blank" rel="noopener noreferrer">Telegram</a></li>
+        <li><a href="mailto:indexfastapp@gmail.com">Email поддержка</a></li>
+        <li><a href="/status.html">Статус сервиса</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 IndexFast. Все права защищены.</p>
+    <div style="display:flex;gap:20px;">
+      <a href="/ru/privacy-policy.html">Конфиденциальность</a>
+      <a href="/ru/terms.html">Условия</a>
+    </div>
+  </div>
+</footer>
+
+<button id="backToTop" class="back-to-top" aria-label="Back to top">
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+</button>
+
+<script>
+  // Navbar scroll effect
+  window.addEventListener('scroll', () => {
+    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+  });
+
+  // Active sidebar link on scroll
+  const sections = document.querySelectorAll('.section');
+  const sideLinks = document.querySelectorAll('.sidebar-nav a');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        sideLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + id));
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '-100px 0px -60% 0px' });
+  sections.forEach(s => observer.observe(s));
+
+  // Back to Top
+  const backToTop = document.getElementById('backToTop');
+  window.addEventListener('scroll', () => backToTop.classList.toggle('visible', window.pageYOffset > 500));
+  backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+</script>
+</body>
+</html>
