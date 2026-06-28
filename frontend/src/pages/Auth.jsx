@@ -426,8 +426,8 @@ export default function Auth() {
 
               <SubmitBtn loading={loading}>{t("auth.registerFreeBtn")}</SubmitBtn>
 
-              <Divider/>
-              <GoogleBtn onClick={() => {
+              <Divider t={t}/>
+              <GoogleBtn t={t} onClick={() => {
                 if (!agreeTerms) {
                   setError(t("auth.agreeTermsGoogle"));
                   return;
