@@ -21,8 +21,9 @@ const SITES_PAGE_STYLES = `
 
 export default memo(function Sites({
   sites, sitesList, sitesLimit, plan,
-  today, onAddSite, onRun, onDelete, onToggle, onImportGsc, showToast, t,
+  today, onAddSite, onRun, onDelete, onToggle, onImportGsc, showToast,
 }) {
+  const { t } = useTranslation();
   const [filter,  setFilter]  = useState("all");
   const [editSite, setEditSite] = useState(null); // { site, tab }
   const handleEdit = (site, tab = null) => setEditSite({ site, tab });

@@ -1,26 +1,10 @@
-// src/pages/Logs.jsx  ← окремий chunk (lazy)
-import { useState, memo, useCallback } from "react";
+import { useState, memo, useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { useLogs }                     from "../hooks/useLogs.js";
 import { Spinner, Btn }                from "../components/ui/index.jsx";
 import { C }                           from "../constants.js";
 
-const STATUS_FILTERS = [
-  { value: "",        label: t("logs.allStatus")        },
-  { value: "ok",      label: t("logs.ok")       },
-  { value: "error",   label: t("logs.errors")  },
-  { value: "pending", label: t("logs.pending") },
-];
-
 const PAGE_SIZE = 50;
-
-// ── Швидкі date-range пресети
-const DATE_PRESETS = [
-  { label: t("logs.today"),   days: 0  },
-  { label: t("logs.sevenDays"),     days: 7  },
-  { label: t("logs.thirtyDays"),    days: 30 },
-  { label: t("logs.allTime"),        days: -1 },
-];
 
 function toDateStr(d) {
   return d.toISOString().slice(0, 10);
@@ -58,7 +42,23 @@ const MOBILE_STYLES = `
   }
 `;
 
-export default memo(function Logs({ sites, t }) {
+export default memo(function Logs({ sites }) {
+  const { t } = useTranslation();
+  
+  const STATUS_FILTERS = useMemo(() => [
+    { value: "",        label: t("logs.allStatus")        },
+    { value: "ok",      label: t("logs.ok")       },
+    { value: "error",   label: t("logs.errors")  },
+    { value: "pending", label: t("logs.pending") },
+  ], [t]);
+
+  const DATE_PRESETS = useMemo(() => [
+    { label: t("logs.today"),   days: 0  },
+    { label: t("logs.sevenDays"),     days: 7  },
+    { label: t("logs.thirtyDays"),    days: 30 },
+    { label: t("logs.allTime"),        days: -1 },
+  ], [t]);
+
   const [siteId,   setSiteId]   = useState("");
   const [status,   setStatus]   = useState("");
   const [page,     setPage]     = useState(0);
