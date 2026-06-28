@@ -1,24 +1,25 @@
 // src/pages/Logs.jsx  ← окремий chunk (lazy)
 import { useState, memo, useCallback } from "react";
+import { useTranslation } from "react-i18next";
 import { useLogs }                     from "../hooks/useLogs.js";
 import { Spinner, Btn }                from "../components/ui/index.jsx";
 import { C }                           from "../constants.js";
 
 const STATUS_FILTERS = [
-  { value: "",        label: "Всі"        },
-  { value: "ok",      label: "✓ OK"       },
-  { value: "error",   label: "✕ Помилки"  },
-  { value: "pending", label: "⏳ В черзі" },
+  { value: "",        label: t("logs.allStatus")        },
+  { value: "ok",      label: t("logs.ok")       },
+  { value: "error",   label: t("logs.errors")  },
+  { value: "pending", label: t("logs.pending") },
 ];
 
 const PAGE_SIZE = 50;
 
 // ── Швидкі date-range пресети
 const DATE_PRESETS = [
-  { label: "Сьогодні",   days: 0  },
-  { label: "7 днів",     days: 7  },
-  { label: "30 днів",    days: 30 },
-  { label: "Все",        days: -1 },
+  { label: t("logs.today"),   days: 0  },
+  { label: t("logs.sevenDays"),     days: 7  },
+  { label: t("logs.thirtyDays"),    days: 30 },
+  { label: t("logs.allTime"),        days: -1 },
 ];
 
 function toDateStr(d) {
@@ -57,7 +58,7 @@ const MOBILE_STYLES = `
   }
 `;
 
-export default memo(function Logs({ sites }) {
+export default memo(function Logs({ sites, t }) {
   const [siteId,   setSiteId]   = useState("");
   const [status,   setStatus]   = useState("");
   const [page,     setPage]     = useState(0);
@@ -135,7 +136,7 @@ export default memo(function Logs({ sites }) {
             <select value={siteId}
               onChange={e => resetPage(() => setSiteId(e.target.value))}
               style={inputStyle}>
-              <option value="">Всі сайти</option>
+               <option value="">{t("logs.allSites")}</option>
               {sites.map(s => (
                 <option key={s.id} value={s.id}>{s.domain}</option>
               ))}
@@ -159,7 +160,7 @@ export default memo(function Logs({ sites }) {
           </div>
 
           <span className="logs-count" style={{ fontSize: 12, color: C.muted, marginLeft: "auto" }}>
-            {total.toLocaleString("uk-UA")} записів
+            {total.toLocaleString("uk-UA")} {t("logs.records")}
           </span>
         </div>
 
@@ -180,13 +181,13 @@ export default memo(function Logs({ sites }) {
           ))}
 
           <div className="logs-date-inputs" style={{ display: "flex", alignItems: "center", gap: 6, marginLeft: 4 }}>
-            <span style={{ fontSize: 11, color: C.muted }}>від</span>
-            <input type="date" value={dateFrom}
-              onChange={e => onDateFromChange(e.target.value)}
-              max={dateTo || todayStr()}
-              style={inputStyle}/>
-            <span style={{ fontSize: 11, color: C.muted }}>до</span>
-            <input type="date" value={dateTo}
+             <span style={{ fontSize: 11, color: C.muted }}>{t("logs.from")}</span>
+             <input type="date" value={dateFrom}
+               onChange={e => onDateFromChange(e.target.value)}
+               max={dateTo || todayStr()}
+               style={inputStyle}/>
+             <span style={{ fontSize: 11, color: C.muted }}>{t("logs.to")}</span>
+             <input type="date" value={dateTo}
               onChange={e => onDateToChange(e.target.value)}
               min={dateFrom} max={todayStr()}
               style={inputStyle}/>
@@ -198,7 +199,7 @@ export default memo(function Logs({ sites }) {
               style={{ padding: "5px 10px", borderRadius: 8, border: "none",
                 cursor: "pointer", fontSize: 11, color: C.muted,
                 background: "rgba(255,255,255,0.04)" }}>
-              ✕ Скинути дати
+               {t("logs.resetDates")}
             </button>
           )}
         </div>
@@ -213,21 +214,21 @@ export default memo(function Logs({ sites }) {
             <Spinner size={28}/>
           </div>
         ) : isError ? (
-          <div style={{ textAlign: "center", padding: "48px 20px", color: C.muted }}>
-            <div style={{ fontSize: 36, marginBottom: 12 }}>⚠️</div>
-            <p style={{ marginBottom: 16 }}>Помилка завантаження логів</p>
-            <Btn variant="outline" onClick={refetch}>Повторити</Btn>
-          </div>
+           <div style={{ textAlign: "center", padding: "48px 20px", color: C.muted }}>
+             <div style={{ fontSize: 36, marginBottom: 12 }}>⚠️</div>
+             <p style={{ marginBottom: 16 }}>{t("logs.loadError")}</p>
+             <Btn variant="outline" onClick={refetch}>{t("common.retry")}</Btn>
+           </div>
         ) : logs.length === 0 ? (
           <div style={{ textAlign: "center", padding: "48px 20px", color: C.muted }}>
             <div style={{ fontSize: 36, marginBottom: 12, opacity: 0.4 }}>📋</div>
             <p style={{ marginBottom: 8 }}>
               {status || siteId || dateFrom || dateTo
-                ? "Нічого не знайдено за фільтром"
-                : "Логів ще немає"}
+                ? t("logs.nothingFound")
+                : t("logs.noData")}
             </p>
-            {!status && !siteId && !dateFrom && (
-              <p style={{ fontSize: 12 }}>Запустіть індексацію щоб побачити логи</p>
+            {!status && !siteId && !dateFrom && !dateTo && (
+              <p style={{ fontSize: 12 }}>{t("logs.noDataHint")}</p>
             )}
           </div>
         ) : (
@@ -246,7 +247,7 @@ export default memo(function Logs({ sites }) {
           alignItems: "center", gap: 8, marginTop: 16 }}>
           <Btn variant="ghost" disabled={page === 0}
             onClick={() => setPage(p => p - 1)}
-            style={{ padding: "7px 16px", fontSize: 13 }}>← Попередня</Btn>
+            style={{ padding: "7px 16px", fontSize: 13 }}>{t("logs.prev")}</Btn>
 
           <span className="logs-page-nums">
             {Array.from({ length: Math.min(pages, 7) }, (_, i) => {
@@ -273,7 +274,7 @@ export default memo(function Logs({ sites }) {
 
           <Btn variant="ghost" disabled={page >= pages - 1}
             onClick={() => setPage(p => p + 1)}
-            style={{ padding: "7px 16px", fontSize: 13 }}>Наступна →</Btn>
+            style={{ padding: "7px 16px", fontSize: 13 }}>{t("logs.next")}</Btn>
         </div>
       )}
     </div>
@@ -319,7 +320,7 @@ const LogRow = memo(function LogRow({ log: l, icons, colors }) {
       </span>
 
       {/* Копіювання */}
-      <button className="log-copy" onClick={copyUrl} title="Копіювати URL"
+      <button className="log-copy" onClick={copyUrl} title={t("logs.copyUrl")}
         style={{ flexShrink: 0, background: "none", border: "none",
           cursor: "pointer", fontSize: 12, color: copied ? C.green : C.muted,
           padding: "2px 6px", borderRadius: 6,

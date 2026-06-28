@@ -1,13 +1,14 @@
 // src/pages/Profile.jsx  ← lazy chunk
 import { useState, useEffect, memo } from "react";
 import { useQueryClient }            from "@tanstack/react-query";
+import { useTranslation }            from "react-i18next";
 import { apiClient }                 from "../api/client.js";
 import { KEYS }                      from "../hooks/useStats.js";
 import { C }                         from "../constants.js";
 import { Spinner, Btn }              from "../components/ui/index.jsx";
 
 // ── Strength bar
-function StrengthBar({ password }) {
+function StrengthBar({ password, t }) {
   if (!password) return null;
   let s = 0;
   if (password.length >= 8)          s++;
@@ -15,7 +16,7 @@ function StrengthBar({ password }) {
   if (/[0-9]/.test(password))        s++;
   if (/[^A-Za-z0-9]/.test(password)) s++;
   const colors = ["", C.red, C.gold, C.gold, C.green];
-  const labels = ["", "Слабкий", "Середній", "Добрий", "Надійний"];
+  const labels = ["", t("profile.weak"), t("profile.medium"), t("profile.good"), t("profile.strong")];
   return (
     <div style={{ marginTop: 8 }}>
       <div style={{ display: "flex", gap: 4, marginBottom: 4 }}>
@@ -69,7 +70,7 @@ function Input({ style: sx, ...props }) {
   );
 }
 
-export default function Profile({ user, onUpdate, showToast }) {
+export default function Profile({ user, onUpdate, showToast, t }) {
   // ── Загальна інфо
   const [name,    setName]    = useState(user?.name    ?? "");
   const [surname, setSurname] = useState(user?.surname ?? "");
@@ -105,15 +106,15 @@ export default function Profile({ user, onUpdate, showToast }) {
   // ── Зберігаємо ім'я/прізвище
   async function saveInfo(e) {
     e.preventDefault();
-    if (name.trim().length < 2) { showToast("Ім'я мінімум 2 символи", "error"); return; }
+    if (name.trim().length < 2) { showToast(t("profile.nameMinLength"), "error"); return; }
     setSavingInfo(true);
     try {
       const res = await apiClient.updateProfile({ name: name.trim(), surname: surname.trim() });
       qc.invalidateQueries({ queryKey: KEYS.stats });
       onUpdate?.(res.user);
-      showToast("✓ Профіль оновлено");
+      showToast(t("profile.updateSuccess"));
     } catch (e) {
-      showToast(e.message || "Помилка збереження", "error");
+      showToast(e.message || t("common.saveError"), "error");
     } finally {
       setSavingInfo(false);
     }
@@ -123,17 +124,17 @@ export default function Profile({ user, onUpdate, showToast }) {
   async function saveEmail(e) {
     e.preventDefault();
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      showToast("Введіть коректний email", "error"); return;
+      showToast(t("profile.invalidEmail"), "error"); return;
     }
-    if (email === user?.email) { showToast("Email не змінився"); return; }
+    if (email === user?.email) { showToast(t("profile.emailNotChanged")); return; }
     setSavingEmail(true);
     try {
       const res = await apiClient.updateProfile({ email });
       qc.invalidateQueries({ queryKey: KEYS.stats });
       onUpdate?.(res.user);
-      showToast("✓ Email змінено. Перевірте пошту для підтвердження.");
+      showToast(t("profile.emailChanged"));
     } catch (e) {
-      showToast(e.message || "Помилка зміни email", "error");
+      showToast(e.message || t("profile.emailChangeError"), "error");
     } finally {
       setSavingEmail(false);
     }
@@ -146,10 +147,10 @@ export default function Profile({ user, onUpdate, showToast }) {
     try {
       await apiClient.updateProfile({ marketing_consent: val });
       qc.invalidateQueries({ queryKey: KEYS.stats });
-      showToast(val ? "✓ Підписку оновлено" : "✓ Відписано від розсилки");
+      showToast(val ? t("profile.subscribed") : t("profile.unsubscribed"));
     } catch (e) {
       setMarketing(!val); // rollback
-      showToast(e.message || "Помилка збереження", "error");
+      showToast(e.message || t("common.saveError"), "error");
     } finally {
       setSavingMarketing(false);
     }
@@ -158,17 +159,16 @@ export default function Profile({ user, onUpdate, showToast }) {
   // ── Зберігаємо пароль
   async function savePassword(e) {
     e.preventDefault();
-    if (newPass.length < 8)     { showToast("Пароль мінімум 8 символів", "error"); return; }
-    if (newPass !== newPass2)   { showToast("Паролі не збігаються", "error"); return; }
+    if (newPass.length < 8)     { showToast(t("profile.passwordMinLength"), "error"); return; }
+    if (newPass !== newPass2)   { showToast(t("profile.passwordsMismatch"), "error"); return; }
     if (user?.password_hash !== undefined && !currentPass) {
-      showToast("Введіть поточний пароль", "error"); return;
+      showToast(t("profile.enterCurrentPassword"), "error"); return;
     }
     setSavingPass(true);
     try {
       await apiClient.updateProfile({ current_password: currentPass, new_password: newPass });
       setCurrentPass(""); setNewPass(""); setNewPass2("");
-      showToast("✓ Пароль змінено. Увійдіть знову.");
-      // Logout тільки при успіху — сесія інвалідована на сервері
+      showToast(t("profile.passwordChanged"));
       setTimeout(() => {
         apiClient.logout();
         localStorage.removeItem("access_token");
@@ -176,12 +176,11 @@ export default function Profile({ user, onUpdate, showToast }) {
         window.location.href = "/app/login";
       }, 2000);
     } catch (e) {
-      // Невірний пароль (401) або інша помилка — НЕ розлогінюємо
       const msg = e.status === 401
-        ? "Поточний пароль невірний"
-        : e.message || "Помилка зміни пароля";
+        ? t("profile.wrongCurrentPassword")
+        : e.message || t("profile.passwordChangeError");
       showToast(msg, "error");
-      setCurrentPass(""); // очищаємо поле поточного пароля
+      setCurrentPass("");
     } finally {
       setSavingPass(false);
     }
@@ -193,7 +192,7 @@ export default function Profile({ user, onUpdate, showToast }) {
   return (
     <div style={{ maxWidth: 600 }}>
       <h2 style={{ fontFamily: "Syne,sans-serif", fontWeight: 800,
-        fontSize: 20, marginBottom: 24 }}>Профіль</h2>
+        fontSize: 20, marginBottom: 24 }}>{t("profile.title")}</h2>
 
       {/* ── Аватар + план */}
       <div style={{ display: "flex", alignItems: "center", gap: 16,
@@ -222,7 +221,7 @@ export default function Profile({ user, onUpdate, showToast }) {
               <span style={{ fontSize: 10, color: C.gold,
                 background: "rgba(255,208,96,0.1)", padding: "2px 8px",
                 borderRadius: 100, border: "1px solid rgba(255,208,96,0.2)" }}>
-                ⚠ Email не підтверджено
+                ⚠ {t("profile.emailNotVerified")}
               </span>
             )}
           </div>
@@ -230,33 +229,33 @@ export default function Profile({ user, onUpdate, showToast }) {
       </div>
 
       {/* ── Ім'я і прізвище */}
-      <Section title="Основна інформація">
+      <Section title={t("profile.basicInfo")}>
         <form onSubmit={saveInfo}>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: 12 }}>
-            <Field label="Ім'я">
+            <Field label={t("profile.firstName")}>
               <Input value={name} onChange={e => setName(e.target.value)}
                 placeholder="Іван" autoComplete="given-name"/>
             </Field>
-            <Field label="Прізвище">
+            <Field label={t("profile.lastName")}>
               <Input value={surname} onChange={e => setSurname(e.target.value)}
                 placeholder="Коваль" autoComplete="family-name"/>
             </Field>
           </div>
           <Btn type="submit" variant="outline" loading={savingInfo}
             style={{ marginTop: 4 }}>
-            Зберегти
+            {t("profile.save")}
           </Btn>
         </form>
       </Section>
 
       {/* ── Email */}
-      <Section title="Email адреса">
+      <Section title={t("profile.emailSection")}>
         <form onSubmit={saveEmail}>
-          <Field label="Email"
+          <Field label={t("profile.email")}
             hint={email !== user?.email
-              ? "⚠ Після зміни email потрібно підтвердити нову адресу. Поточна сесія буде завершена."
+              ? t("profile.emailVerifyHint")
               : user?.email_verified === false
-              ? "Email не підтверджено. Перевірте пошту або запросіть новий лист."
+              ? t("profile.emailNotVerified")
               : undefined}>
             <Input type="email" value={email}
               onChange={e => setEmail(e.target.value)}
@@ -265,29 +264,29 @@ export default function Profile({ user, onUpdate, showToast }) {
           <Btn type="submit" variant="outline" loading={savingEmail}
             disabled={email === user?.email}
             style={{ marginTop: 4 }}>
-            Змінити email
+            {t("profile.changeEmail")}
           </Btn>
         </form>
       </Section>
 
       {/* ── Пароль */}
-      <Section title="Пароль">
+      <Section title={t("profile.passwordSection")}>
         <form onSubmit={savePassword}>
           {/* Поточний пароль — тільки якщо є password (не тільки Google) */}
-          <Field label="Поточний пароль">
+          <Field label={t("profile.currentPassword")}>
             <div style={{ position: "relative" }}>
               <Input type={showPasses ? "text" : "password"}
                 value={currentPass}
                 onChange={e => setCurrentPass(e.target.value)}
-                placeholder="Поточний пароль" autoComplete="current-password"/>
+                placeholder={t("profile.currentPassword")} autoComplete="current-password"/>
             </div>
           </Field>
-          <Field label="Новий пароль">
+          <Field label={t("profile.newPassword")}>
             <div style={{ position: "relative" }}>
               <Input type={showPasses ? "text" : "password"}
                 value={newPass}
                 onChange={e => setNewPass(e.target.value)}
-                placeholder="Мінімум 8 символів" autoComplete="new-password"/>
+                placeholder={t("profile.passwordMinLength")} autoComplete="new-password"/>
               <button type="button" onClick={() => setShowPasses(p => !p)}
                 style={{ position: "absolute", right: 12, top: "50%",
                   transform: "translateY(-50%)", background: "none", border: "none",
@@ -295,31 +294,31 @@ export default function Profile({ user, onUpdate, showToast }) {
                 {showPasses ? "🙈" : "👁"}
               </button>
             </div>
-            <StrengthBar password={newPass}/>
+            <StrengthBar password={newPass} t={t} />
           </Field>
-          <Field label="Підтвердіть пароль">
+          <Field label={t("profile.confirmPassword")}>
             <Input type={showPasses ? "text" : "password"}
               value={newPass2}
               onChange={e => setNewPass2(e.target.value)}
-              placeholder="Повторіть пароль" autoComplete="new-password"
+              placeholder={t("profile.passwordMinLength")} autoComplete="new-password"
               style={{ borderColor: newPass2 && newPass !== newPass2 ? C.red : undefined }}/>
             {newPass2 && newPass !== newPass2 && (
-              <p style={{ fontSize: 11, color: C.red, marginTop: 4 }}>Паролі не збігаються</p>
+              <p style={{ fontSize: 11, color: C.red, marginTop: 4 }}>{t("profile.passwordsMismatch")}</p>
             )}
           </Field>
           <Btn type="submit" variant="outline" loading={savingPass}
             disabled={!newPass || !newPass2}
             style={{ marginTop: 4 }}>
-            Змінити пароль
+            {t("profile.changePassword")}
           </Btn>
           <p style={{ fontSize: 11, color: C.muted, marginTop: 8 }}>
-            Після зміни пароля вас буде розлоговано.
+            {t("profile.logoutHint")}
           </p>
         </form>
       </Section>
 
       {/* ── Маркетингові листи */}
-      <Section title="Email розсилка">
+      <Section title={t("profile.marketing")}>
         <label style={{ display: "flex", alignItems: "flex-start", gap: 14,
           cursor: savingMarketing ? "not-allowed" : "pointer" }}>
           <div style={{ position: "relative", flexShrink: 0, marginTop: 2 }}>
@@ -331,25 +330,24 @@ export default function Profile({ user, onUpdate, showToast }) {
           </div>
           <div>
             <div style={{ fontWeight: 600, fontSize: 14, marginBottom: 4 }}>
-              Отримувати маркетингові листи
+              {t("profile.marketingTitle")}
               {savingMarketing && (
                 <span style={{ marginLeft: 8, fontSize: 11, color: C.muted }}>
-                  збережено...
+                  {t("profile.marketingSaving")}
                 </span>
               )}
             </div>
             <div style={{ fontSize: 13, color: C.muted, lineHeight: 1.6 }}>
-              Новини продукту, оновлення IndexFast та спеціальні пропозиції.
-              Транзакційні листи (підтвердження, сповіщення) надсилаються завжди.
+              {t("profile.marketingDesc")}
             </div>
             {!marketing && (
               <div style={{ fontSize: 12, color: C.gold, marginTop: 6 }}>
-                ○ Ви відписані від маркетингових листів
+                {t("profile.unsubscribed")}
               </div>
             )}
             {marketing && (
               <div style={{ fontSize: 12, color: C.green, marginTop: 6 }}>
-                ✓ Ви підписані на маркетингові листи
+                {t("profile.subscribed")}
               </div>
             )}
           </div>
@@ -361,14 +359,13 @@ export default function Profile({ user, onUpdate, showToast }) {
         border: "1px solid rgba(255,77,109,0.15)",
         borderRadius: 16, padding: 20, marginTop: 8 }}>
         <h3 style={{ fontFamily: "Syne,sans-serif", fontWeight: 700,
-          fontSize: 14, color: C.red, marginBottom: 12 }}>Небезпечна зона</h3>
+          fontSize: 14, color: C.red, marginBottom: 12 }}>{t("profile.dangerZone")}</h3>
         <p style={{ fontSize: 13, color: C.muted, marginBottom: 16, lineHeight: 1.6 }}>
-          Видалення акаунту призведе до втрати всіх даних: сайтів, логів, статистики.
-          Цю дію неможливо скасувати.
+          {t("profile.deleteAccountWarning")}
         </p>
         <Btn variant="danger"
-          onClick={() => showToast("Для видалення акаунту зверніться до підтримки: t.me/indexfastgoogle", "error")}>
-          Видалити акаунт
+          onClick={() => showToast(t("profile.deleteAccountSupport"), "error")}>
+          {t("profile.deleteAccount")}
         </Btn>
       </div>
     </div>
