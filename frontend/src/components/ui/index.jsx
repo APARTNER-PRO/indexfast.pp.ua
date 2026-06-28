@@ -1,5 +1,5 @@
 // src/components/ui/index.jsx
-import { memo, useEffect } from "react";
+import { memo, useEffect, useTranslation } from "react";
 import { C, PLAN_COLORS }  from "../../constants.js";
 
 // ── Badge плану
@@ -15,8 +15,9 @@ export const Badge = memo(function Badge({ plan }) {
 
 // ── Статус сайту
 export const StatusDot = memo(function StatusDot({ status }) {
+  const { t } = useTranslation();
   const colors = { active: C.green, paused: C.gold, error: C.red };
-  const labels = { active: "Активний", paused: "Пауза", error: "Помилка" };
+  const labels = { active: t("sites.active"), paused: t("sites.paused"), error: t("sites.error") };
   const col = colors[status] ?? C.muted;
   return (
     <span style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: 11,
@@ -200,9 +201,10 @@ export const Btn = memo(function Btn({ children, variant = "primary", loading, d
 
 // ── Sparkline SVG (мемо — перемальовується тільки при зміні data)
 export const Sparkline = memo(function Sparkline({ data = [] }) {
+  const { t } = useTranslation();
   if (!data.length) return (
     <div style={{ color: C.muted, fontSize: 12, textAlign: "center", padding: 40 }}>
-      Немає даних
+      {t("logs.noData")}
     </div>
   );
   const W = 100, H = 50;
@@ -250,11 +252,12 @@ export const Sparkline = memo(function Sparkline({ data = [] }) {
 
 // ── JobProgress — прогрес активного job
 export const JobProgress = memo(function JobProgress({ job, isPolling }) {
+  const { t } = useTranslation();
   if (!job) return null;
   const isDone = job.status === "done";
   const isFail = job.status === "failed";
   const color  = isFail ? C.red : isDone ? C.green : C.gold;
-  const label  = isDone ? "Завершено" : isFail ? "Помилка" : "Обробляється...";
+  const label  = isDone ? t("common.success") : isFail ? t("common.error") : t("billing.wait");
 
   return (
     <div style={{ background: `${color}0d`, border: `1px solid ${color}30`,
@@ -273,9 +276,9 @@ export const JobProgress = memo(function JobProgress({ job, isPolling }) {
       </div>
       <ProgressBar value={job.progress ?? 0} max={100} color={color}/>
       <div style={{ display: "flex", gap: 16, marginTop: 8, fontSize: 11, color: C.muted }}>
-        <span>✓ Відправлено: <strong style={{ color: C.green }}>{job.sent}</strong></span>
-        <span>✕ Помилки: <strong style={{ color: job.failed > 0 ? C.red : C.muted }}>{job.failed}</strong></span>
-        <span>Всього: <strong style={{ color: C.white }}>{job.total}</strong></span>
+        <span>✓ {t("overview.urlsSentToday")}: <strong style={{ color: C.green }}>{job.sent}</strong></span>
+        <span>✕ {t("logs.failed")}: <strong style={{ color: job.failed > 0 ? C.red : C.muted }}>{job.failed}</strong></span>
+        <span>{t("logs.total")}: <strong style={{ color: C.white }}>{job.total}</strong></span>
         {job.last_error && <span style={{ color: C.red }}>⚠ {job.last_error}</span>}
       </div>
     </div>

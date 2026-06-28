@@ -1,7 +1,8 @@
 // frontend/src/pages/Billing.jsx
 // Крос-доменна підтримка: всі запити ідуть через BASE = VITE_API_URL ?? "/api"
-// FormData (квитанція) теж використовує BASE, не хардкодений "/api"
+// FormData (квитанція) теж використовує BASE, не хардкоднений "/api"
 import { useState, useEffect, useCallback, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { apiFetch } from '../api/client';
 
 // BASE — той самий що в client.js, щоб FormData запит теж йшов на правильний домен
@@ -29,6 +30,7 @@ const PaymentIcon = ({ id }) => {
 };
 
 export default function Billing() {
+  const { t } = useTranslation();
   const [data,        setData]       = useState(null);
   const [loading,     setLoading]    = useState(true);
   const [error,       setError]      = useState('');
@@ -296,7 +298,7 @@ export default function Billing() {
       <div style={{ borderRadius: 20, border: '1px solid rgba(255,255,255,0.07)',
                     background: '#0d0d17', padding: '24px 28px' }}>
         <p style={{ fontSize: 11, fontWeight: 700, color: '#4a4a68', letterSpacing: '0.1em',
-                    textTransform: 'uppercase', marginBottom: 14 }}>Поточна підписка</p>
+                    textTransform: 'uppercase', marginBottom: 14 }}>{t("billing.currentPlan")}</p>
         {data?.current_plan && data.current_plan !== 'free' && data.current_plan !== 'start' ? (
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between',
                         flexWrap: 'wrap', gap: 12 }}>
@@ -322,7 +324,7 @@ export default function Billing() {
                                background: sub.status === 'paid' ? 'rgba(0,255,136,0.1)' : 'rgba(255,200,0,0.1)',
                                color: sub.status === 'paid' ? '#00ff88' : '#ffd060',
                                border: sub.status === 'paid' ? '1px solid rgba(0,255,136,0.2)' : '1px solid rgba(255,208,96,0.2)' }}>
-                  {sub.status === 'paid' ? '● Активна' : '○ ' + sub.status}
+                  {sub.status === 'paid' ? t("billing.active") : '○ ' + sub.status}
                 </span>
               )}
             </div>
@@ -345,7 +347,7 @@ export default function Billing() {
               <span style={{ fontFamily: 'Syne, sans-serif', fontWeight: 700,
                              fontSize: 15, color: '#5a5a78' }}>Старт</span>
             </div>
-            <p style={{ fontSize: 13, color: '#4a4a68' }}>Безкоштовний план — оберіть тариф для розширення можливостей</p>
+            <p style={{ fontSize: 13, color: '#4a4a68' }}>{t("billing.freePlan")}</p>
           </div>
         )}
       </div>
@@ -365,7 +367,7 @@ export default function Billing() {
             <div style={{ display: 'flex', gap: 4, background: 'rgba(255,255,255,0.05)',
                           borderRadius: 12, padding: 4 }}>
               {['month', 'year', '3_years'].map(per => {
-                let label = per === 'month' ? 'Місяць' : per === 'year' ? 'Рік' : '3 роки';
+                let label = per === 'month' ? t("billing.month") : per === 'year' ? t("billing.year") : t("billing.threeYears");
                 let discountText = '';
                 const pData = plans[selPlan] || plans['pro'];
                 if (per === 'year') {
@@ -413,7 +415,7 @@ export default function Billing() {
                     const isEnterprise = !!p.enterprise;
                     const priceNum     = isEnterprise ? '' : (priceVal > 0 ? priceVal.toLocaleString('uk-UA') : '0');
                     const priceUah     = isEnterprise ? 0 : (p[selPeriod + '_uah'] || 0);
-                    const desc         = isEnterprise ? 'під ваші потреби' : (priceVal > 0 ? '/ ' + PERIOD_LABELS[selPeriod] : 'назавжди безкоштовно');
+                    const desc         = isEnterprise ? t("billing.underNeeds") : (priceVal > 0 ? '/ ' + t("billing." + (selPeriod === '3_years' ? 'per3Years' : selPeriod === 'year' ? 'perYear' : 'perMonth')) : t("billing.freeForever"));
                     return (
                       <div key={id} style={{ flex: '1 1 0', minWidth: 260 }}>
                         <PlanCard
@@ -501,25 +503,25 @@ export default function Billing() {
         <div style={{ borderRadius: 20, border: '1px solid rgba(255,255,255,0.07)',
                       background: '#0d0d17', padding: '28px', marginTop: 40 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 24 }}>
-            <button
-              onClick={() => setStep('plan')}
-              style={{ background: 'rgba(255,255,255,0.05)', border: 'none',
-                       borderRadius: 10, padding: '8px 12px', cursor: 'pointer',
-                       color: '#a0a0c0', fontSize: 13, fontWeight: 600, transition: 'background .15s' }}
-              onMouseOver={e => e.currentTarget.style.background = 'rgba(255,255,255,0.1)'}
-              onMouseOut={e => e.currentTarget.style.background = 'rgba(255,255,255,0.05)'}
-            >
-              ← Назад
-            </button>
-            <h2 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: 16, color: '#eeeef6', margin: 0 }}>
-              Метод оплати
-            </h2>
+              <button
+                onClick={() => setStep('plan')}
+                style={{ background: 'rgba(255,255,255,0.05)', border: 'none',
+                         borderRadius: 10, padding: '8px 12px', cursor: 'pointer',
+                         color: '#a0a0c0', fontSize: 13, fontWeight: 600, transition: 'background .15s' }}
+                onMouseOver={e => e.currentTarget.style.background = 'rgba(255,255,255,0.1)'}
+                onMouseOut={e => e.currentTarget.style.background = 'rgba(255,255,255,0.05)'}
+              >
+                {t("billing.manual.back")}
+              </button>
+              <h2 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: 16, color: '#eeeef6', margin: 0 }}>
+                {t("billing.paymentMethod")}
+              </h2>
           </div>
 
           <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)',
                         borderRadius: 18, padding: '24px 28px', marginBottom: 24 }}>
             <span style={{ color: '#6a6a85', fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em' }}>
-              Обраний тариф
+              {t("billing.selectedPlan")}
             </span>
             <h3 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 24, color: '#fff', margin: '6px 0 16px' }}>
               {PLAN_LABELS[selPlan] || selPlan}
@@ -710,7 +712,7 @@ export default function Billing() {
                      background: !selMethod ? 'rgba(0,255,136,0.3)' : '#00ff88',
                      color: '#050508', opacity: busy ? 0.7 : 1 }}
           >
-            {busy ? 'Зачекайте…' : 'Продовжити →'}
+            {busy ? t("billing.wait") : t("billing.continue")}
           </button>
         </div>
       )}
@@ -722,16 +724,16 @@ export default function Billing() {
 
           {/* Header */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 28 }}>
-            <button
-              onClick={() => setStep(methods?.count > 1 ? 'method' : 'plan')}
-              style={{ background: 'rgba(255,255,255,0.05)', border: 'none',
-                       borderRadius: 10, padding: '8px 12px', cursor: 'pointer',
-                       color: '#a0a0c0', fontSize: 13, fontWeight: 600, transition: 'background .15s' }}
-              onMouseOver={e => e.currentTarget.style.background = 'rgba(255,255,255,0.1)'}
-              onMouseOut={e => e.currentTarget.style.background = 'rgba(255,255,255,0.05)'}
-            >
-              ← Назад
-            </button>
+              <button
+                onClick={() => setStep(methods?.count > 1 ? 'method' : 'plan')}
+                style={{ background: 'rgba(255,255,255,0.05)', border: 'none',
+                         borderRadius: 10, padding: '8px 12px', cursor: 'pointer',
+                         color: '#a0a0c0', fontSize: 13, fontWeight: 600, transition: 'background .15s' }}
+                onMouseOver={e => e.currentTarget.style.background = 'rgba(255,255,255,0.1)'}
+                onMouseOut={e => e.currentTarget.style.background = 'rgba(255,255,255,0.05)'}
+              >
+                {t("billing.manual.back")}
+              </button>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
               <div style={{ width: 36, height: 36, borderRadius: 10,
                             background: 'rgba(0,255,136,0.08)', border: '1px solid rgba(0,255,136,0.15)',
@@ -743,7 +745,7 @@ export default function Billing() {
               </div>
               <h2 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: 16,
                            color: '#eeeef6', margin: 0 }}>
-                Банківський переказ
+                {t("billing.manual.title")}
               </h2>
             </div>
           </div>
@@ -783,27 +785,27 @@ export default function Billing() {
               <div style={{ padding: '14px 22px', borderBottom: '1px solid rgba(255,255,255,0.06)',
                             display: 'flex', alignItems: 'center', gap: 8 }}>
                 <span style={{ fontSize: 11, fontWeight: 700, color: '#00ff88', letterSpacing: '0.12em',
-                               textTransform: 'uppercase' }}>Реквізити для оплати</span>
+                               textTransform: 'uppercase' }}>{t("billing.manual.requisites")}</span>
               </div>
 
               {/* Card body — grid rows */}
               <div style={{ padding: '6px 0' }}>
-                {manual.card_number && (
-                  <ManualReqRow
-                    icon="💳" label="Картка" value={manual.card_number}
-                    mono bold copyable />
-                )}
-                {manual.iban && (
-                  <ManualReqRow
-                    icon="🏛" label="IBAN" value={manual.iban}
-                    mono small copyable />
-                )}
-                {manual.recipient && (
-                  <ManualReqRow icon="👤" label="Отримувач" value={manual.recipient} />
-                )}
-                {manual.bank && (
-                  <ManualReqRow icon="🏦" label="Банк" value={manual.bank} />
-                )}
+                 {manual.card_number && (
+                   <ManualReqRow
+                     icon="💳" label={t("billing.manual.card")} value={manual.card_number}
+                     mono bold copyable />
+                 )}
+                 {manual.iban && (
+                   <ManualReqRow
+                     icon="🏛" label={t("billing.manual.iban")} value={manual.iban}
+                     mono small copyable />
+                 )}
+                 {manual.recipient && (
+                   <ManualReqRow icon="👤" label={t("billing.manual.recipient")} value={manual.recipient} />
+                 )}
+                 {manual.bank && (
+                   <ManualReqRow icon="🏦" label={t("billing.manual.bank")} value={manual.bank} />
+                 )}
               </div>
 
               {/* Сума — виділена секція */}
@@ -811,7 +813,7 @@ export default function Billing() {
                 <div style={{ padding: '16px 22px', borderTop: '1px solid rgba(255,255,255,0.06)',
                               background: 'rgba(0,255,136,0.04)',
                               display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                  <span style={{ fontSize: 13, color: '#6a6a85', fontWeight: 600 }}>Сума до сплати</span>
+                  <span style={{ fontSize: 13, color: '#6a6a85', fontWeight: 600 }}>{t("billing.manual.amountToPay")}</span>
                   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
                     {manualAmount !== null && manualAmount < plans[selPlan][selPeriod] && (
                       <span style={{ textDecoration: 'line-through', color: '#6a6a85', fontSize: 13, marginBottom: 2 }}>
@@ -834,7 +836,7 @@ export default function Billing() {
               {/* Призначення платежу */}
               <div style={{ padding: '14px 22px', borderTop: '1px solid rgba(255,255,255,0.06)',
                             display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12 }}>
-                <span style={{ fontSize: 12, color: '#6a6a85', fontWeight: 600, flexShrink: 0 }}>Призначення:</span>
+                <span style={{ fontSize: 12, color: '#6a6a85', fontWeight: 600, flexShrink: 0 }}>{t("billing.manual.purpose")}</span>
                 <span style={{ fontSize: 13, color: '#d0d0e8', fontWeight: 500, textAlign: 'right' }}>
                   Підписка IndexFast {PLAN_LABELS[selPlan]} ({PERIOD_LABELS[selPeriod]})
                 </span>
@@ -844,12 +846,7 @@ export default function Billing() {
 
           {/* Інструкції — numbered stepper */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 0, marginBottom: 28 }}>
-            {[
-              'Здійсніть переказ на вказані реквізити',
-              'Збережіть квитанцію або скріншот підтвердження',
-              'Завантажте квитанцію нижче та натисніть «Надіслати»',
-              'Підписка активується після перевірки (1–24 год)',
-            ].map((text, i) => (
+            {t("billing.manual.instructions", { returnObjects: true }).map((text, i) => (
               <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 14 }}>
                 {/* Vertical line + circle */}
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', flexShrink: 0 }}>
@@ -921,10 +918,10 @@ export default function Billing() {
                           strokeLinecap="round" strokeLinejoin="round" stroke="#a0a0c0"/>
                   </svg>
                   <p style={{ fontSize: 14, color: '#8a8aa0', margin: 0, fontWeight: 500 }}>
-                    Перетягніть файл або <span style={{ color: '#00ff88', fontWeight: 600 }}>оберіть</span>
+                    {t("billing.manual.upload")} <span style={{ color: '#00ff88', fontWeight: 600 }}>{t("common.confirm")}</span>
                   </p>
                   <p style={{ fontSize: 11, color: '#4a4a68', margin: '6px 0 0' }}>
-                    JPG, PNG, PDF або WebP · макс 10 МБ
+                    {t("billing.manual.uploadHint")}
                   </p>
                 </>
               )}
@@ -943,7 +940,7 @@ export default function Billing() {
             value={notes}
             onChange={e => setNotes(e.target.value)}
             rows={2}
-            placeholder="Примітка (необов'язково)"
+            placeholder={t("billing.manual.note")}
             style={{ width: '100%', boxSizing: 'border-box',
                      background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)',
                      borderRadius: 14, padding: '14px 18px', fontSize: 14, color: '#eeeef6',
@@ -965,12 +962,12 @@ export default function Billing() {
                      color: '#050508', opacity: busy ? 0.7 : 1,
                      display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}
           >
-            {busy ? 'Надсилаємо…' : (
+            {busy ? t("billing.wait") : (
               <>
                 <svg viewBox="0 0 24 24" style={{ width: 18, height: 18 }} fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" strokeLinecap="round" strokeLinejoin="round" stroke="#050508"/>
                 </svg>
-                Надіслати квитанцію
+                {t("billing.manual.submit")}
               </>
             )}
           </button>
@@ -979,9 +976,9 @@ export default function Billing() {
 
       {step === 'manual' && manualDone && (
         <Alert type="success" large>
-          <p className="font-bold text-base mb-1">✅ Квитанцію отримано!</p>
-          <p>Адміністратор перевірить оплату та активує підписку протягом 1–24 год.</p>
-          <p className="mt-1">Ви отримаєте email після підтвердження.</p>
+          <p className="font-bold text-base mb-1">{t("billing.manual.submitted")}</p>
+          <p>{t("billing.manual.submittedText")}</p>
+          <p className="mt-1">{t("billing.manual.emailAfter")}</p>
         </Alert>
       )}
 
@@ -991,12 +988,12 @@ export default function Billing() {
                       background: '#0d0d17', padding: '28px', marginTop: 40 }}>
           <h2 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: 16,
                        color: '#eeeef6', marginBottom: 20 }}>
-            Історія підписок
+            {t("billing.history.title")}
           </h2>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
             {data.history.map(h => {
               const isManual = h.payment_method === 'manual';
-              const methodName = isManual ? 'Банківський переказ' : (h.payment_method || '—');
+              const methodName = isManual ? t("billing.history.manual") : (h.payment_method || '—');
               const dateStr = h.created_at ? new Date(h.created_at.replace(' ', 'T')).toLocaleDateString('uk-UA', { day: 'numeric', month: 'long', year: 'numeric' }) : '';
               
               return (
@@ -1204,7 +1201,7 @@ const PlanCard = ({ plan: p, isCurrent, isSelected, onSelect, onBuy, busy, metho
           <span style={{ background: green, color: '#050508', fontSize: 11,
                          fontWeight: 800, padding: '4px 14px', borderRadius: 100,
                          fontFamily: 'Syne, sans-serif', letterSpacing: '0.05em' }}>
-            Популярний
+            {t("billing.popular")}
           </span>
         </div>
       )}
@@ -1215,7 +1212,7 @@ const PlanCard = ({ plan: p, isCurrent, isSelected, onSelect, onBuy, busy, metho
                          fontWeight: 800, padding: '4px 14px', borderRadius: 100,
                          border: '1px solid rgba(147,112,219,0.4)',
                          fontFamily: 'Syne, sans-serif', letterSpacing: '0.05em' }}>
-            Enterprise
+            {t("billing.enterprise")}
           </span>
         </div>
       )}
@@ -1226,7 +1223,7 @@ const PlanCard = ({ plan: p, isCurrent, isSelected, onSelect, onBuy, busy, metho
                       fontWeight: 800, background: 'rgba(0,255,136,0.1)', color: green,
                       padding: '3px 9px', borderRadius: 100,
                       border: '1px solid rgba(0,255,136,0.2)' }}>
-          ✓ Активний
+          ✓ {t("billing.activeBadge")}
         </div>
       )}
 
@@ -1289,7 +1286,7 @@ const PlanCard = ({ plan: p, isCurrent, isSelected, onSelect, onBuy, busy, metho
                       padding: '14px', borderRadius: 12,
                       color: isEnterprise ? purple : green,
                       background: isEnterprise ? 'rgba(147,112,219,0.08)' : 'rgba(0,255,136,0.06)' }}>
-          Поточний план
+          {t("billing.activeBadge")} {t("billing.currentPlan").toLowerCase()}
         </div>
       ) : isEnterprise ? (
         <button
@@ -1298,20 +1295,20 @@ const PlanCard = ({ plan: p, isCurrent, isSelected, onSelect, onBuy, busy, metho
                    fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: 14,
                    transition: 'all .15s', background: 'rgba(147,112,219,0.1)',
                    border: '2px solid rgba(147,112,219,0.35)', color: purple }}>
-          Зв'язатись →
-        </button>
-      ) : isStart ? (
-        <button
-          onClick={e => { e.stopPropagation(); onSelect(); }}
-          style={{ width: '100%', padding: '14px', borderRadius: 12, cursor: 'pointer',
-                   fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: 14,
-                   transition: 'all .15s',
-                   ...(isSelected
-                     ? { background: green, color: '#050508', border: 'none' }
-                     : { background: 'transparent', color: '#d0d0e8',
-                         border: '1px solid rgba(255,255,255,0.14)' }) }}>
-          {isSelected ? '✓ Обрано' : 'Обрати'}
-        </button>
+           {t("billing.buyNow")}
+         </button>
+       ) : isStart ? (
+         <button
+           onClick={e => { e.stopPropagation(); onSelect(); }}
+           style={{ width: '100%', padding: '14px', borderRadius: 12, cursor: 'pointer',
+                    fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: 14,
+                    transition: 'all .15s',
+                    ...(isSelected
+                      ? { background: green, color: '#050508', border: 'none' }
+                      : { background: 'transparent', color: '#d0d0e8',
+                          border: '1px solid rgba(255,255,255,0.14)' }) }}>
+           {isSelected ? `✓ ${t("billing.select")}` : t("billing.select")}
+         </button>
       ) : (
         <button
           onClick={e => { e.stopPropagation(); if (methodsOk && !busy) onBuy(); }}
@@ -1321,10 +1318,10 @@ const PlanCard = ({ plan: p, isCurrent, isSelected, onSelect, onBuy, busy, metho
                    transition: 'all .15s', border: 'none',
                    background: methodsOk ? green : 'rgba(0,255,136,0.3)',
                    color: '#050508', opacity: busy ? 0.7 : 1 }}>
-          {busy ? 'Зачекайте…'
-            : !methodsOk ? 'Оплата недоступна'
-            : p.popular ? `Придбати ${p.name} →`
-            : `Придбати →`}
+           {busy ? t("billing.wait")
+             : !methodsOk ? t("billing.methodsUnavailable")
+             : p.popular ? `${t("billing.buyNow")} ${p.name} →`
+             : `${t("billing.buyNow")} →`}
         </button>
       )}
     </div>

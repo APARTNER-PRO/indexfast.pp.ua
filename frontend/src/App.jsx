@@ -5,6 +5,7 @@ import {
 } from "react";
 import { useNavigate } from "react-router-dom";
 import { useQueryClient }              from "@tanstack/react-query";
+import { useTranslation }              from "react-i18next";
 import { useStats, useDeleteSite, useToggleSite } from "./hooks/useStats.js";
 import { apiClient } from "./api/client.js";
 import { useToast }          from "./hooks/useToast.js";
@@ -15,6 +16,7 @@ import {
   Toast, Spinner, Btn, Badge, ConfirmModal,
 } from "./components/ui/index.jsx";
 import { C, NAV_ITEMS }      from "./constants.js";
+import LanguageSwitcher       from "./components/LanguageSwitcher.jsx";
 
 // ── Lazy сторінки — окремі JS chunks
 const Overview    = lazy(() => import("./pages/Overview.jsx"));
@@ -44,7 +46,7 @@ function PageLoader() {
 // ══════════════════════════════════════════════
 //  Банер: підтвердіть email
 // ══════════════════════════════════════════════
-function EmailVerifyBanner({ email, showToast }) {
+function EmailVerifyBanner({ email, showToast, t }) {
   const [sending, setSending] = useState(false);
   const [sent,    setSent]    = useState(false);
 
@@ -69,9 +71,9 @@ function EmailVerifyBanner({ email, showToast }) {
     }}>
       <span style={{ fontSize: 18, flexShrink: 0 }}>📧</span>
       <span style={{ flex: 1, color: "#e8d88a", lineHeight: 1.5 }}>
-        <strong>Підтвердіть email</strong> — перевірте пошту{" "}
+        <strong>{t("auth.verifyEmail")}</strong> — {t("auth.verifyEmailText")}{" "}
         <span style={{ opacity: 0.8 }}>{email}</span>
-        {" "}і натисніть на посилання в листі.
+        {" "}{t("auth.clickLink")}
       </span>
       {!sent ? (
         <button onClick={resend} disabled={sending}
@@ -80,10 +82,10 @@ function EmailVerifyBanner({ email, showToast }) {
             borderRadius: 8, padding: "6px 14px", fontSize: 12,
             fontWeight: 700, cursor: sending ? "not-allowed" : "pointer",
             opacity: sending ? 0.6 : 1, whiteSpace: "nowrap" }}>
-          {sending ? "Надсилаємо..." : "Надіслати повторно"}
+          {sending ? t("auth.sending") : t("auth.resend")}
         </button>
       ) : (
-        <span style={{ color: "#00ff88", fontSize: 12, flexShrink: 0 }}>✓ Лист надіслано</span>
+        <span style={{ color: "#00ff88", fontSize: 12, flexShrink: 0 }}>✓ {t("auth.sent")}</span>
       )}
     </div>
   );
@@ -92,7 +94,7 @@ function EmailVerifyBanner({ email, showToast }) {
 // ══════════════════════════════════════════════
 //  Sidebar
 // ══════════════════════════════════════════════
-const Sidebar = memo(function Sidebar({ activePage, setPage, user, sideOpen, setSideOpen, onLogout }) {
+const Sidebar = memo(function Sidebar({ activePage, setPage, user, sideOpen, setSideOpen, onLogout, t }) {
   if (!user) return null;
   const plan = user.plan;
 
@@ -139,7 +141,7 @@ const Sidebar = memo(function Sidebar({ activePage, setPage, user, sideOpen, set
                   background: C.green, borderRadius: "0 2px 2px 0" }}/>
               )}
               <span style={{ fontSize: 16, width: 20, textAlign: "center" }}>{item.icon}</span>
-              <span>{item.label}</span>
+              <span>{t(item.labelKey)}</span>
             </button>
           );
         })}
@@ -147,9 +149,9 @@ const Sidebar = memo(function Sidebar({ activePage, setPage, user, sideOpen, set
         <div style={{ height: 1, background: C.border, margin: "12px 4px" }}/>
 
         {[
-          { href: "/docs/",                        icon: "📖", label: "Документація" },
-          { href: "https://t.me/indexfastgoogle",  icon: "💬", label: "Підтримка", external: true },
-        ].map(({ href, icon, label, external }) => (
+          { href: "/docs/",                        icon: "📖", labelKey: "sidebar.documentation" },
+          { href: "https://t.me/indexfastgoogle",  icon: "💬", labelKey: "sidebar.support", external: true },
+        ].map(({ href, icon, labelKey, external }) => (
           <a key={href} href={href}
             target={external ? "_blank" : undefined}
             rel={external ? "noreferrer" : undefined}
@@ -159,7 +161,7 @@ const Sidebar = memo(function Sidebar({ activePage, setPage, user, sideOpen, set
             onMouseEnter={e => { e.currentTarget.style.background = "rgba(255,255,255,0.04)"; e.currentTarget.style.color = C.white; }}
             onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = C.muted; }}>
             <span style={{ fontSize: 16, width: 20, textAlign: "center" }}>{icon}</span>
-            {label}
+            {t(labelKey)}
           </a>
         ))}
       </nav>
@@ -169,7 +171,7 @@ const Sidebar = memo(function Sidebar({ activePage, setPage, user, sideOpen, set
         <div style={{ display: "flex", alignItems: "center", gap: 10, padding: "10px 12px",
           borderRadius: 12, cursor: "pointer", transition: "background 0.15s" }}
           onClick={() => {
-            if (window.confirm("Вийти з акаунту?")) {
+            if (window.confirm(t("sidebar.logout"))) {
               onLogout?.();
             }
           }}
@@ -200,8 +202,8 @@ const Sidebar = memo(function Sidebar({ activePage, setPage, user, sideOpen, set
 // ══════════════════════════════════════════════
 //  Topbar
 // ══════════════════════════════════════════════
-const Topbar = memo(function Topbar({ activePage, onRefresh, onAddSite, onImportGsc, onToggleSide, isRefetching }) {
-  const label = NAV_ITEMS.find(n => n.id === activePage)?.label ?? "Кабінет";
+const Topbar = memo(function Topbar({ activePage, onRefresh, onAddSite, onImportGsc, onToggleSide, isRefetching, t }) {
+  const label = NAV_ITEMS.find(n => n.id === activePage)?.labelKey ?? "topbar.dashboard";
   return (
     <header className="topbar-header" style={{
       height: 58, padding: "0 28px",
@@ -222,17 +224,18 @@ const Topbar = memo(function Topbar({ activePage, onRefresh, onAddSite, onImport
           ))}
         </button>
         <span style={{ fontFamily: "Syne,sans-serif", fontWeight: 700, fontSize: 15 }}>
-          {label}
+          {t(label)}
         </span>
         {isRefetching && <Spinner size={13}/>}
       </div>
       <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+        <LanguageSwitcher />
         <Btn variant="ghost" onClick={onRefresh} className="btn-refresh"
           style={{ padding: "6px 14px", fontSize: 13 }}>
-          ↻ Оновити
+          {t("common.refresh")}
         </Btn>
         <Btn variant="primary" onClick={onAddSite} style={{ padding: "7px 16px", fontSize: 13 }}>
-          + Додати сайт
+          + {t("overview.addSite")}
         </Btn>
       </div>
     </header>
@@ -244,6 +247,7 @@ const Topbar = memo(function Topbar({ activePage, onRefresh, onAddSite, onImport
 // ══════════════════════════════════════════════
 export default function App() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   // ── Email verified: показуємо toast при ?verified=1
   useEffect(() => {
@@ -566,6 +570,7 @@ export default function App() {
                   localStorage.removeItem("refresh_token");
                   navigate("/app/login");
                 }}
+          t={t}
         />
 
         {/* Main */}
@@ -579,12 +584,13 @@ export default function App() {
             onImportGsc={() => setGscOpen(true)}
             onToggleSide={() => setSideOpen(s => !s)}
             isRefetching={isRefetching}
+            t={t}
           />
 
           <main className="main-padding" style={{ padding: 28, flex: 1 }}>
             {/* Банер підтвердження email */}
             {user && user.email_verified === false && (
-              <EmailVerifyBanner email={user.email} showToast={showToast}/>
+              <EmailVerifyBanner email={user.email} showToast={showToast} t={t}/>
             )}
             {renderPage()}
           </main>
@@ -628,9 +634,9 @@ export default function App() {
         onClose={() => setConfirmSite(null)}
         onConfirm={handleDeleteConfirm}
         loading={deleteLoading}
-        title="Видалити сайт?"
-        message={`Сайт ${confirmSite?.domain ?? ""} та всі його логи будуть видалені безповоротно.`}
-        confirmLabel="Так, видалити"
+        title={t("sites.deleteSite")}
+        message={t("sites.deleteConfirm", { domain: confirmSite?.domain ?? "" })}
+        confirmLabel={t("sites.yesDelete")}
       />
 
       <Toast {...toast}/>
