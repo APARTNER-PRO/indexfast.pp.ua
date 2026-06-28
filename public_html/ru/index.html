@@ -143,8 +143,8 @@
       {
         "@type": "Offer",
         "name": "PRO",
-        "price": "499",
-        "priceCurrency": "UAH",
+        "price": "9.99",
+        "priceCurrency": "USD",
         "description": "PRO план - 100 URL в день, до 5 сайтов"
       },
       {
@@ -413,7 +413,7 @@
         <div class="promo-modal-glow"></div>
         <p class="promo-modal-eyebrow">🔥 Ограниченное предложение</p>
         <h3 class="promo-modal-title" id="promoModalTitle">Уберите <em>-50%</em><br>с собой</h3>
-        <p class="promo-modal-sub">Первый месяц PRO только за <strong>₴249</strong> вместо ₴499. Только для новых
+        <p class="promo-modal-sub">Первый месяц PRO только за <strong>$4.99</strong> вместо $9.99. Только для новых
           клиентов.</p>
 
         <div class="promo-modal-timer">
@@ -427,9 +427,9 @@
           </div>
         </div>
 
-        <a href="https://t.me/indexfastgoogle?text=Хочу%20PRO%20за%20₴249%20(промо)" target="_blank"
+        <a href="https://t.me/indexfastgoogle?text=Хочу%20PRO%20за%20$4.99%20(промо)" target="_blank"
           class="promo-modal-btn" onclick="closePromoPopup(); markCtaClicked();">
-          Хочу PRO за ₴249 →
+          Хочу PRO за $4.99 →
         </a>
         <button class="promo-modal-skip" onclick="closePromoPopup()">Нет спасибо, хочу платить полную цену</button>
       </div>
@@ -437,8 +437,8 @@
       <div class="promo-modal-right" aria-hidden="true">
         <div class="promo-modal-card">
           <div class="pmc-tag">PRO план</div>
-          <div class="pmc-price-old">₴499<span>/мес</span></div>
-          <div class="pmc-price-new">₴249<span>/первый месяц</span></div>
+          <div class="pmc-price-old">$9.99<span>/мес</span></div>
+          <div class="pmc-price-new">$4.99<span>/первый месяц</span></div>
           <ul class="pmc-features">
             <li>✓ До 100 страниц/день</li>
             <li>✓ До 10 сайтов</li>
@@ -1095,7 +1095,7 @@
 
         <div class="pricing-card reveal">
           <p class="pricing-tier">Старт</p>
-          <p class="pricing-price"><span>₴</span>0</p>
+          <p class="pricing-price"><span>$</span>0</p>
           <p class="pricing-period">навсегда бесплатно</p>
           <ul class="pricing-features">
             <li>10 страниц в день</li>
@@ -1113,7 +1113,7 @@
 
         <div class="pricing-card featured reveal reveal-delay-1">
           <p class="pricing-tier">PRO</p>
-          <p class="pricing-price"><span>₴</span>499</p>
+          <p class="pricing-price"><span>$</span>9.99</p>
           <p class="pricing-period">в месяц</p>
           <ul class="pricing-features">
             <li>100 страниц в день</li>
@@ -1126,13 +1126,13 @@
             <li class="disabled">API доступ</li>
             <li class="disabled">Приоритетная поддержка</li>
           </ul>
-          <a href="https://t.me/indexfastgoogle?text=Хочу%20придбати%20PRO%20за%20₴499" target="_blank"
+          <a href="https://t.me/indexfastgoogle?text=Хочу%20придбати%20PRO%20за%20$9.99" target="_blank"
             class="btn-plan btn-plan-solid">Купить PRO →</a>
         </div>
 
         <div class="pricing-card reveal reveal-delay-2">
           <p class="pricing-tier">Агентство</p>
-          <p class="pricing-price"><span>₴</span>2 999</p>
+          <p class="pricing-price"><span>$</span>49</p>
           <p class="pricing-period">в месяц</p>
           <ul class="pricing-features">
             <li>1000 страниц в день</li>
@@ -1145,7 +1145,7 @@
             <li>Полный API доступ</li>
             <li>Приоритетная поддержка 24/7</li>
           </ul>
-          <a href="https://t.me/indexfastgoogle?text=Хочу%20тариф%20Агентство%20за%20₴2999" target="_blank"
+          <a href="https://t.me/indexfastgoogle?text=Хочу%20тариф%20Агентство%20за%20$49" target="_blank"
             class="btn-plan btn-plan-solid">Купить →</a>
         </div>
       </div>
@@ -1738,7 +1738,7 @@
           const savedMins = newPg * minsPer;          // минилин в месяц
           const savedHours = savedMins / 60;
           const savedMoney = savedHours * rate;
-          const proCost = 499;
+          const proCost = 9.99;
           const profit = savedMoney - proCost;
 
           document.getElementById('resSavedTime').textContent = savedHours >= 1 ? savedHours.toFixed(1) + ' год' : savedMins + ' мин';

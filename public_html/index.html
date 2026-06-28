@@ -137,22 +137,22 @@
         "@type": "Offer",
         "name": "Start",
         "price": "0",
-        "priceCurrency": "UAH",
-        "description": "Free plan - 10 URLs per day, 1 site"
+        "priceCurrency": "USD",
+        "description": "Free plan - 50 URLs per day, 1 site"
       },
       {
         "@type": "Offer",
         "name": "PRO",
-        "price": "499",
-        "priceCurrency": "UAH",
-        "description": "PRO plan — 100 URLs per day, up to 5 sites"
+        "price": "9.99",
+        "priceCurrency": "USD",
+        "description": "PRO plan — 500 URLs per day, up to 5 sites"
       },
       {
         "@type": "Offer",
         "name": "Agency",
-        "price": "2999",
-        "priceCurrency": "UAH",
-        "description": "Agency plan — 1000 URLs per day, up to 50 sites"
+        "price": "49",
+        "priceCurrency": "USD",
+        "description": "Agency plan — 5000 URLs per day, up to 50 sites"
       }
     ],
     "aggregateRating": {
@@ -413,7 +413,7 @@
         <div class="promo-modal-glow"></div>
         <p class="promo-modal-eyebrow">🔥 Limited offer</p>
         <h3 class="promo-modal-title" id="promoModalTitle">Take away <em>-50%</em><br>with myself</h3>
-        <p class="promo-modal-sub">First month PRO only for <strong>₴249</strong> instead of ₴499. Only for new ones
+        <p class="promo-modal-sub">First month PRO only for <strong>$4.99</strong> instead of $9.99. Only for new ones
           customers</p>
 
         <div class="promo-modal-timer">
@@ -427,9 +427,9 @@
           </div>
         </div>
 
-        <a href="https://t.me/indexfastgoogle?text=Хочу%20PRO%20за%20₴249%20(промо)" target="_blank"
+        <a href="https://t.me/indexfastgoogle?text=Хочу%20PRO%20за%20$4.99%20(промо)" target="_blank"
           class="promo-modal-btn" onclick="closePromoPopup(); markCtaClicked();">
-          I want PRO for ₴249 →
+          I want PRO for $4.99 →
         </a>
         <button class="promo-modal-skip" onclick="closePromoPopup()">No thanks, I want to pay full price</button>
       </div>
@@ -437,8 +437,8 @@
       <div class="promo-modal-right" aria-hidden="true">
         <div class="promo-modal-card">
           <div class="pmc-tag">PRO plan</div>
-          <div class="pmc-price-old">₴499<span>/miss</span></div>
-          <div class="pmc-price-new">₴249<span>/first month</span></div>
+          <div class="pmc-price-old">$9.99<span>/miss</span></div>
+          <div class="pmc-price-new">$4.99<span>/first month</span></div>
           <ul class="pmc-features">
             <li>✓ Up to 100 pages/day</li>
             <li>✓ Up to 10 sites</li>
@@ -1095,10 +1095,10 @@
 
         <div class="pricing-card reveal">
           <p class="pricing-tier">Start</p>
-          <p class="pricing-price"><span>₴</span>0</p>
+          <p class="pricing-price"><span>$</span>0</p>
           <p class="pricing-period">forever free</p>
           <ul class="pricing-features">
-            <li>10 pages per day</li>
+            <li>50 pages per day</li>
             <li>1 site</li>
             <li>Web interface</li>
             <li>Sitemap Index support</li>
@@ -1113,10 +1113,10 @@
 
         <div class="pricing-card featured reveal reveal-delay-1">
           <p class="pricing-tier">PRO</p>
-          <p class="pricing-price"><span>₴</span>499</p>
+          <p class="pricing-price"><span>$</span>9.99</p>
           <p class="pricing-period">per month</p>
           <ul class="pricing-features">
-            <li>100 pages per day</li>
+            <li>500 pages per day</li>
             <li>Up to 5 sites</li>
             <li>Web interface</li>
             <li>Sitemap Index support</li>
@@ -1126,16 +1126,16 @@
             <li class="disabled">API access</li>
             <li class="disabled">Priority support</li>
           </ul>
-          <a href="https://t.me/indexfastgoogle?text=Хочу%20придбати%20PRO%20за%20₴499" target="_blank"
+          <a href="https://t.me/indexfastgoogle?text=Хочу%20придбати%20PRO%20за%20$9.99" target="_blank"
             class="btn-plan btn-plan-solid">Buy PRO →</a>
         </div>
 
         <div class="pricing-card reveal reveal-delay-2">
           <p class="pricing-tier">Agency</p>
-          <p class="pricing-price"><span>₴</span>2 999</p>
+          <p class="pricing-price"><span>$</span>49</p>
           <p class="pricing-period">per month</p>
           <ul class="pricing-features">
-            <li>1000 pages per day</li>
+            <li>5,000 pages per day</li>
             <li>Up to 50 sites</li>
             <li>Web interface</li>
             <li>Sitemap Index support</li>
@@ -1145,7 +1145,7 @@
             <li>Full API access</li>
             <li>Priority support 24/7</li>
           </ul>
-          <a href="https://t.me/indexfastgoogle?text=Хочу%20тариф%20Agency%20за%20₴2999" target="_blank"
+          <a href="https://t.me/indexfastgoogle?text=Хочу%20тариф%20Agency%20за%20$49" target="_blank"
             class="btn-plan btn-plan-solid">Buy →</a>
         </div>
       </div>
@@ -1743,7 +1743,7 @@
           const savedMins = newPg * minsPer;          // minилин per month
           const savedHours = savedMins / 60;
           const savedMoney = savedHours * rate;
-          const proCost = 499;
+          const proCost = 9.99;
           const profit = savedMoney - proCost;
 
           document.getElementById('resSavedTime').textContent = savedHours >= 1 ? savedHours.toFixed(1) + ' hours' : savedMins + ' min';
