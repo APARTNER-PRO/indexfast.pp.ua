@@ -9,7 +9,7 @@ import {
 } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { C } from "./constants.js";
-import "./i18n/index.js";
+import i18n from "./i18n/index.js";
 
 // ── Lazy chunks
 const Auth          = lazy(() => import("./pages/Auth.jsx"));
