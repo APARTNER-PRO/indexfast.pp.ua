@@ -58,7 +58,7 @@ export default memo(function Overview({
           <div style={{ flex: 1, minWidth: 200 }}>
             <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }}>
               <div style={{ fontFamily: "Syne,sans-serif", fontWeight: 700, fontSize: 15 }}>
-                Перейдіть на PRO — 100 сторінок/день
+                Перейдіть на PRO — 500 сторінок/день
               </div>
               <span style={{
                 background: "#00ff88", color: "#050508",
@@ -68,11 +68,11 @@ export default memo(function Overview({
             </div>
             <div style={{ fontSize: 13, color: C.muted }}>
               До 10 сайтів · Автоматичний запуск · Email-сповіщення
-              <span style={{ marginLeft: 8, color: "#6a6a85", textDecoration: "line-through" }}>₴499</span>
-              <span style={{ marginLeft: 6, color: "#00ff88", fontWeight: 700 }}>₴249/перший місяць</span>
+              <span style={{ marginLeft: 8, color: "#6a6a85", textDecoration: "line-through" }}>$9.99</span>
+              <span style={{ marginLeft: 6, color: "#00ff88", fontWeight: 700 }}>$4.99/перший місяць</span>
             </div>
           </div>
-          <Btn className="ov-upgrade-btn" variant="primary" onClick={onGoBilling}>Хочу PRO за ₴249 →</Btn>
+          <Btn className="ov-upgrade-btn" variant="primary" onClick={onGoBilling}>Хочу PRO за $4.99 →</Btn>
         </div>
       )}
 

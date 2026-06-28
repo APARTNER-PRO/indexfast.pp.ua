@@ -10,20 +10,25 @@ IndexFast is a professional SEO tool designed to solve the problem of slow Googl
 
 ## Pricing Plans
 1. **Free (Start)**:
-   - 0 UAH/month
-   - 20 URLs per day
+   - $0/month (forever free)
+   - 50 URLs per day
    - 1 Website
    - Web Interface access
+   - Sitemap Index support
+   - IndexNow support
 2. **PRO**:
-   - 999 UAH/month
-   - 100 URLs per day
-   - Up to 10 Websites
+   - $9.99/month
+   - 500 URLs per day
+   - Up to 5 Websites
    - Detailed indexing logs
+   - All Free features
 3. **Agency**:
-   - 3999 UAH/month
-   - Unlimited URLs & Websites
+   - $49/month
+   - 5,000 URLs per day
+   - Up to 50 Websites
    - Automation (cron/scheduler)
    - White-label reports
+   - Priority support 24/7
    - Full API access
 
 ## Target Audience
