@@ -1,10 +1,12 @@
 // src/pages/ResetPassword.jsx  ← lazy chunk
 import { useState, useEffect } from "react";
 import { useNavigate, useSearchParams, Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { apiClient } from "../api/client.js";
 import { C }         from "../constants.js";
 
 export default function ResetPassword() {
+  const { t } = useTranslation();
   const navigate             = useNavigate();
   const [searchParams]       = useSearchParams();
   const token                = searchParams.get("token") || "";
@@ -38,18 +40,18 @@ export default function ResetPassword() {
   }
 
   const strengthColor = ["", C.red, C.gold, C.gold, C.green][strength];
-  const strengthLabel = ["", "Слабкий", "Середній", "Добрий", "Надійний"][strength];
+  const strengthLabel = ["", t("profile.weak"), t("profile.medium"), t("profile.good"), t("profile.strong")][strength];
 
   async function handleSubmit(e) {
     e.preventDefault();
     setError("");
 
     if (password.length < 8) {
-      setError("Пароль має бути мінімум 8 символів");
+      setError(t("profile.passwordMinLength"));
       return;
     }
     if (password !== password2) {
-      setError("Паролі не збігаються");
+      setError(t("profile.passwordsMismatch"));
       return;
     }
 
@@ -59,11 +61,11 @@ export default function ResetPassword() {
       setDone(true);
     } catch (e) {
       if (e.status === 400) {
-        setError("Посилання недійсне або прострочене. Запросіть нове скидання пароля.");
+        setError(t("auth.invalidResetLink"));
       } else if (e.status === 422) {
-        setError(e.message || "Пароль не відповідає вимогам.");
+        setError(e.message || t("auth.passwordRequirements"));
       } else {
-        setError(e.message || "Помилка. Спробуйте ще раз.");
+        setError(e.message || t("auth.generalError"));
       }
     } finally {
       setLoading(false);
@@ -93,18 +95,17 @@ export default function ResetPassword() {
           {noToken && (
             <div style={{ textAlign: "center" }}>
               <div style={{ fontSize: 48, marginBottom: 16 }}>🔗</div>
-              <h1 style={{ fontFamily: "Syne,sans-serif", fontWeight: 800,
-                fontSize: 22, marginBottom: 12 }}>Недійсне посилання</h1>
-              <p style={{ color: C.muted, fontSize: 14, marginBottom: 24, lineHeight: 1.6 }}>
-                Посилання для скидання пароля відсутнє або некоректне.
-                Перейдіть на сторінку відновлення пароля і запросіть нове посилання.
-              </p>
-              <Link to="/app/forgot" style={{ display: "inline-block",
-                background: C.green, color: C.black, borderRadius: 12,
-                padding: "12px 28px", fontFamily: "Syne,sans-serif",
-                fontWeight: 700, fontSize: 14, textDecoration: "none" }}>
-                Запросити нове посилання
-              </Link>
+               <h1 style={{ fontFamily: "Syne,sans-serif", fontWeight: 800,
+                 fontSize: 22, marginBottom: 12 }}>{t("auth.invalidLink")}</h1>
+               <p style={{ color: C.muted, fontSize: 14, marginBottom: 24, lineHeight: 1.6 }}>
+                 {t("auth.invalidLinkDesc")}
+               </p>
+               <Link to="/app/forgot" style={{ display: "inline-block",
+                 background: C.green, color: C.black, borderRadius: 12,
+                 padding: "12px 28px", fontFamily: "Syne,sans-serif",
+                 fontWeight: 700, fontSize: 14, textDecoration: "none" }}>
+                 {t("auth.requestNewLink")}
+               </Link>
             </div>
           )}
 
@@ -113,16 +114,16 @@ export default function ResetPassword() {
             <div style={{ textAlign: "center" }}>
               <div style={{ fontSize: 48, marginBottom: 16 }}>✅</div>
               <h1 style={{ fontFamily: "Syne,sans-serif", fontWeight: 800,
-                fontSize: 22, marginBottom: 12 }}>Пароль змінено!</h1>
+                fontSize: 22, marginBottom: 12 }}>{t("auth.passwordChangedTitle")}</h1>
               <p style={{ color: C.muted, fontSize: 14, marginBottom: 28, lineHeight: 1.6 }}>
-                Ваш пароль успішно оновлено. Тепер можете увійти з новим паролем.
+                {t("auth.passwordChangedDesc")}
               </p>
               <Link to="/app/login" style={{ display: "block",
                 background: C.green, color: C.black, borderRadius: 12,
                 padding: "13px 20px", fontFamily: "Syne,sans-serif",
                 fontWeight: 700, fontSize: 15, textDecoration: "none",
                 textAlign: "center" }}>
-                Увійти →
+                {t("auth.goToLogin")}
               </Link>
             </div>
           )}
@@ -131,9 +132,9 @@ export default function ResetPassword() {
           {!noToken && !done && (
             <form onSubmit={handleSubmit}>
               <h1 style={{ fontFamily: "Syne,sans-serif", fontWeight: 800,
-                fontSize: 24, marginBottom: 6 }}>Новий пароль</h1>
+                fontSize: 24, marginBottom: 6 }}>{t("auth.newPasswordTitle")}</h1>
               <p style={{ color: C.muted, fontSize: 14, marginBottom: 28 }}>
-                Введіть новий пароль для вашого акаунту
+                {t("auth.newPasswordDesc")}
               </p>
 
               {/* Error */}
@@ -143,7 +144,7 @@ export default function ResetPassword() {
                   padding: "12px 16px", marginBottom: 16,
                   fontSize: 13, color: C.red, lineHeight: 1.5 }}>
                   {error}
-                  {error.includes("Запросіть нове") && (
+                   {error.includes(t("auth.requestNew")) && (
                     <> <Link to="/app/forgot"
                       style={{ color: C.green, marginLeft: 4 }}>
                       Запросити →
@@ -162,7 +163,7 @@ export default function ResetPassword() {
                     type={showPass ? "text" : "password"}
                     value={password}
                     autoComplete="new-password"
-                    placeholder="Мінімум 8 символів"
+                    placeholder={t("profile.passwordMinLength")}
                     onChange={e => { setPassword(e.target.value); calcStrength(e.target.value); }}
                     style={{ width: "100%", background: C.card, borderRadius: 12,
                       padding: "11px 44px 11px 14px", color: C.white,
@@ -198,12 +199,12 @@ export default function ResetPassword() {
               <div style={{ marginBottom: 28 }}>
                 <label style={{ display: "block", fontSize: 11, fontWeight: 700,
                   letterSpacing: "0.08em", textTransform: "uppercase",
-                  color: C.muted, marginBottom: 6 }}>Підтвердіть пароль</label>
+                  color: C.muted, marginBottom: 6 }}>{t("profile.confirmPassword")}</label>
                 <input
                   type={showPass ? "text" : "password"}
                   value={password2}
                   autoComplete="new-password"
-                  placeholder="Повторіть пароль"
+                  placeholder={t("profile.passwordMinLength")}
                   onChange={e => setPassword2(e.target.value)}
                   style={{ width: "100%", background: C.card, borderRadius: 12,
                     padding: "11px 14px", color: C.white, fontFamily: "inherit",
@@ -212,9 +213,9 @@ export default function ResetPassword() {
                     transition: "border-color 0.2s" }}
                 />
                 {password2 && password !== password2 && (
-                  <p style={{ fontSize: 11, color: C.red, marginTop: 4 }}>
-                    Паролі не збігаються
-                  </p>
+                   <p style={{ fontSize: 11, color: C.red, marginTop: 4 }}>
+                     {t("profile.passwordsMismatch")}
+                   </p>
                 )}
               </div>
 
@@ -230,12 +231,12 @@ export default function ResetPassword() {
                   transition: "all 0.2s",
                   display: "flex", alignItems: "center",
                   justifyContent: "center", gap: 8 }}>
-                {loading
-                  ? <span style={{ width: 18, height: 18,
-                      border: "2px solid #2a6a44", borderTopColor: C.green,
-                      borderRadius: "50%", animation: "spin 0.7s linear infinite",
-                      display: "inline-block" }}/>
-                  : "Зберегти новий пароль"}
+                 {loading
+                   ? <span style={{ width: 18, height: 18,
+                       border: "2px solid #2a6a44", borderTopColor: C.green,
+                       borderRadius: "50%", animation: "spin 0.7s linear infinite",
+                       display: "inline-block" }}/>
+                   : t("auth.saveNewPassword")}
               </button>
 
               <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
@@ -247,7 +248,7 @@ export default function ResetPassword() {
         {!done && (
           <p style={{ textAlign: "center", marginTop: 20, fontSize: 13, color: C.muted }}>
             <Link to="/app/login" style={{ color: C.muted, textDecoration: "none" }}>
-              ← Повернутись до входу
+              ← {t("auth.backToLogin")}
             </Link>
           </p>
         )}

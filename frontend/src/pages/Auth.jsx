@@ -1,6 +1,7 @@
 // src/pages/Auth.jsx  ← lazy chunk
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useNavigate, useLocation }                  from "react-router-dom";
+import { useTranslation }                            from "react-i18next";
 import { apiClient }                                 from "../api/client.js";
 import { C }                                         from "../constants.js";
 
@@ -8,6 +9,7 @@ import { C }                                         from "../constants.js";
 const VIEWS = { login: "login", register: "register", forgot: "forgot" };
 
 export default function Auth() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -81,11 +83,11 @@ export default function Auth() {
     const oauthError = params.get("error");
     if (oauthError) {
       const messages = {
-        invalid_state:        "Помилка безпеки. Спробуйте ще раз.",
-        account_disabled:     "Акаунт заблоковано. Зверніться до підтримки.",
-        token_exchange_failed:"Помилка авторизації Google. Спробуйте ще раз.",
-        userinfo_failed:      "Не вдалось отримати дані з Google.",
-        verification_failed:  "Посилання для підтвердження недійсне або застаріле.",
+        invalid_state:        t("errors.securityError"),
+        account_disabled:     t("errors.accountDisabled"),
+        token_exchange_failed:t("errors.googleAuthError"),
+        userinfo_failed:      t("errors.userinfoError"),
+        verification_failed:  t("errors.verificationError"),
       };
       setError(messages[oauthError] || "Помилка входу через Google.");
       window.history.replaceState(null, "", window.location.pathname);
@@ -134,21 +136,22 @@ export default function Auth() {
   async function handleLogin(e) {
     e?.preventDefault();
     setError("");
-    if (!isValidEmail(loginEmail)) { setError("Введіть коректний email"); return; }
-    if (!loginPass)                  { setError("Введіть пароль"); return; }
+    if (!isValidEmail(loginEmail)) { setError(t("auth.invalidEmail")); return; }
+    if (!loginPass)                  { setError(t("auth.enterPassword")); return; }
 
     setLoading(true);
     try {
       const res = await apiClient.login({ email: loginEmail.trim(), password: loginPass });
       saveAndRedirect(res);
+      showToast?.(t("auth.loginSuccess"));
     } catch (e) {
       if (e.status === 401) {
-        setError("Невірний email або пароль");
+        setError(t("auth.invalidCredentials"));
         setLoginPass("");
       } else if (e.status === 429) {
-        setError(e.message || "Забагато спроб. Зачекайте кілька хвилин.");
+        setError(e.message || t("auth.tooManyAttempts"));
       } else {
-        setError(e.message || "Помилка входу. Спробуйте ще раз.");
+        setError(e.message || t("auth.generalError"));
       }
     } finally {
       setLoading(false);
@@ -159,10 +162,10 @@ export default function Auth() {
   async function handleRegister(e) {
     e?.preventDefault();
     setError("");
-    if (regName.trim().length < 2)   { setError("Ім'я має бути мінімум 2 символи"); return; }
-    if (!isValidEmail(regEmail))      { setError("Введіть коректний email"); return; }
-    if (regPass.length < 8)           { setError("Пароль мінімум 8 символів"); return; }
-    if (!agreeTerms)                  { setError("Погодьтесь з умовами використання"); return; }
+    if (regName.trim().length < 2)   { setError(t("auth.nameMinLength")); return; }
+    if (!isValidEmail(regEmail))      { setError(t("auth.invalidEmail")); return; }
+    if (regPass.length < 8)           { setError(t("auth.passwordMinLength")); return; }
+    if (!agreeTerms)                  { setError(t("auth.agreeTerms")); return; }
 
     setLoading(true);
     try {
@@ -172,13 +175,14 @@ export default function Auth() {
         marketing: agreeMarketing,
       });
       saveAndRedirect(res);
+      showToast?.(t("auth.registerSuccess"));
     } catch (e) {
       if (e.status === 409 || e.message?.includes("вже існує")) {
-        setError(<>Користувач з таким email вже існує. <button onClick={() => switchView("login")} style={{ color: C.green, background: "none", border: "none", cursor: "pointer", textDecoration: "underline" }}>Увійти →</button></>);
+        setError(<>Користувач з таким email вже існує. <button type="button" onClick={() => switchView("login")} style={{ color: C.green, background: "none", border: "none", cursor: "pointer", textDecoration: "underline" }}>{t("auth.loginLink")}</button></>);
       } else if (e.status === 429) {
-        setError("Забагато спроб реєстрації. Зачекайте.");
+        setError(t("auth.tooManyRegAttempts"));
       } else {
-        setError(e.message || "Помилка реєстрації. Спробуйте ще раз.");
+        setError(e.message || t("auth.registrationError"));
       }
     } finally {
       setLoading(false);
@@ -189,14 +193,14 @@ export default function Auth() {
   async function handleForgot(e) {
     e?.preventDefault();
     setError("");
-    if (!isValidEmail(forgotEmail)) { setError("Введіть коректний email"); return; }
+    if (!isValidEmail(forgotEmail)) { setError(t("auth.invalidForgotEmail")); return; }
 
     setLoading(true);
     try {
       await apiClient.forgot({ email: forgotEmail.trim() });
       setSuccess(forgotEmail.trim());
     } catch (e) {
-      setError(e.message || "Помилка. Спробуйте ще раз.");
+      setError(e.message || t("auth.generalError"));
     } finally {
       setLoading(false);
     }
@@ -256,13 +260,13 @@ export default function Auth() {
           </a>
           <h2 style={{ fontFamily: "Syne,sans-serif", fontWeight: 800, fontSize: 26,
             lineHeight: 1.25, marginBottom: 24, letterSpacing: "-0.03em" }}>
-            Автоматична індексація<br/>в Google за хвилини
+            {t("overview.goPro")}
           </h2>
           {[
-            { icon: "⚡", text: "До 500 URL/день на PRO плані" },
-            { icon: "🔑", text: "Офіційний Google Indexing API" },
-            { icon: "📊", text: "Статистика та логи в реальному часі" },
-            { icon: "🌐", text: "Підтримка Sitemap Index" },
+            { icon: "⚡", text: t("overview.proFeatures").split('·')[0].trim() },
+            { icon: "🔑", text: t("auth.registerFreeBtn") },
+            { icon: "📊", text: t("overview.urlsSentToday") },
+            { icon: "🌐", text: t("sites.gscIntegration") },
           ].map(({ icon, text }) => (
             <div key={text} style={{ display: "flex", alignItems: "center", gap: 12,
               marginBottom: 14, fontSize: 14, color: C.muted }}>
@@ -292,23 +296,23 @@ export default function Auth() {
           {view === VIEWS.login && (
             <form onSubmit={handleLogin}>
               <h1 style={{ fontFamily: "Syne,sans-serif", fontWeight: 800, fontSize: 24,
-                marginBottom: 6 }}>З поверненням</h1>
+                marginBottom: 6 }}>{t("auth.login")}</h1>
               <p style={{ color: C.muted, fontSize: 14, marginBottom: 28 }}>
-                Немає акаунту?{" "}
+                {t("auth.noAccount")}{" "}
                 <button type="button" onClick={() => switchView("register")}
-                  style={linkBtnStyle}>Зареєструватись безкоштовно</button>
+                  style={linkBtnStyle}>{t("auth.registerFree")}</button>
               </p>
 
               {error && <ErrorAlert>{error}</ErrorAlert>}
 
-              <Field label="Email">
+              <Field label={t("auth.email")}>
                 <Input type="email" value={loginEmail} autoComplete="email"
                   placeholder="your@email.com"
                   onChange={e => onEmailChange(e.target.value, setLoginEmail)}
                   error={emailError}/>
               </Field>
 
-              <Field label="Пароль" style={{ marginBottom: 8 }}>
+              <Field label={t("auth.password")} style={{ marginBottom: 8 }}>
                 <div style={{ position: "relative" }}>
                   <Input type={showPass ? "text" : "password"} value={loginPass}
                     autoComplete="current-password" placeholder="••••••••"
@@ -328,13 +332,13 @@ export default function Auth() {
                   fontSize: 13, color: C.muted, cursor: "pointer" }}>
                   <input type="checkbox" checked={remember}
                     onChange={e => setRemember(e.target.checked)}/>
-                  Запам'ятати мене
+                  {t("auth.rememberMe")}
                 </label>
                 <button type="button" onClick={() => switchView("forgot")}
-                  style={linkBtnStyle}>Забули пароль?</button>
+                  style={linkBtnStyle}>{t("auth.forgotPassword")}</button>
               </div>
 
-              <SubmitBtn loading={loading}>Увійти</SubmitBtn>
+              <SubmitBtn loading={loading}>{t("auth.login")}</SubmitBtn>
 
               <Divider/>
               <GoogleBtn/>
@@ -345,34 +349,34 @@ export default function Auth() {
           {view === VIEWS.register && (
             <form onSubmit={handleRegister}>
               <h1 style={{ fontFamily: "Syne,sans-serif", fontWeight: 800, fontSize: 24,
-                marginBottom: 6 }}>Створити акаунт</h1>
+                marginBottom: 6 }}>{t("auth.register")}</h1>
               <p style={{ color: C.muted, fontSize: 14, marginBottom: 28 }}>
-                Вже є акаунт?{" "}
+                {t("auth.hasAccount")}{" "}
                 <button type="button" onClick={() => switchView("login")}
-                  style={linkBtnStyle}>Увійти</button>
+                  style={linkBtnStyle}>{t("auth.login")}</button>
               </p>
 
               {error && <ErrorAlert>{error}</ErrorAlert>}
 
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
-                <Field label="Ім'я">
+                <Field label={t("auth.name")}>
                   <Input value={regName} placeholder="Іван"
                     onChange={e => setRegName(e.target.value)}/>
                 </Field>
-                <Field label="Прізвище">
+                <Field label={t("profile.lastName")}>
                   <Input value={regSurname} placeholder="Коваль"
                     onChange={e => setRegSurname(e.target.value)}/>
                 </Field>
               </div>
 
-              <Field label="Email">
+              <Field label={t("auth.email")}>
                 <Input type="email" value={regEmail} autoComplete="email"
                   placeholder="your@email.com"
                   onChange={e => onEmailChange(e.target.value, setRegEmail)}
                   error={emailError}/>
               </Field>
 
-              <Field label="Пароль">
+              <Field label={t("auth.password")}>
                 <div style={{ position: "relative" }}>
                   <Input type={showPass ? "text" : "password"} value={regPass}
                     autoComplete="new-password" placeholder="Мінімум 8 символів"
@@ -403,11 +407,11 @@ export default function Auth() {
                 <input type="checkbox" checked={agreeTerms}
                   onChange={e => setAgreeTerms(e.target.checked)}
                   style={{ marginTop: 2, flexShrink: 0 }}/>
-                <span>Погоджуюсь з{" "}
-                  <a href="/terms.html" target="_blank" style={{ color: C.green }}>умовами використання</a>
-                  {" "}та{" "}
-                  <a href="/privacy-policy.html" target="_blank" style={{ color: C.green }}>політикою конфіденційності</a>
-                </span>
+                 <span>{t("auth.agreeTermsText")}{" "}
+                   <a href="/terms.html" target="_blank" style={{ color: C.green }}>{t("auth.terms")}</a>
+                   {" "}{t("auth.andText")}{" "}
+                   <a href="/privacy-policy.html" target="_blank" style={{ color: C.green }}>{t("auth.privacy")}</a>
+                 </span>
               </label>
 
               <label style={{ display: "flex", alignItems: "flex-start", gap: 10,
@@ -415,17 +419,17 @@ export default function Auth() {
                 <input type="checkbox" checked={agreeMarketing}
                   onChange={e => setAgreeMarketing(e.target.checked)}
                   style={{ marginTop: 2, flexShrink: 0 }}/>
-                <span>
-                  Погоджуюсь отримувати корисні матеріали, оновлення продукту та спеціальні пропозиції на email.
-                </span>
+                 <span>
+                  {t("profile.marketingDesc")}
+                 </span>
               </label>
 
-              <SubmitBtn loading={loading}>Зареєструватись безкоштовно</SubmitBtn>
+              <SubmitBtn loading={loading}>{t("auth.registerFreeBtn")}</SubmitBtn>
 
               <Divider/>
               <GoogleBtn onClick={() => {
                 if (!agreeTerms) {
-                  setError("Будь ласка, погодьтесь з умовами використання перед реєстрацією через Google.");
+                  setError(t("auth.agreeTermsGoogle"));
                   return;
                 }
                 const BASE = import.meta?.env?.VITE_API_URL ?? "/api";
@@ -438,9 +442,9 @@ export default function Auth() {
           {view === VIEWS.forgot && !success && (
             <form onSubmit={handleForgot}>
               <h1 style={{ fontFamily: "Syne,sans-serif", fontWeight: 800, fontSize: 24,
-                marginBottom: 6 }}>Відновлення пароля</h1>
+                marginBottom: 6 }}>{t("auth.forgotTitle")}</h1>
               <p style={{ color: C.muted, fontSize: 14, marginBottom: 28 }}>
-                Введіть email і ми надішлемо інструкції для відновлення
+                {t("auth.forgotDesc")}
               </p>
 
               {error && <ErrorAlert>{error}</ErrorAlert>}
@@ -450,11 +454,11 @@ export default function Auth() {
                   onChange={e => setForgotEmail(e.target.value)}/>
               </Field>
 
-              <SubmitBtn loading={loading}>Надіслати інструкції</SubmitBtn>
+              <SubmitBtn loading={loading}>{t("auth.sendInstructions")}</SubmitBtn>
 
               <div style={{ textAlign: "center", marginTop: 16 }}>
                 <button type="button" onClick={() => switchView("login")}
-                  style={linkBtnStyle}>← Повернутись до входу</button>
+                  style={linkBtnStyle}>{t("auth.backToLogin")}</button>
               </div>
             </form>
           )}
@@ -464,21 +468,21 @@ export default function Auth() {
             <div style={{ textAlign: "center" }}>
               <div style={{ fontSize: 48, marginBottom: 16 }}>📧</div>
               <h2 style={{ fontFamily: "Syne,sans-serif", fontWeight: 800,
-                fontSize: 22, marginBottom: 12 }}>Перевірте пошту</h2>
+                fontSize: 22, marginBottom: 12 }}>{t("auth.checkEmail")}</h2>
               <p style={{ color: C.muted, fontSize: 14, marginBottom: 8 }}>
-                Ми надіслали інструкції на
+                {t("auth.sentInstructions")}
               </p>
               <p style={{ color: C.green, fontWeight: 600, marginBottom: 24 }}>{success}</p>
               <p style={{ color: C.muted, fontSize: 12, marginBottom: 24 }}>
-                Не отримали? Перевірте папку «Спам» або{" "}
+                {t("auth.notReceived")}{" "}
                 <button type="button" onClick={() => setSuccess("")}
-                  style={linkBtnStyle}>спробуйте знову</button>
+                  style={linkBtnStyle}>{t("auth.resend")}</button>
               </p>
               <button onClick={() => switchView("login")}
                 style={{ background: C.green, color: C.black, border: "none",
                   borderRadius: 12, padding: "12px 32px", fontFamily: "Syne,sans-serif",
                   fontWeight: 700, fontSize: 15, cursor: "pointer", width: "100%" }}>
-                Повернутись до входу
+                {t("auth.backToLogin")}
               </button>
             </div>
           )}
@@ -560,7 +564,7 @@ function Divider() {
     <div style={{ display: "flex", alignItems: "center", gap: 12,
       margin: "20px 0", color: C.muted, fontSize: 12 }}>
       <div style={{ flex: 1, height: 1, background: C.border }}/>
-      або
+      {t("auth.or")}
       <div style={{ flex: 1, height: 1, background: C.border }}/>
     </div>
   );
@@ -585,7 +589,7 @@ function GoogleBtn({ onClick }) {
         <path fill="#4CAF50" d="M24 44c5.2 0 9.9-1.9 13.5-5l-6.2-5.2C29.4 35.6 26.8 36 24 36c-5.2 0-9.7-2.9-11.3-7.2l-6.5 5C9.5 39.6 16.3 44 24 44z"/>
         <path fill="#1976D2" d="M43.6 20H24v8h11.3c-.9 2.6-2.7 4.7-5 6.1l6.2 5.2C40 35.9 44 30.4 44 24c0-1.3-.1-2.7-.4-4z"/>
       </svg>
-      Продовжити з Google
+      {t("auth.continueWithGoogle")}
     </button>
   );
 }

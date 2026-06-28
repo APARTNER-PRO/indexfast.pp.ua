@@ -1,5 +1,6 @@
 // src/pages/Overview.jsx  ← окремий chunk
 import { memo, useCallback, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Badge, Btn, ProgressBar, Sparkline } from "../components/ui/index.jsx";
 import { SitesTable } from "../components/SitesTable.jsx";
 import { EditSiteModal } from "../components/EditSiteModal.jsx";
@@ -27,7 +28,7 @@ const OVERVIEW_MOBILE = `
 `;
 
 export default memo(function Overview({
-  data, onAddSite, onRun, onDelete, onToggle, onGoLogs, onGoBilling, onImportGsc, showToast,
+  data, onAddSite, onRun, onDelete, onToggle, onGoLogs, onGoBilling, onImportGsc, showToast, t,
 }) {
   const [editSite, setEditSite] = useState(null); // { site, tab }
   const handleEdit = (site, tab = null) => setEditSite({ site, tab });
@@ -58,21 +59,21 @@ export default memo(function Overview({
           <div style={{ flex: 1, minWidth: 200 }}>
             <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }}>
               <div style={{ fontFamily: "Syne,sans-serif", fontWeight: 700, fontSize: 15 }}>
-                Перейдіть на PRO — 500 сторінок/день
+                {t("overview.goPro")}
               </div>
               <span style={{
                 background: "#00ff88", color: "#050508",
                 fontSize: 10, fontWeight: 800, padding: "2px 8px",
                 borderRadius: 100, fontFamily: "Syne,sans-serif", letterSpacing: "0.05em"
-              }}>−50%</span>
+              }}>{t("overview.discount")}</span>
             </div>
             <div style={{ fontSize: 13, color: C.muted }}>
-              До 10 сайтів · Автоматичний запуск · Email-сповіщення
+              {t("overview.proFeatures")}
               <span style={{ marginLeft: 8, color: "#6a6a85", textDecoration: "line-through" }}>$9.99</span>
-              <span style={{ marginLeft: 6, color: "#00ff88", fontWeight: 700 }}>$4.99/перший місяць</span>
+              <span style={{ marginLeft: 6, color: "#00ff88", fontWeight: 700 }}>$4.99 {t("overview.proPrice").replace('$4.99', '')}</span>
             </div>
           </div>
-          <Btn className="ov-upgrade-btn" variant="primary" onClick={onGoBilling}>Хочу PRO за $4.99 →</Btn>
+          <Btn className="ov-upgrade-btn" variant="primary" onClick={onGoBilling}>{t("overview.goPro").split('—')[0].trim()} PRO $4.99 →</Btn>
         </div>
       )}
 
@@ -80,22 +81,22 @@ export default memo(function Overview({
       <div className="ov-stats" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(180px,1fr))", gap: 16 }}>
         {[
           {
-            label: "Сьогодні відправлено", value: today.sent,
+            label: t("overview.urlsSentToday"), value: today.sent,
             sub: `${today.delta >= 0 ? "+" : ""}${today.delta} vs вчора`,
             subColor: today.delta >= 0 ? C.green : C.red, accent: C.green
           },
           {
-            label: "Ліміт сьогодні", value: `${today.sent}/${today.limit}`,
-            sub: `${remaining} URL залишилось`,
+            label: t("overview.limitSitesToday"), value: `${today.sent}/${today.limit}`,
+            sub: `${remaining} ${t("overview.remaining")}`,
             subColor: remaining === 0 ? C.red : C.muted, accent: remaining === 0 ? C.red : C.gold
           },
           {
-            label: "За цей місяць", value: month,
-            sub: "URL відправлено", subColor: C.muted, accent: C.blue
+            label: t("overview.thisMonth"), value: month,
+            sub: t("overview.urlsSentToday"), subColor: C.muted, accent: C.blue
           },
           {
-            label: "Активних сайтів", value: `${sites.length}/${sites_limit}`,
-            sub: plan === "start" ? "Ліміт плану" : "Підключено",
+            label: t("overview.activeSites"), value: `${sites.length}/${sites_limit}`,
+            sub: plan === "start" ? t("overview.planLimit") : t("overview.connected"),
             subColor: C.muted, accent: C.green
           },
         ].map(({ label, value, sub, subColor, accent }) => (
@@ -123,9 +124,9 @@ export default memo(function Overview({
       {/* Графік + Ліміти */}
       <div className="ov-mid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 16 }}>
         <div style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 16, padding: 24 }}>
-          <div style={{ fontFamily: "Syne,sans-serif", fontWeight: 700, marginBottom: 4 }}>Активність за 30 днів</div>
+          <div style={{ fontFamily: "Syne,sans-serif", fontWeight: 700, marginBottom: 4 }}>{t("overview.activity30")}</div>
           <div style={{ fontSize: 12, color: C.muted, marginBottom: 16 }}>
-            URL відправлених у Google Indexing API
+            {t("overview.activityDesc")}
           </div>
           <Sparkline data={chart} />
         </div>
@@ -135,17 +136,17 @@ export default memo(function Overview({
           padding: 24, display: "flex", flexDirection: "column", gap: 20
         }}>
           <div>
-            <div style={{ fontFamily: "Syne,sans-serif", fontWeight: 700, marginBottom: 4 }}>Ліміти плану</div>
+            <div style={{ fontFamily: "Syne,sans-serif", fontWeight: 700, marginBottom: 4 }}>{t("overview.planLimits")}</div>
             <div style={{ fontSize: 12, color: C.muted }}><Badge plan={plan} /> {user.plan_label}</div>
           </div>
           {[
             {
-              label: "URL сьогодні", value: today.sent, max: today.limit,
-              note: `${remaining} залишилось`
+              label: t("overview.limitUrlsToday"), value: today.sent, max: today.limit,
+              note: `${remaining} ${t("overview.remaining")}`
             },
             {
-              label: "Сайти", value: sites.length, max: sites_limit,
-              note: sites_limit < 9999 ? `з ${sites_limit}` : "необмежено"
+              label: t("overview.limitSites"), value: sites.length, max: sites_limit,
+              note: sites_limit < 9999 ? `${t("common.of")} ${sites_limit}` : t("overview.unlimited")
             },
           ].map(({ label, value, max, note }) => (
             <div key={label}>
@@ -162,7 +163,7 @@ export default memo(function Overview({
           ))}
           {plan === "start" && (
             <Btn variant="primary" onClick={onGoBilling} style={{ width: "100%", marginTop: "auto" }}>
-              ✦ Оновити план
+              {t("overview.upgradePlan")}
             </Btn>
           )}
         </div>
@@ -175,11 +176,11 @@ export default memo(function Overview({
           padding: "18px 20px", borderBottom: `1px solid ${C.border}`
         }}>
           <div>
-            <div style={{ fontFamily: "Syne,sans-serif", fontWeight: 700 }}>Мої сайти</div>
-            <div style={{ fontSize: 12, color: C.muted, marginTop: 2 }}>{sites.length} підключено</div>
+            <div style={{ fontFamily: "Syne,sans-serif", fontWeight: 700 }}>{t("overview.mySites")}</div>
+            <div style={{ fontSize: 12, color: C.muted, marginTop: 2 }}>{sites.length} {t("overview.sitesConnected")}</div>
           </div>
           <Btn className="ov-section-btn" variant="outline" onClick={onAddSite} style={{ padding: "7px 16px", fontSize: 13 }}>
-            + Додати сайт
+            + {t("overview.addSite")}
           </Btn>
         </div>
         <SitesTable
@@ -204,16 +205,16 @@ export default memo(function Overview({
           padding: "18px 20px", borderBottom: `1px solid ${C.border}`
         }}>
           <div>
-            <div style={{ fontFamily: "Syne,sans-serif", fontWeight: 700 }}>Останні операції</div>
+            <div style={{ fontFamily: "Syne,sans-serif", fontWeight: 700 }}>{t("overview.lastOperations")}</div>
             <div style={{ fontSize: 12, color: C.muted, marginTop: 2 }}>
-              Лог відправок у Google Indexing API
+              {t("overview.logsDesc")}
             </div>
           </div>
           <Btn className="ov-section-btn" variant="ghost" onClick={onGoLogs} style={{ padding: "7px 14px", fontSize: 12 }}>
-            Всі логи →
+            {t("overview.allLogs")}
           </Btn>
         </div>
-        <LogPreview logs={logs} />
+        <LogPreview logs={logs} t={t} />
       </div>
 
       <EditSiteModal
@@ -228,10 +229,10 @@ export default memo(function Overview({
 });
 
 // Превью логів (показує 10 записів з stats)
-const LogPreview = memo(function LogPreview({ logs }) {
+const LogPreview = memo(function LogPreview({ logs, t }) {
   if (!logs?.length) return (
     <div style={{ textAlign: "center", padding: "40px 20px", color: C.muted, fontSize: 13 }}>
-      Логи з'являться після першого запуску індексації
+      {t("overview.logsAppear")}
     </div>
   );
   const icons = { ok: "✓", error: "✕", pending: "⏳" };
@@ -251,7 +252,7 @@ const LogPreview = memo(function LogPreview({ logs }) {
               {icons[l.status] ?? "?"}
             </span>
             {l.indexnow_status && (
-              <span title={`IndexNow: ${l.indexnow_status} (${l.indexnow_http_status})`} 
+              <span title={`IndexNow: ${l.indexnow_status} (${l.indexnow_http_status})`}
                 style={{ color: colors[l.indexnow_status] ?? C.muted, fontWeight: 800 }}>
                 <span style={{ fontSize: 9, marginRight: 2, color: C.muted }}>I</span>
                 {icons[l.indexnow_status] ?? "?"}
@@ -273,7 +274,7 @@ const LogPreview = memo(function LogPreview({ logs }) {
               fontWeight: 700, fontSize: 10, color: colors[l.status], flexShrink: 0,
               fontFamily: "Syne,sans-serif", letterSpacing: "0.05em"
             }}>
-              {l.status === "ok" ? "OK 200" : l.http_status ? `ERR ${l.http_status}` : l.status.toUpperCase()}
+              {l.status === "ok" ? t("overview.statusOk") : l.http_status ? `ERR ${l.http_status}` : l.status.toUpperCase()}
             </span>
             <span style={{ color: C.muted, fontSize: 10, whiteSpace: "nowrap", flexShrink: 0,
               marginLeft: "auto" }}>
