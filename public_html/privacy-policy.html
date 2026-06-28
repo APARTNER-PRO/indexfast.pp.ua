@@ -51,17 +51,139 @@
     html { scroll-behavior: smooth; }
     body { background: var(--black); color: var(--white); font-family: var(--font-body); font-weight: 300; line-height: 1.7; }
 
-    /* NAV */
+    /* ─── NAV ─── */
     nav {
-      position: sticky; top: 0; z-index: 100;
-      padding: 20px 60px; display: flex; align-items: center; justify-content: space-between;
-      background: rgba(5,5,8,0.95); backdrop-filter: blur(10px);
-      border-bottom: 1px solid var(--border);
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 500;
+      padding: 20px 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: linear-gradient(to bottom, rgba(5, 5, 8, 0.95) 0%, transparent 100%);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.3s;
+    }
+
+    nav.scrolled {
+      background: rgba(5, 5, 8, 0.98);
+      border-bottom-color: var(--border);
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 32px;
+      align-items: center;
+    }
+
+    .nav-links a {
+      color: var(--white);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--green);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .nav-login {
+      color: var(--muted, #7a7a95);
+      font-size: 0.875rem;
+      text-decoration: none;
+      padding: 7px 16px;
+      border-radius: 100px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .nav-login:hover {
+      color: var(--white, #f0f0f8);
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+  
+    /* ─── LANGUAGE DROPDOWN ─── */
+    .nav-lang-dropdown {
+      position: relative;
+      display: inline-block;
+      margin-right: 16px;
+    }
+    .nav-lang-btn {
+      background: none;
+      border: none;
+      color: var(--muted);
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 0.875rem;
+      cursor: pointer;
+      padding: 8px 0;
+      transition: color 0.2s;
+    }
+    .nav-lang-btn:hover {
+      color: var(--white);
+    }
+    .nav-lang-menu {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 8px 0;
+      min-width: 140px;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(10px);
+      transition: all 0.2s;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+      z-index: 1000;
+    }
+    .nav-lang-dropdown:hover .nav-lang-menu {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+    .nav-lang-menu a {
+      display: block;
+      padding: 8px 20px;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.875rem;
+      transition: background 0.2s, color 0.2s;
+    }
+    .nav-lang-menu a:hover {
+      background: rgba(255,255,255,0.05);
+      color: var(--white);
+    }
+    .nav-lang-menu a.active {
+      color: var(--green);
+      font-weight: 600;
+      background: rgba(0,255,136,0.05);
+    }
+    
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--white);
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 0;
+      line-height: 1;
     }
     .logo { font-family: var(--font-display); font-size: 1.4rem; font-weight: 800; letter-spacing: -0.03em; color: var(--white); text-decoration: none; }
     .logo span { color: var(--green); }
-    .nav-back { color: var(--muted); text-decoration: none; font-size: 0.875rem; display: flex; align-items: center; gap: 6px; transition: color 0.2s; }
-    .nav-back:hover { color: var(--white); }
 
     /* HERO */
     .page-hero {
@@ -166,8 +288,21 @@
       box-shadow: 0 0 30px rgba(0, 255, 136, 0.4);
     }
 
-    @media (max-width: 768px) {
+    @media (max-width: 1100px) {
       nav { padding: 16px 20px; }
+      .mobile-menu-btn { display: block; }
+      .nav-actions { gap: 12px; }
+      .nav-links {
+        display: none; flex-direction: column; gap: 0;
+        position: fixed; top: 58px; left: 0; right: 0;
+        background: rgba(5, 5, 8, 0.98); backdrop-filter: blur(14px);
+        padding: 20px 0; border-bottom: 1px solid var(--border);
+      }
+      .nav-links.active { display: flex; }
+      .nav-links li { width: 100%; text-align: center; }
+      .nav-links a { display: block; padding: 16px 20px; font-size: 1.1rem; }
+      .nav-lang-dropdown { margin-right: 0; }
+      
       .page-hero { padding: 60px 20px 40px; }
       .layout { grid-template-columns: 1fr; padding: 40px 20px 60px; gap: 40px; }
       .sidebar { position: static; }
@@ -175,19 +310,6 @@
       .footer-brand p { margin: 16px auto 0; }
       .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
       footer { padding: 40px 20px; }
-    }
-      .nav-login {
-      color: var(--muted, #7a7a95);
-      font-size: 0.875rem;
-      text-decoration: none;
-      padding: 7px 16px;
-      border-radius: 100px;
-      border: 1px solid rgba(255,255,255,0.1);
-      transition: color 0.2s, border-color 0.2s;
-    }
-    .nav-login:hover {
-      color: var(--white, #f0f0f8);
-      border-color: rgba(255,255,255,0.25);
     }
   </style>
 
@@ -214,11 +336,33 @@
 </head>
 <body>
 
-<nav>
-  <a href="/" class="logo">Index<span>Fast</span></a>
-  <a href="/" class="nav-back">← Повернутись на головну</a>
-  <a href="/app/login" class="nav-login">Увійти</a>
-  <a href="/app/register" class="nav-cta">Почати →</a>
+<nav id="navbar" role="navigation" aria-label="Головне меню">
+  <a href="/" class="logo" aria-label="IndexFast — Головна">Index<span>Fast</span></a>
+  <ul class="nav-links">
+    <li><a href="/#how-it-works">Як це працює</a></li>
+    <li><a href="/#for-whom">Для кого</a></li>
+    <li><a href="/#features">Переваги</a></li>
+    <li><a href="/#pricing">Тарифи</a></li>
+    <li><a href="/#faq">FAQ</a></li>
+  </ul>
+  <div class="nav-actions">
+    <div class="nav-lang-dropdown">
+      <button class="nav-lang-btn">UK ▾</button>
+      <div class="nav-lang-menu">
+        <a href="/privacy-policy.html">English</a>
+        <a href="/uk/privacy-policy.html" class="active">Українська</a>
+        <a href="/es/privacy-policy.html">Español</a>
+        <a href="/pt/privacy-policy.html">Português</a>
+        <a href="/ru/privacy-policy.html">Русский</a>
+        <a href="/de/privacy-policy.html">Deutsch</a>
+        <a href="/fr/privacy-policy.html">Français</a>
+        <a href="/pl/privacy-policy.html">Polski</a>
+      </div>
+    </div>
+    <a href="/app/login" class="nav-login">Увійти</a>
+    <a href="/app/register" class="nav-cta">Почати →</a>
+    <button class="mobile-menu-btn" onclick="document.querySelector('.nav-links').classList.toggle('active')" aria-label="Відкрити меню">☰</button>
+  </div>
 </nav>
 
 <div class="page-hero">
