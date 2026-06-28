@@ -56,7 +56,7 @@ define('APP_NAME', 'IndexFast');
 define('APP_URL',  env('APP_URL',  'https://indexfast.pp.ua'));
 define('APP_ENV',  env('APP_ENV',  'production'));
 define('APP_EMAIL', env('APP_EMAIL', 'indexfastapp@gmail.com'));
-define('DEFAULT_CURRENCY', env('DEFAULT_CURRENCY', 'USD'));
+define('DEFAULT_CURRENCY', env('DEFAULT_CURRENCY', 'UAH'));
 define('DEBUG',    APP_ENV === 'development');
 
 if (DEBUG) {
@@ -150,3 +150,7 @@ define('WORKER_KEY',          env('WORKER_KEY', 'indexfast_secret_key_2024'));
 //  INDEXNOW
 // ─────────────────────────────────────────────
 define('INDEXNOW_ENABLED', env('INDEXNOW_ENABLED', 'true') === 'true');
+
+// ── Exchange rates to UAH (оновлюй вручну)
+define('EXCHANGE_USD_TO_UAH', (float)(env('EXCHANGE_USD_TO_UAH', 41.5)));
+define('EXCHANGE_EUR_TO_UAH', (float)(env('EXCHANGE_EUR_TO_UAH', 45.2)));

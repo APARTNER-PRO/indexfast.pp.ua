@@ -21,6 +21,12 @@ $history = DB::all(
 
 // Інформація про тарифи з Plans::CONFIG (єдине джерело істини) + ціни з ENV
 $plans = [];
+$rateToUah = 1;
+if (DEFAULT_CURRENCY !== 'UAH') {
+    $rateKey = 'EXCHANGE_' . DEFAULT_CURRENCY . '_TO_UAH';
+    $rateToUah = (float)env($rateKey, 1);
+}
+
 foreach (Plans::CONFIG as $pid => $cfg) {
     $planData = [
         'label'      => $cfg['label'],
@@ -33,6 +39,9 @@ foreach (Plans::CONFIG as $pid => $cfg) {
         'month'      => (float)env('PRICE_' . strtoupper($pid) . '_MONTH', 0),
         'year'       => (float)env('PRICE_' . strtoupper($pid) . '_YEAR',  0),
         '3_years'    => (float)env('PRICE_' . strtoupper($pid) . '_3_YEARS', 0),
+        'month_uah'  => round((float)env('PRICE_' . strtoupper($pid) . '_MONTH', 0) * $rateToUah, 2),
+        'year_uah'   => round((float)env('PRICE_' . strtoupper($pid) . '_YEAR',  0) * $rateToUah, 2),
+        '3_years_uah'=> round((float)env('PRICE_' . strtoupper($pid) . '_3_YEARS', 0) * $rateToUah, 2),
     ];
     $plans[$pid] = $planData;
 }
