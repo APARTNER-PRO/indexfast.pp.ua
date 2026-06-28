@@ -2687,9 +2687,15 @@
       }
 
       .footer-grid {
-        grid-template-columns: 1fr 1fr;
-        gap: 40px;
-      }
+          grid-template-columns: 1fr 1fr;
+          gap: 40px;
+          text-align: left;
+          word-break: break-word;
+        }
+        .footer-brand {
+          grid-column: 1 / -1;
+          text-align: center;
+        }
 
       .footer-bottom {
         flex-direction: column;
