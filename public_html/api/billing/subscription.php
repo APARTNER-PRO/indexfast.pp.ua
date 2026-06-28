@@ -19,19 +19,22 @@ $history = DB::all(
     [$user['id']]
 );
 
-// Ціни тарифів з ENV + метадані з Plans::CONFIG
+// Інформація про тарифи з Plans::CONFIG (єдине джерело істини) + ціни з ENV
 $plans = [];
 foreach (Plans::CONFIG as $pid => $cfg) {
-    if ($pid === 'free') continue; // пропускаємо legacy
-    $plans[$pid] = [
+    $planData = [
         'label'      => $cfg['label'],
         'popular'    => (bool)($cfg['popular']    ?? false),
         'enterprise' => (bool)($cfg['enterprise'] ?? false),
         'features'   => $cfg['features'] ?? [],
+        'urls_per_day' => (int)($cfg['urls_per_day'] ?? 0),
+        'max_sites'    => (int)($cfg['max_sites']    ?? 0),
+        'limits'       => $cfg['limits'] ?? [],
         'month'      => (float)env('PRICE_' . strtoupper($pid) . '_MONTH', 0),
         'year'       => (float)env('PRICE_' . strtoupper($pid) . '_YEAR',  0),
         '3_years'    => (float)env('PRICE_' . strtoupper($pid) . '_3_YEARS', 0),
     ];
+    $plans[$pid] = $planData;
 }
 
 $methods = $manager->getEnabledProvidersInfo();
@@ -60,4 +63,5 @@ respond(200, 'ok', [
         'methods' => $methods,
     ],
     'manual_requisites' => $manualRequisites,
+    'currency'          => DEFAULT_CURRENCY,
 ]);
