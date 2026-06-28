@@ -28,8 +28,9 @@ const OVERVIEW_MOBILE = `
 `;
 
 export default memo(function Overview({
-  data, onAddSite, onRun, onDelete, onToggle, onGoLogs, onGoBilling, onImportGsc, showToast, t,
+  data, onAddSite, onRun, onDelete, onToggle, onGoLogs, onGoBilling, onImportGsc, showToast,
 }) {
+  const { t } = useTranslation();
   const [editSite, setEditSite] = useState(null); // { site, tab }
   const handleEdit = (site, tab = null) => setEditSite({ site, tab });
   const { user, today, month, sites, sites_limit, logs, chart } = data;
