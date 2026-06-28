@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+
+<html lang="uk">
+<head>
+<meta charset="utf-8"/>
+<link href="/favicon.ico" rel="icon" type="image/x-icon"/>
+<link href="/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+<link href="/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+<link href="/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
+<link href="/site.webmanifest" rel="manifest"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "IndexFast",
+    "url": "https://indexfast.pp.ua",
+    "logo": "https://indexfast.pp.ua/logo.png"
+  }
+  </script>
+<title>Політика конфіденційності — IndexFast</title>
+<meta content="Політика конфіденційності сервісу IndexFast. Як ми збираємо, використовуємо та захищаємо ваші персональні дані." name="description"/>
+<meta content="index, follow" name="robots"/>
+<link href="https://indexfast.pp.ua/privacy-policy.html" rel="canonical"/>
+<meta content="website" property="og:type"/>
+<meta content="https://indexfast.pp.ua/privacy-policy.html" property="og:url"/>
+<meta content="Політика конфіденційності — IndexFast" property="og:title"/>
+<meta content="Як IndexFast збирає, зберігає та захищає ваші персональні дані." property="og:description"/>
+<meta content="https://indexfast.pp.ua/og-image.jpg" property="og:image"/>
+<meta content="1200" property="og:image:width"/>
+<meta content="630" property="og:image:height"/>
+<meta content="uk_UA" property="og:locale"/>
+<meta content="IndexFast" property="og:site_name"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="Політика конфіденційності — IndexFast" name="twitter:title"/>
+<meta content="Як IndexFast збирає, зберігає та захищає ваші персональні дані." name="twitter:description"/>
+<meta content="https://indexfast.pp.ua/og-image.jpg" name="twitter:image"/>
+<link as="style" crossorigin="" href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&amp;family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&amp;display=swap" rel="preload"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&amp;family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&amp;display=swap" rel="stylesheet"/>
+<style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --black: #050508; --dark: #0d0d14; --card: #12121c;
+      --border: rgba(255,255,255,0.07); --green: #00ff88;
+      --white: #f0f0f8; --muted: #7a7a95;
+      --font-display: 'Syne', sans-serif; --font-body: 'DM Sans', sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--black); color: var(--white); font-family: var(--font-body); font-weight: 300; line-height: 1.7; }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 500;
+      padding: 20px 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: linear-gradient(to bottom, rgba(5, 5, 8, 0.95) 0%, transparent 100%);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.3s;
+    }
+
+    nav.scrolled {
+      background: rgba(5, 5, 8, 0.98);
+      border-bottom-color: var(--border);
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 32px;
+      align-items: center;
+    }
+
+    .nav-links a {
+      color: var(--white);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--green);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .nav-login {
+      color: var(--muted, #7a7a95);
+      font-size: 0.875rem;
+      text-decoration: none;
+      padding: 7px 16px;
+      border-radius: 100px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .nav-login:hover {
+      color: var(--white, #f0f0f8);
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+  
+    /* ─── LANGUAGE DROPDOWN ─── */
+    .nav-lang-dropdown {
+      position: relative;
+      display: inline-block;
+      margin-right: 16px;
+    }
+    .nav-lang-btn {
+      background: none;
+      border: none;
+      color: var(--muted);
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 0.875rem;
+      cursor: pointer;
+      padding: 8px 0;
+      transition: color 0.2s;
+    }
+    .nav-lang-btn:hover {
+      color: var(--white);
+    }
+    .nav-lang-menu {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 8px 0;
+      min-width: 140px;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(10px);
+      transition: all 0.2s;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+      z-index: 1000;
+    }
+    .nav-lang-dropdown:hover .nav-lang-menu {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+    .nav-lang-menu a {
+      display: block;
+      padding: 8px 20px;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.875rem;
+      transition: background 0.2s, color 0.2s;
+    }
+    .nav-lang-menu a:hover {
+      background: rgba(255,255,255,0.05);
+      color: var(--white);
+    }
+    .nav-lang-menu a.active {
+      color: var(--green);
+      font-weight: 600;
+      background: rgba(0,255,136,0.05);
+    }
+    
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--white);
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 0;
+      line-height: 1;
+    }
+    .logo { font-family: var(--font-display); font-size: 1.4rem; font-weight: 800; letter-spacing: -0.03em; color: var(--white); text-decoration: none; }
+    .logo span { color: var(--green); }
+
+    /* HERO */
+    .page-hero {
+      padding: 80px 40px 60px; text-align: center;
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(to bottom, rgba(0,255,136,0.04) 0%, transparent 100%);
+    }
+    .page-tag { font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--green); margin-bottom: 16px; }
+    .page-title { font-family: var(--font-display); font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; letter-spacing: -0.03em; margin-bottom: 16px; }
+    .page-meta { color: var(--muted); font-size: 0.9rem; }
+    .page-meta span { color: var(--green); }
+
+    /* LAYOUT */
+    .layout { display: grid; grid-template-columns: 260px 1fr; gap: 60px; max-width: 1100px; margin: 0 auto; padding: 60px 40px 100px; align-items: start; }
+
+    /* SIDEBAR */
+    .sidebar { position: sticky; top: 100px; }
+    .sidebar-title { font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 16px; }
+    .sidebar-nav { list-style: none; display: flex; flex-direction: column; gap: 4px; }
+    .sidebar-nav a {
+      display: block; padding: 8px 14px; border-radius: 8px; color: var(--muted);
+      text-decoration: none; font-size: 0.875rem; border-left: 2px solid transparent;
+      transition: all 0.2s;
+    }
+    .sidebar-nav a:hover, .sidebar-nav a.active { color: var(--white); border-left-color: var(--green); background: rgba(0,255,136,0.05); }
+
+    /* CONTENT */
+    .content { min-width: 0; }
+    .section { margin-bottom: 56px; padding-bottom: 56px; border-bottom: 1px solid var(--border); }
+    .section:last-child { border-bottom: none; }
+    .section h2 {
+      font-family: var(--font-display); font-size: 1.5rem; font-weight: 700;
+      margin-bottom: 20px; display: flex; align-items: center; gap: 12px;
+      scroll-margin-top: 120px;
+    }
+    .section h2 .icon { font-size: 1.2rem; }
+    .section p { color: rgba(240,240,248,0.8); margin-bottom: 16px; font-size: 0.975rem; }
+    .section p:last-child { margin-bottom: 0; }
+    .section ul, .section ol { padding-left: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
+    .section ul li, .section ol li {
+      display: flex; align-items: flex-start; gap: 10px;
+      color: rgba(240,240,248,0.8); font-size: 0.975rem;
+    }
+    .section ul li::before { content: '—'; color: var(--green); flex-shrink: 0; margin-top: 1px; }
+    .section ol { counter-reset: ol-counter; }
+    .section ol li { counter-increment: ol-counter; }
+    .section ol li::before { content: counter(ol-counter) '.'; color: var(--green); font-family: var(--font-display); font-weight: 700; flex-shrink: 0; min-width: 20px; }
+
+    .highlight-box {
+      background: rgba(0,255,136,0.05); border: 1px solid rgba(0,255,136,0.15);
+      border-radius: 12px; padding: 20px 24px; margin: 20px 0;
+      color: rgba(240,240,248,0.85); font-size: 0.9rem;
+    }
+    .highlight-box strong { color: var(--green); }
+
+    a.inline-link { color: var(--green); text-decoration: none; border-bottom: 1px solid rgba(0,255,136,0.3); transition: border-color 0.2s; }
+    a.inline-link:hover { border-bottom-color: var(--green); }
+
+    /* FOOTER */
+    footer { background: var(--dark); border-top: 1px solid var(--border); padding: 60px 40px 40px; }
+    .footer-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 60px; text-align: left; }
+    .footer-brand p { color: var(--muted); font-size: 0.9rem; line-height: 1.7; margin-top: 16px; max-width: 280px; }
+    .footer-col .footer-title { font-family: var(--font-display); font-weight: 700; margin-bottom: 20px; font-size: 0.9rem; letter-spacing: 0.05em; color: var(--white); }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 12px; padding: 0; }
+    .footer-col ul a { color: var(--muted); text-decoration: none; font-size: 0.9rem; transition: color 0.2s; }
+    .footer-col ul a:hover { color: var(--white); }
+    .footer-bottom { max-width: 1200px; margin: 48px auto 0; padding-top: 28px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; color: var(--muted); }
+    .footer-bottom a { color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .footer-bottom a:hover { color: var(--white); }
+
+    /* ─── BACK TO TOP ─── */
+    .back-to-top {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 50px;
+      height: 50px;
+      background: rgba(0, 255, 136, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(0, 255, 136, 0.3);
+      color: var(--green);
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+    .back-to-top.visible {
+      opacity: 1;
+      visibility: visible;
+      bottom: 40px;
+    }
+    .back-to-top:hover {
+      background: var(--green);
+      color: var(--black);
+      transform: translateY(-5px);
+      box-shadow: 0 0 30px rgba(0, 255, 136, 0.4);
+    }
+
+    @media (max-width: 1100px) {
+      nav { padding: 16px 20px; }
+      .mobile-menu-btn { display: block; }
+      .nav-actions { gap: 12px; }
+      .nav-links {
+        display: none; flex-direction: column; gap: 0;
+        position: fixed; top: 58px; left: 0; right: 0;
+        background: rgba(5, 5, 8, 0.98); backdrop-filter: blur(14px);
+        padding: 20px 0; border-bottom: 1px solid var(--border);
+      }
+      .nav-links.active { display: flex; }
+      .nav-links li { width: 100%; text-align: center; }
+      .nav-links a { display: block; padding: 16px 20px; font-size: 1.1rem; }
+      .nav-lang-dropdown { margin-right: 0; }
+      
+      .page-hero { padding: 60px 20px 40px; }
+      .layout { grid-template-columns: 1fr; padding: 40px 20px 60px; gap: 40px; }
+      .sidebar { position: static; }
+      .footer-grid { grid-template-columns: 1fr; gap: 40px; text-align: center; }
+      .footer-brand p { margin: 16px auto 0; }
+      .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+      footer { padding: 40px 20px; }
+    }
+  </style>
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+        {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Головна",
+            "item": "https://indexfast.pp.ua/"
+        },
+        {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Політика конфіденційності",
+            "item": "https://indexfast.pp.ua/privacy-policy.html"
+        }
+    ]
+}
+  </script>
+</head>
+<body>
+<nav aria-label="Головне меню" id="navbar" role="navigation">
+<a aria-label="IndexFast — Головна" class="logo" href="/">Index<span>Fast</span></a>
+<ul class="nav-links">
+<li><a href="/#how-it-works">Як це працює</a></li>
+<li><a href="/#for-whom">Для кого</a></li>
+<li><a href="/#features">Переваги</a></li>
+<li><a href="/#pricing">Тарифи</a></li>
+<li><a href="/#faq">FAQ</a></li>
+</ul>
+<div class="nav-actions">
+<div class="nav-lang-dropdown">
+<button class="nav-lang-btn">UK ▾</button>
+<div class="nav-lang-menu">
+<a href="/privacy-policy.html">English</a>
+<a class="active" href="/uk/privacy-policy.html">Українська</a>
+<a href="/es/privacy-policy.html">Español</a>
+<a href="/pt/privacy-policy.html">Português</a>
+<a href="/ru/privacy-policy.html">Русский</a>
+<a href="/de/privacy-policy.html">Deutsch</a>
+<a href="/fr/privacy-policy.html">Français</a>
+<a href="/pl/privacy-policy.html">Polski</a>
+</div>
+</div>
+<a class="nav-login" href="/app/login">Увійти</a>
+<a class="nav-cta" href="/app/register">Почати →</a>
+<button aria-label="Відкрити меню" class="mobile-menu-btn" onclick="document.querySelector('.nav-links').classList.toggle('active')">☰</button>
+</div>
+</nav>
+<div class="page-hero">
+<p class="page-tag">Юридичний документ</p>
+<h1 class="page-title">Політика конфіденційності</h1>
+<p class="page-meta">Останнє оновлення: <span>Квітень 2026</span></p>
+</div>
+<div class="layout">
+<!-- Sidebar -->
+<aside class="sidebar">
+<p class="sidebar-title">Зміст</p>
+<ul class="sidebar-nav">
+<li><a href="#intro">1. Загальні положення</a></li>
+<li><a href="#data-collect">2. Які дані ми збираємо</a></li>
+<li><a href="#data-use">3. Як ми використовуємо дані</a></li>
+<li><a href="#data-store">4. Зберігання та захист</a></li>
+<li><a href="#cookies">5. Файли cookie</a></li>
+<li><a href="#third-party">6. Треті сторони</a></li>
+<li><a href="#rights">7. Ваші права</a></li>
+<li><a href="#children">8. Діти</a></li>
+<li><a href="#changes">9. Зміни політики</a></li>
+<li><a href="#contact">10. Контакти</a></li>
+</ul>
+</aside>
+<!-- Content -->
+<main class="content">
+<div class="section" id="intro">
+<h2><span class="icon">📋</span> 1. Загальні положення</h2>
+<p>Ця Політика конфіденційності описує, як IndexFast («ми», «нас», «наш сервіс») збирає, використовує та захищає інформацію, яку ви надаєте під час використання нашого сервісу за адресою <a class="inline-link" href="https://indexfast.pp.ua">indexfast.pp.ua</a>.</p>
+<p>Використовуючи IndexFast, ви погоджуєтесь з умовами цієї Політики конфіденційності. Якщо ви не погоджуєтесь — будь ласка, не використовуйте наш сервіс.</p>
+<div class="highlight-box">
+<strong>Коротко:</strong> ми збираємо мінімум необхідних даних, не продаємо їх третім особам і використовуємо виключно для надання послуг IndexFast.
+      </div>
+</div>
+<div class="section" id="data-collect">
+<h2><span class="icon">📦</span> 2. Які дані ми збираємо</h2>
+<p>При реєстрації та використанні сервісу ми збираємо:</p>
+<ul>
+<li><strong>Дані акаунту:</strong> ім'я, прізвище, email-адреса, хешований пароль.</li>
+<li><strong>Google Service Account:</strong> JSON-ключ вашого сервісного акаунту для роботи з Google Indexing API. Зберігається у зашифрованому вигляді.</li>
+<li><strong>Дані про сайти:</strong> доменне ім'я, URL sitemap, статус індексації.</li>
+<li><strong>Логи індексації:</strong> URL сторінок, статус обробки, HTTP-коди відповідей від Google.</li>
+<li><strong>Технічні дані:</strong> IP-адреса, тип браузера, дата та час входу — для безпеки та діагностики.</li>
+<li><strong>Маркетингова згода:</strong> факт надання або ненадання згоди на маркетингові листи при реєстрації (зберігається для підтвердження законності розсилки).</li>
+</ul>
+</div>
+<div class="section" id="data-use">
+<h2><span class="icon">⚙️</span> 3. Як ми використовуємо дані</h2>
+<p>Зібрані дані використовуються для таких цілей:</p>
+<h3 style="font-family:var(--font-display);font-size:1rem;margin:20px 0 10px;color:var(--white)">3.1. Надання сервісу</h3>
+<ul>
+<li>Автентифікація та управління акаунтом.</li>
+<li>Відправка URL на індексацію через Google Indexing API.</li>
+<li>Відображення статистики та логів індексації.</li>
+<li>Управління підпискою та тарифним планом.</li>
+</ul>
+<h3 style="font-family:var(--font-display);font-size:1rem;margin:20px 0 10px;color:var(--white)">3.2. Транзакційні листи</h3>
+<p>Ми надсилаємо листи без вашого додаткового дозволу, оскільки вони є частиною надання послуги:</p>
+<ul>
+<li>Підтвердження реєстрації та email-адреси.</li>
+<li>Відновлення пароля.</li>
+<li>Сповіщення про критичні помилки сервісу (недійсний Service Account тощо).</li>
+<li>Сповіщення про зміни тарифного плану або умов сервісу.</li>
+</ul>
+<h3 style="font-family:var(--font-display);font-size:1rem;margin:20px 0 10px;color:var(--white)">3.3. Маркетингові листи <span style="font-size:0.8rem;color:var(--green);font-family:var(--font-body)">— тільки за згодою</span></h3>
+<p>Якщо ви позначили відповідний чекбокс при реєстрації або надали згоду пізніше, ми можемо надсилати:</p>
+<ul>
+<li>Новини та оновлення продукту IndexFast.</li>
+<li>Корисні матеріали про SEO та індексацію.</li>
+<li>Спеціальні пропозиції та знижки на тарифи.</li>
+<li>Поради щодо ефективного використання сервісу.</li>
+</ul>
+<p>Кожен маркетинговий лист містить посилання для <strong>одноклікового відписання</strong>. Відписка обробляється негайно. Відписка від маркетингових листів не впливає на транзакційні повідомлення.</p>
+<p><strong style="color:var(--green)">Ваш вибір:</strong> Ми зберігаємо факт надання або відкликання маркетингової згоди з датою та часом. Ви можете змінити своє рішення в будь-який момент у <a href="/app/profile" style="color:var(--green)">налаштуваннях акаунту</a> або написавши на <a href="mailto:indexfastapp@gmail.com" style="color:var(--green)">indexfastapp@gmail.com</a>.</p>
+<h3 style="font-family:var(--font-display);font-size:1rem;margin:20px 0 10px;color:var(--white)">3.4. Аналітика та покращення сервісу</h3>
+<ul>
+<li>Агрегована (знеособлена) статистика використання для розуміння функцій, що потребують покращення.</li>
+<li>Діагностика технічних проблем.</li>
+<li>Виконання вимог законодавства України та ЄС.</li>
+</ul>
+<p style="margin-top:16px">Ми <strong>ніколи</strong> не продаємо, не передаємо і не обмінюємо ваші персональні дані з рекламодавцями чи брокерами даних.</p>
+</div>
+<div class="section" id="data-store">
+<h2><span class="icon">🛡️</span> 4. Зберігання та захист даних</h2>
+<p>Ми вживаємо технічних та організаційних заходів для захисту ваших даних:</p>
+<ul>
+<li>Шифрування даних в стані спокою (AES-256) та при передачі (TLS 1.3).</li>
+<li>Google API ключі зберігаються у зашифрованому сховищі з обмеженим доступом.</li>
+<li>Регулярне резервне копіювання та моніторинг безпеки.</li>
+<li>Доступ до персональних даних мають лише авторизовані співробітники.</li>
+</ul>
+<p>Дані зберігаються на серверах в межах ЄС та/або України протягом строку дії вашого акаунту та 90 днів після його видалення.</p>
+</div>
+<div class="section" id="cookies">
+<h2><span class="icon">🍪</span> 5. Файли cookie</h2>
+<p>Ми використовуємо мінімальний набір файлів cookie:</p>
+<ul>
+<li><strong>Необхідні cookie:</strong> сесія авторизації, налаштування безпеки. Без них сервіс не працює.</li>
+<li><strong>Аналітичні cookie:</strong> Google Analytics для розуміння як користувачі взаємодіють з сайтом. Дані анонімізовані.</li>
+</ul>
+<p>Ви можете вимкнути cookie в налаштуваннях браузера, однак це може вплинути на роботу деяких функцій сервісу.</p>
+</div>
+<div class="section" id="third-party">
+<h2><span class="icon">🔗</span> 6. Треті сторони</h2>
+<p>IndexFast взаємодіє з такими третіми сторонами:</p>
+<ul>
+<li><strong>Google LLC</strong> — для роботи з Google Indexing API та Google Search Console. Дані передаються відповідно до <a class="inline-link" href="https://policies.google.com/privacy" target="_blank">Політики конфіденційності Google</a>.</li>
+<li><strong>Платіжні сервіси (LiqPay / Stripe)</strong> — для обробки платежів. Ми не отримуємо та не зберігаємо платіжні реквізити.</li>
+<li><strong>Хостинг-провайдер</strong> — для розміщення сервісу. Підписаний договір про обробку даних (DPA).</li>
+</ul>
+<p>Ми не передаємо ваші дані іншим третім особам без вашої згоди, за винятком випадків, передбачених законодавством.</p>
+</div>
+<div class="section" id="rights">
+<h2><span class="icon">⚖️</span> 7. Ваші права</h2>
+<p>Відповідно до законодавства України про захист персональних даних, ви маєте право:</p>
+<ol>
+<li>Отримати доступ до ваших персональних даних, які ми зберігаємо.</li>
+<li>Вимагати виправлення неточних або неповних даних.</li>
+<li>Вимагати видалення ваших даних («право на забуття»).</li>
+<li>Обмежити або заперечити проти обробки ваших даних.</li>
+<li>Отримати ваші дані у машинозчитуваному форматі (портабельність).</li>
+<li>Відкликати згоду на обробку в будь-який момент (у тому числі маркетингову згоду).</li>
+<li>Відписатись від маркетингових листів — через посилання в кожному листі або в налаштуваннях акаунту.</li>
+</ol>
+<p>Для реалізації будь-якого з цих прав — напишіть нам на <a class="inline-link" href="/cdn-cgi/l/email-protection#2f5f5d46594e4c566f46414b4a57494e5c5b014c4042015a4e"><span class="__cf_email__" data-cfemail="b1c1c3d8c7d0d2c8f1d8dfd5d4c9d7d0c2c59fd2dedc9fc4d0">[email protected]</span></a>. Ми відповімо протягом 30 днів.</p>
+</div>
+<div class="section" id="children">
+<h2><span class="icon">👶</span> 8. Діти</h2>
+<p>IndexFast не призначений для осіб віком до 18 років. Ми свідомо не збираємо персональні дані дітей. Якщо ви вважаєте, що дитина надала нам свої дані — негайно зв'яжіться з нами для їх видалення.</p>
+</div>
+<div class="section" id="changes">
+<h2><span class="icon">🔄</span> 9. Зміни Політики</h2>
+<p>Ми можемо оновлювати цю Політику конфіденційності. Про суттєві зміни ми повідомимо вас електронною поштою або через сповіщення в особистому кабінеті не пізніше ніж за 14 днів до набрання чинності.</p>
+<p>Дата «Останнього оновлення» у верхній частині сторінки завжди відображає поточну версію документа.</p>
+</div>
+<div class="section" id="contact">
+<h2><span class="icon">✉️</span> 10. Контакти</h2>
+<p>З питань конфіденційності та захисту персональних даних звертайтесь:</p>
+<div class="highlight-box">
+<strong>IndexFast</strong><br/>
+        Email: <a class="inline-link" href="mailto:indexfastapp@gmail.com">indexfastapp@gmail.com</a><br/>
+        Загальна підтримка: <a class="inline-link" href="mailto:indexfastapp@gmail.com">indexfastapp@gmail.com</a><br/>
+        Telegram: <a class="inline-link" href="https://t.me/indexfastgoogle">@indexfastgoogle</a>
+</div>
+</div>
+</main>
+</div>
+<footer role="contentinfo">
+<div class="footer-grid">
+<div class="footer-brand">
+<a class="logo" href="/">Index<span>Fast</span></a>
+<p>Сервіс автоматичної індексації сторінок сайту в Google через офіційний Google Indexing API.</p>
+</div>
+<div class="footer-col">
+<p class="footer-title">Продукт</p>
+<ul>
+<li><a href="/#how-it-works">Як це працює</a></li>
+<li><a href="/#features">Переваги</a></li>
+<li><a href="/#pricing">Тарифи</a></li>
+<li><a href="/docs/">Документація</a></li>
+</ul>
+</div>
+<div class="footer-col">
+<p class="footer-title">Компанія</p>
+<ul>
+<li><a href="/about.html">Про нас</a></li>
+<li><a href="/blog/">Блог</a></li>
+<li><a href="/affiliate.html">Партнерська програма</a></li>
+<li><a href="/contacts.html">Контакти</a></li>
+</ul>
+</div>
+<div class="footer-col">
+<p class="footer-title">Підтримка</p>
+<ul>
+<li><a href="/#faq">FAQ</a></li>
+<li><a href="https://t.me/indexfastgoogle" rel="noopener noreferrer" target="_blank">Telegram чат</a></li>
+<li><a href="mailto:indexfastapp@gmail.com">Email підтримка</a></li>
+<li><a href="/status.html">Статус сервісу</a></li>
+</ul>
+</div>
+</div>
+<div class="footer-bottom">
+<p>© 2026 IndexFast. Всі права захищені.</p>
+<div style="display:flex; gap:20px;">
+<a href="/privacy-policy.html">Конфіденційність</a>
+<a href="/terms.html">Умови</a>
+</div>
+</div>
+<button aria-label="Вгору" class="back-to-top" id="backToTop">
+<svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewbox="0 0 24 24" width="24"><path d="M18 15l-6-6-6 6"></path></svg>
+</button>
+</footer>
+<script>
+  // Active sidebar link on scroll
+  const sections = document.querySelectorAll('.section');
+  const sideLinks = document.querySelectorAll('.sidebar-nav a');
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        sideLinks.forEach(l => {
+          l.classList.toggle('active', l.getAttribute('href') === '#' + id);
+        });
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '-100px 0px -60% 0px' });
+
+  sections.forEach(s => observer.observe(s));
+
+  // Back to Top
+  const backToTop = document.getElementById('backToTop');
+  window.addEventListener('scroll', () => {
+    if (window.pageYOffset > 500) {
+      backToTop.classList.add('visible');
+    } else {
+      backToTop.classList.remove('visible');
+    }
+  });
+  backToTop.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+</script>
+</body>
+</html>
