@@ -9,9 +9,9 @@ if (!class_exists('Plans')) {
         public const CONFIG = [
             'start' => [
                 'label'       => 'Старт',
-                'urls_per_day'=> 10,
+                'urls_per_day'=> 50,
                 'max_sites'   => 1,
-                'limits'      => ['sites' => 1, 'pages' => 10],
+                'limits'      => ['sites' => 1, 'pages' => 50],
                 'popular'     => false,
                 'enterprise'  => false,
                 'features'    => [
@@ -24,9 +24,9 @@ if (!class_exists('Plans')) {
             ],
             'pro' => [
                 'label'       => 'PRO',
-                'urls_per_day'=> 100,
+                'urls_per_day'=> 500,
                 'max_sites'   => 5,
-                'limits'      => ['sites' => 5, 'pages' => 100],
+                'limits'      => ['sites' => 5, 'pages' => 500],
                 'popular'     => true,
                 'enterprise'  => false,
                 'features'    => [
@@ -39,9 +39,9 @@ if (!class_exists('Plans')) {
             ],
             'agency' => [
                 'label'       => 'Агенція',
-                'urls_per_day'=> 1000,
+                'urls_per_day'=> 5000,
                 'max_sites'   => 50,
-                'limits'      => ['sites' => 50, 'pages' => 1000],
+                'limits'      => ['sites' => 50, 'pages' => 5000],
                 'popular'     => false,
                 'enterprise'  => false,
                 'features'    => [
