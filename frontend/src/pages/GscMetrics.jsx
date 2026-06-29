@@ -169,7 +169,7 @@ function LineChart({ currentData, previousData, metricKey, color, fmt }) {
             <text
               x={CHART_PAD.left - 6} y={yOf(tick) + 4}
               textAnchor="end" fontSize="10" fill="rgba(255,255,255,0.35)">
-              {fmt(tick)}
+               {resolvedFmt(tick)}
             </text>
           </g>
         ))}
@@ -246,13 +246,13 @@ function LineChart({ currentData, previousData, metricKey, color, fmt }) {
           <div style={{ display: "flex", gap: 16 }}>
             <div>
               <div style={{ color: "rgba(255,255,255,0.4)", fontSize: 9, marginBottom: 2 }}>{t("gsc.currentPeriodLabel")}</div>
-              <div style={{ color, fontWeight: 800 }}>{fmt(tooltip.cur[metricKey])}</div>
+              <div style={{ color, fontWeight: 800 }}>{resolvedFmt(tooltip.cur[metricKey])}</div>
             </div>
             {tooltip.prev && (
               <div>
                 <div style={{ color: "rgba(255,255,255,0.4)", fontSize: 9, marginBottom: 2 }}>{t("gsc.previousPeriodLabel")}</div>
                 <div style={{ color: "rgba(255,255,255,0.45)", fontWeight: 700 }}>
-                  {fmt(tooltip.prev[metricKey])}
+                  {resolvedFmt(tooltip.prev[metricKey])}
                 </div>
               </div>
             )}
