@@ -2,20 +2,216 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <link rel="icon" type="image/x-icon" href="/favicon.ico">
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-  <link rel="manifest" href="/site.webmanifest">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FAQ — IndexFast | Preguntas frecuentes</title>
-  <meta name="robots" content="index, follow">
+  <title>Preguntas frecuentes — IndexFast | Indexación en Google</title>
+  <meta name="description" content="Respuestas a preguntas frecuentes sobre IndexFast y la indexación de sitios web en Google. Cómo indexar páginas rápidamente, cómo conectar Google Search Console, cómo funciona la API de Indexación de Google.">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
   <link rel="canonical" href="https://indexfast.pro/es/faqs.html">
   <link rel="alternate" hreflang="es" href="https://indexfast.pro/es/faqs.html">
   <link rel="alternate" hreflang="en" href="https://indexfast.pro/faqs.html">
+  <link rel="alternate" hreflang="x-default" href="https://indexfast.pro/faqs.html">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: #0a0a0f; color: #e0e0e0; line-height: 1.7; }
+    .container { max-width: 860px; margin: 0 auto; padding: 0 24px; }
+    header { background: linear-gradient(135deg, #0a0a0f 0%, #111128 100%); border-bottom: 1px solid rgba(0,255,136,0.1); padding: 60px 0 40px; }
+    .logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 20px; color: #fff; text-decoration: none; }
+    .logo span { color: #00ff88; }
+    .breadcrumb { display: flex; gap: 8px; align-items: center; margin-bottom: 20px; font-size: 13px; color: #888; }
+    .breadcrumb a { color: #666; text-decoration: none; }
+    .breadcrumb a:hover { color: #00ff88; }
+    h1 { font-family: 'Syne', sans-serif; font-size: clamp(28px, 5vw, 42px); font-weight: 800; color: #fff; margin-bottom: 12px; letter-spacing: -0.03em; }
+    .subtitle { font-size: 16px; color: #888; max-width: 600px; }
+    main { padding: 48px 0 80px; }
+    .faq-meta { display: flex; gap: 24px; flex-wrap: wrap; margin-bottom: 40px; padding: 16px 20px; background: rgba(0,255,136,0.04); border: 1px solid rgba(0,255,136,0.1); border-radius: 12px; font-size: 13px; color: #aaa; }
+    .faq-meta span strong { color: #00ff88; }
+    .faq-list { display: flex; flex-direction: column; gap: 2px; }
+    .faq-item { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; overflow: hidden; transition: border-color 0.2s; }
+    .faq-item:hover { border-color: rgba(0,255,136,0.2); }
+    .faq-item.open { background: rgba(0,255,136,0.03); border-color: rgba(0,255,136,0.25); }
+    .faq-q { width: 100%; background: none; border: none; color: #e0e0e0; font-size: 16px; font-weight: 600; padding: 20px 24px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 16px; text-align: left; font-family: inherit; line-height: 1.4; transition: color 0.2s; }
+    .faq-q:hover { color: #00ff88; }
+    .faq-arrow { font-size: 20px; color: #00ff88; flex-shrink: 0; transition: transform 0.25s; }
+    .faq-item.open .faq-arrow { transform: rotate(45deg); }
+    .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.35s ease, padding 0.35s ease; }
+    .faq-item.open .faq-a { max-height: 600px; }
+    .faq-a-inner { padding: 0 24px 24px; color: #b0b0b0; font-size: 14px; line-height: 1.8; }
+    .faq-a-inner p { margin-bottom: 10px; }
+    .faq-a-inner a { color: #00ff88; text-decoration: none; }
+    .faq-a-inner a:hover { text-decoration: underline; }
+    .faq-a-inner ul { margin: 8px 0 8px 20px; }
+    .faq-a-inner li { margin-bottom: 6px; }
+    .faq-a-inner code { background: rgba(0,255,136,0.08); padding: 2px 7px; border-radius: 4px; font-size: 13px; color: #00ff88; }
+    .cta-box { margin-top: 48px; padding: 32px; background: rgba(0,255,136,0.05); border: 1px solid rgba(0,255,136,0.2); border-radius: 16px; text-align: center; }
+    .cta-box h3 { font-family: 'Syne', sans-serif; font-size: 20px; color: #fff; margin-bottom: 8px; }
+    .cta-box p { color: #aaa; margin-bottom: 20px; font-size: 14px; }
+    .btn { display: inline-block; padding: 12px 28px; background: #00ff88; color: #0a0a0f; font-weight: 700; border-radius: 10px; text-decoration: none; font-size: 14px; }
+    footer { border-top: 1px solid rgba(255,255,255,0.06); padding: 32px 0; text-align: center; font-size: 13px; color: #555; }
+    footer a { color: #666; text-decoration: none; }
+    footer a:hover { color: #00ff88; }
+    footer .links { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin-top: 8px; }
+  </style>
 </head>
 <body>
-<h1>Preguntas frecuentes — IndexFast</h1>
-<p>Todo lo que necesitas saber sobre IndexFast.</p>
+  <header>
+    <div class="container">
+      <div class="breadcrumb">
+        <a href="/es/">IndexFast</a>
+        <span>/</span>
+        <span>FAQ</span>
+      </div>
+      <h1>Preguntas frecuentes sobre indexación en Google</h1>
+      <p class="subtitle">Todo lo que necesitas saber sobre Google Search Console, la API de Indexación de Google y la indexación automática con IndexFast.</p>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+      <div class="faq-meta">
+        <span><strong>8</strong> idiomas</span>
+        <span><strong>200</strong> URL/día gratis</span>
+        <span><strong>24–48 h</strong> tiempo medio de indexación</span>
+        <span>Actualizado <strong>junio 2026</strong></span>
+      </div>
+
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            ¿Qué es IndexFast y cómo funciona con Google Search Console?
+            <span class="faq-arrow">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <p><strong>IndexFast</strong> es un servicio web que automatiza la indexación de páginas en Google mediante la API oficial de Indexación de Google. Conecta tu GSC una vez, añade el sitemap, e IndexFast envía automáticamente todas tus páginas para su indexación.</p>
+            <p>El servicio crea una <strong>Cuenta de Servicio</strong> en Google Cloud y usa el endpoint <code>indexing.googleapis.com</code> para notificar a Google sobre páginas nuevas o actualizadas.</p>
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            ¿Qué rápido indexará Google mis páginas con IndexFast?
+            <span class="faq-arrow">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <p>Tras el envío a través de la API de Indexación, Google indexa las páginas en <strong>24–48 horas</strong>, en lugar de las 2–8 semanas habituales.</p>
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            ¿Cómo conecto IndexFast a Google Search Console?
+            <span class="faq-arrow">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <p>Configuración en ~10 minutos: crea un proyecto en Google Cloud, activa la Indexing API, crea una Cuenta de Servicio, añade el email como Propietario en GSC, y sube la clave JSON en IndexFast. Guía completa: <a href="/docs/">Documentación</a>.</p>
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            ¿Es seguro? ¿Google penalizará mi sitio?
+            <span class="faq-arrow">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <p><strong>Sí, completamente seguro.</strong> IndexFast usa únicamente la API oficial de Google — el método recomendado por Google para acelerar la indexación. No son técnicas riesgosas ni hacks.</p>
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            ¿Qué límite tiene la API de Indexación de Google?
+            <span class="faq-arrow">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <p>Google permite <strong>200 envíos de URL/día</strong> gratuitos. IndexFast gestiona automáticamente la cuota: Free hasta 50/día, PRO 500/día ($9.99/mes), Agency 5000/día ($49/mes).</p>
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            ¿Funciona con cualquier plataforma (WordPress, Shopify, etc.)?
+            <span class="faq-arrow">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <p><strong>Sí.</strong> IndexFast es independiente de la plataforma. Funciona con cualquier sitio que tenga <code>sitemap.xml</code>: WordPress, Shopify, Wix, PrestaShop, OpenCart, Laravel, Joomla, etc.</p>
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            ¿Ayuda IndexFast con páginas "Descubierta - sin indexar" en GSC?
+            <span class="faq-arrow">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <p><strong>Sí.</strong> IndexFast envía notificaciones <code>URL_UPDATED</code> a Google, lo que ayuda a acelerar la indexación de páginas con estado "Descubierta — sin indexar" o "Rastreada — sin indexar" en GSC.</p>
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            ¿Tiene garantía de devolución?
+            <span class="faq-arrow">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <p><strong>Sí.</strong> Devolución garantizada dentro de los <strong>14 días</strong> posteriores al pago. Sin preguntas. Contacto: <a href="mailto:indexfastapp@gmail.com">indexfastapp@gmail.com</a> o <a href="https://t.me/indexfastgoogle" target="_blank">Telegram</a>.</p>
+          </div></div>
+        </div>
+
+      </div>
+
+      <div class="cta-box">
+        <h3>¿Aún tienes preguntas?</h3>
+        <p>Nuestro equipo te ayudará a configurar la indexación en GSC en 10 minutos.</p>
+        <a class="btn" href="/app/register">🚀 Empieza gratis</a>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>© 2026 IndexFast. Todos los derechos reservados.</p>
+      <div class="links">
+        <a href="/es/privacy-policy.html">Privacidad</a>
+        <a href="/es/terms.html">Términos</a>
+        <a href="/es/docs/">Documentación</a>
+        <a href="mailto:indexfastapp@gmail.com">Contacto</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.querySelectorAll('.faq-q').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.closest('.faq-item');
+        const isOpen = item.classList.contains('open');
+        document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+        if (!isOpen) item.classList.add('open');
+        btn.setAttribute('aria-expanded', !isOpen);
+      });
+    });
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "¿Qué es IndexFast y cómo funciona con Google Search Console?",
+        "acceptedAnswer": { "@type": "Answer", "text": "IndexFast es un servicio web para indexación automática en Google mediante la API oficial de Indexación de Google. Conecta GSC, añade sitemap, y IndexFast envía todas las páginas automáticamente." }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Es seguro? ¿Google penalizará mi sitio?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Sí, completamente seguro. IndexFast usa únicamente la API oficial de Google." }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Tiene garantía de devolución?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Sí, devolución garantizada en 14 días después del pago." }
+      }
+    ]
+  }
+  </script>
 </body>
 </html>

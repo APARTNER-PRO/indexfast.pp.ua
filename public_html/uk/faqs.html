@@ -2,20 +2,366 @@
 <html lang="uk">
 <head>
   <meta charset="UTF-8">
-  <link rel="icon" type="image/x-icon" href="/favicon.ico">
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-  <link rel="manifest" href="/site.webmanifest">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FAQ — IndexFast | Часті запитання</title>
-  <meta name="robots" content="index, follow">
+  <title>Часті запитання — IndexFast | GSC індексація</title>
+  <meta name="description" content="Відповіді на часті запитання про IndexFast та індексацію сайтів у Google через Google Search Console. Як швидко індексувати сторінки, як підключити GSC, як працює Google Indexing API.">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
   <link rel="canonical" href="https://indexfast.pro/uk/faqs.html">
   <link rel="alternate" hreflang="uk" href="https://indexfast.pro/uk/faqs.html">
   <link rel="alternate" hreflang="en" href="https://indexfast.pro/faqs.html">
+  <link rel="alternate" hreflang="x-default" href="https://indexfast.pro/faqs.html">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: #0a0a0f; color: #e0e0e0; line-height: 1.7; }
+    .container { max-width: 860px; margin: 0 auto; padding: 0 24px; }
+    header { background: linear-gradient(135deg, #0a0a0f 0%, #111128 100%); border-bottom: 1px solid rgba(0,255,136,0.1); padding: 60px 0 40px; }
+    .logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 20px; color: #fff; text-decoration: none; }
+    .logo span { color: #00ff88; }
+    .breadcrumb { display: flex; gap: 8px; align-items: center; margin-bottom: 20px; font-size: 13px; color: #888; }
+    .breadcrumb a { color: #666; text-decoration: none; }
+    .breadcrumb a:hover { color: #00ff88; }
+    h1 { font-family: 'Syne', sans-serif; font-size: clamp(28px, 5vw, 42px); font-weight: 800; color: #fff; margin-bottom: 12px; letter-spacing: -0.03em; }
+    .subtitle { font-size: 16px; color: #888; max-width: 600px; }
+    main { padding: 48px 0 80px; }
+    .faq-meta { display: flex; gap: 24px; flex-wrap: wrap; margin-bottom: 40px; padding: 16px 20px; background: rgba(0,255,136,0.04); border: 1px solid rgba(0,255,136,0.1); border-radius: 12px; font-size: 13px; color: #aaa; }
+    .faq-meta span strong { color: #00ff88; }
+    .faq-list { display: flex; flex-direction: column; gap: 2px; }
+    .faq-item { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; overflow: hidden; transition: border-color 0.2s; }
+    .faq-item:hover { border-color: rgba(0,255,136,0.2); }
+    .faq-item.open { background: rgba(0,255,136,0.03); border-color: rgba(0,255,136,0.25); }
+    .faq-q { width: 100%; background: none; border: none; color: #e0e0e0; font-size: 16px; font-weight: 600; padding: 20px 24px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 16px; text-align: left; font-family: inherit; line-height: 1.4; transition: color 0.2s; }
+    .faq-q:hover { color: #00ff88; }
+    .faq-arrow { font-size: 20px; color: #00ff88; flex-shrink: 0; transition: transform 0.25s; }
+    .faq-item.open .faq-arrow { transform: rotate(45deg); }
+    .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.35s ease, padding 0.35s ease; }
+    .faq-item.open .faq-a { max-height: 600px; }
+    .faq-a-inner { padding: 0 24px 24px; color: #b0b0b0; font-size: 14px; line-height: 1.8; }
+    .faq-a-inner p { margin-bottom: 10px; }
+    .faq-a-inner a { color: #00ff88; text-decoration: none; }
+    .faq-a-inner a:hover { text-decoration: underline; }
+    .faq-a-inner ul { margin: 8px 0 8px 20px; }
+    .faq-a-inner li { margin-bottom: 6px; }
+    .faq-a-inner code { background: rgba(0,255,136,0.08); padding: 2px 7px; border-radius: 4px; font-size: 13px; color: #00ff88; }
+    .cta-box { margin-top: 48px; padding: 32px; background: rgba(0,255,136,0.05); border: 1px solid rgba(0,255,136,0.2); border-radius: 16px; text-align: center; }
+    .cta-box h3 { font-family: 'Syne', sans-serif; font-size: 20px; color: #fff; margin-bottom: 8px; }
+    .cta-box p { color: #aaa; margin-bottom: 20px; font-size: 14px; }
+    .btn { display: inline-block; padding: 12px 28px; background: #00ff88; color: #0a0a0f; font-weight: 700; border-radius: 10px; text-decoration: none; font-size: 14px; }
+    footer { border-top: 1px solid rgba(255,255,255,0.06); padding: 32px 0; text-align: center; font-size: 13px; color: #555; }
+    footer a { color: #666; text-decoration: none; }
+    footer a:hover { color: #00ff88; }
+    footer .links { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin-top: 8px; }
+  </style>
 </head>
 <body>
-<h1>Часті запитання — IndexFast</h1>
-<p>Все що потрібно знати про IndexFast.</p>
+  <header>
+    <div class="container">
+      <div class="breadcrumb">
+        <a href="/uk/">IndexFast</a>
+        <span>/</span>
+        <span>ЧАСТІ ЗАПИТАННЯ</span>
+      </div>
+      <h1>Часті запитання про індексацію сайтів у Google</h1>
+      <p class="subtitle">Все що потрібно знати про Google Search Console, Google Indexing API та автоматичну індексацію в IndexFast.</p>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+      <div class="faq-meta">
+        <span><strong>8</strong> мов підтримки</span>
+        <span><strong>200</strong> URL/день безкоштовно</span>
+        <span><strong>24–48 год</strong> середній час індексації</span>
+        <span>Оновлено <strong>червень 2026</strong></span>
+      </div>
+
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Що таке IndexFast і як він працює з Google Search Console?
+            <span class="faq-arrow">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <p><strong>IndexFast</strong> — це веб-сервіс, який автоматизує індексацію сторінок у Google через офіційний <strong>Google Indexing API</strong>. Замість ручного відправлення URL по одному в Google Search Console, ви один раз підключаєте GSC, додаєте sitemap, а IndexFast автоматично відправляє всі сторінки на індексацію.</p>
+            <p>Сервіс створює <strong>Service Account</strong> в Google Cloud і надає йому доступ до вашої властивості в GSC. Потім використовує офіційний endpoint <code>indexing.googleapis.com</code>, щоб повідомити Google про нові або оновлені сторінки.</p>
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Як швидко Google проіндексує мої сторінки через IndexFast?
+            <span class="faq-arrow">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <p>Після відправки через Google Indexing API, Google зазвичай індексує сторінки за <strong>24–48 годин</strong>, замість звичайних 2–8 тижнів.</p>
+            <p>Для максимальної швидкості комбінуйте IndexFast з:</p>
+            <ul>
+              <li><strong>Свіжим sitemap.xml</strong>, підключеним в GSC</li>
+              <li>Сторінками з <strong>унікальним контентом</strong> та правильними meta-тегами</li>
+              <li>Регулярними оновленнями контенту</li>
+            </ul>
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Як підключити IndexFast до Google Search Console?
+            <span class="faq-arrow">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <p>Налаштування займає близько 10 хвилин:</p>
+            <ul>
+              <li><strong>Крок 1:</strong> Додайте сайт в <a href="https://search.google.com/search-console" target="_blank">Google Search Console</a> та підтвердіть права власника</li>
+              <li><strong>Крок 2:</strong> Зареєструйтесь на <a href="https://indexfast.pro">indexfast.pro</a></li>
+              <li><strong>Крок 3:</strong> Створіть проект в <a href="https://console.cloud.google.com" target="_blank">Google Cloud Console</a></li>
+              <li><strong>Крок 4:</strong> Увімкніть <strong>Indexing API</strong> у вашому проекті</li>
+              <li><strong>Крок 5:</strong> Створіть <strong>Service Account</strong> та завантажте JSON-ключ</li>
+              <li><strong>Крок 6:</strong> Додайте email Service Account як <strong>Власника</strong> в GSC → Налаштування → Користувачі та дозволи</li>
+              <li><strong>Крок 7:</strong> Завантажте JSON-ключ в кабінеті IndexFast</li>
+            </ul>
+            <p>Детальна інструкція: <a href="/docs/">Документація</a></p>
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Чи потрібні технічні навички для використання IndexFast?
+            <span class="faq-arrow">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <p><strong>Ні.</strong> Базове налаштування не вимагає програмування:</p>
+            <ul>
+              <li>Доступ до Google Search Console</li>
+              <li>Доступ до Google Cloud Console</li>
+              <li>URL sitemap.xml (або просто домен сайту)</li>
+            </ul>
+            <p>Більшість користувачів запускають сервіс за 10 хвилин. Для автоматизації через cron потрібні базові знання Linux, але тариф PRO має вбудований планувальник.</p>
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Який ліміт Google Indexing API та як IndexFast ним керує?
+            <span class="faq-arrow">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <p>Google надає безкоштовний ліміт <strong>200 відправлень URL на день</strong> через Indexing API. Ліміт на один Google Cloud проєкт — не на одну властивість GSC.</p>
+            <p>IndexFast автоматично керує лімітом:</p>
+            <ul>
+              <li><strong>Безкоштовний план:</strong> до 50 URL/день</li>
+              <li><strong>PRO:</strong> 500 URL/день ($9.99/міс)</li>
+              <li><strong>Agency:</strong> 5 000 URL/день ($49/міс)</li>
+            </ul>
+            <p>Якщо потрібно >200 URL/день, запитуйте збільшення ліміту напряму в <a href="https://console.cloud.google.com" target="_blank">Google Cloud Console</a>.</p>
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Це безпечно? Google не заблокує мій сайт?
+            <span class="faq-arrow">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <p><strong>Так, повністю безпечно.</strong> IndexFast використовує лише офіційний Google Indexing API — рекомендований Google метод для прискорення індексації. Це не "сірий" метод і не взлом.</p>
+            <p>API було розроблено Google спеціально для цієї мети. Тисячі сайтів використовують його щоденно без проблем. Єдина вимога — ви повинні бути власником властивості в GSC.</p>
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Чи допоможе IndexFast, якщо сторінки не індексуються в GSC?
+            <span class="faq-arrow">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <p><strong>Так.</strong> Якщо в GSC показано статус "Виявлено — поки не проіндексовано" або "Проскановано — поки не проіндексовано", IndexFast може допомогти:</p>
+            <ul>
+              <li>Повідомляє Google, що сторінка існує або була оновлена</li>
+              <li>Підвищує пріориitet сканування через API-сигнали</li>
+              <li>Допомагає Google швидше discovering нові сторінки</li>
+            </ul>
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Чи підтримується Sitemap Index та вкладені sitemap'и?
+            <span class="faq-arrow">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <p><strong>Так.</strong> IndexFast повністю підтримує:</p>
+            <ul>
+              <li>Звичайні <code>sitemap.xml</code></li>
+              <li><strong>Sitemap Index</strong> — вкладені sitemap'и будь-якої глибини</li>
+              <li>Стиснуті (<code>.xml.gz</code>) та нестиснуті sitemap'и</li>
+              <li>Автовиявлення sitemap за доменом</li>
+            </ul>
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Чи працює IndexFast з WordPress / Shopify / будь-якою платформою?
+            <span class="faq-arrow">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <p><strong>Так.</strong> IndexFast не залежить від CMS — працює з будь-яким сайтом, що має <code>sitemap.xml</code>:</p>
+            <ul>
+              <li><strong>WordPress:</strong> Yoast SEO / Rank Math генерують sitemap автоматично</li>
+              <li><strong>Shopify:</strong> Вбудований sitemap</li>
+              <li><strong>Wix / PrestaShop / OpenCart / Laravel / Joomla</strong></li>
+            </ul>
+            <p>Якщо у вашого сайту є <code>sitemap.xml</code> — IndexFast працює з ним.</p>
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Чи підтримує індексацію Bing, Yandex та інші пошукові системи?
+            <span class="faq-arrow">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <p><strong>Так.</strong> IndexFast підтримує протокол <strong>IndexNow</strong>, що одночасно повідомляє:</p>
+            <ul>
+              <li><strong>Bing</strong></li>
+              <li><strong>Yandex</strong></li>
+              <li><strong>DuckDuckGo</strong></li>
+              <li><strong>Naver</strong> (Корея)</li>
+              <li><strong>Seznam.cz</strong> (Чехія)</li>
+              <li><strong>Yep</strong></li>
+            </ul>
+            <p>IndexNow доступний на всіх тарифах.</p>
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Як перевірити, що сторінка проіндексувалась в Google?
+            <span class="faq-arrow">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <p>Після відправки через IndexFast:</p>
+            <ul>
+              <li><strong>GSC:</strong> Увімкніть інспектор URL — вкажіть адресу та перевірте статус "Індексація сторінок"</li>
+              <li><strong>site: пошук:</strong> Впишіть <code>site:ваш-сайт.ua/url-сторінки</code> у Google</li>
+              <li><strong>Кабінет IndexFast:</strong> Перевірте лог індексації — HTTP 200 = запит прийнято Google</li>
+            </ul>
+            <p>Примітка: HTTP 200 означає, що Google <em>прийняв запит</em>, але індексація відбувається після наступного сканування (зазвичай 24–48 год).</p>
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Як налаштувати автоматичну щоденну індексацію через cron?
+            <span class="faq-arrow">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <p>На <strong>безкоштовному плані</strong> можна налаштувати cron на своєму сервері:</p>
+            <ul>
+              <li>Запускайте скрипт індексації кожні N годин</li>
+              <li>IndexFast надає CLI-інструмент для виклику з cron</li>
+              <li>Детальна інструкція: <a href="/docs/">Документація</a></li>
+            </ul>
+            <p>На <strong>PRO та Agency</strong> вбудований планувальник — достатньо налаштувати розклад в кабінеті.</p>
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Чи є гарантія повернення коштів?
+            <span class="faq-arrow">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <p><strong>Так.</strong> Ми гарантуємо повний повернення коштів протягом <strong>14 днів</strong> після оплати, якщо сервіс вам не підійшов. Без зайвих питань.</p>
+            <p>Напишіть на <a href="mailto:indexfastapp@gmail.com">indexfastapp@gmail.com</a> або в Telegram: <a href="https://t.me/indexfastgoogle" target="_blank">@indexfastgoogle</a>.</p>
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Чи можна використовувати IndexFast для клієнтських проєктів?
+            <span class="faq-arrow">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <p>Тариф <strong>Agency</strong> розрахований на SEO-агенції та фрилансерів:</p>
+            <ul>
+              <li>До <strong>50 сайтів</strong> в одному акаунті</li>
+              <li><strong>5 000 URL/день</strong> ліміт індексації</li>
+              <li>Повний <strong>API доступ</strong> для white-label інтеграцій</li>
+              <li>White-label звіти для клієнтів</li>
+            </ul>
+          </div></div>
+        </div>
+
+      </div>
+
+      <div class="cta-box">
+        <h3>Залишилися запитання?</h3>
+        <p>Наша підтримка допоможе налаштувати індексацію в GSC за 10 хвилин.</p>
+        <a class="btn" href="/app/register">🚀 Почати безкоштовно</a>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>© 2026 IndexFast. Всі права захищені.</p>
+      <div class="links">
+        <a href="/uk/privacy-policy.html">Політика конфіденційності</a>
+        <a href="/uk/terms.html">Умови використання</a>
+        <a href="/uk/docs/">Документація</a>
+        <a href="mailto:indexfastapp@gmail.com">Контакт</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.querySelectorAll('.faq-q').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.closest('.faq-item');
+        const isOpen = item.classList.contains('open');
+        document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+        if (!isOpen) item.classList.add('open');
+        btn.setAttribute('aria-expanded', !isOpen);
+      });
+    });
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Що таке IndexFast і як він працює з Google Search Console?",
+        "acceptedAnswer": { "@type": "Answer", "text": "IndexFast — це веб-сервіс для автоматичної індексації сторінок у Google через офіційний Google Indexing API. Підключіть GSC один раз, додайте sitemap — і IndexFast автоматично відправляє всі сторінки на індексацію." }
+      },
+      {
+        "@type": "Question",
+        "name": "Як швидко Google проіндексує мої сторінки через IndexFast?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Після відправки через Google Indexing API, Google індексує сторінки за 24-48 годин замість звичайних 2-8 тижнів." }
+      },
+      {
+        "@type": "Question",
+        "name": "Як підключити IndexFast до Google Search Console?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Створіть Service Account в Google Cloud, увімкніть Indexing API, додайте email Service Account як Власника в GSC, завантажте JSON-ключ в IndexFast. Налаштування займає ~10 хвилин." }
+      },
+      {
+        "@type": "Question",
+        "name": "Чи безпечно це? Google не заблокує мій сайт?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Так, повністю безпечно. IndexFast використовує лише офіційний Google Indexing API — рекомендований Google метод для прискорення індексації." }
+      },
+      {
+        "@type": "Question",
+        "name": "Чи допоможе IndexFast при статусі 'поки не проіндексовано' в GSC?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Так, IndexFast відправляє URL_UPDATED-повідомлення Google, що допомагає швидше проіндексувати сторінки зі статусом 'виявлено — поки не проіндексовано'." }
+      },
+      {
+        "@type": "Question",
+        "name": "Чи є гарантія повернення коштів?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Так, ми гарантуємо повний повернення коштів протягом 14 днів після оплати, якщо сервіс вам не підійшов." }
+      }
+    ]
+  }
+  </script>
 </body>
 </html>

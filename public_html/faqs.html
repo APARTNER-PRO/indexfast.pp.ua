@@ -2,18 +2,451 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <link rel="icon" type="image/x-icon" href="/favicon.ico">
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-  <link rel="manifest" href="/site.webmanifest">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FAQ — IndexFast | Frequently Asked Questions</title>
-  <meta name="robots" content="index, follow">
+  <title>FAQ — IndexFast | Google Search Console Indexing FAQ</title>
+  <meta name="description" content="Frequently asked questions about IndexFast and Google Search Console indexing. Learn how the Google Indexing API works, how to speed up page indexing, and how to use IndexFast for GSC.">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
   <link rel="canonical" href="https://indexfast.pro/faqs.html">
+  <link rel="alternate" hreflang="en" href="https://indexfast.pro/faqs.html">
+  <link rel="alternate" hreflang="uk" href="https://indexfast.pro/uk/faqs.html">
+  <link rel="alternate" hreflang="ru" href="https://indexfast.pro/ru/faqs.html">
+  <link rel="alternate" hreflang="es" href="https://indexfast.pro/es/faqs.html">
+  <link rel="alternate" hreflang="pt" href="https://indexfast.pro/pt/faqs.html">
+  <link rel="alternate" hreflang="de" href="https://indexfast.pro/de/faqs.html">
+  <link rel="alternate" hreflang="fr" href="https://indexfast.pro/fr/faqs.html">
+  <link rel="alternate" hreflang="pl" href="https://indexfast.pro/pl/faqs.html">
+  <link rel="alternate" hreflang="x-default" href="https://indexfast.pro/faqs.html">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: #0a0a0f; color: #e0e0e0; line-height: 1.7; }
+    .container { max-width: 860px; margin: 0 auto; padding: 0 24px; }
+    header { background: linear-gradient(135deg, #0a0a0f 0%, #111128 100%); border-bottom: 1px solid rgba(0,255,136,0.1); padding: 60px 0 40px; }
+    .logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 20px; color: #fff; text-decoration: none; }
+    .logo span { color: #00ff88; }
+    .breadcrumb { display: flex; gap: 8px; align-items: center; margin-bottom: 20px; font-size: 13px; color: #888; }
+    .breadcrumb a { color: #666; text-decoration: none; }
+    .breadcrumb a:hover { color: #00ff88; }
+    h1 { font-family: 'Syne', sans-serif; font-size: clamp(28px, 5vw, 42px); font-weight: 800; color: #fff; margin-bottom: 12px; letter-spacing: -0.03em; }
+    .subtitle { font-size: 16px; color: #888; max-width: 600px; }
+    main { padding: 48px 0 80px; }
+    .faq-meta { display: flex; gap: 24px; flex-wrap: wrap; margin-bottom: 40px; padding: 16px 20px; background: rgba(0,255,136,0.04); border: 1px solid rgba(0,255,136,0.1); border-radius: 12px; font-size: 13px; color: #aaa; }
+    .faq-meta span strong { color: #00ff88; }
+    .faq-list { display: flex; flex-direction: column; gap: 2px; }
+    .faq-item { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; overflow: hidden; transition: border-color 0.2s; }
+    .faq-item:hover { border-color: rgba(0,255,136,0.2); }
+    .faq-item.open { background: rgba(0,255,136,0.03); border-color: rgba(0,255,136,0.25); }
+    .faq-q { width: 100%; background: none; border: none; color: #e0e0e0; font-size: 16px; font-weight: 600; padding: 20px 24px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 16px; text-align: left; font-family: inherit; line-height: 1.4; transition: color 0.2s; }
+    .faq-q:hover { color: #00ff88; }
+    .faq-arrow { font-size: 20px; color: #00ff88; flex-shrink: 0; transition: transform 0.25s; }
+    .faq-item.open .faq-arrow { transform: rotate(45deg); }
+    .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.35s ease, padding 0.35s ease; }
+    .faq-item.open .faq-a { max-height: 600px; }
+    .faq-a-inner { padding: 0 24px 24px; color: #b0b0b0; font-size: 14px; line-height: 1.8; }
+    .faq-a-inner p { margin-bottom: 10px; }
+    .faq-a-inner a { color: #00ff88; text-decoration: none; }
+    .faq-a-inner a:hover { text-decoration: underline; }
+    .faq-a-inner ul { margin: 8px 0 8px 20px; }
+    .faq-a-inner li { margin-bottom: 6px; }
+    .faq-a-inner code { background: rgba(0,255,136,0.08); padding: 2px 7px; border-radius: 4px; font-size: 13px; color: #00ff88; }
+    .cta-box { margin-top: 48px; padding: 32px; background: rgba(0,255,136,0.05); border: 1px solid rgba(0,255,136,0.2); border-radius: 16px; text-align: center; }
+    .cta-box h3 { font-family: 'Syne', sans-serif; font-size: 20px; color: #fff; margin-bottom: 8px; }
+    .cta-box p { color: #aaa; margin-bottom: 20px; font-size: 14px; }
+    .btn { display: inline-block; padding: 12px 28px; background: #00ff88; color: #0a0a0f; font-weight: 700; border-radius: 10px; text-decoration: none; font-size: 14px; transition: opacity 0.2s; }
+    .btn:hover { opacity: 0.9; }
+    footer { border-top: 1px solid rgba(255,255,255,0.06); padding: 32px 0; text-align: center; font-size: 13px; color: #555; }
+    footer a { color: #666; text-decoration: none; }
+    footer a:hover { color: #00ff88; }
+    footer .links { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin-top: 8px; }
+  </style>
 </head>
 <body>
-<h1>FAQ — IndexFast</h1>
-<p>Frequently asked questions page.</p>
+  <header>
+    <div class="container">
+      <div class="breadcrumb">
+        <a href="/">IndexFast</a>
+        <span>/</span>
+        <span>FAQ</span>
+      </div>
+      <h1>Frequently Asked Questions</h1>
+      <p class="subtitle">Everything you need to know about Google Search Console indexing and IndexFast.</p>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+      <div class="faq-meta">
+        <span><strong>8</strong> languages</span>
+        <span><strong>200</strong> URLs/day free quota</span>
+        <span><strong>24–48h</strong> average indexing time</span>
+        <span>Updated <strong>June 2026</strong></span>
+      </div>
+
+      <div class="faq-list">
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            What is IndexFast and how does it work with Google Search Console?
+            <span class="faq-arrow">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <p>IndexFast is a web service that automates page indexing in Google through the official <strong>Google Indexing API</strong>. Instead of manually submitting URLs one by one in Google Search Console, you connect your GSC account once, add a sitemap, and IndexFast automatically submits all your pages for indexing.</p>
+            <p>It works by creating a <strong>Service Account</strong> in Google Cloud and granting it access to your GSC property. IndexFast then uses the official <code>indexing.googleapis.com</code> endpoint to notify Google about new or updated pages.</p>
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            How quickly will Google index my pages with IndexFast?
+            <span class="faq-arrow">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <p>Once submitted through the Google Indexing API, Google typically crawls and indexes pages within <strong>24–48 hours</strong> — compared to the usual 2–8 weeks with regular crawling.</p>
+            <p>For maximum speed, combine IndexFast with:</p>
+            <ul>
+              <li>A <strong>fresh sitemap.xml</strong> submitted in GSC</li>
+              <li>Pages with <strong>proper meta tags</strong> and structured data</li>
+              <li>Regular content updates to keep the site active in Google's eyes</li>
+            </ul>
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            How do I connect IndexFast to Google Search Console?
+            <span class="faq-arrow">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <p>Setup takes about 10 minutes:</p>
+            <ul>
+              <li><strong>Step 1:</strong> Add your site in <a href="https://search.google.com/search-console" target="_blank">Google Search Console</a> and verify ownership</li>
+              <li><strong>Step 2:</strong> Register at <a href="https://indexfast.pro">indexfast.pro</a></li>
+              <li><strong>Step 3:</strong> Create a project in <a href="https://console.cloud.google.com" target="_blank">Google Cloud Console</a></li>
+              <li><strong>Step 4:</strong> Enable the <strong>Indexing API</strong> in your project</li>
+              <li><strong>Step 5:</strong> Create a <strong>Service Account</strong> and download the JSON key</li>
+              <li><strong>Step 6:</strong> Add the Service Account email as an <strong>Owner</strong> in GSC → Settings → Users & permissions</li>
+              <li><strong>Step 7:</strong> Upload the JSON key in IndexFast dashboard</li>
+            </ul>
+            <p>Detailed guide: <a href="/docs/">Documentation</a></p>
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Do I need technical skills to use IndexFast?
+            <span class="faq-arrow">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <p><strong>No.</strong> The basic setup requires no coding. All you need is:</p>
+            <ul>
+              <li>Access to Google Search Console</li>
+              <li>Access to Google Cloud Console</li>
+              <li>A sitemap.xml URL (or just your domain)</li>
+            </ul>
+            <p>Most users are up and running within 10 minutes. For advanced automation (cron jobs, API), basic Linux skills help but are optional — the Pro plan has a built-in scheduler.</p>
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            What is the Google Indexing API quota and how does IndexFast handle it?
+            <span class="faq-arrow">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <p>Google provides a free quota of <strong>200 URL submissions per day</strong> through the Indexing API. This quota is per Google Cloud project — not per GSC property.</p>
+            <p>IndexFast automatically manages the quota:</p>
+            <ul>
+              <li><strong>Free plan:</strong> up to 50 URLs/day (well within Google's free limit)</li>
+              <li><strong>PRO plan:</strong> 500 URLs/day ($9.99/month)</li>
+              <li><strong>Agency plan:</strong> 5,000 URLs/day ($49/month)</li>
+            </ul>
+            <p>If you need more than 200 URLs/day, you can request a quota increase directly in the <a href="https://console.cloud.google.com" target="_blank">Google Cloud Console</a>.</p>
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Is this method safe? Will Google ban my site?
+            <span class="faq-arrow">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <p><strong>Yes, completely safe.</strong> IndexFast uses only the official Google Indexing API — Google's own recommended method for accelerating indexing. This is not a "gray hat" technique or a hack.</p>
+            <p>The API was built by Google specifically for this purpose. Thousands of sites use it daily without any issues. The only requirement is that you own the property in Google Search Console.</p>
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Does IndexFast work with Google Search Console on non-English sites?
+            <span class="faq-arrow">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <p><strong>Yes.</strong> Google Search Console and the Indexing API work with sites in any language. IndexFast is used in 8 languages (English, Ukrainian, Russian, Spanish, Portuguese, German, French, Polish).</p>
+            <p>The GSC data (inspection results, coverage reports, sitemap submission) works equally well for any TLD and language.</p>
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Will IndexFast help with pages that are not being indexed in GSC?
+            <span class="faq-arrow">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <p><strong>Yes.</strong> If your GSC shows "Discovered — currently not indexed" or "Crawled — currently not indexed", IndexFast can help by:</p>
+            <ul>
+              <li>Notifying Google that the page exists or was updated</li>
+              <li>Increasing crawl priority through API signals</li>
+              <li>Helping Google discover new pages faster than through regular crawl</li>
+            </ul>
+            <p>Note: IndexFast signals the page to Google — it doesn't guarantee indexing. For best results, ensure your pages have unique content and proper meta tags.</p>
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            How does IndexFast differ from manual URL submission in GSC?
+            <span class="faq-arrow">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <p>Manual submission in GSC is limited to <strong>one URL at a time</strong> — impractical for sites with hundreds or thousands of pages. IndexFast automates the entire process:</p>
+            <ul>
+              <li>Parses your <strong>sitemap.xml</strong> (including sitemap index)</li>
+              <li>Submits all URLs in bulk via the Google Indexing API</li>
+              <li>Runs on a schedule automatically (Pro plan)</li>
+              <li>Provides a detailed <strong>indexing log</strong> with status for each URL</li>
+              <li>Manages the daily Google quota so you never exceed it</li>
+            </ul>
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Does IndexFast support sitemap.xml and Sitemap Index?
+            <span class="faq-arrow">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <p><strong>Yes.</strong> IndexFast fully supports:</p>
+            <ul>
+              <li>Standard <code>sitemap.xml</code> files</li>
+              <li><strong>Sitemap Index</strong> files — nested sitemaps of any depth</li>
+              <li>Both compressed (<code>.xml.gz</code>) and uncompressed sitemaps</li>
+              <li>Auto-discovery of sitemap if you only provide your domain</li>
+            </ul>
+            <p>The service will recursively parse all sitemaps and submit every URL it finds.</p>
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Can IndexFast speed up re-indexing of changed pages?
+            <span class="faq-arrow">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <p><strong>Yes.</strong> The Google Indexing API supports two actions:</p>
+            <ul>
+              <li><code>URL_UPDATED</code> — tells Google the page content has changed</li>
+              <li><code>URL_DELETED</code> — tells Google to remove the page from the index</li>
+            </ul>
+            <p>When IndexFast detects a new or modified URL in your sitemap, it sends an <code>URL_UPDATED</code> notification. This signals Google to re-crawl the page much faster than waiting for discovery crawl.</p>
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Does IndexFast support Bing, Yandex, and other search engines?
+            <span class="faq-arrow">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <p><strong>Yes.</strong> IndexFast supports the <strong>IndexNow protocol</strong>, which simultaneously notifies:</p>
+            <ul>
+              <li><strong>Bing</strong></li>
+              <li><strong>Yandex</strong></li>
+              <li><strong>DuckDuckGo</strong></li>
+              <li><strong>Naver</strong> (Korea)</li>
+              <li><strong>Seznam.cz</strong> (Czech Republic)</li>
+              <li><strong>Yep</strong></li>
+            </ul>
+            <p>The IndexNow feature is available on all plans and can be enabled per site in the dashboard.</p>
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            How do I set up automatic daily indexing with a cron job?
+            <span class="faq-arrow">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <p>On the <strong>Free plan</strong>, you can set up automatic indexing using a cron job on your server:</p>
+            <ul>
+              <li>Run the indexing script every N hours via cron</li>
+              <li>IndexFast provides a CLI tool you can call from cron</li>
+              <li>Detailed instructions are available in the <a href="/docs/">Documentation</a></li>
+            </ul>
+            <p>On the <strong>PRO and Agency plans</strong>, there's a built-in scheduler — no cron setup needed. Just set a schedule in your dashboard.</p>
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Is there a money-back guarantee?
+            <span class="faq-arrow">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <p><strong>Yes.</strong> We offer a full refund within <strong>14 days</strong> after payment if the service didn't work for you. No questions asked.</p>
+            <p>To request a refund, contact us at <a href="mailto:indexfastapp@gmail.com">indexfastapp@gmail.com</a> or via Telegram: <a href="https://t.me/indexfastgoogle" target="_blank">@indexfastgoogle</a>.</p>
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Can I use IndexFast for multiple client sites?
+            <span class="faq-arrow">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <p>The <strong>Agency plan</strong> is designed for SEO agencies and freelancers managing multiple projects:</p>
+            <ul>
+              <li>Up to <strong>50 sites</strong> in one account</li>
+              <li><strong>5,000 URLs/day</strong> indexing quota</li>
+              <li>Full <strong>API access</strong> for white-label integrations</li>
+              <li>White-label reports for your clients</li>
+            </ul>
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            How do I check if a page has been successfully indexed by Google?
+            <span class="faq-arrow">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <p>After submitting via IndexFast, verification methods:</p>
+            <ul>
+              <li><strong>Google Search Console:</strong> URL Inspection tool — enter the URL and check the "Page indexing" status</li>
+              <li><strong>site: operator:</strong> Search <code>site:yourdomain.com/page-url</code> in Google</li>
+              <li><strong>IndexFast dashboard:</strong> Check the indexing log — each URL has a status (HTTP 200 = accepted by Google)</li>
+            </ul>
+            <p>Note: A 200 response from the API means <em>Google accepted the request</em>, not that the page is live in search results yet. Indexing happens after Google's subsequent crawl.</p>
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            My site uses WordPress / Shopify / Webflow — is IndexFast compatible?
+            <span class="faq-arrow">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <p><strong>Yes, it works with any platform</strong> that has a sitemap.xml. IndexFast is platform-agnostic:</p>
+            <ul>
+              <li><strong>WordPress:</strong> Yoast SEO/Rank Math generates sitemaps automatically</li>
+              <li><strong>Shopify:</strong> Built-in sitemap at <code>/sitemap.xml</code></li>
+              <li><strong>Wix:</strong> Auto-generated sitemap in GSC</li>
+              <li><strong>PrestaShop / OpenCart / Laravel / Joomla:</strong> All generate sitemaps</li>
+            </ul>
+            <p>If your site has <code>sitemap.xml</code> — IndexFast works with it.</p>
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            What happens when I reach my daily URL limit?
+            <span class="faq-arrow">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <p>When you reach your plan's daily limit:</p>
+            <ul>
+              <li>IndexFast <strong>stops submitting</strong> new URLs for that day</li>
+              <li>Remaining URLs are queued for the next day</li>
+              <li>You'll see a <strong>"Daily limit reached"</strong> notification in the dashboard</li>
+              <li>You can <a href="/app/dashboard">upgrade your plan</a> at any time for more capacity</li>
+            </ul>
+          </div></div>
+        </div>
+
+      </div>
+
+      <div class="cta-box">
+        <h3>Still have questions?</h3>
+        <p>Our support team is ready to help you set up Google Search Console indexing in 10 minutes.</p>
+        <a class="btn" href="/app/register">🚀 Get started for free</a>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>© 2026 IndexFast. All rights reserved.</p>
+      <div class="links">
+        <a href="/privacy-policy.html">Privacy Policy</a>
+        <a href="/terms.html">Terms of Service</a>
+        <a href="/docs/">Documentation</a>
+        <a href="mailto:indexfastapp@gmail.com">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.querySelectorAll('.faq-q').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.closest('.faq-item');
+        const isOpen = item.classList.contains('open');
+        document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+        if (!isOpen) item.classList.add('open');
+        btn.setAttribute('aria-expanded', !isOpen);
+      });
+    });
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is IndexFast and how does it work with Google Search Console?",
+        "acceptedAnswer": { "@type": "Answer", "text": "IndexFast is a web service that automates page indexing in Google through the official Google Indexing API. Connect your GSC account once, add a sitemap, and IndexFast automatically submits all pages for indexing." }
+      },
+      {
+        "@type": "Question",
+        "name": "How quickly will Google index my pages with IndexFast?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Once submitted through the Google Indexing API, Google typically indexes pages within 24-48 hours, compared to 2-8 weeks with regular crawling." }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I connect IndexFast to Google Search Console?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Create a Service Account in Google Cloud, enable the Indexing API, add the service account email as Owner in GSC, and upload the JSON key in IndexFast. Full setup takes about 10 minutes." }
+      },
+      {
+        "@type": "Question",
+        "name": "Is this method safe? Will Google ban my site?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes, completely safe. IndexFast uses only the official Google Indexing API, which is Google's recommended method for accelerating indexing." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the Google Indexing API quota and how does IndexFast handle it?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Google provides 200 free URL submissions per day. IndexFast Free Plan manages 50 URLs/day, PRO handles 500/day, and Agency handles 5,000/day, all within Google's quota." }
+      },
+      {
+        "@type": "Question",
+        "name": "Does IndexFast support Bing, Yandex, and other search engines?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes, IndexFast supports the IndexNow protocol, notifying Bing, Yandex, DuckDuckGo, Naver, Seznam.cz and Yep simultaneously." }
+      },
+      {
+        "@type": "Question",
+        "name": "Can IndexFast help with pages that are not being indexed in GSC?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes. IndexFast sends URL_UPDATED notifications to Google, which helps with pages showing 'Discovered - currently not indexed' or 'Crawled - currently not indexed' in GSC." }
+      },
+      {
+        "@type": "Question",
+        "name": "What happens when I reach my daily URL limit?",
+        "acceptedAnswer": { "@type": "Answer", "text": "IndexFast stops submitting new URLs and queues remaining URLs for the next day. You can upgrade your plan at any time for more capacity." }
+      },
+      {
+        "@type": "Question",
+        "name": "Is there a refund guarantee?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes, we offer a full refund within 14 days after payment if the service didn't meet your needs. No questions asked." }
+      }
+    ]
+  }
+  </script>
 </body>
 </html>
