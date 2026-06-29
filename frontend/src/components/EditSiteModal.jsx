@@ -236,23 +236,23 @@ export const EditSiteModal = memo(function EditSiteModal({
             const steps = [
               {
                 n: 1,
-                text: <>Створіть текстовий файл з назвою:</>,
+                text: t("sites.step1Text"),
                 value: filename,
-                copyLabel: "назву файлу",
+                copyLabel: t("sites.copyLabel", { label: "filename" }),
                 extra: null,
               },
               {
                 n: 2,
-                text: <>Вставте в нього <strong style={{ color: "#e0e0ff" }}>тільки цей рядок</strong> (ваш ключ верифікації):</>,
+                text: t("sites.step2Text"),
                 value: key,
-                copyLabel: "ключ",
+                copyLabel: t("sites.copyLabel", { label: "key" }),
                 extra: null,
               },
               {
                 n: 3,
-                text: <>Завантажте файл у корінь сайту — він має бути доступний за адресою:</>,
+                text: t("sites.step3Text"),
                 value: fileUrl,
-                copyLabel: "URL",
+                copyLabel: t("sites.copyLabel", { label: "URL" }),
                 extra: fileUrl,
               },
             ];
@@ -310,8 +310,8 @@ export const EditSiteModal = memo(function EditSiteModal({
               onChange={e => setIndexnowEnabled(e.target.checked)}
               style={{ width: 16, height: 16, accentColor: C.green }} />
             <div>
-              <div style={{ fontSize: 14, fontWeight: 600 }}>Увімкнути IndexNow</div>
-              <div style={{ fontSize: 12, color: C.muted }}>Відправляти URL у Bing при запуску індексації</div>
+              <div style={{ fontSize: 14, fontWeight: 600 }}>{t("sites.enableIndexNow")}</div>
+              <div style={{ fontSize: 12, color: C.muted }}>{t("sites.enableIndexNowDesc")}</div>
             </div>
           </label>
         </>
