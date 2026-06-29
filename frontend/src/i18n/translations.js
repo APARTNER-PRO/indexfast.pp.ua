@@ -403,6 +403,7 @@ const translations = {
       copy: "Copy",
       required: "required",
       optional: "optional",
+      yesterday: "yesterday",
     },
     sidebar: {
       logout: "Log out?",
@@ -619,6 +620,7 @@ const translations = {
       copy: "Copiar",
       required: "obligatorio",
       optional: "opcional",
+      yesterday: "ayer",
     },
     sidebar: {
       logout: "¿Cerrar sesión?",
@@ -833,6 +835,7 @@ const translations = {
       copy: "Copiar",
       required: "obrigatório",
       optional: "opcional",
+      yesterday: "ontem",
     },
     sidebar: {
       logout: "Sair?",
@@ -1047,6 +1050,7 @@ const translations = {
       copy: "Копировать",
       required: "обязательно",
       optional: "необязательно",
+      yesterday: "вчора",
     },
     sidebar: {
       logout: "Выйти?",
@@ -1245,7 +1249,7 @@ const translations = {
       serverError: "Ошибка сервера",
     },
   },
-  de: {
+   de: {
     common: {
       appName: "IndexFast",
       loading: "Laden…",
@@ -1261,6 +1265,7 @@ const translations = {
       copy: "Kopieren",
       required: "erforderlich",
       optional: "optional",
+      yesterday: "gestern",
     },
     sidebar: {
       logout: "Abmelden?",
@@ -1475,6 +1480,7 @@ const translations = {
       copy: "Copier",
       required: "obligatoire",
       optional: "optionnel",
+      yesterday: "hier",
     },
     sidebar: {
       logout: "Se déconnecter ?",
@@ -1689,6 +1695,7 @@ const translations = {
       copy: "Kopiuj",
       required: "wymagane",
       optional: "opcjonalne",
+      yesterday: "wczoraj",
     },
     sidebar: {
       logout: "Wylogować?",
