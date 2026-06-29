@@ -197,10 +197,10 @@ export const EditSiteModal = memo(function EditSiteModal({
                   <div style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
                     <div style={{ fontSize: 24, lineHeight: 1 }}>🚀</div>
                     <div>
-                      <div style={{ fontSize: 14, fontWeight: 700, color: "#00d4ff", marginBottom: 6 }}>IndexNow не активовано</div>
+                      <div style={{ fontSize: 14, fontWeight: 700, color: "#00d4ff", marginBottom: 6 }}>{t("sites.indexNowNotActiveTitle")}</div>
                       <div style={{ fontSize: 13, color: "#c8c8d8", lineHeight: 1.5 }}>
-                        IndexNow дозволяє миттєво повідомляти Bing, Yandex та DuckDuckGo про нові сторінки.<br/>
-                        Щоб отримати ключ верифікації та інструкцію, <strong>увімкніть опцію нижче та збережіть налаштування</strong>.
+                        {t("sites.indexNowDesc")}<br/>
+                        {t("sites.indexNowStepsIntro")}
                       </div>
                     </div>
                   </div>
