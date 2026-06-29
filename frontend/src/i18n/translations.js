@@ -3116,6 +3116,13 @@ const translations = {
       popular: "Popularny",
       enterprise: "Enterprise",
       activeBadge: "✓ Aktywny",
+      subStatusPaid: "✅ Aktywna",
+      subStatusPending: "⏳ Oczekujące",
+      subStatusFailed: "❌ Nieudana",
+      subStatusExpired: "🔴 Zakończona",
+      subStatusCancelled: "⚪ Anulowana",
+      subStatusRefunded: "↩ Zwrot",
+      subStatusAwaitingManualConfirmation: "⏳ Oczekuje na potwierdzenie",
       paymentMethod: "Metoda płatności",
       selectedPlan: "Wybrany tarif",
       promo: {

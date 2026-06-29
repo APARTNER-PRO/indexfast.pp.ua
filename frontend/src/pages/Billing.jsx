@@ -1060,7 +1060,7 @@ export default function Billing() {
                         {currencySymbol}{Number(h.amount).toLocaleString('uk-UA')}
                       </span>
                     )}
-                    <StatusBadge status={h.status} />
+                    <StatusBadge status={h.status} t={t} />
                   </div>
                 </div>
               );
@@ -1141,24 +1141,24 @@ function Alert({ type, children, large }) {
   );
 }
 
-function StatusBadge({ status }) {
+function StatusBadge({ status, t }) {
   const cfg = {
     paid:                         'bg-green-500/10 text-green-400 border border-green-500/20',
     pending:                      'bg-yellow-500/10 text-yellow-400 border border-yellow-500/20',
     failed:                       'bg-red-500/10 text-red-400 border border-red-500/20',
-    expired:                      'bg-white/5 text-gray-500 border border-white/10',
+    expired:                      'bg-red-500/10 text-red-400 border border-red-500/20',
     cancelled:                    'bg-white/5 text-gray-500 border border-white/10',
     refunded:                     'bg-yellow-500/10 text-yellow-400 border border-yellow-500/20',
     awaiting_manual_confirmation: 'bg-yellow-500/10 text-yellow-400 border border-yellow-500/20',
   };
   const labels = {
-    paid:                         '✅ Активна',
-    pending:                      '⏳ Очікує',
-    failed:                       '❌ Відхилено',
-    expired:                      '🔴 Завершена',
-    cancelled:                    '⚪ Скасована',
-    refunded:                     '↩ Повернено',
-    awaiting_manual_confirmation: '⏳ Підтвердження',
+    paid:                         t('billing.subStatusPaid'),
+    pending:                      t('billing.subStatusPending'),
+    failed:                       t('billing.subStatusFailed'),
+    expired:                      t('billing.subStatusExpired'),
+    cancelled:                    t('billing.subStatusCancelled'),
+    refunded:                     t('billing.subStatusRefunded'),
+    awaiting_manual_confirmation: t('billing.subStatusAwaitingManualConfirmation'),
   };
   const cls   = cfg[status]    || 'bg-white/5 text-gray-400 border border-white/10';
   const label = labels[status] || status;
