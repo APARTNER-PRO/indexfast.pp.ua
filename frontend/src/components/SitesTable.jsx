@@ -1,5 +1,6 @@
 // src/components/SitesTable.jsx
 import { memo } from "react";
+import { useTranslation } from "react-i18next";
 import { StatusDot, Btn, ProgressBar } from "./ui/index.jsx";
 import { C } from "../constants.js";
 
@@ -98,6 +99,7 @@ export const SitesTable = memo(function SitesTable({
 
 /* ── Mobile card layout ── */
 const SiteCard = memo(function SiteCard({ site: s, remaining, onRun, onDelete, onToggle, onEdit, onEditWithTab, gscMetrics }) {
+  const { t } = useTranslation();
   const handleRun    = () => onRun(s);
   const handleDelete = () => onDelete(s);
   const handleToggle = () => onToggle(s.id);
@@ -175,7 +177,7 @@ const SiteCard = memo(function SiteCard({ site: s, remaining, onRun, onDelete, o
       {/* Row 2: Stats */}
       <div style={{ display: "flex", gap: 12, marginBottom: 10, fontSize: 11 }}>
         <div>
-          <span style={{ color: C.muted }}>Sitemap: </span>
+          <span style={{ color: C.muted }}>{t("sites.sitemap")}: </span>
           <span style={{ color: C.white, fontWeight: 600 }}>
             {(s.total_urls || 0).toLocaleString("uk-UA")}
           </span>
