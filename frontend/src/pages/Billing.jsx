@@ -343,7 +343,7 @@ export default function Billing() {
                          cursor: busy ? 'not-allowed' : 'pointer', transition: 'all .15s',
                          background: 'transparent', color: '#f87171',
                          border: '1px solid rgba(248,113,113,0.25)' }}>
-                Скасувати
+                {t("billing.cancelSub")}
               </button>
             )}
           </div>
@@ -369,7 +369,7 @@ export default function Billing() {
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between',
                         flexWrap: 'wrap', gap: 12, marginBottom: 24 }}>
             <p style={{ fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: 16,
-                        color: '#eeeef6' }}>Оберіть тариф</p>
+                        color: '#eeeef6' }}>{t("billing.choosePlan")}</p>
             {/* Перемикач місяць/рік/3 роки */}
             <div style={{ display: 'flex', gap: 4, background: 'rgba(255,255,255,0.05)',
                           borderRadius: 12, padding: 4 }}>
@@ -593,7 +593,7 @@ export default function Billing() {
                 <div style={{ display: 'flex', gap: 10 }}>
                   <input
                     type="text"
-                    placeholder="Введіть промокод"
+                     placeholder={t("billing.promo.inputPlaceholder")}
                     value={promoInput}
                     onChange={e => {
                       setPromoInput(e.target.value);
@@ -618,7 +618,7 @@ export default function Billing() {
                              color: '#050508', transition: 'all .15s',
                              opacity: busy ? 0.7 : 1 }}
                   >
-                    Застосувати
+                    {t("billing.promo.apply")}
                   </button>
                 </div>
                 {promoError && (

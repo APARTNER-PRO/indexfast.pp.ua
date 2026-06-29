@@ -123,7 +123,7 @@ export default memo(function Logs({ sites }) {
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between",
         marginBottom: 20, flexWrap: "wrap", gap: 12 }}>
         <h2 style={{ fontFamily: "Syne,sans-serif", fontWeight: 800, fontSize: 20 }}>
-          Логи індексації
+          {t("logs.title")}
         </h2>
         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
           {isFetching && !isLoading && <Spinner size={16}/>}
