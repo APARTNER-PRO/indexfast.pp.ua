@@ -301,7 +301,7 @@ export default memo(function GscMetrics({ sites, onImportGsc }) {
   const [chartSiteId, setChartSiteId] = useState("all");
   const [activeTab, setActiveTab] = useState("overview");
   const [searchDomain, setSearchDomain] = useState("");
-  const [_langKey, setTick] = useState(0);
+  const [, setTick] = useState(0);
 
   useEffect(() => {
     const handler = () => setTick(t => t + 1);
