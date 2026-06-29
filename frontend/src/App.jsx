@@ -94,9 +94,11 @@ function EmailVerifyBanner({ email, showToast, t }) {
 // ══════════════════════════════════════════════
 //  Sidebar
 // ══════════════════════════════════════════════
-const Sidebar = memo(function Sidebar({ activePage, setPage, user, sideOpen, setSideOpen, onLogout, t }) {
+const Sidebar = memo(function Sidebar({ activePage, setPage, user, sideOpen, setSideOpen, onLogout, t, lang }) {
   if (!user) return null;
   const plan = user.plan;
+  const docsHref = lang === "en" ? "/docs/" : `/${lang}/docs/`;
+  const faqsHref = lang === "en" ? "/faqs.html" : `/${lang}/faqs.html`;
 
   return (
     <aside style={{
@@ -149,8 +151,9 @@ const Sidebar = memo(function Sidebar({ activePage, setPage, user, sideOpen, set
         <div style={{ height: 1, background: C.border, margin: "12px 4px" }}/>
 
         {[
-          { href: "/docs/",                        icon: "📖", labelKey: "sidebar.documentation" },
+          { href: docsHref,                    icon: "📖", labelKey: "sidebar.documentation" },
           { href: "https://t.me/indexfastgoogle",  icon: "💬", labelKey: "sidebar.support", external: true },
+          { href: faqsHref,                    icon: "❓", labelKey: "sidebar.faqs" },
         ].map(({ href, icon, labelKey, external }) => (
           <a key={href} href={href}
             target={external ? "_blank" : undefined}
@@ -582,6 +585,7 @@ export default function App() {
                   navigate("/app/login");
                 }}
           t={t}
+          lang={i18n.language}
         />
 
         {/* Main */}
