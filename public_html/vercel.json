@@ -122,6 +122,16 @@
       "permanent": true
     },
     {
+      "source": "/blog/create-a-landing-page-that-performs-great",
+      "destination": "/blog/create-a-landing-page-that-performs-great.html",
+      "permanent": true
+    },
+    {
+      "source": "/blog/create-a-landing-page-that-performs-great/",
+      "destination": "/blog/create-a-landing-page-that-performs-great.html",
+      "permanent": true
+    },
+    {
       "source": "/contact",
       "destination": "/contacts.html",
       "permanent": true
