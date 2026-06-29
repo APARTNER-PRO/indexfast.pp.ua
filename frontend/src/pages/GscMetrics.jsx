@@ -72,7 +72,7 @@ function TrendBadge({ current, previous, metricKey }) {
 const CHART_H = 200;
 const CHART_PAD = { top: 16, bottom: 32, left: 48, right: 16 };
 
-function LineChart({ currentData, previousData, metricKey, color }) {
+function LineChart({ currentData, previousData, metricKey, color, fmt }) {
   const [tooltip, setTooltip] = useState(null);
 
   const allVals = [
@@ -84,7 +84,7 @@ function LineChart({ currentData, previousData, metricKey, color }) {
   const maxV = Math.max(1, ...allVals);
   const range = maxV - minV || 1;
 
-  const fmt   = METRICS.find(m => m.key === metricKey)?.fmt ?? fmtMetric;
+  const fmt   = fmt ?? fmtMetric;
   const n     = Math.max(currentData.length, 1);
 
   // Responsive width via viewBox
@@ -579,6 +579,7 @@ export default memo(function GscMetrics({ sites, onImportGsc }) {
                     previousData={previousData}
                     metricKey={activeMetric}
                     color={metricCfg.color}
+                    fmt={metricCfg.fmt}
                   />
                   <ChartLegend color={metricCfg.color} />
                 </>
