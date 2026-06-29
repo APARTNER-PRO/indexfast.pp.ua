@@ -287,7 +287,7 @@ export default function Billing() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-64 text-gray-400 text-sm">
-        Завантаження…
+        {t("common.loading")}
       </div>
     );
   }
@@ -451,7 +451,7 @@ export default function Billing() {
             const isEnterprise = !!p.enterprise;
             const priceNum     = isEnterprise ? '' : (priceVal > 0 ? priceVal.toLocaleString('uk-UA') : '0');
             const priceUah     = isEnterprise ? 0 : (p[selPeriod + '_uah'] || 0);
-            const desc         = isEnterprise ? 'під ваші потреби' : (priceVal > 0 ? '/ ' + PERIOD_LABELS[selPeriod] : 'назавжди безкоштовно');
+             const desc         = isEnterprise ? t("billing.underNeeds") : (priceVal > 0 ? t("billing." + (selPeriod === '3_years' ? 'per3Years' : selPeriod === 'year' ? 'perYear' : 'perMonth')) : t("billing.freeForever"));
 
             return (
               <div style={{ paddingTop: 20 }}>
@@ -646,18 +646,18 @@ export default function Billing() {
                     </div>
 
                     <div>
-                      <div style={{ fontSize: 14, fontWeight: 700, color: '#fff', display: 'flex', alignItems: 'center', gap: 8 }}>
-                        Промокод застосовано
-                        <span style={{ display: 'inline-block', width: 6, height: 6, borderRadius: '50%', background: '#34d399' }} />
-                      </div>
+                        <div style={{ fontSize: 14, fontWeight: 700, color: '#fff', display: 'flex', alignItems: 'center', gap: 8 }}>
+                          {t("billing.promo.applied")}
+                          <span style={{ display: 'inline-block', width: 6, height: 6, borderRadius: '50%', background: '#34d399' }} />
+                        </div>
 
-                      <div style={{ fontSize: 12, fontWeight: 600, color: '#9ca3af', marginTop: 3, display: 'flex', alignItems: 'center', gap: 8 }}>
-                        <span style={{ color: '#34d399', background: 'rgba(16,185,129,0.1)', padding: '2px 6px', borderRadius: 4,
-                                      border: '1px solid rgba(16,185,129,0.15)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                          {appliedPromo.code}
-                        </span>
-                        <span>· Знижка {appliedPromo.discount_type === 'percentage' ? `${appliedPromo.discount_value}%` : `${currencySymbol}${appliedPromo.discount_value}`}</span>
-                      </div>
+                        <div style={{ fontSize: 12, fontWeight: 600, color: '#9ca3af', marginTop: 3, display: 'flex', alignItems: 'center', gap: 8 }}>
+                          <span style={{ color: '#34d399', background: 'rgba(16,185,129,0.1)', padding: '2px 6px', borderRadius: 4,
+                                        border: '1px solid rgba(16,185,129,0.15)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                            {appliedPromo.code}
+                          </span>
+                          <span>· {t("billing.promo.discount")} {appliedPromo.discount_type === 'percentage' ? `${appliedPromo.discount_value}%` : `${currencySymbol}${appliedPromo.discount_value}`}</span>
+                        </div>
                     </div>
                   </div>
 
@@ -675,7 +675,7 @@ export default function Billing() {
                       e.currentTarget.style.borderColor = 'rgba(239,68,68,0.15)';
                     }}
                   >
-                    Видалити
+                    {t("billing.promo.delete")}
                   </button>
                 </div>
               </div>
@@ -847,7 +847,7 @@ export default function Billing() {
                             display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12 }}>
                 <span style={{ fontSize: 12, color: '#6a6a85', fontWeight: 600, flexShrink: 0 }}>{t("billing.manual.purpose")}</span>
                 <span style={{ fontSize: 13, color: '#d0d0e8', fontWeight: 500, textAlign: 'right' }}>
-                  Підписка IndexFast {PLAN_LABELS[selPlan]} ({PERIOD_LABELS[selPeriod]})
+                  {t("billing.manual.subscriptionPrefix")} {PLAN_LABELS[selPlan]} ({PERIOD_LABELS[selPeriod]})
                 </span>
               </div>
             </div>

@@ -392,6 +392,7 @@ const translations = {
         bank: "Банк",
         amountToPay: "Сума до сплати",
         purpose: "Призначення:",
+        subscriptionPrefix: "Підписка IndexFast",
         instructions: [
           "Здійсніть переказ на вказані реквізити",
           "Збережіть квитанцію або скріншот підтвердження",
@@ -791,6 +792,7 @@ const translations = {
         bank: "Bank",
         amountToPay: "Amount to pay",
         purpose: "Purpose:",
+        subscriptionPrefix: "IndexFast subscription",
         instructions: [
           "Make a transfer to the specified details",
           "Save the receipt or confirmation screenshot",
@@ -1183,6 +1185,7 @@ const translations = {
         bank: "Banco",
         amountToPay: "Importe a pagar",
         purpose: "Concepto:",
+        subscriptionPrefix: "Suscripción IndexFast",
         instructions: [
           "Realiza una transferencia a los datos indicados",
           "Guarda el justificante o captura de pantalla",
@@ -1575,6 +1578,7 @@ const translations = {
         bank: "Banco",
         amountToPay: "Valor a pagar",
         purpose: "Finalidade:",
+        subscriptionPrefix: "Assinatura IndexFast",
         instructions: [
           "Faça uma transferência para os dados indicados",
           "Guarde o recibo ou captura de tela",
@@ -1967,6 +1971,7 @@ const translations = {
         bank: "Банк",
         amountToPay: "Сумма к оплате",
         purpose: "Назначение:",
+        subscriptionPrefix: "Подписка IndexFast",
         instructions: [
           "Осуществите перевод на указанные реквизиты",
           "Сохраните квитанцию или скриншот подтверждения",
@@ -2359,6 +2364,7 @@ const translations = {
         bank: "Bank",
         amountToPay: "Zahlungsbetrag",
         purpose: "Zweck:",
+        subscriptionPrefix: "IndexFast-Abonnement",
         instructions: [
           "Überweisen Sie den Betrag auf die angegebenen Daten",
           "Speichern Sie die Quittung oder den Bestätigungs-Screenshot",
@@ -2751,6 +2757,7 @@ const translations = {
         bank: "Banque",
         amountToPay: "Montant à payer",
         purpose: "Motif :",
+        subscriptionPrefix: "Abonnement IndexFast",
         instructions: [
           "Effectuez un virement aux coordonnées indiquées",
           "Conservez le reçu ou une capture d'écran",
@@ -3143,6 +3150,7 @@ const translations = {
         bank: "Bank",
         amountToPay: "Kwota do zapłaty",
         purpose: "Cel:",
+        subscriptionPrefix: "Subskrypcja IndexFast",
         instructions: [
           "Wykonaj przelew na podane dane",
           "Zapisz potwierdzenie lub zrzut ekranu",
