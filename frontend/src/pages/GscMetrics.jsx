@@ -314,6 +314,13 @@ export default memo(function GscMetrics({ sites, onImportGsc }) {
   const [chartSiteId, setChartSiteId] = useState("all");
   const [activeTab, setActiveTab] = useState("overview");
   const [searchDomain, setSearchDomain] = useState("");
+  const [, setTick] = useState(0);
+
+  useEffect(() => {
+    const handler = () => setTick(t => t + 1);
+    i18n.on("languageChanged", handler);
+    return () => i18n.off("languageChanged", handler);
+  }, []);
 
   const siteIds = useMemo(() => sites.map(s => s.id), [sites]);
   const enabled = siteIds.length > 0;
