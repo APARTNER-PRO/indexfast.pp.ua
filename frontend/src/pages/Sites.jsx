@@ -1,11 +1,11 @@
 // src/pages/Sites.jsx  ← окремий chunk (lazy)
 import { memo, useState, useEffect } from "react";
-import { useTranslation } from "react-i18next";
 import { SitesTable }       from "../components/SitesTable.jsx";
 import { EditSiteModal }   from "../components/EditSiteModal.jsx";
 import { Btn, Badge }    from "../components/ui/index.jsx";
 import { useGscMetrics } from "../hooks/useStats.js";
 import { C }             from "../constants.js";
+import i18n              from "../i18n/index.js";
 
 const SITES_PAGE_STYLES = `
   @media (max-width: 640px) {
@@ -23,7 +23,14 @@ export default memo(function Sites({
   sites, sitesList, sitesLimit, plan,
   today, onAddSite, onRun, onDelete, onToggle, onImportGsc, showToast,
 }) {
-  const { t } = useTranslation();
+  const [, forceUpdate] = useState(0);
+  const t = i18n.t.bind(i18n);
+
+  useEffect(() => {
+    const handler = () => forceUpdate(n => n + 1);
+    i18n.on("languageChanged", handler);
+    return () => i18n.off("languageChanged", handler);
+  }, []);
   const [filter,  setFilter]  = useState("all");
   const [editSite, setEditSite] = useState(null); // { site, tab }
   const handleEdit = (site, tab = null) => setEditSite({ site, tab });

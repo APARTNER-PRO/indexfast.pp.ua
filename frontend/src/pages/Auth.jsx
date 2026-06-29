@@ -1,15 +1,22 @@
 // src/pages/Auth.jsx  ← lazy chunk
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useNavigate, useLocation }                  from "react-router-dom";
-import { useTranslation }                            from "react-i18next";
 import { apiClient }                                 from "../api/client.js";
 import { C }                                         from "../constants.js";
+import i18n                                          from "../i18n/index.js";
 
 // ── Типи видів
 const VIEWS = { login: "login", register: "register", forgot: "forgot" };
 
 export default function Auth() {
-  const { t } = useTranslation();
+  const [, forceUpdate] = useState(0);
+  const t = i18n.t.bind(i18n);
+
+  useEffect(() => {
+    const handler = () => forceUpdate(n => n + 1);
+    i18n.on("languageChanged", handler);
+    return () => i18n.off("languageChanged", handler);
+  }, []);
   const navigate = useNavigate();
   const location = useLocation();
 

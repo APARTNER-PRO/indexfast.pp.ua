@@ -250,7 +250,6 @@ export default function App() {
   const [, forceUpdate] = useState(0);
   const t = i18n.t.bind(i18n);
 
-  // Re-render on language change so all t() calls pick up the new language
   useEffect(() => {
     const handler = () => forceUpdate(n => n + 1);
     i18n.on("languageChanged", handler);
@@ -302,6 +301,10 @@ export default function App() {
 
   useEffect(() => {
     if (data?.user) {
+      const savedLang = data.user.lang || localStorage.getItem("lang") || "en";
+      if (savedLang && savedLang !== i18n.language) {
+        i18n.changeLanguage(savedLang);
+      }
       setCachedStats(data);
     }
   }, [data]);
