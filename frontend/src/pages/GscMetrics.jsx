@@ -831,14 +831,14 @@ export default memo(function GscMetrics({ sites, onImportGsc }) {
                 <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
                   <thead>
                     <tr style={{ borderBottom: `1px solid ${C.border}`, background: "rgba(255,255,255,0.02)" }}>
-                      <th style={{ padding: "12px 16px", textAlign: "left", color: C.muted, fontSize: 10, fontWeight: 800, letterSpacing: "0.08em", textTransform: "uppercase", whiteSpace: "nowrap" }}>URL</th>
+                      <th style={{ padding: "12px 16px", textAlign: "left", color: C.muted, fontSize: 10, fontWeight: 800, letterSpacing: "0.08em", textTransform: "uppercase", whiteSpace: "nowrap" }}>{t("gsc.url")}</th>
                       {chartSiteId === "all" && (
-                        <th style={{ padding: "12px 16px", textAlign: "left", color: C.muted, fontSize: 10, fontWeight: 800, letterSpacing: "0.08em", textTransform: "uppercase", whiteSpace: "nowrap" }}>Сайт</th>
+                        <th style={{ padding: "12px 16px", textAlign: "left", color: C.muted, fontSize: 10, fontWeight: 800, letterSpacing: "0.08em", textTransform: "uppercase", whiteSpace: "nowrap" }}>{t("gsc.site")}</th>
                       )}
-                      <th style={thStyle("clicks")} onClick={() => togglePageSort("clicks")}>Кліки{pSortIcon("clicks")}</th>
-                      <th style={thStyle("impressions")} onClick={() => togglePageSort("impressions")}>Покази{pSortIcon("impressions")}</th>
-                      <th style={thStyle("ctr")} onClick={() => togglePageSort("ctr")}>CTR{pSortIcon("ctr")}</th>
-                      <th style={thStyle("position")} onClick={() => togglePageSort("position")}>Позиція{pSortIcon("position")}</th>
+                      <th style={thStyle("clicks")} onClick={() => togglePageSort("clicks")}>{t("gsc.clicks")}{pSortIcon("clicks")}</th>
+                      <th style={thStyle("impressions")} onClick={() => togglePageSort("impressions")}>{t("gsc.impressions")}{pSortIcon("impressions")}</th>
+                      <th style={thStyle("ctr")} onClick={() => togglePageSort("ctr")}>{t("gsc.ctr")}{pSortIcon("ctr")}</th>
+                      <th style={thStyle("position")} onClick={() => togglePageSort("position")}>{t("gsc.position")}{pSortIcon("position")}</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -869,14 +869,14 @@ export default memo(function GscMetrics({ sites, onImportGsc }) {
       {sites.length > 0 && activeTab === "countries" && (
         <div style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 16, overflow: "hidden", padding: "24px 0" }}>
           {countriesQ.isLoading ? (
-            <div style={{ padding: 40, textAlign: "center", color: C.muted }}>Завантажуємо статистику по країнах...</div>
+            <div style={{ padding: 40, textAlign: "center", color: C.muted }}>{t("gsc.loadingCountries")}</div>
           ) : countriesQ.error ? (
             <div style={{ padding: 40, textAlign: "center", color: C.red }}>
-              Помилка завантаження<br/>
+              {t("gsc.countriesError")}<br/>
               <small style={{ opacity: 0.6 }}>{countriesQ.error.message}</small>
             </div>
           ) : !countriesQ.data?.countries?.length ? (
-            <div style={{ padding: 40, textAlign: "center", color: C.muted }}>Немає даних по країнах за цей period</div>
+            <div style={{ padding: 40, textAlign: "center", color: C.muted }}>{t("gsc.noCountriesData")}</div>
           ) : (
             <div style={{ padding: "0 24px" }}>
               {countriesQ.data.countries.map((c, i) => {
