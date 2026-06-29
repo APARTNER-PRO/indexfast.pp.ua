@@ -22,6 +22,7 @@ const translations = {
       logout: "Вийти з акаунту?",
       documentation: "Документація",
       support: "Підтримка",
+      faqs: "Часті запитання",
     },
     nav: {
       overview: "Огляд",
@@ -503,6 +504,7 @@ const translations = {
       logout: "Log out?",
       documentation: "Documentation",
       support: "Support",
+      faqs: "FAQ",
     },
     nav: {
       overview: "Overview",
@@ -896,6 +898,7 @@ const translations = {
       logout: "¿Cerrar sesión?",
       documentation: "Documentación",
       support: "Soporte",
+      faqs: "Preguntas frecuentes",
     },
     nav: {
       overview: "Resumen",
@@ -1287,6 +1290,7 @@ const translations = {
       logout: "Sair?",
       documentation: "Documentação",
       support: "Suporte",
+      faqs: "Perguntas frequentes",
     },
     nav: {
       overview: "Visão geral",
@@ -1678,6 +1682,7 @@ const translations = {
       logout: "Выйти?",
       documentation: "Документация",
       support: "Поддержка",
+      faqs: "Частые вопросы",
     },
     nav: {
       overview: "Обзор",
@@ -2069,6 +2074,7 @@ const translations = {
       logout: "Abmelden?",
       documentation: "Dokumentation",
       support: "Support",
+      faqs: "FAQ",
     },
     nav: {
       overview: "Übersicht",
@@ -2460,6 +2466,7 @@ const translations = {
       logout: "Se déconnecter ?",
       documentation: "Documentation",
       support: "Support",
+      faqs: "FAQ",
     },
     nav: {
       overview: "Aperçu",
@@ -2851,6 +2858,7 @@ const translations = {
       logout: "Wylogować?",
       documentation: "Dokumentacja",
       support: "Wsparcie",
+      faqs: "FAQ",
     },
     nav: {
       overview: "Przegląd",
