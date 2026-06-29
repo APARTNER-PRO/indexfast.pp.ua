@@ -31,11 +31,12 @@ export const SitesTable = memo(function SitesTable({
   sites, remaining, onRun, onDelete, onToggle, onEdit, onEditWithTab,
   gscMetrics = {}, gscLoading = false, gscError = null, onImportGsc,
 }) {
+  const { t } = useTranslation();
   if (!sites.length) return (
     <div style={{ textAlign: "center", padding: "60px 20px", color: C.muted }}>
       <div style={{ fontSize: 48, marginBottom: 16, opacity: 0.4 }}>🌐</div>
-      <p style={{ fontSize: 15, marginBottom: 8, color: C.white }}>Немає підключених сайтів</p>
-      <p style={{ fontSize: 13 }}>Натисніть «+ Додати сайт» щоб розпочати</p>
+      <p style={{ fontSize: 15, marginBottom: 8, color: C.white }}>{t("sites.noSitesTitle")}</p>
+      <p style={{ fontSize: 13 }}>{t("sites.noSitesText")}</p>
     </div>
   );
 
