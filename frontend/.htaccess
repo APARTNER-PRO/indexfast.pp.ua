@@ -3,6 +3,9 @@
     RewriteEngine On
     RewriteBase /app/
 
+    # 301 redirect /blog → /blog/
+    RewriteRule ^blog$ /blog/ [R=301,L]
+
     # Статичні файли — віддаємо напряму
     RewriteRule ^index\.html$ - [L]
     RewriteCond %{REQUEST_FILENAME} !-f
