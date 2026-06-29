@@ -1,4 +1,4 @@
-import{r as d,i as c,j as e,C as s}from"./index-CYQ5NcZA.js";import{S as R,E as I}from"./EditSiteModal-B4n7MZtr.js";import{u as $,a as A,B as S}from"./App-npjvAyIU.js";import"./client-DbjFF3zR.js";const M=`
+import{r as d,i as c,j as e,C as s}from"./index-CblfYwzI.js";import{S as R,E as I}from"./EditSiteModal-DXOAuQp5.js";import{u as $,a as A,B as S}from"./App-DTrd6bER.js";import"./client-DbjFF3zR.js";const M=`
   @media (max-width: 640px) {
     .sites-limit-banner { flex-direction: column !important; align-items: flex-start !important; gap: 10px !important; }
     .sites-limit-banner .sites-limit-btn { width: 100%; }
