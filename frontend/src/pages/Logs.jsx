@@ -1,8 +1,8 @@
-import { useState, memo, useCallback, useMemo } from "react";
-import { useTranslation } from "react-i18next";
+import { useState, memo, useCallback, useMemo, useEffect } from "react";
 import { useLogs }                     from "../hooks/useLogs.js";
 import { Spinner, Btn }                from "../components/ui/index.jsx";
 import { C }                           from "../constants.js";
+import i18n                            from "../i18n/index.js";
 
 const PAGE_SIZE = 50;
 
@@ -43,7 +43,14 @@ const MOBILE_STYLES = `
 `;
 
 export default memo(function Logs({ sites }) {
-  const { t } = useTranslation();
+  const [, forceUpdate] = useState(0);
+  const t = i18n.t.bind(i18n);
+
+  useEffect(() => {
+    const handler = () => forceUpdate(n => n + 1);
+    i18n.on("languageChanged", handler);
+    return () => i18n.off("languageChanged", handler);
+  }, []);
   
   const STATUS_FILTERS = useMemo(() => [
     { value: "",        label: t("logs.allStatus")        },

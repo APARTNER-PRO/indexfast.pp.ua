@@ -11,7 +11,7 @@ require_once dirname(__DIR__) . '/db.php';
 requireMethod('GET');
 $payload = requireAuth();
 
-$user = DB::row("SELECT id, name, surname, email, email_verified, plan, avatar_url, created_at, last_login_at FROM users WHERE id = ? AND is_active = 1", [$payload['sub']]);
+$user = DB::row("SELECT id, name, surname, email, email_verified, plan, avatar_url, created_at, last_login_at, lang FROM users WHERE id = ? AND is_active = 1", [$payload['sub']]);
 
 if (!$user) {
     respond(404, 'Користувача не знайдено');
@@ -28,5 +28,6 @@ respondOk('OK', [
         'avatar_url'     => $user['avatar_url'],
         'created_at'     => $user['created_at'],
         'last_login_at'  => $user['last_login_at'],
+        'lang'           => $user['lang'] ?? 'en',
     ],
 ]);

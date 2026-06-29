@@ -1,11 +1,11 @@
 // src/pages/Overview.jsx  ← окремий chunk
-import { memo, useCallback, useState } from "react";
-import { useTranslation } from "react-i18next";
+import { memo, useCallback, useState, useEffect } from "react";
 import { Badge, Btn, ProgressBar, Sparkline } from "../components/ui/index.jsx";
 import { SitesTable } from "../components/SitesTable.jsx";
 import { EditSiteModal } from "../components/EditSiteModal.jsx";
 import { useGscMetrics } from "../hooks/useStats.js";
 import { C } from "../constants.js";
+import i18n from "../i18n/index.js";
 
 const OVERVIEW_MOBILE = `
   @media (max-width: 640px) {
@@ -30,7 +30,14 @@ const OVERVIEW_MOBILE = `
 export default memo(function Overview({
   data, onAddSite, onRun, onDelete, onToggle, onGoLogs, onGoBilling, onImportGsc, showToast,
 }) {
-  const { t } = useTranslation();
+  const [, forceUpdate] = useState(0);
+  const t = i18n.t.bind(i18n);
+
+  useEffect(() => {
+    const handler = () => forceUpdate(n => n + 1);
+    i18n.on("languageChanged", handler);
+    return () => i18n.off("languageChanged", handler);
+  }, []);
   const [editSite, setEditSite] = useState(null); // { site, tab }
   const handleEdit = (site, tab = null) => setEditSite({ site, tab });
   const { user, today, month, sites, sites_limit, logs, chart } = data;

@@ -1,12 +1,19 @@
 // src/pages/ResetPassword.jsx  ← lazy chunk
 import { useState, useEffect } from "react";
 import { useNavigate, useSearchParams, Link } from "react-router-dom";
-import { useTranslation } from "react-i18next";
 import { apiClient } from "../api/client.js";
 import { C }         from "../constants.js";
+import i18n          from "../i18n/index.js";
 
 export default function ResetPassword() {
-  const { t } = useTranslation();
+  const [, forceUpdate] = useState(0);
+  const t = i18n.t.bind(i18n);
+
+  useEffect(() => {
+    const handler = () => forceUpdate(n => n + 1);
+    i18n.on("languageChanged", handler);
+    return () => i18n.off("languageChanged", handler);
+  }, []);
   const navigate             = useNavigate();
   const [searchParams]       = useSearchParams();
   const token                = searchParams.get("token") || "";

@@ -1,11 +1,11 @@
 // src/pages/Profile.jsx  ← lazy chunk
-import { useState, useEffect, memo } from "react";
+import { useState, useEffect, memo, useRef } from "react";
 import { useQueryClient }            from "@tanstack/react-query";
-import { useTranslation }            from "react-i18next";
 import { apiClient }                 from "../api/client.js";
 import { KEYS }                      from "../hooks/useStats.js";
 import { C }                         from "../constants.js";
 import { Spinner, Btn }              from "../components/ui/index.jsx";
+import i18n                          from "../i18n/index.js";
 
 // ── Strength bar
 function StrengthBar({ password, t }) {
@@ -70,7 +70,96 @@ function Input({ style: sx, ...props }) {
   );
 }
 
-export default function Profile({ user, onUpdate, showToast, t }) {
+const LANGS = [
+  { code: "uk", label: "UA" },
+  { code: "en", label: "EN" },
+  { code: "es", label: "ES" },
+  { code: "pt", label: "PT" },
+  { code: "ru", label: "RU" },
+  { code: "de", label: "DE" },
+  { code: "fr", label: "FR" },
+  { code: "pl", label: "PL" },
+];
+
+function LanguageSelect({ current, onChange }) {
+  const [open, setOpen] = useState(false);
+  const ref = useRef(null);
+  const active = LANGS.find(l => current.startsWith(l.code)) || LANGS[0];
+
+  useEffect(() => {
+    function onClickOutside(e) {
+      if (ref.current && !ref.current.contains(e.target)) setOpen(false);
+    }
+    document.addEventListener("mousedown", onClickOutside);
+    return () => document.removeEventListener("mousedown", onClickOutside);
+  }, []);
+
+  return (
+    <div ref={ref} style={{ position: "relative" }}>
+      <button
+        onClick={() => setOpen(v => !v)}
+        title={active.label}
+        style={{
+          display: "flex", alignItems: "center", gap: 6,
+          padding: "5px 10px", borderRadius: 10, border: "none", cursor: "pointer",
+          fontSize: 12, fontWeight: 700, fontFamily: "inherit",
+          background: "rgba(255,255,255,0.04)",
+          color: "#f0f0f8",
+          transition: "all 0.15s",
+        }}
+        onMouseEnter={e => { e.currentTarget.style.background = "rgba(255,255,255,0.08)"; }}
+        onMouseLeave={e => { e.currentTarget.style.background = "rgba(255,255,255,0.04)"; }}
+      >
+        <span>{active.label}</span>
+        <svg width="10" height="6" viewBox="0 0 10 6" style={{ marginLeft: 2, opacity: 0.6 }}>
+          <path d="M0 0 L5 6 L10 0" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+      </button>
+      {open && (
+        <div style={{
+          position: "absolute", top: "calc(100% + 6px)", left: 0,
+          background: "#131320", border: "1px solid rgba(255,255,255,0.1)",
+          borderRadius: 12, padding: 4, minWidth: 120,
+          boxShadow: "0 8px 24px rgba(0,0,0,0.5)", zIndex: 1000,
+          display: "flex", flexDirection: "column", gap: 2,
+        }}>
+          {LANGS.map(lang => {
+            const isActive = current.startsWith(lang.code);
+            return (
+              <button
+                key={lang.code}
+                onClick={() => { onChange(lang.code); setOpen(false); }}
+                style={{
+                  display: "flex", alignItems: "center", gap: 8,
+                  padding: "7px 12px", borderRadius: 8, border: "none", cursor: "pointer",
+                  fontSize: 13, fontWeight: 600, fontFamily: "inherit",
+                  background: isActive ? "rgba(0,255,136,0.12)" : "transparent",
+                  color: isActive ? "#00ff88" : "#8a8aa0",
+                  transition: "all 0.12s", textAlign: "left", width: "100%",
+                }}
+                onMouseEnter={e => { if (!isActive) e.currentTarget.style.background = "rgba(255,255,255,0.05)"; }}
+                onMouseLeave={e => { if (!isActive) e.currentTarget.style.background = "transparent"; }}
+              >
+                <span>{lang.label}</span>
+                {isActive && <span style={{ marginLeft: "auto", fontSize: 11 }}>✓</span>}
+              </button>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+}
+
+export default function Profile({ user, onUpdate, showToast }) {
+  const [, forceUpdate] = useState(0);
+  const t = i18n.t.bind(i18n);
+
+  useEffect(() => {
+    const handler = () => forceUpdate(n => n + 1);
+    i18n.on("languageChanged", handler);
+    return () => i18n.off("languageChanged", handler);
+  }, []);
   // ── Загальна інфо
   const [name,    setName]    = useState(user?.name    ?? "");
   const [surname, setSurname] = useState(user?.surname ?? "");
@@ -153,6 +242,19 @@ export default function Profile({ user, onUpdate, showToast, t }) {
       showToast(e.message || t("common.saveError"), "error");
     } finally {
       setSavingMarketing(false);
+    }
+  }
+
+  async function handleLangChange(code) {
+    try {
+      await apiClient.updateProfile({ lang: code });
+      localStorage.setItem("lang", code);
+      i18n.changeLanguage(code);
+      qc.invalidateQueries({ queryKey: KEYS.stats });
+      onUpdate?.({ ...user, lang: code });
+      showToast(t("profile.languageChanged"));
+    } catch (e) {
+      showToast(e.message || t("common.saveError"), "error");
     }
   }
 
@@ -246,6 +348,15 @@ export default function Profile({ user, onUpdate, showToast, t }) {
             {t("profile.save")}
           </Btn>
         </form>
+      </Section>
+
+      {/* ── Мова */}
+      <Section title={t("profile.language")}>
+        <p style={{ fontSize: 13, color: C.muted, marginBottom: 12 }}>{t("profile.languageDesc")}</p>
+        <LanguageSelect
+          current={user?.lang || localStorage.getItem("lang") || "uk"}
+          onChange={handleLangChange}
+        />
       </Section>
 
       {/* ── Email */}

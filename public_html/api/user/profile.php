@@ -11,7 +11,7 @@ $uid  = (int)requireAuth()['sub'];
 $body = getBody();
 
 $user = DB::row(
-    "SELECT id, name, surname, email, email_verified, password_hash, google_id
+    "SELECT id, name, surname, email, email_verified, password_hash, google_id, lang
      FROM users WHERE id = ?",
     [$uid]
 );
@@ -78,6 +78,17 @@ if (isset($body['marketing_consent'])) {
     $params[]  = $body['marketing_consent'] ? 1 : 0;
 }
 
+// ── Мова
+if (isset($body['lang'])) {
+    $lang = strtolower(trim($body['lang']));
+    $allowed = ['uk', 'en', 'es', 'pt', 'ru', 'de', 'fr', 'pl'];
+    if (!in_array($lang, $allowed, true)) {
+        respond(422, 'Недійсна мова');
+    }
+    $updates[] = "lang = ?";
+    $params[]  = $lang;
+}
+
 if (empty($updates)) respond(422, 'Немає полів для оновлення');
 
 // ── Застосовуємо зміни
@@ -103,7 +114,7 @@ if ($emailChanged) {
 
 // ── Повертаємо оновлений профіль
 $updated = DB::row(
-    "SELECT id, name, surname, email, email_verified, marketing_consent, plan, avatar_url FROM users WHERE id = ?",
+    "SELECT id, name, surname, email, email_verified, marketing_consent, plan, avatar_url, lang FROM users WHERE id = ?",
     [$uid]
 );
 
@@ -120,6 +131,7 @@ respondOk($message, [
         'email_verified' => (bool)$updated['email_verified'],
         'plan'           => $updated['plan'],
         'avatar_url'     => $updated['avatar_url'],
+        'lang'           => $updated['lang'] ?? 'en',
     ],
     'email_changed'    => $emailChanged,
     'password_changed' => $passwordChanged,

@@ -2,8 +2,8 @@
 // Крос-доменна підтримка: всі запити ідуть через BASE = VITE_API_URL ?? "/api"
 // FormData (квитанція) теж використовує BASE, не хардкоднений "/api"
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { useTranslation } from 'react-i18next';
 import { apiFetch } from '../api/client';
+import i18n from '../i18n/index.js';
 
 // BASE — той самий що в client.js, щоб FormData запит теж йшов на правильний домен
 const BASE = (typeof import.meta !== 'undefined' && import.meta?.env?.VITE_API_URL)
@@ -30,7 +30,14 @@ const PaymentIcon = ({ id }) => {
 };
 
 export default function Billing() {
-  const { t } = useTranslation();
+  const [, forceUpdate] = useState(0);
+  const t = i18n.t.bind(i18n);
+
+  useEffect(() => {
+    const handler = () => forceUpdate(n => n + 1);
+    i18n.on("languageChanged", handler);
+    return () => i18n.off("languageChanged", handler);
+  }, []);
   const [data,        setData]       = useState(null);
   const [loading,     setLoading]    = useState(true);
   const [error,       setError]      = useState('');
@@ -429,6 +436,7 @@ export default function Billing() {
                           onBuy={() => { setSelPlan(id); goNext(); }}
                           busy={busy}
                           methodsOk={(methods?.count || 0) > 0}
+                          t={t}
                         />
                       </div>
                     );
@@ -465,6 +473,7 @@ export default function Billing() {
                     onBuy={() => { setSelPlan(id); goNext(); }}
                     busy={busy}
                     methodsOk={(methods?.count || 0) > 0}
+                    t={t}
                   />
                 </div>
 
@@ -1158,7 +1167,7 @@ function StatusBadge({ status }) {
 
 // ── PlanCard — дизайн як на головній сторінці, дані з API (plans.php → subscription.php)
 
-const PlanCard = ({ plan: p, isCurrent, isSelected, onSelect, onBuy, busy, methodsOk }) => {
+const PlanCard = ({ plan: p, isCurrent, isSelected, onSelect, onBuy, busy, methodsOk, t }) => {
   const isEnterprise = p.enterprise || p.id === 'enterprise';
   const isStart      = p.id === 'start';
   const purple = '#9370db';
