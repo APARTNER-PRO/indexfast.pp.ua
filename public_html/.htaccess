@@ -23,6 +23,12 @@ RewriteRule ^privacy-policy$ /privacy-policy.html [R=301,L]
 RewriteRule ^privacy-policy/$ /privacy-policy.html [R=301,L]
 RewriteRule ^terms-and-conditions/$ /terms.html [R=301,L]
 
+# 301 redirects for new English-slug articles
+RewriteRule ^on-page-seo-complete-guide-2026$ /blog/on-page-seo-complete-guide-2026.html [R=301,L]
+RewriteRule ^on-page-seo-complete-guide-2026/$ /blog/on-page-seo-complete-guide-2026.html [R=301,L]
+RewriteRule ^backlink-building-for-small-business-2026$ /blog/backlink-building-for-small-business-2026.html [R=301,L]
+RewriteRule ^backlink-building-for-small-business-2026/$ /blog/backlink-building-for-small-business-2026.html [R=301,L]
+
 # ── 301 редіректи старих дублікатів блогу
 RewriteRule ^blog-indexation\.html$ /blog/yak-pryskoriti-indeksaciyu-saitu-v-google.html [R=301,L]
 RewriteRule ^blog-sitemap\.html$ /blog/shcho-take-sitemap-xml.html [R=301,L]
