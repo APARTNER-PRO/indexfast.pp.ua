@@ -897,15 +897,15 @@ export default memo(function GscMetrics({ sites, onImportGsc }) {
                         <div style={{ width: `${pct}%`, height: "100%", background: C.green, borderRadius: 4, transition: "width 0.5s ease-out" }} />
                       </div>
                       <div style={{ display: "flex", gap: 16, fontSize: 11, color: "rgba(255,255,255,0.4)" }}>
-                        <span>Покази: {fmtMetric(c.impressions)}</span>
-                        <span>CTR: {fmtCtr(c.ctr)}</span>
-                        <span>Поз: {fmtPos(c.position)}</span>
+                        <span>{t("gsc.impressions")}: {fmtMetric(c.impressions)}</span>
+                        <span>{t("gsc.ctr")}: {fmtCtr(c.ctr)}</span>
+                        <span>{t("gsc.posLabel")} {fmtPos(c.position)}</span>
                       </div>
                     </div>
                     
                     {/* Main Metric */}
                     <div style={{ textAlign: "right", color: C.green, fontWeight: 800, fontSize: 16 }}>
-                      {fmtMetric(c.clicks)} кліків
+                      {fmtMetric(c.clicks)} {t("gsc.clicksSuffix")}
                     </div>
                   </div>
                 );
