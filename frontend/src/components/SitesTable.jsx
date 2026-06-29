@@ -51,8 +51,8 @@ export const SitesTable = memo(function SitesTable({
         <thead>
           <tr style={{ borderBottom: `1px solid ${C.border}` }}>
             {[
-              "Сайт", "Статус",
-              "URL у sitemap", "Відправлено", "Остання індексація", ""
+              t("sites.domain"), t("sites.status"),
+              t("sites.urlsInSitemap"), t("sites.sent"), t("sites.lastIndexing"), ""
             ].map(h => (
               <th key={h} style={{ padding: "10px 16px", textAlign: "left", color: C.muted,
                 fontSize: 10, fontWeight: 700, letterSpacing: "0.1em",
@@ -184,7 +184,7 @@ const SiteCard = memo(function SiteCard({ site: s, remaining, onRun, onDelete, o
           </span>
         </div>
         <div>
-          <span style={{ color: C.muted }}>Відправлено: </span>
+          <span style={{ color: C.muted }}>{t("sites.sent")}: </span>
           <span style={{ color: C.green, fontWeight: 700 }}>
             {(s.indexed_total || 0).toLocaleString("uk-UA")}
           </span>
@@ -206,9 +206,9 @@ const SiteCard = memo(function SiteCard({ site: s, remaining, onRun, onDelete, o
         {!isPaused && (
           <Btn variant="outline" onClick={handleRun}
             disabled={remaining === 0 || isJobRunning}
-            title={remaining === 0 ? "Денний ліміт вичерпано" : "Запустити індексацію"}
+            title={remaining === 0 ? t("sites.dailyLimitReached") : t("sites.runIndexing")}
             style={{ padding: "6px 12px", fontSize: 12, flex: 1 }}>
-            ▶ Запуск
+            {t("sites.runShort")}
           </Btn>
         )}
         <Btn
@@ -216,20 +216,20 @@ const SiteCard = memo(function SiteCard({ site: s, remaining, onRun, onDelete, o
           onClick={handleToggle}
           disabled={isJobRunning}
           title={isJobRunning
-            ? "Дочекайтесь завершення індексації"
-            : isPaused ? "Активувати сайт" : "Призупинити сайт"}
+            ? t("sites.waitForCompletion")
+            : isPaused ? t("sites.activateSite") : t("sites.pauseSite")}
           style={{
             padding: "6px 12px", fontSize: 12,
             flex: isPaused ? 1 : undefined,
             ...(isPaused ? { color: C.green, borderColor: "rgba(0,255,136,0.3)" } : {}),
           }}>
-          {isPaused ? "▶ Активувати" : "⏸"}
+          {isPaused ? t("sites.activateShort") : "⏸"}
         </Btn>
-        <Btn variant="ghost" onClick={handleEdit} title="Редагувати сайт"
+        <Btn variant="ghost" onClick={handleEdit} title={t("sites.editSite")}
           style={{ padding: "6px 12px", fontSize: 12 }}>
           ✏
         </Btn>
-        <Btn variant="danger" onClick={handleDelete} title="Видалити сайт"
+        <Btn variant="danger" onClick={handleDelete} title={t("sites.deleteSite")}
           style={{ padding: "6px 12px", fontSize: 12 }}>
           ✕
         </Btn>
@@ -240,6 +240,7 @@ const SiteCard = memo(function SiteCard({ site: s, remaining, onRun, onDelete, o
 
 /* ── Desktop table row ── */
 const SiteRow = memo(function SiteRow({ site: s, remaining, onRun, onDelete, onToggle, onEdit, onEditWithTab, gscMetrics }) {
+  const { t } = useTranslation();
   // Прямі виклики замість useCallback — уникаємо stale closure
   const handleRun    = () => onRun(s);
   const handleDelete = () => onDelete(s);
@@ -318,17 +319,17 @@ const SiteRow = memo(function SiteRow({ site: s, remaining, onRun, onDelete, onT
 
 
 
-      {/* URL у sitemap */}
+          {/* {t("sites.urlInSitemap")} */}
       <td style={{ padding: "14px 16px", color: C.white }}>
         {(s.total_urls || 0).toLocaleString("uk-UA")}
       </td>
 
-      {/* Відправлено */}
+      {/* {t("sites.sent")} */}
       <td style={{ padding: "14px 16px", color: C.green, fontWeight: 700 }}>
         {(s.indexed_total || 0).toLocaleString("uk-UA")}
       </td>
 
-      {/* Остання індексація */}
+      {/* {t("sites.lastIndexing")} */}
       <td style={{ padding: "14px 16px", color: C.muted, whiteSpace: "nowrap", fontSize: 12 }}>
         {s.last_run_at
           ? new Date(s.last_run_at).toLocaleString("uk-UA", {
@@ -338,43 +339,44 @@ const SiteRow = memo(function SiteRow({ site: s, remaining, onRun, onDelete, onT
           : "—"}
       </td>
 
-      {/* Дії */}
+      {/* {t("sites.actions")} */}
       <td style={{ padding: "14px 16px" }}>
         <div style={{ display: "flex", gap: 6, justifyContent: "flex-end" }}>
 
-          {/* Запуск — тільки для активних */}
+          {/* {t("sites.runShort")} — тільки для активних */}
           {!isPaused && (
             <Btn variant="outline" onClick={handleRun}
               disabled={remaining === 0 || isJobRunning}
-              title={remaining === 0 ? "Денний ліміт вичерпано" : "Запустити індексацію"}
+              title={remaining === 0 ? t("sites.dailyLimitReached") : t("sites.runIndexing")}
               style={{ padding: "6px 14px", fontSize: 12 }}>
-              ▶ Запуск
+              {t("sites.runShort")}
             </Btn>
           )}
 
-          {/* Пауза / Активація */}
+          {/* {t("sites.pauseSite")} / {t("sites.activateSite")} */}
           <Btn
             variant={isPaused ? "outline" : "ghost"}
             onClick={handleToggle}
             disabled={isJobRunning}
             title={isJobRunning
-              ? "Дочекайтесь завершення індексації"
-              : isPaused ? "Активувати сайт" : "Призупинити сайт"}
+              ? t("sites.waitForCompletion")
+              : isPaused ? t("sites.activateSite") : t("sites.pauseSite")}
             style={{
               padding: "6px 12px", fontSize: 12,
+              flex: isPaused ? 1 : undefined,
               ...(isPaused ? { color: C.green, borderColor: "rgba(0,255,136,0.3)" } : {}),
             }}>
-            {isPaused ? "▶ Активувати" : "⏸"}
+            {isPaused ? t("sites.activateShort") : "⏸"}
           </Btn>
 
-          {/* Редагувати */}
-          <Btn variant="ghost" onClick={handleEdit} title="Редагувати сайт"
+          {/* {t("sites.editSite")} */}
+          <Btn variant="ghost" onClick={handleEdit} title={t("sites.editSite")}
             style={{ padding: "6px 12px", fontSize: 12 }}>
             ✏
           </Btn>
 
-          {/* Видалити */}
-          <Btn variant="danger" onClick={handleDelete} title="Видалити сайт"
+          {/* {t("sites.deleteSite")} */}
+          <Btn variant="danger" onClick={handleDelete} title={t("sites.deleteSite")}
             style={{ padding: "6px 12px", fontSize: 12 }}>
             ✕
           </Btn>

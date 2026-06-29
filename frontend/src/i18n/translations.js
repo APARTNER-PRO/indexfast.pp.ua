@@ -1342,6 +1342,8 @@ const translations = {
       limitReached: "Seitenlimit für Ihren Tarif erreicht",
       gscIntegration: "GSC-Integration",
       importGsc: "Aus GSC importieren",
+      noSitesTitle: "Keine Seiten verbunden",
+      noSitesText: 'Klicke auf "+ Seite hinzufügen" um loszulegen',
     },
     logs: {
       title: "Indexierungsprotokolle",
@@ -1554,6 +1556,8 @@ const translations = {
       limitReached: "Limite de sites atteinte pour votre forfait",
       gscIntegration: "Intégration GSC",
       importGsc: "Importer depuis GSC",
+      noSitesTitle: "Aucun site connecté",
+      noSitesText: 'Cliquez sur "+ Ajouter un site" pour commencer',
     },
     logs: {
       title: "Journaux d'indexation",
@@ -1766,6 +1770,8 @@ const translations = {
       limitReached: "Limit stron osiągnięty dla Twojego planu",
       gscIntegration: "Integracja GSC",
       importGsc: "Importuj z GSC",
+      noSitesTitle: "Brak połączonych stron",
+      noSitesText: 'Kliknij "+ Dodaj stronę" aby rozpocząć',
     },
     logs: {
       title: "Logi indeksacji",
