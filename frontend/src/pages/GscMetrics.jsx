@@ -1,5 +1,5 @@
 // src/pages/GscMetrics.jsx
-import { memo, useMemo, useState } from "react";
+import { memo, useMemo, useState, useEffect } from "react";
 import { Btn } from "../components/ui/index.jsx";
 import { useGscMetrics, useGscChart, useGscQueries, useGscPages, useGscDevices, useGscCountries } from "../hooks/useStats.js";
 import { C } from "../constants.js";
