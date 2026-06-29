@@ -271,11 +271,11 @@ export default function Billing() {
   };
 
   const cancelSub = async (subId) => {
-    if (!confirm('Скасувати підписку? Доступ залишається до кінця оплаченого periodу.')) return;
+    if (!confirm(t("billing.cancelConfirm"))) return;
     setBusy(true);
     try {
       await apiFetch('/billing/cancel.php', { method: 'POST', body: { sub_id: subId } });
-      setSuccess('Підписку скасовано');
+      setSuccess(t("billing.subscriptionCancelled"));
       load();
     } catch (e) {
       setError(e.message);
@@ -422,7 +422,7 @@ export default function Billing() {
                     const isEnterprise = !!p.enterprise;
                     const priceNum     = isEnterprise ? '' : (priceVal > 0 ? priceVal.toLocaleString('uk-UA') : '0');
                     const priceUah     = isEnterprise ? 0 : (p[selPeriod + '_uah'] || 0);
-                    const desc         = isEnterprise ? t("billing.underNeeds") : (priceVal > 0 ? '/ ' + t("billing." + (selPeriod === '3_years' ? 'per3Years' : selPeriod === 'year' ? 'perYear' : 'perMonth')) : t("billing.freeForever"));
+                     const desc         = isEnterprise ? t("billing.underNeeds") : (priceVal > 0 ? t("billing." + (selPeriod === '3_years' ? 'per3Years' : selPeriod === 'year' ? 'perYear' : 'perMonth')) : t("billing.freeForever"));
                     return (
                       <div key={id} style={{ flex: '1 1 0', minWidth: 260 }}>
                         <PlanCard
