@@ -107,6 +107,11 @@
       "permanent": true
     },
     {
+      "source": "/blog/starting-a-career-in-web-design/",
+      "destination": "/blog/starting-a-career-in-web-design.html",
+      "permanent": true
+    },
+    {
       "source": "/contact",
       "destination": "/contacts.html",
       "permanent": true
