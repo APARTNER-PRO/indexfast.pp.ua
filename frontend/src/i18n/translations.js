@@ -1128,6 +1128,8 @@ const translations = {
       limitReached: "Лимит сайтов исчерпан для вашего тарифа",
       gscIntegration: "Интеграция GSC",
       importGsc: "Импорт из GSC",
+      noSitesTitle: "Нет подключенных сайтов",
+      noSitesText: 'Нажмите "+ Добавить сайт" чтобы начать',
     },
     logs: {
       title: "Логи индексации",
