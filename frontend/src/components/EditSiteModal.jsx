@@ -5,10 +5,12 @@ import { useQueryClient }                      from "@tanstack/react-query";
 import { apiClient }                           from "../api/client.js";
 import { KEYS }                                from "../hooks/useStats.js";
 import { C }                                   from "../constants.js";
+import i18n                                    from "../i18n/index.js";
 
 export const EditSiteModal = memo(function EditSiteModal({
   open, onClose, site, showToast, initialTab = null,
 }) {
+  const t = i18n.t.bind(i18n);
   const [domain,  setDomain]  = useState("");
   const [sitemap, setSitemap] = useState("");
   const [sa,      setSa]      = useState("");
@@ -41,8 +43,8 @@ export const EditSiteModal = memo(function EditSiteModal({
     const trimSitemap = sitemap.trim();
     const trimSa      = sa.trim();
 
-    if (!trimDomain)  { setError("Введіть домен"); return; }
-    if (!trimSitemap) { setError("Введіть URL sitemap"); return; }
+      if (!trimDomain)  { setError(t("sites.enterDomain")); return; }
+      if (!trimSitemap) { setError(t("sites.enterSitemap")); return; }
 
     // Якщо SA заповнено — валідуємо
     if (trimSa) {
@@ -93,7 +95,7 @@ export const EditSiteModal = memo(function EditSiteModal({
 
   return (
     <Modal open={open} onClose={onClose}
-      title={`Редагувати сайт`}
+      title={t("sites.editSiteTitle")}
       subtitle={currentSite.domain}>
 
       {/* Вкладки */}
@@ -101,10 +103,10 @@ export const EditSiteModal = memo(function EditSiteModal({
         background: C.dark, borderRadius: 10, padding: 4,
         border: `1px solid ${C.border}` }}>
         {[
-          { id: "info", label: "🌐 Основне" },
-          { id: "sa",   label: hasSa ? "🔑 Service Account" : "⚠ Додати SA" },
-          { id: "indexnow", label: "🚀 IndexNow" },
-        ].map(t => (
+          { id: "info", label: t("sites.infoTab") },
+          { id: "sa",   label: hasSa ? t("sites.saTabLabel") : t("sites.saTabNoSa") },
+          { id: "indexnow", label: t("sites.indexnowTab") },
+        ].map((t) => (
           <button key={t.id} onClick={() => setTab(t.id)}
             style={{ flex: 1, padding: "8px 12px", border: "none",
               borderRadius: 8, cursor: "pointer", fontSize: 13,
@@ -122,11 +124,11 @@ export const EditSiteModal = memo(function EditSiteModal({
       {/* Вкладка: Основне */}
       {tab === "info" && (
         <>
-          <Field label="Домен сайту" hint="Без https:// — наприклад: myshop.ua">
+          <Field label={t("sites.domainField")} hint={t("sites.domainHint")}>
             <Input value={domain} onChange={e => setDomain(e.target.value)}
               placeholder="myshop.ua"/>
           </Field>
-          <Field label="URL Sitemap.xml" hint="Повна адреса з https://...">
+          <Field label={t("sites.sitemapField")} hint={t("sites.sitemapHint")}>
             <Input value={sitemap} onChange={e => setSitemap(e.target.value)}
               placeholder="https://myshop.ua/sitemap.xml"/>
           </Field>
@@ -141,8 +143,7 @@ export const EditSiteModal = memo(function EditSiteModal({
               border: "1px solid rgba(255,208,96,0.2)",
               borderRadius: 10, padding: "10px 14px", marginBottom: 16,
               fontSize: 13, color: C.gold, lineHeight: 1.6 }}>
-              ⚠ Цей сайт не має Service Account.
-              Без нього запуск індексації неможливий.
+              ⚠ {t("sites.noSaWarning")}
             </div>
           )}
           {hasSa && (
@@ -150,10 +151,10 @@ export const EditSiteModal = memo(function EditSiteModal({
               border: "1px solid rgba(0,255,136,0.15)",
               borderRadius: 10, padding: "10px 14px", marginBottom: 16,
               fontSize: 13, color: C.green }}>
-              ✅ Service Account підключений. Вставте новий JSON щоб замінити.
+              {t("sites.hasSaInfo")}
             </div>
           )}
-          <Field label="Google Service Account JSON"
+          <Field label={t("sites.saField")}
             hint={<>Отримайте в <a href="https://console.cloud.google.com"
               target="_blank" style={{ color: C.green }}>Google Cloud Console</a>.{" "}
               <a href="/docs/" style={{ color: C.green }}>Інструкція →</a></>}>
