@@ -55,7 +55,7 @@ export const EditSiteModal = memo(function EditSiteModal({
       if (!obj.client_email || !obj.private_key)
         { setError(t("sites.saMissingFields")); return; }
       } catch {
-        setError("Невалідний JSON"); return;
+        setError(t("sites.saInvalidJson")); return;
       }
     }
 
@@ -155,9 +155,13 @@ export const EditSiteModal = memo(function EditSiteModal({
             </div>
           )}
           <Field label={t("sites.saField")}
-            hint={<>Отримайте в <a href="https://console.cloud.google.com"
-              target="_blank" style={{ color: C.green }}>Google Cloud Console</a>.{" "}
-              <a href="/docs/" style={{ color: C.green }}>Інструкція →</a></>}>
+            hint={<> 
+              {t("sites.saGetFrom")}{" "}
+              <a href="https://console.cloud.google.com"
+                target="_blank" style={{ color: C.green }}>Google Cloud Console</a>.{" "}
+              {t("sites.saDocsLinkText")}{" "}
+              <a href="/docs/" style={{ color: C.green }}>{t("sites.saDocsLink")}</a>
+            </>}>
             <Textarea
               value={sa}
               onChange={e => setSa(e.target.value)}
@@ -260,8 +264,8 @@ export const EditSiteModal = memo(function EditSiteModal({
             return (
               <div style={{ marginBottom: 14 }}>
                 <div style={{ fontSize: 12, color: C.muted, marginBottom: 14, lineHeight: 1.5 }}>
-                  <strong style={{ color: "#00d4ff" }}>IndexNow</strong> — дозволяє миттєво повідомляти Bing, Yandex та DuckDuckGo про нові сторінки.
-                  Для верифікації потрібно розмістити файл-ключ на вашому сайті.
+                  <strong style={{ color: "#00d4ff" }}>IndexNow</strong> — {t("sites.indexNowDesc")}
+                  {t("sites.indexNowStepsIntro")}
                 </div>
 
                 {steps.map(({ n, text, value, copyLabel, extra }) => (
@@ -281,12 +285,12 @@ export const EditSiteModal = memo(function EditSiteModal({
                         {extra
                           ? <a href={extra} target="_blank" rel="noopener noreferrer"
                               style={{ ...codeStyle, color: "#00d4ff", textDecoration: "none" }}
-                              title="Відкрити в новій вкладці">{value}</a>
+                              title={t("sites.copyFile")}>{value}</a>
                           : <span style={codeStyle}>{value}</span>}
-                        {iconBtn(() => copy(value, copyLabel), "📋", `Копіювати ${copyLabel}`)}
+                        {iconBtn(() => copy(value, copyLabel), "📋", t("sites.copyLabel", { label: copyLabel }))}
                         {extra && (
                           <a href={extra} target="_blank" rel="noopener noreferrer"
-                            title="Відкрити в новій вкладці"
+                            title={t("sites.copyFile")}
                             style={{
                               flexShrink: 0, width: 24, height: 24,
                               display: "flex", alignItems: "center", justifyContent: "center",
