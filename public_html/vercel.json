@@ -97,6 +97,16 @@
   ],
   "redirects": [
     {
+      "source": "/privacy-policy",
+      "destination": "/privacy-policy.html",
+      "permanent": true
+    },
+    {
+      "source": "/privacy-policy/",
+      "destination": "/privacy-policy.html",
+      "permanent": true
+    },
+    {
       "source": "/blog/create-a-landing-page-that-performs-great/",
       "destination": "/blog/create-a-landing-page-that-performs-great.html",
       "permanent": true
