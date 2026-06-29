@@ -8,8 +8,8 @@ Object.keys(translations).forEach(lng => {
 });
 
 i18n.use(initReactI18next).init({
-  lng: localStorage.getItem("lang") || "uk",
-  fallbackLng: "uk",
+  lng: localStorage.getItem("lang") || "en",
+  fallbackLng: "en",
   interpolation: { escapeValue: false, prefix: "{", suffix: "}" },
   ns: ["translation"],
   defaultNS: "translation",
