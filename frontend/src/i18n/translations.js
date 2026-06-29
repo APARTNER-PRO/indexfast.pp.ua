@@ -172,7 +172,7 @@ const translations = {
       run: "Запустити",
       toggle: "Змінити статус",
       url: "URL",
-      sitemap: "Sitemap",
+      sitemap: "Карта сайту",
       limitReached: "Досягнуто ліміту сайтів для вашого тарифу",
       gscIntegration: "GSC інтеграція",
       importGsc: "Імпортувати з GSC",
