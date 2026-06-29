@@ -2,5 +2,7 @@
 <IfModule mod_rewrite.c>
     RewriteEngine On
     RewriteRule ^starting-a-career-in-web-design/$ /blog/starting-a-career-in-web-design.html [R=301,L]
-    RewriteRule ^create-a-landing-page-that-performs-great/$ /blog/create-a-landing-page-that-performs-great.html [R=301,L]
+      RewriteRule ^create-a-landing-page-that-performs-great/$ /blog/create-a-landing-page-that-performs-great.html [R=301,L]
+      RewriteRule ^how-can-designers-prepare-for-the-future$ /blog/how-can-designers-prepare-for-the-future.html [R=301,L]
+      RewriteRule ^how-can-designers-prepare-for-the-future/$ /blog/how-can-designers-prepare-for-the-future.html [R=301,L]
 </IfModule>
