@@ -282,13 +282,13 @@ function ChartLegend({ color }) {
     <div style={{ display: "flex", gap: 16, fontSize: 11, color: "rgba(255,255,255,0.45)", marginTop: 8 }}>
       <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
         <svg width="20" height="2"><line x1="0" y1="1" x2="20" y2="1" stroke={color} strokeWidth="2"/></svg>
-        Поточний period
+         {t("gsc.currentPeriod")}
       </div>
       <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
         <svg width="20" height="2">
           <line x1="0" y1="1" x2="20" y2="1" stroke={color} strokeWidth="1.5" strokeDasharray="4 3" strokeOpacity="0.5"/>
         </svg>
-        Попередній period
+         {t("gsc.previousPeriod")}
       </div>
     </div>
   );
@@ -549,12 +549,12 @@ export default memo(function GscMetrics({ sites, onImportGsc }) {
               {chartQ.isLoading ? (
                 <div style={{ height: CHART_H, display: "flex", alignItems: "center",
                   justifyContent: "center", color: C.muted, fontSize: 13 }}>
-                  Завантажуємо дані графіку…
+                  {t("gsc.loadingChart")}
                 </div>
               ) : chartQ.error ? (
                 <div style={{ height: CHART_H, display: "flex", alignItems: "center", flexDirection: "column", gap: 8,
                   justifyContent: "center", color: C.red, fontSize: 13 }}>
-                  <div>Помилка завантаження графіку</div>
+                  <div>{t("gsc.chartError")}</div>
                   <div style={{ opacity: 0.6, fontSize: 11, maxWidth: "80%", textAlign: "center" }}>
                     {chartQ.error.message}
                   </div>
@@ -562,7 +562,7 @@ export default memo(function GscMetrics({ sites, onImportGsc }) {
               ) : currentData.length === 0 ? (
                 <div style={{ height: CHART_H, display: "flex", alignItems: "center",
                   justifyContent: "center", color: C.muted, fontSize: 13 }}>
-                  Немає даних для графіку
+                  {t("gsc.noChartData")}
                 </div>
               ) : (
                 <>
@@ -579,13 +579,13 @@ export default memo(function GscMetrics({ sites, onImportGsc }) {
 
             {/* ── Devices block ── */}
             <div style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 16, padding: "20px" }}>
-              <div style={{ fontSize: 13, fontWeight: 800, color: C.white, marginBottom: 16, textTransform: "uppercase", letterSpacing: "0.05em" }}>Пристрої (Кліки)</div>
+              <div style={{ fontSize: 13, fontWeight: 800, color: C.white, marginBottom: 16, textTransform: "uppercase", letterSpacing: "0.05em" }}>{t("gsc.devicesTitle")}</div>
               {devicesQ.isLoading ? (
-                <div style={{ color: C.muted, fontSize: 12, textAlign: "center", marginTop: 40 }}>Завантаження...</div>
+                <div style={{ color: C.muted, fontSize: 12, textAlign: "center", marginTop: 40 }}>{t("gsc.loadingDevices")}</div>
               ) : devicesQ.error ? (
-                <div style={{ color: C.red, fontSize: 12, textAlign: "center", marginTop: 40 }}>Помилка</div>
+                <div style={{ color: C.red, fontSize: 12, textAlign: "center", marginTop: 40 }}>{t("gsc.devicesError")}</div>
               ) : !devicesQ.data?.devices?.length ? (
-                <div style={{ color: C.muted, fontSize: 12, textAlign: "center", marginTop: 40 }}>Немає даних</div>
+                <div style={{ color: C.muted, fontSize: 12, textAlign: "center", marginTop: 40 }}>{t("gsc.noDevicesData")}</div>
               ) : (
                 <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
                   {devicesQ.data.devices.map(d => {
@@ -594,7 +594,7 @@ export default memo(function GscMetrics({ sites, onImportGsc }) {
                     const isMobile = d.device === "MOBILE";
                     const isTablet = d.device === "TABLET";
                     const devColor = isMobile ? "#ff6b9d" : isTablet ? "#ffd060" : "#5b8cff";
-                    const label = isMobile ? "Мобільні" : isTablet ? "Планшети" : "ПК";
+                    const label = isMobile ? t("gsc.mobile") : isTablet ? t("gsc.tablet") : t("gsc.desktop");
                     
                     return (
                       <div key={d.device}>
@@ -606,8 +606,8 @@ export default memo(function GscMetrics({ sites, onImportGsc }) {
                           <div style={{ width: `${pct}%`, height: "100%", background: devColor, borderRadius: 4, transition: "width 0.5s ease-out" }} />
                         </div>
                         <div style={{ display: "flex", justifyContent: "space-between", fontSize: 10, marginTop: 4, color: "rgba(255,255,255,0.3)" }}>
-                          <span>CTR: {fmtCtr(d.ctr)}</span>
-                          <span>Поз: {fmtPos(d.position)}</span>
+                          <span>{t("gsc.ctrLabel")} {fmtCtr(d.ctr)}</span>
+                          <span>{t("gsc.posLabel")} {fmtPos(d.position)}</span>
                         </div>
                       </div>
                     );
