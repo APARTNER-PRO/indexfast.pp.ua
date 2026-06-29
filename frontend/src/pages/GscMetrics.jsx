@@ -8,19 +8,6 @@ import i18n from "../i18n/index.js";
 const t = i18n.t.bind(i18n);
 
 /* ─── Constants ─────────────────────────────────────── */
-const PERIODS = [
-  { label: "7 days",    days: 7  },
-  { label: "1 month",   days: 30 },
-  { label: "2 months",  days: 60 },
-  { label: "3 months",  days: 90 },
-];
-
-const METRICS = [
-  { key: "clicks",      label: t("gsc.clicks"),       color: "#00ff88", fmt: fmtMetric  },
-  { key: "impressions", label: t("gsc.impressions"),  color: "#5b8cff", fmt: fmtMetric  },
-  { key: "ctr",         label: t("gsc.ctr"),         color: "#ffd060", fmt: fmtCtr     },
-  { key: "position",    label: t("gsc.position"),     color: "#ff6b9d", fmt: fmtPos     },
-];
 
 const COUNTRY_FLAGS = {
   "UKR": "🇺🇦", "USA": "🇺🇸", "POL": "🇵🇱", "DEU": "🇩🇪", "GBR": "🇬🇧",
@@ -314,13 +301,27 @@ export default memo(function GscMetrics({ sites, onImportGsc }) {
   const [chartSiteId, setChartSiteId] = useState("all");
   const [activeTab, setActiveTab] = useState("overview");
   const [searchDomain, setSearchDomain] = useState("");
-  const [, setTick] = useState(0);
+  const [_langKey, setTick] = useState(0);
 
   useEffect(() => {
     const handler = () => setTick(t => t + 1);
     i18n.on("languageChanged", handler);
     return () => i18n.off("languageChanged", handler);
   }, []);
+
+  const PERIODS = [
+    { label: t("gsc.days7"),      days: 7  },
+    { label: t("gsc.days1month"), days: 30 },
+    { label: t("gsc.days2months"), days: 60 },
+    { label: t("gsc.days3months"), days: 90 },
+  ];
+
+  const METRICS = [
+    { key: "clicks",      label: t("gsc.clicks"),       color: "#00ff88", fmt: fmtMetric  },
+    { key: "impressions", label: t("gsc.impressions"),  color: "#5b8cff", fmt: fmtMetric  },
+    { key: "ctr",         label: t("gsc.ctr"),         color: "#ffd060", fmt: fmtCtr     },
+    { key: "position",    label: t("gsc.position"),     color: "#ff6b9d", fmt: fmtPos     },
+  ];
 
   const siteIds = useMemo(() => sites.map(s => s.id), [sites]);
   const enabled = siteIds.length > 0;
