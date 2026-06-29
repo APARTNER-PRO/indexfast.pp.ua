@@ -90,7 +90,7 @@ export default memo(function Overview({
         {[
           {
             label: t("overview.urlsSentToday"), value: today.sent,
-            sub: `${today.delta >= 0 ? "+" : ""}${today.delta} vs вчора`,
+            sub: `${today.delta >= 0 ? "+" : ""}${today.delta} vs ${t("common.yesterday")}`,
             subColor: today.delta >= 0 ? C.green : C.red, accent: C.green
           },
           {
@@ -286,7 +286,7 @@ const LogPreview = memo(function LogPreview({ logs, t }) {
             </span>
             <span style={{ color: C.muted, fontSize: 10, whiteSpace: "nowrap", flexShrink: 0,
               marginLeft: "auto" }}>
-              {new Date(l.created_at).toLocaleTimeString("uk-UA", { hour: "2-digit", minute: "2-digit" })}
+              {new Date(l.created_at).toLocaleTimeString(i18n.language || "uk-UA", { hour: "2-digit", minute: "2-digit" })}
             </span>
           </span>
         </div>
