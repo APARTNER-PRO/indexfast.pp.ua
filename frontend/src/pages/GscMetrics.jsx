@@ -84,7 +84,7 @@ function LineChart({ currentData, previousData, metricKey, color, fmt }) {
   const maxV = Math.max(1, ...allVals);
   const range = maxV - minV || 1;
 
-  const fmt   = fmt ?? fmtMetric;
+  const resolvedFmt = fmt ?? fmtMetric;
   const n     = Math.max(currentData.length, 1);
 
   // Responsive width via viewBox
