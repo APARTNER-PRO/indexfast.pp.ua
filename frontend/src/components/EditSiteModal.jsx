@@ -50,10 +50,10 @@ export const EditSiteModal = memo(function EditSiteModal({
     if (trimSa) {
       try {
         const obj = JSON.parse(trimSa);
-        if (obj?.type !== "service_account")
-          { setError('Тип має бути "service_account"'); return; }
-        if (!obj.client_email || !obj.private_key)
-          { setError("Відсутній client_email або private_key"); return; }
+      if (obj?.type !== "service_account")
+        { setError(t("sites.saInvalidType")); return; }
+      if (!obj.client_email || !obj.private_key)
+        { setError(t("sites.saMissingFields")); return; }
       } catch {
         setError("Невалідний JSON"); return;
       }
@@ -73,7 +73,7 @@ export const EditSiteModal = memo(function EditSiteModal({
       if (res?.site) setLocalSite(res.site);
       
       qc.invalidateQueries({ queryKey: KEYS.stats });
-      showToast?.("✓ Сайт оновлено");
+      showToast?.(t("sites.siteUpdated"));
       
       // Якщо IndexNow щойно увімкнули, залишаємо модалку відкритою на вкладці indexnow, щоб показати згенерований ключ
       if (indexnowEnabled && !(localSite || site).indexnow_enabled) {
@@ -82,7 +82,7 @@ export const EditSiteModal = memo(function EditSiteModal({
         onClose();
       }
     } catch (e) {
-      setError(e.message || "Помилка збереження");
+      setError(e.message || t("common.saveError"));
     } finally {
       setLoading(false);
     }
