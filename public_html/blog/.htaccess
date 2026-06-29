@@ -1,0 +1,5 @@
+# Redirect /blog/starting-a-career-in-web-design/ to .html
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^starting-a-career-in-web-design/$ /blog/starting-a-career-in-web-design.html [R=301,L]
+</IfModule>
