@@ -619,10 +619,10 @@ export default memo(function GscMetrics({ sites, onImportGsc }) {
 
           {/* ── Sites table ── */}
           <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "center", marginBottom: 16, gap: 12 }}>
-            <h3 style={{ fontSize: 16, fontWeight: 700 }}>Статистика сайтів</h3>
+            <h3 style={{ fontSize: 16, fontWeight: 700 }}>{t("gsc.sitesStats")}</h3>
             <input 
               type="text" 
-              placeholder="Пошук по домену..." 
+              placeholder={t("gsc.searchPlaceholder")} 
               value={searchDomain} 
               onChange={e => setSearchDomain(e.target.value)}
               style={{
@@ -639,13 +639,13 @@ export default memo(function GscMetrics({ sites, onImportGsc }) {
                 <thead>
                   <tr style={{ borderBottom: `1px solid ${C.border}`, background: "rgba(255,255,255,0.02)" }}>
                     {[
-                      ["domain",     "Сайт"],
-                      ["gsc_url",    "GSC resource"],
-                      ["impressions","Покази"],
-                      ["clicks",     "Кліки"],
-                      ["ctr",        "CTR"],
-                      ["position",   "Позиція"],
-                      ["updated_at", "Оновлено"],
+                      ["domain",     t("gsc.site")],
+                      ["gsc_url",    t("gsc.gscResource")],
+                      ["impressions",t("gsc.impressions")],
+                      ["clicks",     t("gsc.clicks")],
+                      ["ctr",        t("gsc.ctr")],
+                      ["position",   t("gsc.position")],
+                      ["updated_at", t("gsc.updated")],
                     ].map(([key, label]) => (
                       <th key={key} onClick={() => changeSort(key)}
                         style={{ padding: "12px 16px", textAlign: "left", color: sort.key === key ? C.green : C.muted,
@@ -679,7 +679,7 @@ export default memo(function GscMetrics({ sites, onImportGsc }) {
                         <div style={{ fontWeight: 700, color: C.white }}>{site.domain}</div>
                         {missingRow && (
                           <div style={{ fontSize: 11, color: C.gold, marginTop: 3 }}>
-                            Немає даних: {missingRow.reason}
+                            {t("gsc.missingData", { reason: missingRow.reason })}
                           </div>
                         )}
                       </td>
