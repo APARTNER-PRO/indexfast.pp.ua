@@ -747,27 +747,27 @@ export default memo(function GscMetrics({ sites, onImportGsc }) {
         return (
           <div style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 16, overflow: "hidden" }}>
             {queriesQ.isLoading ? (
-              <div style={{ padding: 40, textAlign: "center", color: C.muted }}>Завантажуємо ключові запити...</div>
+               <div style={{ padding: 40, textAlign: "center", color: C.muted }}>{t("gsc.loadingQueries")}</div>
             ) : queriesQ.error ? (
               <div style={{ padding: 40, textAlign: "center", color: C.red }}>
-                Помилка завантаження запитів<br/>
+                {t("gsc.queriesError")}<br/>
                 <small style={{ opacity: 0.6 }}>{queriesQ.error.message}</small>
               </div>
             ) : !sortedQueries.length ? (
-              <div style={{ padding: 40, textAlign: "center", color: C.muted }}>Немає даних по запитах за цей period</div>
+              <div style={{ padding: 40, textAlign: "center", color: C.muted }}>{t("gsc.noQueriesData")}</div>
             ) : (
               <div style={{ overflowX: "auto" }}>
                 <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
                   <thead>
                     <tr style={{ borderBottom: `1px solid ${C.border}`, background: "rgba(255,255,255,0.02)" }}>
-                      <th style={{ padding: "12px 16px", textAlign: "left", color: C.muted, fontSize: 10, fontWeight: 800, letterSpacing: "0.08em", textTransform: "uppercase", whiteSpace: "nowrap" }}>Запит</th>
+                      <th style={{ padding: "12px 16px", textAlign: "left", color: C.muted, fontSize: 10, fontWeight: 800, letterSpacing: "0.08em", textTransform: "uppercase", whiteSpace: "nowrap" }}>{t("gsc.query")}</th>
                       {chartSiteId === "all" && (
-                        <th style={{ padding: "12px 16px", textAlign: "left", color: C.muted, fontSize: 10, fontWeight: 800, letterSpacing: "0.08em", textTransform: "uppercase", whiteSpace: "nowrap" }}>Сайт</th>
+                        <th style={{ padding: "12px 16px", textAlign: "left", color: C.muted, fontSize: 10, fontWeight: 800, letterSpacing: "0.08em", textTransform: "uppercase", whiteSpace: "nowrap" }}>{t("gsc.site")}</th>
                       )}
-                      <th style={thStyle("clicks")} onClick={() => toggleQuerySort("clicks")}>Кліки{qSortIcon("clicks")}</th>
-                      <th style={thStyle("impressions")} onClick={() => toggleQuerySort("impressions")}>Покази{qSortIcon("impressions")}</th>
-                      <th style={thStyle("ctr")} onClick={() => toggleQuerySort("ctr")}>CTR{qSortIcon("ctr")}</th>
-                      <th style={thStyle("position")} onClick={() => toggleQuerySort("position")}>Позиція{qSortIcon("position")}</th>
+                      <th style={thStyle("clicks")} onClick={() => toggleQuerySort("clicks")}>{t("gsc.clicks")}{qSortIcon("clicks")}</th>
+                      <th style={thStyle("impressions")} onClick={() => toggleQuerySort("impressions")}>{t("gsc.impressions")}{qSortIcon("impressions")}</th>
+                      <th style={thStyle("ctr")} onClick={() => toggleQuerySort("ctr")}>{t("gsc.ctr")}{qSortIcon("ctr")}</th>
+                      <th style={thStyle("position")} onClick={() => toggleQuerySort("position")}>{t("gsc.position")}{qSortIcon("position")}</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -818,10 +818,10 @@ export default memo(function GscMetrics({ sites, onImportGsc }) {
         return (
           <div style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 16, overflow: "hidden" }}>
             {pagesQ.isLoading ? (
-              <div style={{ padding: 40, textAlign: "center", color: C.muted }}>Завантажуємо топ сторінок...</div>
+              <div style={{ padding: 40, textAlign: "center", color: C.muted }}>{t("gsc.loadingPages")}</div>
             ) : pagesQ.error ? (
               <div style={{ padding: 40, textAlign: "center", color: C.red }}>
-                Помилка завантаження сторінок<br/>
+                {t("gsc.pagesError")}<br/>
                 <small style={{ opacity: 0.6 }}>{pagesQ.error.message}</small>
               </div>
             ) : !sortedPages.length ? (
