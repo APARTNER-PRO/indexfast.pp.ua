@@ -171,15 +171,15 @@ export const EditSiteModal = memo(function EditSiteModal({
               const obj = JSON.parse(sa);
               if (obj?.type !== "service_account")
                 return <p style={{ fontSize: 12, color: C.red, marginTop: -8, marginBottom: 12 }}>
-                  ✕ type має бути "service_account"</p>;
+                  ✕ {t("sites.saInvalidType")}</p>;
               if (!obj.client_email || !obj.private_key)
                 return <p style={{ fontSize: 12, color: C.red, marginTop: -8, marginBottom: 12 }}>
-                  ✕ Відсутній client_email або private_key</p>;
+                  ✕ {t("sites.saMissingFields")}</p>;
               return <p style={{ fontSize: 12, color: C.green, marginTop: -8, marginBottom: 12 }}>
-                ✓ JSON валідний · {obj.client_email}</p>;
+                {t("sites.saValidPrefix")} · {obj.client_email}</p>;
             } catch {
               return <p style={{ fontSize: 12, color: C.red, marginTop: -8, marginBottom: 12 }}>
-                ✕ Невалідний JSON</p>;
+                ✕ {t("sites.saInvalidJson")}</p>;
             }
           })()}
         </>
@@ -211,7 +211,7 @@ export const EditSiteModal = memo(function EditSiteModal({
             const filename = `${key}.txt`;
             const fileUrl  = `https://${currentSite.domain}/${filename}`;
             const copy = (text, label) =>
-              navigator.clipboard.writeText(text).then(() => showToast?.(`✓ ${label} скопійовано`));
+              navigator.clipboard.writeText(text).then(() => showToast?.(`✓ ${t("sites.copyLabel", { label })}`));
 
             const copyRowStyle = {
               display: "flex", alignItems: "center", gap: 6, marginTop: 6,
@@ -329,10 +329,10 @@ export const EditSiteModal = memo(function EditSiteModal({
       {/* Кнопки */}
       <div style={{ display: "flex", gap: 10, marginTop: 8 }}>
         <Btn variant="ghost" onClick={onClose} disabled={loading} style={{ flex: 1 }}>
-          Скасувати
+          {t("common.cancel")}
         </Btn>
         <Btn variant="primary" loading={loading} onClick={save} style={{ flex: 2 }}>
-          ✓ Зберегти
+          ✓ {t("common.save")}
         </Btn>
       </div>
     </Modal>
