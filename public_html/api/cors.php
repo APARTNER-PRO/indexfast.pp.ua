@@ -7,7 +7,7 @@
 //   require_once __DIR__ . '/cors.php';
 //
 // Конфігурація через .env:
-//   CORS_ORIGINS=https://app.indexfast.pp.ua,https://indexfast.pp.ua
+//   CORS_ORIGINS=https://app.indexfast.pro,https://indexfast.pro
 //   CORS_ENABLED=true
 //
 // Якщо CORS_ORIGINS=* — дозволяє всі домени (тільки для розробки!)

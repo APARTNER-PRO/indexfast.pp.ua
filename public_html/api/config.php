@@ -53,7 +53,7 @@ define('DB_CHARSET', 'utf8mb4');
 //  APP
 // ─────────────────────────────────────────────
 define('APP_NAME', 'IndexFast');
-define('APP_URL',  env('APP_URL',  'https://indexfast.pp.ua'));
+define('APP_URL',  env('APP_URL',  'https://indexfast.pro'));
 define('APP_ENV',  env('APP_ENV',  'production'));
 define('APP_EMAIL', env('APP_EMAIL', 'indexfastapp@gmail.com'));
 define('DEFAULT_CURRENCY', env('DEFAULT_CURRENCY', 'UAH'));
@@ -83,13 +83,13 @@ define('JWT_REFRESH_TTL', 60 * 60 * 24 * 30);
 //  CORS / FRONTEND_URL
 //
 //  FRONTEND_URL може містити ОДИН або КІЛЬКА доменів через кому:
-//    FRONTEND_URL=https://indexfast.pp.ua
-//    FRONTEND_URL=https://indexfast.pp.ua,https://app.indexfast.com
+//    FRONTEND_URL=https://indexfast.pro
+//    FRONTEND_URL=https://indexfast.pro,https://app.indexfast.com
 //
 //  CORS_ORIGINS — масив дозволених origins для middleware.php
 //  FRONTEND_URL — перший домен (для посилань в email тощо)
 // ─────────────────────────────────────────────
-$_frontendRaw = env('FRONTEND_URL', 'https://indexfast.pp.ua');
+$_frontendRaw = env('FRONTEND_URL', 'https://indexfast.pro');
 
 // Розбиваємо на масив, фільтруємо порожні
 $_corsArray = array_values(array_filter(
@@ -100,7 +100,7 @@ define('CORS_ORIGINS',  $_corsArray);
 define('FRONTEND_URLS', $_frontendRaw);
 
 // FRONTEND_URL — перший з масиву (для email-лінків, redirect_uri тощо)
-define('FRONTEND_URL', !empty($_corsArray) ? $_corsArray[0] : 'https://indexfast.pp.ua');
+define('FRONTEND_URL', !empty($_corsArray) ? $_corsArray[0] : 'https://indexfast.pro');
 
 // ─────────────────────────────────────────────
 //  GOOGLE OAUTH
@@ -113,7 +113,7 @@ define('GOOGLE_SCOPES',        'openid email profile');
 // ─────────────────────────────────────────────
 //  EMAIL (SMTP)
 // ─────────────────────────────────────────────
-define('MAIL_FROM',      env('MAIL_FROM',      'noreply@indexfast.pp.ua'));
+define('MAIL_FROM',      env('MAIL_FROM',      'noreply@indexfast.pro'));
 define('MAIL_FROM_NAME', env('MAIL_FROM_NAME', APP_NAME));
 define('SMTP_HOST',      env('SMTP_HOST',      'smtp.gmail.com'));
 define('SMTP_PORT',      env('SMTP_PORT',      587));

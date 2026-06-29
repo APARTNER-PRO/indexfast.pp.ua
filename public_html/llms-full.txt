@@ -38,7 +38,7 @@ IndexFast is a professional SEO tool designed to solve the problem of slow Googl
 - SaaS & Startups (quick market entry).
 
 ## Usage Steps
-1. Register at indexfast.pp.ua.
+1. Register at indexfast.pro.
 2. Connect Google Search Console and upload Service Account JSON key.
 3. Provide Sitemap URL.
 4. Run indexing and monitor progress in the dashboard.
@@ -46,4 +46,4 @@ IndexFast is a professional SEO tool designed to solve the problem of slow Googl
 ## Contact & Support
 - Telegram: https://t.me/indexfastgoogle
 - Support Email: provided in the footer of the main site.
-- Status Page: https://indexfast.pp.ua/status.html
+- Status Page: https://indexfast.pro/status.html

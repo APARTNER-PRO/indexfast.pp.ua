@@ -55,6 +55,6 @@ export default defineConfig({
   },
 
   // VITE_API_URL береться автоматично з frontend/.env.local або frontend/.env
-  // Приклад: VITE_API_URL=https://api.indexfast.pp.ua/api
+  // Приклад: VITE_API_URL=https://api.indexfast.pro/api
   // Vite підставляє всі import.meta.env.VITE_* змінні при білді
 });

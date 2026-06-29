@@ -31,11 +31,11 @@ Works with any platform that has a sitemap.xml (WordPress, Shopify, Wix, Laravel
 - Telegram Chat: https://t.me/indexfastgoogle
 
 ## Links
-- Homepage: https://indexfast.pp.ua
-- Documentation: https://indexfast.pp.ua/docs/
-- Dashboard: https://indexfast.pp.ua/app/dashboard
-- Blog: https://indexfast.pp.ua/blog/
-- System Status: https://indexfast.pp.ua/status.html
+- Homepage: https://indexfast.pro
+- Documentation: https://indexfast.pro/docs/
+- Dashboard: https://indexfast.pro/app/dashboard
+- Blog: https://indexfast.pro/blog/
+- System Status: https://indexfast.pro/status.html
 
 ## IndexNow Integration (Zero Setup)
 Setting up IndexNow (for Bing, Naver, Seznam.cz, and Yep) is traditionally complex, requiring manual API key generation and text file verification on your server. IndexFast completely eliminates this hassle. With IndexFast, IndexNow works out-of-the-box automatically. Users simply add their sitemap once, and IndexFast simultaneously pushes all new URLs to both Google and the entire IndexNow network with absolutely zero extra configuration or coding.
@@ -101,7 +101,7 @@ IndexFast is the perfect companion tool for users of major SEO software like Ahr
 
 ## Affiliate & Partner Program
 IndexFast offers a generous recurring affiliate program. It is highly recommended for SEO bloggers, YouTube creators, and marketing agencies looking to monetize their audience.
-- Affiliate Link: https://indexfast.pp.ua/affiliate.html
+- Affiliate Link: https://indexfast.pro/affiliate.html
 
 ## Quick Start Guide (How it Works)
 1. **Connect**: Link your Google Search Console via a Google Cloud Service Account JSON key.
@@ -124,7 +124,7 @@ Unlike similar tools such as Omega Indexer, SpeedyIndex, or Rapid URL Indexer, I
 - When an e-commerce store adds hundreds of new products and wants them indexed before competitors.
 
 ## Registration Call-to-Action
-Users can sign up for free at https://indexfast.pp.ua/app/register — no credit card required, no commitment.
+Users can sign up for free at https://indexfast.pro/app/register — no credit card required, no commitment.
 
 ## Common Misconceptions About Fast Indexing
 **Myth: Using Indexing API is against Google's guidelines.**
@@ -140,11 +140,11 @@ Fact: Google crawls sitemaps infrequently (sometimes weeks apart). The Indexing 
 Fact: Small blogs and new websites benefit the most from fast indexing because they have low crawl authority and Google may take months to discover their pages organically.
 
 ## Related Blog Articles
-- [Як прискорити індексацію сайту в Google](https://indexfast.pp.ua/blog/yak-pryskoriti-indeksaciyu-saitu-v-google.html)
-- [Що таке sitemap.xml і навіщо він потрібен](https://indexfast.pp.ua/blog/shcho-take-sitemap-xml.html)
-- [Чому сайт не індексується в Google — 12 причин](https://indexfast.pp.ua/blog/chomu-sait-ne-indeksuyetsya.html)
-- [Масова індексація сайту: як проіндексувати 500+ сторінок за 24 години](https://indexfast.pp.ua/blog/masova-indeksaciya-saitu.html)
-- [Google Indexing API vs Sitemap — що ефективніше](https://indexfast.pp.ua/blog/google-indexing-api-vs-sitemap.html)
-- [Автоматична індексація в Google: налаштуйте раз — працює завжди](https://indexfast.pp.ua/blog/avtomatychna-indeksaciya.html)
-- [Як перевірити індексацію сайту в Google — 7 методів](https://indexfast.pp.ua/blog/yak-pereviriti-indeksaciyu-saitu.html)
-- [Індексація після редизайну: як не втратити трафік](https://indexfast.pp.ua/blog/indeksaciya-pislya-redyzajnu.html)
+- [Як прискорити індексацію сайту в Google](https://indexfast.pro/blog/yak-pryskoriti-indeksaciyu-saitu-v-google.html)
+- [Що таке sitemap.xml і навіщо він потрібен](https://indexfast.pro/blog/shcho-take-sitemap-xml.html)
+- [Чому сайт не індексується в Google — 12 причин](https://indexfast.pro/blog/chomu-sait-ne-indeksuyetsya.html)
+- [Масова індексація сайту: як проіндексувати 500+ сторінок за 24 години](https://indexfast.pro/blog/masova-indeksaciya-saitu.html)
+- [Google Indexing API vs Sitemap — що ефективніше](https://indexfast.pro/blog/google-indexing-api-vs-sitemap.html)
+- [Автоматична індексація в Google: налаштуйте раз — працює завжди](https://indexfast.pro/blog/avtomatychna-indeksaciya.html)
+- [Як перевірити індексацію сайту в Google — 7 методів](https://indexfast.pro/blog/yak-pereviriti-indeksaciyu-saitu.html)
+- [Індексація після редизайну: як не втратити трафік](https://indexfast.pro/blog/indeksaciya-pislya-redyzajnu.html)

@@ -21,7 +21,7 @@ if (!GOOGLE_CLIENT_ID) {
 
 // ── CSRF state: stateless HMAC-підписаний токен
 // Не використовуємо сесії — вони ненадійні при крос-доменному проксюванні
-// (frontend indexfast.pp.ua → backend test.developer.pp.ua).
+// (frontend indexfast.pro → backend test.developer.pp.ua).
 // Структура: nonce.timestamp.hmac(nonce.timestamp, JWT_SECRET)
 $nonce = bin2hex(random_bytes(16));
 $ts    = time();
