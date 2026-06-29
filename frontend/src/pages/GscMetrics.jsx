@@ -3,20 +3,23 @@ import { memo, useMemo, useState } from "react";
 import { Btn } from "../components/ui/index.jsx";
 import { useGscMetrics, useGscChart, useGscQueries, useGscPages, useGscDevices, useGscCountries } from "../hooks/useStats.js";
 import { C } from "../constants.js";
+import i18n from "../i18n/index.js";
+
+const t = i18n.t.bind(i18n);
 
 /* ─── Constants ─────────────────────────────────────── */
 const PERIODS = [
-  { label: "7 днів",   days: 7  },
-  { label: "1 місяць", days: 30 },
-  { label: "2 місяці", days: 60 },
-  { label: "3 місяці", days: 90 },
+  { label: "7 days",    days: 7  },
+  { label: "1 month",   days: 30 },
+  { label: "2 months",  days: 60 },
+  { label: "3 months",  days: 90 },
 ];
 
 const METRICS = [
-  { key: "clicks",      label: "Кліки",       color: "#00ff88", fmt: fmtMetric  },
-  { key: "impressions", label: "Покази",       color: "#5b8cff", fmt: fmtMetric  },
-  { key: "ctr",         label: "CTR",          color: "#ffd060", fmt: fmtCtr     },
-  { key: "position",    label: "Позиція",      color: "#ff6b9d", fmt: fmtPos     },
+  { key: "clicks",      label: t("gsc.clicks"),       color: "#00ff88", fmt: fmtMetric  },
+  { key: "impressions", label: t("gsc.impressions"),  color: "#5b8cff", fmt: fmtMetric  },
+  { key: "ctr",         label: t("gsc.ctr"),         color: "#ffd060", fmt: fmtCtr     },
+  { key: "position",    label: t("gsc.position"),     color: "#ff6b9d", fmt: fmtPos     },
 ];
 
 const COUNTRY_FLAGS = {
@@ -406,12 +409,12 @@ export default memo(function GscMetrics({ sites, onImportGsc }) {
             Google Search Console
           </h2>
           <div style={{ fontSize: 13, color: C.muted }}>
-            Покази, кліки, CTR і середня позиція по всіх сайтах
+            {t("gsc.subtitle")}
           </div>
         </div>
         {onImportGsc && (
           <Btn variant="outline" onClick={onImportGsc} style={{ padding: "8px 16px", fontSize: 13 }}>
-            Підключити / оновити GSC
+            {t("gsc.connectOrUpdate")}
           </Btn>
         )}
       </div>
@@ -420,7 +423,7 @@ export default memo(function GscMetrics({ sites, onImportGsc }) {
       <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "center", marginBottom: 20, gap: 16 }}>
         {/* Tabs */}
         <div className="gsc-tabs" style={{ background: "rgba(255,255,255,0.03)", padding: 4, borderRadius: 12, border: `1px solid ${C.border}` }}>
-          {[{ id: "overview", label: "Огляд та Графіки" }, { id: "queries", label: "Пошукові запити" }, { id: "pages", label: "Топ сторінки" }, { id: "countries", label: "Країни" }].map(tab => (
+          {[{ id: "overview", label: t("gsc.overviewAndCharts") }, { id: "queries", label: t("gsc.searchQueries") }, { id: "pages", label: t("gsc.topPages") }, { id: "countries", label: t("gsc.countries") }].map(tab => (
             <button key={tab.id} onClick={() => setActiveTab(tab.id)}
               style={{
                 padding: "8px 16px", background: activeTab === tab.id ? "rgba(255,255,255,0.08)" : "transparent",
@@ -442,7 +445,7 @@ export default memo(function GscMetrics({ sites, onImportGsc }) {
               outline: "none", cursor: "pointer", maxWidth: 220, textOverflow: "ellipsis"
             }}
           >
-            <option value="all" style={{ background: "#1a1d2e", color: "#fff" }}>Всі сайти (сумарно)</option>
+            <option value="all" style={{ background: "#1a1d2e", color: "#fff" }}>{t("gsc.allSitesTotal")}</option>
             {sortedRows.map(({ site }) => (
               <option key={site.id} value={site.id} style={{ background: "#1a1d2e", color: "#fff" }}>
                 {site.domain}
@@ -480,8 +483,8 @@ export default memo(function GscMetrics({ sites, onImportGsc }) {
         <div style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 16,
           padding: "40px 24px", textAlign: "center", color: C.muted }}>
           <div style={{ fontSize: 36, marginBottom: 12 }}>🌐</div>
-          <div style={{ color: C.white, fontWeight: 700, marginBottom: 6 }}>Сайти ще не додані</div>
-          <div>Додайте сайт або імпортуйте список із Google Search Console</div>
+          <div style={{ color: C.white, fontWeight: 700, marginBottom: 6 }}>{t("gsc.noSitesAdded")}</div>
+          <div>{t("gsc.addSiteOrImport")}</div>
         </div>
       )}
 
@@ -490,11 +493,11 @@ export default memo(function GscMetrics({ sites, onImportGsc }) {
           {/* ── Summary cards ── */}
           <div className="gsc-metrics-cards" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(160px,1fr))",
             gap: 12, marginBottom: 20 }}>
-            {[
-              { label: "Покази",        value: fmtMetric(totals.impressions), color: "#5b8cff", metricKey: "impressions", cur: totals.impressions, prev: prevTotals?.impressions },
-              { label: "Кліки",         value: fmtMetric(totals.clicks),      color: C.green,   metricKey: "clicks",      cur: totals.clicks,      prev: prevTotals?.clicks      },
-              { label: "CTR",           value: fmtCtr(ctr),                   color: C.gold,    metricKey: "ctr",         cur: ctr,                prev: prevCtr                 },
-              { label: "Сер. позиція",  value: fmtPos(avgPosition),           color: "#ff6b9d", metricKey: "position",    cur: avgPosition,        prev: prevAvgPos              },
+               {[
+                { label: t("gsc.impressions"), value: fmtMetric(totals.impressions), color: "#5b8cff", metricKey: "impressions", cur: totals.impressions, prev: prevTotals?.impressions },
+                { label: t("gsc.clicks"),      value: fmtMetric(totals.clicks),      color: C.green,   metricKey: "clicks",      cur: totals.clicks,      prev: prevTotals?.clicks      },
+                { label: t("gsc.ctr"),         value: fmtCtr(ctr),                   color: C.gold,    metricKey: "ctr",         cur: ctr,                prev: prevCtr                 },
+                { label: t("gsc.avgPosition"), value: fmtPos(avgPosition),           color: "#ff6b9d", metricKey: "position",    cur: avgPosition,        prev: prevAvgPos              },
             ].map(card => (
               <div key={card.label}
                 onClick={() => setActiveMetric(card.metricKey)}
