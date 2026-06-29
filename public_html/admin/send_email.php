@@ -46,7 +46,7 @@ try {
 </ul>
 
 <p style="text-align:center;margin:28px 0">
-  <a href="https://indexfast.pp.ua" style="background:#00ff88;color:#050508;padding:13px 28px;border-radius:100px;text-decoration:none;font-weight:700;font-family:sans-serif;font-size:15px;display:inline-block">Активувати знижку →</a>
+  <a href="https://indexfast.pro" style="background:#00ff88;color:#050508;padding:13px 28px;border-radius:100px;text-decoration:none;font-weight:700;font-family:sans-serif;font-size:15px;display:inline-block">Активувати знижку →</a>
 </p>
 
 <hr style="border:none;border-top:1px solid rgba(255,255,255,0.08);margin:24px 0">
@@ -69,7 +69,7 @@ try {
 <p style="margin:0 0 16px;font-size:15px;line-height:1.7;color:#c8c8d8">Спробуйте відправити ваші нові сторінки на індексацію прямо зараз та оцініть швидкість роботи оновленого сервісу.</p>
 
 <p style="text-align:center;margin:28px 0">
-  <a href="https://indexfast.pp.ua" style="background:#00ff88;color:#050508;padding:13px 28px;border-radius:100px;text-decoration:none;font-weight:700;font-family:sans-serif;font-size:15px;display:inline-block">Перейти до кабінету →</a>
+  <a href="https://indexfast.pro" style="background:#00ff88;color:#050508;padding:13px 28px;border-radius:100px;text-decoration:none;font-weight:700;font-family:sans-serif;font-size:15px;display:inline-block">Перейти до кабінету →</a>
 </p>
 
 <hr style="border:none;border-top:1px solid rgba(255,255,255,0.08);margin:24px 0">
@@ -107,7 +107,7 @@ try {
 </table>
 
 <p style="text-align:center;margin:28px 0">
-  <a href="https://indexfast.pp.ua" style="background:#00ff88;color:#050508;padding:13px 28px;border-radius:100px;text-decoration:none;font-weight:700;font-family:sans-serif;font-size:15px;display:inline-block">Почати індексацію →</a>
+  <a href="https://indexfast.pro" style="background:#00ff88;color:#050508;padding:13px 28px;border-radius:100px;text-decoration:none;font-weight:700;font-family:sans-serif;font-size:15px;display:inline-block">Почати індексацію →</a>
 </p>
 
 <hr style="border:none;border-top:1px solid rgba(255,255,255,0.08);margin:24px 0">
@@ -133,7 +133,7 @@ try {
 <p style="margin:0 0 16px;font-size:14px;line-height:1.7;color:#888">⚠ Якщо це були ви, ви можете проігнорувати цей лист. Якщо це були не ви — будь ласка, негайно змініть пароль у налаштуваннях вашого профілю для захисту даних.</p>
 
 <p style="text-align:center;margin:28px 0">
-  <a href="https://indexfast.pp.ua" style="background:#ffd060;color:#050508;padding:13px 28px;border-radius:100px;text-decoration:none;font-weight:700;font-family:sans-serif;font-size:15px;display:inline-block">Перевірити активність →</a>
+  <a href="https://indexfast.pro" style="background:#ffd060;color:#050508;padding:13px 28px;border-radius:100px;text-decoration:none;font-weight:700;font-family:sans-serif;font-size:15px;display:inline-block">Перевірити активність →</a>
 </p>
 
 <hr style="border:none;border-top:1px solid rgba(255,255,255,0.08);margin:24px 0">
@@ -159,7 +159,7 @@ try {
 <p style="margin:0 0 16px;font-size:14px;line-height:1.7;color:#888">Ваш акаунт залишається в безпеці. Однак, якщо ви не робили цієї спроби, ми рекомендуємо встановити більш складний пароль або переконатися, що ваша пошта захищена двофакторною автентифікацією.</p>
 
 <p style="text-align:center;margin:28px 0">
-  <a href="https://indexfast.pp.ua" style="background:#ff4d6d;color:#fff;padding:13px 28px;border-radius:100px;text-decoration:none;font-weight:700;font-family:sans-serif;font-size:15px;display:inline-block">Змінити пароль →</a>
+  <a href="https://indexfast.pro" style="background:#ff4d6d;color:#fff;padding:13px 28px;border-radius:100px;text-decoration:none;font-weight:700;font-family:sans-serif;font-size:15px;display:inline-block">Змінити пароль →</a>
 </p>
 
 <hr style="border:none;border-top:1px solid rgba(255,255,255,0.08);margin:24px 0">
@@ -670,7 +670,7 @@ h2 { font-size: .8rem; font-weight: 700; letter-spacing: .08em; text-transform: 
       $blocks = [
         ['🎯 Заголовок',         '<h2 style="margin:0 0 16px;font-size:22px;font-weight:800;color:#eeeef6">Ваш заголовок тут</h2>'],
         ['📝 Текст',             '<p style="margin:0 0 16px;font-size:15px;line-height:1.7;color:#c8c8d8">Ваш текст тут. Привіт, {{name}}!</p>'],
-        ['🟢 Кнопка CTA',       '<p style="text-align:center;margin:28px 0"><a href="https://indexfast.pp.ua" style="background:#00ff88;color:#050508;padding:13px 28px;border-radius:100px;text-decoration:none;font-weight:700;font-family:sans-serif;font-size:15px">Спробувати →</a></p>'],
+        ['🟢 Кнопка CTA',       '<p style="text-align:center;margin:28px 0"><a href="https://indexfast.pro" style="background:#00ff88;color:#050508;padding:13px 28px;border-radius:100px;text-decoration:none;font-weight:700;font-family:sans-serif;font-size:15px">Спробувати →</a></p>'],
         ['📦 Блок з рамкою',    '<div style="background:rgba(0,255,136,0.05);border:1px solid rgba(0,255,136,0.15);border-radius:12px;padding:20px;margin:20px 0"><p style="margin:0;font-size:14px;color:#c8c8d8">Важлива інформація тут</p></div>'],
         ['⭐ Список переваг',   '<ul style="padding:0;list-style:none;margin:0 0 16px"><li style="padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.06);font-size:14px;color:#c8c8d8">✅ Перевага одна</li><li style="padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.06);font-size:14px;color:#c8c8d8">✅ Перевага два</li><li style="padding:8px 0;font-size:14px;color:#c8c8d8">✅ Перевага три</li></ul>'],
         ['💰 Ціна / Оффер',     '<div style="text-align:center;padding:24px;background:rgba(255,208,96,0.06);border:1px solid rgba(255,208,96,0.2);border-radius:14px;margin:20px 0"><div style="font-size:36px;font-weight:800;color:#ffd060">₴990</div><div style="font-size:13px;color:#888;margin-top:4px">на місяць</div></div>'],

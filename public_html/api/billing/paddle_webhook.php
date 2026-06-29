@@ -3,7 +3,7 @@
 //  POST /api/billing/paddle_webhook.php
 //  Приймає Paddle Billing webhooks
 //  Налаштуйте в Paddle Dashboard → Notifications
-//  URL: https://indexfast.pp.ua/api/billing/paddle_webhook.php
+//  URL: https://indexfast.pro/api/billing/paddle_webhook.php
 //
 //  Оброблювані події:
 //  subscription.created    → активуємо план
@@ -265,7 +265,7 @@ function buildActivationEmail(string $name, string $plan, ?string $expiresAt): s
       </table>
       <p>Тепер вам доступні всі можливості плану. Перейдіть в кабінет щоб почати:</p>
       <p style="text-align:center;margin:28px 0">
-        <a href="https://indexfast.pp.ua/app/dashboard"
+        <a href="https://indexfast.pro/app/dashboard"
            style="background:#00ff88;color:#050508;padding:13px 28px;border-radius:100px;
                   text-decoration:none;font-weight:700;font-size:15px">
           Відкрити кабінет →
@@ -273,7 +273,7 @@ function buildActivationEmail(string $name, string $plan, ?string $expiresAt): s
       </p>
     </td></tr>
     <tr><td style="padding:16px 32px;border-top:1px solid rgba(255,255,255,0.06);font-size:12px;color:#555570;text-align:center">
-      © IndexFast · <a href="https://indexfast.pp.ua" style="color:#555570">indexfast.pp.ua</a>
+      © IndexFast · <a href="https://indexfast.pro" style="color:#555570">indexfast.pro</a>
     </td></tr>
     </table></td></tr></table></body></html>
     HTML;
@@ -302,7 +302,7 @@ function buildPaymentFailedEmail(string $name): string {
       </p>
     </td></tr>
     <tr><td style="padding:16px 32px;border-top:1px solid rgba(255,255,255,0.06);font-size:12px;color:#555570;text-align:center">
-      © IndexFast · <a href="https://indexfast.pp.ua" style="color:#555570">indexfast.pp.ua</a>
+      © IndexFast · <a href="https://indexfast.pro" style="color:#555570">indexfast.pro</a>
     </td></tr>
     </table></td></tr></table></body></html>
     HTML;

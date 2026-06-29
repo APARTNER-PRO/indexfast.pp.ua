@@ -54,7 +54,7 @@ function page(string $icon, string $title, string $msg, bool $isError = false): 
         <div class="icon">{$icon}</div>
         <h1>{$title}</h1>
         <p>{$msg}</p>
-        <a class="btn" href="https://indexfast.pp.ua">На головну</a>
+        <a class="btn" href="https://indexfast.pro">На головну</a>
       </div>
     </body>
     </html>

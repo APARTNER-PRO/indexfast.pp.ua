@@ -2,7 +2,7 @@
 // ══════════════════════════════════════════════
 //  IndexFast — db_check.php
 //  Запустити ОДИН РАЗ після деплою:
-//  https://indexfast.pp.ua/api/db_check.php?token=YOUR_SECRET
+//  https://indexfast.pro/api/db_check.php?token=YOUR_SECRET
 //
 //  Показує поточні параметри MySQL і дає рекомендації
 //  ВИДАЛИТИ або закрити після перевірки!

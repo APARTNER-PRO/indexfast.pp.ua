@@ -375,7 +375,7 @@ class Mailer {
                 <!-- Footer -->
                 <tr>
                   <td style="padding:20px 36px;border-top:1px solid rgba(255,255,255,0.06);font-size:12px;color:#555570;text-align:center">
-                    © IndexFast · <a href="https://indexfast.pp.ua" style="color:#555570">indexfast.pp.ua</a>
+                    © IndexFast · <a href="https://indexfast.pro" style="color:#555570">indexfast.pro</a>
                     {UNSUB_FOOTER}
                   </td>
                 </tr>

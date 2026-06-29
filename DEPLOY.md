@@ -93,7 +93,7 @@ cp .env.example .env
 ### 3.2 Заповни значення
 
 ```env
-APP_URL=https://indexfast.pp.ua   # твій домен
+APP_URL=https://indexfast.pro   # твій домен
 
 DB_HOST=localhost
 DB_NAME=indexfast_db              # назва бази з кроку 2.1
@@ -106,7 +106,7 @@ JWT_SECRET=вставити_32_символи_випадкового_рядка
 # SMTP — для листів підтвердження
 SMTP_USER=your@gmail.com
 SMTP_PASS=16_символів_app_password
-MAIL_FROM=noreply@indexfast.pp.ua
+MAIL_FROM=noreply@indexfast.pro
 ```
 
 ### 3.3 Де розмістити .env
@@ -138,7 +138,7 @@ MAIL_FROM=noreply@indexfast.pp.ua
 
 **Через FTP (FileZilla):**
 ```
-Host:     ftp.indexfast.pp.ua або IP хостингу
+Host:     ftp.indexfast.pro або IP хостингу
 Port:     21
 User:     FTP логін з hPanel
 Pass:     FTP пароль
@@ -247,20 +247,20 @@ npm run build
 ### 7.1 Перевір API
 Відкрий у браузері:
 ```
-https://indexfast.pp.ua/api/db_check.php?token=ТВІЙтокенЗ.env
+https://indexfast.pro/api/db_check.php?token=ТВІЙтокенЗ.env
 ```
 Має показати таблиці і ✅ для параметрів MySQL.
 Після перевірки — **видали** `public_html/api/db_check.php`.
 
 ### 7.2 Перевір авторизацію
 ```
-https://indexfast.pp.ua/auth.html
+https://indexfast.pro/auth.html
 ```
 Зареєструйся → має перенаправити на `/dashboard/`
 
 ### 7.3 Перевір лендінг
 ```
-https://indexfast.pp.ua/
+https://indexfast.pro/
 ```
 
 ### 7.4 Перевір воркер
@@ -287,7 +287,7 @@ https://indexfast.pp.ua/
 
 ### Google OAuth не працює
 → GOOGLE_CLIENT_ID і GOOGLE_CLIENT_SECRET не заповнені
-→ Authorized redirect URI в Google Console: `https://indexfast.pp.ua/api/auth/google/callback.php`
+→ Authorized redirect URI в Google Console: `https://indexfast.pro/api/auth/google/callback.php`
 
 ### SKIP LOCKED помилка
 → Хостинг має MySQL старіше 8.0
@@ -304,15 +304,15 @@ https://indexfast.pp.ua/
 
 | URL | Що |
 |-----|----|
-| `https://indexfast.pp.ua/` | Лендінг |
-| `https://indexfast.pp.ua/auth.html` | Вхід / Реєстрація |
-| `https://indexfast.pp.ua/dashboard/` | Особистий кабінет (React) |
-| `https://indexfast.pp.ua/api/auth/login.php` | API: логін |
-| `https://indexfast.pp.ua/api/auth/register.php` | API: реєстрація |
-| `https://indexfast.pp.ua/api/dashboard/stats.php` | API: статистика |
-| `https://indexfast.pp.ua/api/sites/index.php` | API: сайти |
-| `https://indexfast.pp.ua/api/indexing/run.php` | API: запуск індексації |
-| `https://indexfast.pp.ua/blog/` | Блог |
+| `https://indexfast.pro/` | Лендінг |
+| `https://indexfast.pro/auth.html` | Вхід / Реєстрація |
+| `https://indexfast.pro/dashboard/` | Особистий кабінет (React) |
+| `https://indexfast.pro/api/auth/login.php` | API: логін |
+| `https://indexfast.pro/api/auth/register.php` | API: реєстрація |
+| `https://indexfast.pro/api/dashboard/stats.php` | API: статистика |
+| `https://indexfast.pro/api/sites/index.php` | API: сайти |
+| `https://indexfast.pro/api/indexing/run.php` | API: запуск індексації |
+| `https://indexfast.pro/blog/` | Блог |
 
 ---
 
@@ -323,20 +323,20 @@ https://indexfast.pp.ua/
 1. Завантаж тільки папку `public_html/api/` на бекенд хостинг
 2. У `.env` бекенду вкажи:
    ```env
-   APP_URL=https://api.indexfast.pp.ua
-   FRONTEND_URL=https://indexfast.pp.ua
+   APP_URL=https://api.indexfast.pro
+   FRONTEND_URL=https://indexfast.pro
    ```
    `FRONTEND_URL` — домен(и) де розміщений frontend (для CORS).
    Кілька доменів через кому:
    ```env
-   FRONTEND_URL=https://indexfast.pp.ua,https://app.indexfast.com
+   FRONTEND_URL=https://indexfast.pro,https://app.indexfast.com
    ```
 
 ### Frontend — окремий хостинг (Vercel, Netlify, GitHub Pages)
 
 1. Створи файл `frontend/.env.local`:
    ```env
-   VITE_API_URL=https://api.indexfast.pp.ua/api
+   VITE_API_URL=https://api.indexfast.pro/api
    ```
 2. Збери React:
    ```bash
@@ -350,7 +350,7 @@ https://indexfast.pp.ua/
 
 Якщо `auth.html` на іншому домені ніж API, додай атрибут до `<body>`:
 ```html
-<body data-api-url="https://api.indexfast.pp.ua/api">
+<body data-api-url="https://api.indexfast.pro/api">
 ```
 
 ### Лендінг + Auth (статичний хостинг)
@@ -374,7 +374,7 @@ https://indexfast.pp.ua/
 
 ### Paddle Webhook
 В Paddle Dashboard → Notifications → New Notification:
-- URL: https://indexfast.pp.ua/api/billing/paddle_webhook.php
+- URL: https://indexfast.pro/api/billing/paddle_webhook.php
 - Events: subscription.created, subscription.activated, subscription.updated,
           subscription.canceled, subscription.payment_failed, transaction.completed
 - Скопіюйте Webhook Secret → PADDLE_WEBHOOK_SECRET в .env
