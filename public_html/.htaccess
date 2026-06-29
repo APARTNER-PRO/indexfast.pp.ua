@@ -21,6 +21,7 @@ RewriteRule ^storage/receipts/([^/]+)$ api/billing/serve_receipt.php?file=$1 [L,
 # ── 301 редіректи статичних сторінок
 RewriteRule ^privacy-policy$ /privacy-policy.html [R=301,L]
 RewriteRule ^privacy-policy/$ /privacy-policy.html [R=301,L]
+RewriteRule ^terms-and-conditions/$ /terms.html [R=301,L]
 
 # ── 301 редіректи старих дублікатів блогу
 RewriteRule ^blog-indexation\.html$ /blog/yak-pryskoriti-indeksaciyu-saitu-v-google.html [R=301,L]
