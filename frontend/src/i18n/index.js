@@ -10,7 +10,7 @@ Object.keys(translations).forEach(lng => {
 i18n.use(initReactI18next).init({
   lng: localStorage.getItem("lang") || "uk",
   fallbackLng: "uk",
-  interpolation: { escapeValue: false },
+  interpolation: { escapeValue: false, prefix: "{", suffix: "}" },
   ns: ["translation"],
   defaultNS: "translation",
   resources,
