@@ -97,6 +97,11 @@
   ],
   "redirects": [
     {
+      "source": "/blog",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
       "source": "/contact",
       "destination": "/contacts.html",
       "permanent": true
