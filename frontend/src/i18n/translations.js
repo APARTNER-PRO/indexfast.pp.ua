@@ -621,7 +621,7 @@ const translations = {
       indexNowDesc: "IndexNow allows instant notification of Bing, Yandex and DuckDuckGo about new pages.",
       indexNowStepsIntro: "To get a verification key and instructions, enable the option below and save the settings.",
       step1Text: "Create a text file named:",
-      step2Text: <>Paste <strong>only this line</strong> (your verification key):</>,
+      step2Text: "Paste only this line (your verification key):",
       step3Text: "Upload the file to the site root — it must be available at:",
       copyFile: "Open in new tab",
       enableIndexNow: "Enable IndexNow",
