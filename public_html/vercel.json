@@ -107,6 +107,11 @@
       "permanent": true
     },
     {
+      "source": "/terms-and-conditions/",
+      "destination": "/terms.html",
+      "permanent": true
+    },
+    {
       "source": "/blog/create-a-landing-page-that-performs-great/",
       "destination": "/blog/create-a-landing-page-that-performs-great.html",
       "permanent": true
