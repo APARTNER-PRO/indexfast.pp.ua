@@ -825,7 +825,7 @@ export default memo(function GscMetrics({ sites, onImportGsc }) {
                 <small style={{ opacity: 0.6 }}>{pagesQ.error.message}</small>
               </div>
             ) : !sortedPages.length ? (
-              <div style={{ padding: 40, textAlign: "center", color: C.muted }}>Немає даних по сторінках за цей period</div>
+              <div style={{ padding: 40, textAlign: "center", color: C.muted }}>{t("gsc.noPagesData")}</div>
             ) : (
               <div style={{ overflowX: "auto" }}>
                 <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
