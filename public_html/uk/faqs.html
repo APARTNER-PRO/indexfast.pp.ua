@@ -166,6 +166,49 @@
           </div></div>
         </div>
 
+<div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Чи працює IndexFast з Google Search Console на неанглійських сайтах?
+            <span class="faq-arrow">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <p><strong>Так.</strong> Google Search Console та Indexing API працюють з сайтами будь-якої мови. IndexFast використовується на 8 мовах (українська, російська, англійська, іспанська, португальська, німецька, французька, полська).</p>
+            <p>Дані GSC (інспекція, звіти про індексацію, sitemap) працюють однаково для будь-якого домену та мови.</p>
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            В чому різниця між IndexFast та ручним додаванням URL в GSC?
+            <span class="faq-arrow">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <p>Ручне додавання в GSC обмежене <strong>одним URL за раз</strong> — непрактично для сайтів з сотнями або тисячами сторінок. IndexFast автоматизує весь процес:</p>
+            <ul>
+              <li>Парсить ваш <code>sitemap.xml</code> (включаючи Sitemap Index)</li>
+              <li>Масово відправляє всі URL через Google Indexing API</li>
+              <li>Автоматично запускається за розкладом (тариф PRO)</li>
+              <li>Надає детальний <strong>лог індексації</strong> зі статусом кожного URL</li>
+              <li>Керує денним лімітом Google, щоб ви ніколи його не перевищували</li>
+            </ul>
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Чи може IndexFast прискорити повторну індексацію змінених сторінок?
+            <span class="faq-arrow">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <p><strong>Так.</strong> Google Indexing API підтримує два типи сповіщень:</p>
+            <ul>
+              <li><code>URL_UPDATED</code> — повідомляє Google, що контент сторінки змінився</li>
+              <li><code>URL_DELETED</code> — повідомляє про видалення сторінки з індексу</li>
+            </ul>
+            <p>Коли IndexFast виявляє новий або змінений URL у sitemap, він відправляє <code>URL_UPDATED</code>. Це сигналізує Google пересканувати сторінку набагато швидше, ніж чекати вичіковування.</p>
+          </div></div>
+        </div>
+
         <div class="faq-item">
           <button class="faq-q" aria-expanded="false">
             Чи допоможе IndexFast, якщо сторінки не індексуються в GSC?
@@ -175,11 +218,94 @@
             <p><strong>Так.</strong> Якщо в GSC показано статус "Виявлено — поки не проіндексовано" або "Проскановано — поки не проіндексовано", IndexFast може допомогти:</p>
             <ul>
               <li>Повідомляє Google, що сторінка існує або була оновлена</li>
-              <li>Підвищує пріориitet сканування через API-сигнали</li>
+              <li>Підвищує пріоритет сканування через API-сигнали</li>
               <li>Допомагає Google швидше discovering нові сторінки</li>
             </ul>
           </div></div>
         </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Чи підтримується Sitemap Index та вкладені sitemap'и?
+            <span class="faq-arrow">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <p><strong>Так.</strong> IndexFast повністю підтримує:</p>
+            <ul>
+              <li>Звичайні <code>sitemap.xml</code></li>
+              <li><strong>Sitemap Index</strong> — вкладені sitemap'и будь-якої глибини</li>
+              <li>Стиснуті (<code>.xml.gz</code>) та нестиснуті sitemap'и</li>
+              <li>Автовиявлення sitemap за доменом</li>
+            </ul>
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Як перевірити, що сторінка проіндексувалась в Google?
+            <span class="faq-arrow">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <p>Після відправки через IndexFast:</p>
+            <ul>
+              <li><strong>GSC:</strong> Увімкніть інспектор URL — вкажіть адресу та перевірте статус "Індексація сторінок"</li>
+              <li><strong>site: пошук:</strong> Впишіть <code>site:ваш-сайт.ua/url-сторінки</code> у Google</li>
+              <li><strong>Кабінет IndexFast:</strong> Перевірте лог індексації — HTTP 200 = запит прийнято Google</li>
+            </ul>
+            <p>Примітка: HTTP 200 означає, що Google <em>прийняв запит</em>, але індексація відбувається після наступного сканування (зазвичай 24–48 год).</p>
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Чи можна використовувати IndexFast для клієнтських проєктів?
+            <span class="faq-arrow">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <p>Тариф <strong>Agency</strong> розрахований на SEO-агенції та фрилансерів:</p>
+            <ul>
+              <li>До <strong>50 сайтів</strong> в одному акаунті</li>
+              <li><strong>5 000 URL/день</strong> ліміт індексації</li>
+              <li>Повний <strong>API доступ</strong> для white-label інтеграцій</li>
+              <li>White-label звіти для клієнтів</li>
+            </ul>
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Що відбувається, коли досягнутий денний ліміт?
+            <span class="faq-arrow">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <p>Коли ви досягнули свого денного ліміту:</p>
+            <ul>
+              <li>IndexFast <strong>перестає відправляти</strong> нові URL цього дня</li>
+              <li>Решта URL очікуються на наступний день</li>
+              <li>Ви бачите повідомлення <strong>"Денний ліміт досягнутий"</strong> в кабінеті</li>
+              <li>Можна <a href="/app/dashboard">оновити тариф</a> в будь-який час для збільшення ліміту</li>
+            </ul>
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Чи працює IndexFast з WordPress / Shopify / Webflow / Wix?
+            <span class="faq-arrow">+</span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <p><strong>Так, з усіма платформами.</strong> IndexFast працює з будь-яким сайтом, що має <code>sitemap.xml</code>:</p>
+            <ul>
+              <li><strong>WordPress:</strong> Yoast SEO / Rank Math генерують sitemap автоматично</li>
+              <li><strong>Shopify:</strong> Вбудований sitemap</li>
+              <li><strong>Wix:</strong> Автоматичний sitemap в GSC</li>
+              <li><strong>PrestaShop / OpenCart / Laravel / Joomla:</strong> Всі генерують sitemap</li>
+            </ul>
+            <p>Якщо у вашого сайту є <code>sitemap.xml</code> — IndexFast працює.</p>
+          </div></div>
+        </div>
+
+      </div>
 
         <div class="faq-item">
           <button class="faq-q" aria-expanded="false">
