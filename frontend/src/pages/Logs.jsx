@@ -129,7 +129,7 @@ export default memo(function Logs({ sites }) {
           {isFetching && !isLoading && <Spinner size={16}/>}
           <Btn variant="ghost" onClick={refetch}
             style={{ padding: "6px 12px", fontSize: 12 }}>
-            ↻ Оновити
+            {t("logs.refresh")}
           </Btn>
         </div>
       </div>
