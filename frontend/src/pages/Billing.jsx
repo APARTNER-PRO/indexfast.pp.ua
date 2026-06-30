@@ -319,7 +319,7 @@ export default function Billing() {
               </div>
               {data.plan_expires_at && (
                 <div>
-                  <p style={{ fontSize: 11, color: '#4a4a68', marginBottom: 2 }}>Дійсний до</p>
+                  <p style={{ fontSize: 11, color: '#4a4a68', marginBottom: 2 }}>{t("billing.validUntil")}</p>
                   <p style={{ fontSize: 15, fontWeight: 600, color: '#d0d0e8' }}>
                     {new Date(data.plan_expires_at).toLocaleDateString('uk-UA', { day: 'numeric', month: 'long', year: 'numeric' })}
                   </p>
