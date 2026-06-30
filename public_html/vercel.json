@@ -190,6 +190,16 @@
       "source": "/blog/building-a-navigation-component/",
       "destination": "/blog/building-a-navigation-component.html",
       "permanent": true
+    },
+    {
+      "source": "/faqs",
+      "destination": "/faqs.html",
+      "permanent": true
+    },
+    {
+      "source": "/faqs/",
+      "destination": "/faqs.html",
+      "permanent": true
     }
   ],
   "rewrites": [
