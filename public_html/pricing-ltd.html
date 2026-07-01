@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Lifetime Plan — IndexFast | One-time Payment</title>
+  <meta name="description" content="Get lifetime access to IndexFast. One-time payment, no recurring fees. Save big in the long run!">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://indexfast.pro/pricing-ltd">
+
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://indexfast.pro/pricing-ltd">
+  <meta property="og:title" content="Lifetime Plan — IndexFast">
+  <meta property="og:description" content="Get lifetime access to IndexFast. One-time payment, no recurring fees.">
+  <meta property="og:image" content="https://indexfast.pro/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="en_US">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --black:  #050508;
+      --dark:   #0d0d14;
+      --card:   #12121c;
+      --border: rgba(255,255,255,0.07);
+      --green:  #00ff88;
+      --green2: #00c96a;
+      --white:  #f0f0f8;
+      --muted:  #7a7a95;
+      --font-display: 'Syne', sans-serif;
+      --font-body:    'DM Sans', sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--black); color: var(--white); font-family: var(--font-body); font-weight: 300; overflow-x: hidden; }
+
+    nav {
+      position: sticky; top: 0; z-index: 200;
+      padding: 12px 60px; display: flex; align-items: center; justify-content: space-between;
+      background: rgba(5,5,8,0.95); backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .logo { font-family: var(--font-display); font-size: 1.4rem; font-weight: 800; letter-spacing: -0.03em; color: var(--white); text-decoration: none; }
+    .logo span { color: var(--green); }
+    .nav-links { display: flex; align-items: center; gap: 28px; list-style: none; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.95rem; font-weight: 400; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--white); }
+    .nav-actions { display: flex; align-items: center; gap: 16px; }
+    
+    .nav-cta { background: var(--green); color: var(--black); padding: 10px 24px; border-radius: 100px; font-family: var(--font-display); font-weight: 700; font-size: 0.875rem; text-decoration: none; transition: box-shadow 0.2s, transform 0.2s; box-shadow: 0 0 20px rgba(0,255,136,0.25); }
+    .nav-cta:hover { box-shadow: 0 0 36px rgba(0,255,136,0.45); transform: translateY(-1px); }
+    .nav-login { color: var(--muted); font-size: 0.875rem; text-decoration: none; padding: 7px 16px; border-radius: 100px; border: 1px solid rgba(255,255,255,0.1); transition: color 0.2s, border-color 0.2s; }
+    .nav-login:hover { color: var(--white); border-color: rgba(255,255,255,0.25); }
+    .mobile-menu-btn { display: none; background: transparent; border: none; color: var(--white); font-size: 1.5rem; cursor: pointer; padding: 4px; }
+    .mobile-auth { display: none; }
+
+    .about-hero {
+      position: relative; overflow: hidden;
+      padding: 120px 60px 100px; min-height: 50vh;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .about-hero-inner {
+      max-width: 1200px; width: 100%; text-align: center;
+      position: relative; z-index: 1;
+    }
+    .hero-bg {
+      position: absolute; inset: 0; pointer-events: none;
+      background:
+        radial-gradient(ellipse 60% 80% at 50% 50%, rgba(0,255,136,0.07) 0%, transparent 60%);
+    }
+    .hero-grid-lines {
+      position: absolute; inset: 0; pointer-events: none;
+      background-image: linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 100% 100% at 50% 50%, black 0%, transparent 70%);
+    }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(0,255,136,0.07); border: 1px solid rgba(0,255,136,0.2);
+      padding: 6px 16px; border-radius: 100px; margin-bottom: 24px;
+      font-size: 0.75rem; color: var(--green); letter-spacing: 0.12em; text-transform: uppercase; font-weight: 600;
+      animation: fadeUp 0.7s ease both;
+    }
+    .about-hero h1 {
+      font-family: var(--font-display); font-size: clamp(2.8rem, 5vw, 4.5rem);
+      font-weight: 800; letter-spacing: -0.04em; line-height: 1.1; margin-bottom: 24px;
+      animation: fadeUp 0.7s 0.1s ease both;
+    }
+    .about-hero h1 em {
+      font-style: normal;
+      background: linear-gradient(135deg, var(--green) 0%, #00d4ff 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .hero-lead { font-size: 1.15rem; color: rgba(240,240,248,0.75); line-height: 1.75; max-width: 600px; margin: 0 auto; animation: fadeUp 0.7s 0.2s ease both; }
+    
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* Lifetime Pricing Card */
+    .ltd-card-section {
+      padding: 0 60px 100px;
+      display: flex;
+      justify-content: center;
+      position: relative;
+      z-index: 10;
+    }
+    .ltd-card {
+      background: var(--card);
+      border: 2px solid var(--green);
+      border-radius: 24px;
+      padding: 48px;
+      max-width: 500px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 20px 80px rgba(0,255,136,0.15);
+      position: relative;
+      overflow: hidden;
+      animation: fadeUp 0.7s 0.3s ease both;
+    }
+    .ltd-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 100%;
+      background: radial-gradient(circle at top, rgba(0,255,136,0.15) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .ltd-badge {
+      background: var(--green);
+      color: var(--black);
+      font-weight: 700;
+      font-family: var(--font-display);
+      padding: 6px 16px;
+      border-radius: 100px;
+      display: inline-block;
+      margin-bottom: 24px;
+      font-size: 0.85rem;
+    }
+    .ltd-price-old {
+      text-decoration: line-through;
+      color: var(--muted);
+      font-size: 1.5rem;
+      margin-right: 12px;
+    }
+    .ltd-price-new {
+      font-family: var(--font-display);
+      font-size: 4rem;
+      font-weight: 800;
+      color: var(--white);
+      line-height: 1;
+    }
+    .ltd-price-currency {
+      font-size: 2rem;
+      vertical-align: top;
+      margin-right: 4px;
+      color: var(--green);
+    }
+    .ltd-features {
+      margin: 32px 0;
+      list-style: none;
+      text-align: left;
+    }
+    .ltd-features li {
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 1.05rem;
+    }
+    .ltd-features li::before {
+      content: '✓';
+      color: var(--green);
+      font-weight: bold;
+      background: rgba(0,255,136,0.1);
+      width: 24px; height: 24px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+    }
+    .btn-purchase {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: var(--green); color: var(--black); padding: 18px 36px; border-radius: 100px; font-family: var(--font-display); font-weight: 700; font-size: 1.1rem; text-decoration: none; transition: all 0.3s; box-shadow: 0 0 30px rgba(0,255,136,0.3); width: 100%; margin-top: 10px;
+    }
+    .btn-purchase:hover { transform: translateY(-2px); box-shadow: 0 0 50px rgba(0,255,136,0.5); }
+    
+    .ltd-hurry {
+      margin-top: 20px;
+      color: #ffcc00;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    /* Content Sections */
+    .content-section { background: var(--dark); padding: 100px 60px; border-top: 1px solid var(--border); }
+    .content-grid { max-width: 1000px; margin: 0 auto; }
+    .section-title { font-family: var(--font-display); font-size: clamp(2rem, 3vw, 2.5rem); font-weight: 800; letter-spacing: -0.03em; margin-bottom: 40px; text-align: center; }
+    
+    .features-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px;
+    }
+    .feature-box {
+      background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 32px;
+      transition: transform 0.3s, border-color 0.3s;
+    }
+    .feature-box:hover { transform: translateY(-4px); border-color: rgba(0,255,136,0.3); }
+    .feature-box h3 { font-family: var(--font-display); font-size: 1.2rem; margin-bottom: 12px; color: var(--white); }
+    .feature-box p { color: var(--muted); line-height: 1.6; }
+
+    /* Table */
+    .comparison-table-wrapper {
+      overflow-x: auto;
+      margin-top: 40px;
+    }
+    .comparison-table {
+      width: 100%; border-collapse: collapse; text-align: center;
+      background: var(--card); border-radius: 16px; overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .comparison-table th, .comparison-table td {
+      padding: 24px; border-bottom: 1px solid var(--border);
+    }
+    .comparison-table th {
+      font-family: var(--font-display); font-weight: 700; color: var(--white);
+      background: rgba(255,255,255,0.02);
+    }
+    .comparison-table th:first-child, .comparison-table td:first-child { text-align: left; }
+    .comparison-table tr:last-child td { border-bottom: none; }
+    .col-ltd { background: rgba(0,255,136,0.05); color: var(--green); font-weight: 600; }
+    .comparison-table th.col-ltd { background: rgba(0,255,136,0.1); }
+    .strikethrough { text-decoration: line-through; color: var(--muted); font-size: 0.9em; margin-right: 8px; }
+
+    /* FAQ */
+    .faq-list { margin-top: 40px; display: flex; flex-direction: column; gap: 16px; }
+    .faq-item {
+      background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 24px 32px;
+    }
+    .faq-item h3 { font-family: var(--font-display); font-size: 1.1rem; margin-bottom: 12px; color: var(--white); display: flex; gap: 12px; align-items: flex-start; }
+    .faq-item h3::before { content: '🙋'; }
+    .faq-item p, .faq-item ul { color: var(--muted); line-height: 1.6; font-size: 0.95rem; }
+    .faq-item ul { padding-left: 20px; margin-top: 12px; }
+    .faq-item li { margin-bottom: 8px; }
+
+    /* Purchase Section */
+    .purchase-instructions {
+      text-align: center; background: rgba(0,255,136,0.05); border: 1px solid rgba(0,255,136,0.2);
+      border-radius: 24px; padding: 60px 40px; margin-top: 60px;
+    }
+    .purchase-instructions h2 { font-family: var(--font-display); font-size: 2rem; margin-bottom: 16px; }
+    .purchase-instructions p { color: var(--muted); font-size: 1.1rem; margin-bottom: 32px; max-width: 600px; margin-left: auto; margin-right: auto; line-height: 1.6; }
+
+    footer { background: var(--dark); border-top: 1px solid var(--border); padding: 60px 40px 40px; text-align: center; }
+    .footer-bottom { border-top: 1px solid var(--border); padding-top: 28px; font-size: 0.85rem; color: var(--muted); display: flex; justify-content: space-between; max-width: 1200px; margin: 0 auto; }
+    .footer-bottom a { color: var(--muted); text-decoration: none; }
+    .footer-bottom a:hover { color: var(--white); }
+
+    .reveal { opacity: 0; transform: translateY(32px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; } }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+
+    @media (max-width: 960px) {
+      nav { padding: 12px 20px; }
+      .nav-links { display: none; position: absolute; top: 100%; left: 0; right: 0; background: var(--dark); flex-direction: column; padding: 20px; border-bottom: 1px solid var(--border); align-items: flex-start; }
+      .nav-links.active { display: flex; }
+      .nav-actions .nav-login, .nav-actions .nav-cta { display: none; }
+      .mobile-menu-btn { display: block; }
+      .mobile-auth { display: flex !important; flex-direction: column; gap: 12px; padding-top: 16px; width: 100%; }
+      .about-hero { padding: 80px 24px 40px; }
+      .ltd-card-section { padding: 0 24px 60px; }
+      .content-section { padding: 60px 24px; }
+      .features-grid { grid-template-columns: 1fr; }
+      .comparison-table th, .comparison-table td { padding: 16px; font-size: 0.9rem; }
+      .purchase-instructions { padding: 40px 24px; }
+      .footer-bottom { flex-direction: column; gap: 12px; align-items: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar" role="navigation">
+    <a href="/" class="logo">Index<span>Fast</span></a>
+    <ul class="nav-links">
+      <li><a href="/#how-it-works">How it works</a></li>
+      <li><a href="/#features">Advantages</a></li>
+      <li><a href="/#pricing">Prices</a></li>
+      <li><a href="/#faq">FAQ</a></li>
+      <li class="mobile-auth">
+        <a href="/app/login" class="nav-login" style="border: 1px solid rgba(255,255,255,0.1); text-align: center; padding: 10px; border-radius: 100px;">Sign in</a>
+        <a href="/app/register" class="nav-cta" style="background: var(--green); color: var(--black) !important; text-align: center; padding: 10px; border-radius: 100px; font-weight: bold;">Get started for free →</a>
+      </li>
+    </ul>
+    <div class="nav-actions">
+      <a href="/app/login" class="nav-login">Sign in</a>
+      <a href="/app/register" class="nav-cta">Get started for free →</a>
+      <button class="mobile-menu-btn" onclick="document.querySelector('.nav-links').classList.toggle('active')">☰</button>
+    </div>
+  </nav>
+
+<!-- HERO -->
+<section class="about-hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid-lines"></div>
+  <div class="about-hero-inner">
+    <div class="hero-eyebrow">💰 pricing</div>
+    <h1>Lifetime Access to<br><em>All Features</em></h1>
+    <p class="hero-lead">
+      One-time payment, no recurring fees. Save big in the long run!
+    </p>
+  </div>
+</section>
+
+<!-- PRICING CARD -->
+<section class="ltd-card-section">
+  <div class="ltd-card">
+    <div class="ltd-badge">Lifetime Plan</div>
+    <div style="margin-bottom: 24px;">
+      <span class="ltd-price-old">$250</span>
+      <span class="ltd-price-currency">$</span><span class="ltd-price-new">120</span>
+    </div>
+    
+    <ul class="ltd-features">
+      <li>3 websites</li>
+      <li>Index upto 200 pages/day</li>
+      <li>New/modified pages check (daily)</li>
+      <li>Google auto indexing</li>
+      <li>Unlimited URLs/website + Priority support</li>
+    </ul>
+
+    <a href="/app/register" class="btn-purchase">Get Started</a>
+    <p class="ltd-hurry">Hurry!!! purchase now before price increases</p>
+  </div>
+</section>
+
+<!-- WHY CHOOSE -->
+<section class="content-section">
+  <div class="content-grid">
+    <h2 class="section-title reveal">Why choose lifetime plan?</h2>
+    <div class="features-grid">
+      <div class="feature-box reveal">
+        <h3>Unlimited access</h3>
+        <p>Unlimited access to all features available in the premium tiers without any monthly caps holding you back.</p>
+      </div>
+      <div class="feature-box reveal reveal-delay-1">
+        <h3>Free updates</h3>
+        <p>Free updates and new features. You will automatically receive all future improvements to the platform.</p>
+      </div>
+      <div class="feature-box reveal">
+        <h3>Premium support</h3>
+        <p>Premium support, always at your side. Get priority response from our dedicated support team.</p>
+      </div>
+      <div class="feature-box reveal reveal-delay-1">
+        <h3>One-time payment</h3>
+        <p>One-time payment, no surprises. Pay once and use the tool forever, completely eliminating subscription fatigue.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARISON -->
+<section class="content-section" style="background: var(--black);">
+  <div class="content-grid">
+    <h2 class="section-title reveal">Plan Comparison</h2>
+    <div class="comparison-table-wrapper reveal">
+      <table class="comparison-table">
+        <thead>
+          <tr>
+            <th>Plan Type</th>
+            <th>Monthly Plan (Basic)</th>
+            <th>Yearly Plan (Basic)</th>
+            <th class="col-ltd">Lifetime Plan</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Price</strong></td>
+            <td>$10/month</td>
+            <td>$96/year</td>
+            <td class="col-ltd"><span class="strikethrough">$250</span> $120</td>
+          </tr>
+          <tr>
+            <td><strong>Total cost (2 years)</strong></td>
+            <td>$240</td>
+            <td>$192</td>
+            <td class="col-ltd">$120</td>
+          </tr>
+          <tr>
+            <td><strong>Access to features</strong></td>
+            <td>All</td>
+            <td>All</td>
+            <td class="col-ltd">All</td>
+          </tr>
+          <tr>
+            <td><strong>Priority Support</strong></td>
+            <td>✗</td>
+            <td>✗</td>
+            <td class="col-ltd">✓</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- FAQS -->
+<section class="content-section">
+  <div class="content-grid">
+    <h2 class="section-title reveal">Anything we can help you with?</h2>
+    
+    <div class="faq-list">
+      <div class="faq-item reveal">
+        <h3>What happens if I just use Google Search Console?</h3>
+        <p>Go to Google Search Console (search.google.com/search-console), add your site, submit a sitemap, and Google will eventually index your site. Easy. Sometimes, depending on the project / website, things related to URL indexing (and / or deindexing) for SEO can be quite a headache. And that’s why Indexfast.pro, the SEO tool for indexing URLs on Google that saves you all the headaches, has been born.</p>
+        <p style="margin-top: 10px;">Our tool automatically checks which URLs on your website are indexed, or not. In case some pages are not indexed and should be, Indexfast.pro will take care of getting them indexed at lightning speed. All without you having to do anything at all. Just sit and see URLs get indexed!</p>
+      </div>
+
+      <div class="faq-item reveal">
+        <h3>Do you need access to my Search Console?</h3>
+        <p>Yes. We request access to your Search Console in order to regularly check sitemap changes and index your web pages automatically. Rest assured, You can revoke access at any moment and all your Search Console data is removed from our servers permanently.</p>
+        <p style="margin-top: 10px;">It is not intended for users to sign in directly to Google Search Console using the service account. Instead, it is given very particular rights that are only intended to be used in conjunction with the Google Indexing API and perform the following tasks:</p>
+        <ul>
+          <li>Check URL indexation</li>
+          <li>Index URLs</li>
+        </ul>
+      </div>
+
+      <div class="faq-item reveal">
+        <h3>How to check if my URLs are indexed?</h3>
+        <p>To determine if a URL is indexed on Google, you can use the following methods:</p>
+        <ul>
+          <li><strong>Google Search:</strong> Enter "site:https://yourwebsite.com/your-url" in Google's search bar. If the URL appears in search results, it's indexed.</li>
+          <li><strong>Google Search Console:</strong> Access the Index Coverage Report in Google Search Console to check URL indexing status. You can also use the URL inspector tool.</li>
+          <li><strong>Google Analytics (or similar tools):</strong> Monitor organic traffic to the URL. If traffic is generated from Google (no ads), it's likely indexed.</li>
+          <li><strong>Indexfast.pro:</strong> Our SEO software checks daily if the URLs of your website(s) are indexed on Google, or not.</li>
+        </ul>
+        <p>By employing these methods, you can ascertain whether a specific URL is indexed on Google.</p>
+      </div>
+
+      <div class="faq-item reveal">
+        <h3>Is my data secure?</h3>
+        <p>Protecting the data you trust to Index Fast is our first priority. We protect your data at rest and in transit at the highest standards specified by GDP or CCPA.</p>
+      </div>
+
+      <div class="faq-item reveal">
+        <h3>What is the refund policy?</h3>
+        <p>Due to the costs associated with setting up an account, we do not offer refunds. However, you are free to cancel at any time through self-service before your subscription is renewed.</p>
+        <p style="margin-top: 10px;">we would highly appreciate if you will give us some feedback, and we'll see what we can do to sort it out.</p>
+      </div>
+
+      <div class="faq-item reveal">
+        <h3>Can I change my plan later?</h3>
+        <p>You are free to upgrade/downgrade your plan anytime as per your requirement from your self serving billing portal.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW TO PURCHASE -->
+<section class="content-section" style="background: var(--black);">
+  <div class="content-grid">
+    <div class="purchase-instructions reveal">
+      <h2>How to purchase lifetime plan?</h2>
+      <p>Go to the IndexFast dashboard and purchase the lifetime plan directly from the billing page.</p>
+      <a href="/app#pricing" class="btn-purchase" style="display: inline-block; width: auto;">Check Subscription Plans</a>
+      <p style="margin-top: 24px; font-size: 0.95rem;">Have some doubts? Feel free to <a href="/contacts.html" style="color: var(--green);">Contact Us</a></p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-bottom">
+    <p>© 2026 IndexFast. All rights reserved.</p>
+    <div style="display:flex; gap:20px;">
+      <a href="/privacy-policy.html">Privacy</a>
+      <a href="/terms.html">Conditions</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const revealEls = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  revealEls.forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
