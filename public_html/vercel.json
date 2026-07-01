@@ -200,6 +200,16 @@
       "source": "/faqs/",
       "destination": "/faqs.html",
       "permanent": true
+    },
+    {
+      "source": "/pricing-ltd",
+      "destination": "/pricing-ltd.html",
+      "permanent": true
+    },
+    {
+      "source": "/pricing-ltd/",
+      "destination": "/pricing-ltd.html",
+      "permanent": true
     }
   ],
   "rewrites": [
