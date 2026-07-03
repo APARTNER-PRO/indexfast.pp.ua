@@ -4,7 +4,7 @@
 User-agent: *
 Allow: /
 
-# Закриваємо службові файли
+# Service files
 Disallow: /api/
 Disallow: /admin/
 Disallow: /dashboard/
@@ -13,3 +13,7 @@ Disallow: /*.json$
 
 # Sitemap
 Sitemap: https://indexfast.pro/sitemap.xml
+
+# LLM / AI Bot Content
+# See https://llmstxt.org/ for specification
+Sitemap: https://indexfast.pro/llms.txt
