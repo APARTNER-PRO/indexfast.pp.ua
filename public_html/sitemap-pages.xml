@@ -200,6 +200,23 @@
     <priority>0.7</priority>
   </url>
 
+  <!-- === FAQ === -->
+  <url>
+    <loc>https://indexfast.pro/faqs.html</loc>
+    <lastmod>2026-06-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://indexfast.pro/faqs.html"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://indexfast.pro/uk/faqs.html"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://indexfast.pro/ru/faqs.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://indexfast.pro/de/faqs.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://indexfast.pro/es/faqs.html"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://indexfast.pro/fr/faqs.html"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://indexfast.pro/pl/faqs.html"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://indexfast.pro/pt/faqs.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://indexfast.pro/faqs.html"/>
+  </url>
+
   <!-- === OTHER PAGES === -->
   <url>
     <loc>https://indexfast.pro/affiliate.html</loc>
