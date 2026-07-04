@@ -8,106 +8,193 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
   <link rel="manifest" href="/site.webmanifest">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>Cron jobs для SEO: автоматизуємо рутину — IndexFast</title>
   <meta name="description" content="Як налаштувати cron jobs для автоматичного запуску SEO-скриптів на сервері. Покроковий гайд для власників сайтів і розробників.">
+  
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
   <link rel="canonical" href="https://indexfast.pro/blog/cron-jobs-dlya-seo.html">
-  <meta name="robots" content="index, follow">
+
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://indexfast.pro/blog/cron-jobs-dlya-seo.html">
-  <meta property="og:title" content="Cron jobs для SEO: автоматизуємо рутину">
-  <meta property="og:description" content="Як налаштувати cron jobs для автоматичного запуску SEO-скриптів на сервері. Покроковий гайд.">
+  <meta property="og:title" content="Cron jobs для SEO: автоматизуємо рутину — IndexFast">
+  <meta property="og:description" content="Як налаштувати cron jobs для автоматичного запуску SEO-скриптів на сервері. Покроковий гайд для власників сайтів і розробників.">
   <meta property="og:image" content="https://indexfast.pro/og-image.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:locale" content="uk_UA">
-  <meta property="og:site_name" content="IndexFast">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Cron jobs для SEO: автоматизуємо рутину">
-  <meta name="twitter:description" content="Налаштовуємо автоматичний запуск SEO-скриптів через cron.">
-  <meta name="twitter:image" content="https://indexfast.pro/og-image.jpg">
-    <script type="application/ld+json">
+  <meta property="article:published_time" content="2026-03-05">
+  <meta property="article:modified_time" content="2026-03-05">
+  <meta property="article:author" content="IndexFast">
+
+  <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "Article",
-    "headline": "Cron jobs для SEO: автоматизуємо рутину",
-    "description": "Як налаштувати cron jobs для автоматичного запуску SEO-скриптів на сервері.",
-    "image": "https://indexfast.pro/og-image.jpg",
-    "author": {"@type": "Person", "name": "Андрій Савченко", "url": "https://indexfast.pro/about.html"},
-    "publisher": {"@type": "Organization", "name": "IndexFast", "logo": {"@type": "ImageObject", "url": "https://indexfast.pro/og-image.jpg"}},
+    "headline": "Cron jobs для SEO: автоматизуємо рутину — IndexFast",
+    "description": "Як налаштувати cron jobs для автоматичного запуску SEO-скриптів на сервері. Покроковий гайд для власників сайтів і розробників.",
+    "inLanguage": "uk",
+    "author": {
+      "@type": "Organization",
+      "name": "IndexFast",
+      "url": "https://indexfast.pro"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "IndexFast",
+      "url": "https://indexfast.pro",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://indexfast.pro/logo.png"
+      }
+    },
     "datePublished": "2026-03-05",
-    "dateModified": "2026-03-13",
-    "mainEntityOfPage": {"@type": "WebPage", "@id": "https://indexfast.pro/blog/cron-jobs-dlya-seo.html"}
+    "dateModified": "2026-03-05",
+    "url": "https://indexfast.pro/blog/cron-jobs-dlya-seo.html",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://indexfast.pro/blog/cron-jobs-dlya-seo.html"
+    },
+    "image": {
+      "@type": "ImageObject",
+      "url": "https://indexfast.pro/og-image.jpg",
+      "width": 1200,
+      "height": 630
+    }
   }
   </script>
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Cron jobs для SEO: автоматизуємо рутину — IndexFast">
+  <meta name="twitter:description" content="Як налаштувати cron jobs для автоматичного запуску SEO-скриптів на сервері. Покроковий гайд для власників сайтів і розробників.">
+  <meta name="twitter:image" content="https://indexfast.pro/og-image.jpg">
+
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     "itemListElement": [
-      {"@type": "ListItem", "position": 1, "name": "Головна", "item": "https://indexfast.pro/"},
-      {"@type": "ListItem", "position": 2, "name": "Блог", "item": "https://indexfast.pro/blog/"},
-      {"@type": "ListItem", "position": 3, "name": "Cron jobs для SEO", "item": "https://indexfast.pro/blog/cron-jobs-dlya-seo.html"}
+      { "@type": "ListItem", "position": 1, "name": "Головна", "item": "https://indexfast.pro/" },
+      { "@type": "ListItem", "position": 2, "name": "Блог", "item": "https://indexfast.pro/blog/" },
+      { "@type": "ListItem", "position": 3, "name": "Cron jobs для SEO: автоматизуємо рутину", "item": "https://indexfast.pro/blog/cron-jobs-dlya-seo.html" }
     ]
   }
   </script>
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500&display=swap">
+
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --black: #050508; --dark: #0d0d14; --card: #111119;
+      --black: #050508; --dark: #0d0d14; --card: #12121c;
       --border: rgba(255,255,255,0.07); --green: #00ff88;
       --white: #f0f0f8; --muted: #7a7a95;
       --font-display: 'Syne', sans-serif; --font-body: 'DM Sans', sans-serif;
     }
     html { scroll-behavior: smooth; }
-    body { background: var(--black); color: var(--white); font-family: var(--font-body); font-weight: 300; line-height: 1.7; }
-    a { color: var(--green); text-decoration: none; }
-    a:hover { text-decoration: underline; }
-    nav { position: sticky; top: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 48px; height: 64px; background: rgba(5,5,8,0.9); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); }
-    .logo { font-family: var(--font-display); font-size: 1.3rem; font-weight: 800; letter-spacing: -0.04em; color: var(--white); }
+    body { background: var(--black); color: var(--white); font-family: var(--font-body); font-weight: 300; }
+
+    nav {
+      position: sticky; top: 0; z-index: 100; padding: 18px 60px;
+      display: flex; align-items: center; justify-content: space-between;
+      background: rgba(5,5,8,0.95); backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .logo { font-family: var(--font-display); font-size: 1.4rem; font-weight: 800; letter-spacing: -0.03em; color: var(--white); text-decoration: none; }
     .logo span { color: var(--green); }
     .nav-right { display: flex; align-items: center; gap: 24px; }
-    .nav-link { color: var(--muted); font-size: 0.875rem; transition: color 0.2s; }
-    .nav-link:hover { color: var(--white); text-decoration: none; }
-    .nav-cta { background: var(--green); color: var(--black); padding: 8px 20px; border-radius: 100px; font-family: var(--font-display); font-weight: 700; font-size: 0.85rem; transition: box-shadow 0.2s; }
-    .nav-cta:hover { box-shadow: 0 0 24px rgba(0,255,136,0.4); text-decoration: none; }
-    .page-wrap { max-width: 760px; margin: 0 auto; padding: 60px 24px 100px; }
-    .article-meta { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 28px; }
-    .meta-tag { font-size: 0.72rem; font-weight: 700; font-family: var(--font-display); letter-spacing: 0.08em; text-transform: uppercase; padding: 4px 12px; border-radius: 100px; background: rgba(0,255,136,0.08); border: 1px solid rgba(0,255,136,0.2); color: var(--green); }
-    .meta-date, .meta-read { font-size: 0.8rem; color: var(--muted); }
-    h1 { font-family: var(--font-display); font-size: clamp(1.9rem, 5vw, 2.8rem); font-weight: 800; letter-spacing: -0.04em; line-height: 1.15; margin-bottom: 24px; }
-    .article-lead { font-size: 1.1rem; color: var(--muted); line-height: 1.75; margin-bottom: 40px; padding-bottom: 40px; border-bottom: 1px solid var(--border); }
-    .article-body h2 { font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; letter-spacing: -0.03em; margin: 44px 0 16px; }
-    .article-body h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; margin: 32px 0 12px; }
-    .article-body p { margin-bottom: 18px; color: #c8c8d8; }
-    .article-body ul, .article-body ol { padding-left: 24px; margin-bottom: 18px; color: #c8c8d8; }
-    .article-body li { margin-bottom: 8px; line-height: 1.65; }
-    .article-body strong { color: var(--white); font-weight: 600; }
-    .article-body code { background: rgba(0,255,136,0.08); border: 1px solid rgba(0,255,136,0.15); color: var(--green); padding: 2px 7px; border-radius: 5px; font-size: 0.875em; font-family: 'Courier New', monospace; }
-    .code-block { background: #0a0a12; border: 1px solid var(--border); border-radius: 12px; padding: 20px 24px; margin: 20px 0; font-family: 'Courier New', monospace; font-size: 0.85rem; line-height: 1.7; overflow-x: auto; color: #a8b8d8; }
-    .code-block .cm { color: #546e7a; }
-    .code-block .ck { color: #00ff88; }
-    .code-block .cv { color: #ffd060; }
-    .tip-box { background: rgba(0,255,136,0.05); border: 1px solid rgba(0,255,136,0.15); border-left: 3px solid var(--green); border-radius: 12px; padding: 20px 24px; margin: 28px 0; }
-    .tip-box strong { display: block; margin-bottom: 8px; color: var(--green); }
-    .tip-box p { margin: 0; color: var(--muted); font-size: 0.9rem; }
-    .warn-box { background: rgba(255,200,60,0.05); border: 1px solid rgba(255,200,60,0.2); border-left: 3px solid #ffd060; border-radius: 12px; padding: 20px 24px; margin: 28px 0; }
-    .warn-box strong { display: block; margin-bottom: 8px; color: #ffd060; }
-    .warn-box p { margin: 0; color: var(--muted); font-size: 0.9rem; }
-    .cta-inline { background: linear-gradient(135deg, rgba(0,255,136,0.07), rgba(0,255,136,0.03)); border: 1px solid rgba(0,255,136,0.15); border-radius: 20px; padding: 32px; margin: 44px 0; text-align: center; }
-    .cta-inline h3 { font-family: var(--font-display); font-size: 1.2rem; font-weight: 700; margin-bottom: 10px; }
-    .cta-inline p { color: var(--muted); font-size: 0.9rem; margin-bottom: 20px; }
-    .btn-cta { display: inline-flex; align-items: center; gap: 8px; background: var(--green); color: var(--black); padding: 12px 28px; border-radius: 100px; font-family: var(--font-display); font-weight: 700; font-size: 0.9rem; transition: box-shadow 0.2s, transform 0.2s; }
-    .btn-cta:hover { box-shadow: 0 0 28px rgba(0,255,136,0.4); transform: translateY(-1px); text-decoration: none; }
-    .article-nav { display: flex; gap: 16px; margin-top: 60px; padding-top: 40px; border-top: 1px solid var(--border); }
-    .article-nav a { flex: 1; background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 20px; transition: border-color 0.2s; font-size: 0.875rem; color: var(--muted); }
-    .article-nav a:hover { border-color: rgba(0,255,136,0.2); text-decoration: none; color: var(--white); }
-    .article-nav-label { font-size: 0.72rem; color: var(--muted); font-family: var(--font-display); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 6px; }
-    .article-nav-title { color: var(--white); font-weight: 500; line-height: 1.4; }
-        /* ── FOOTER ── */
+    .nav-link { color: var(--muted); text-decoration: none; font-size: 0.875rem; transition: color 0.2s; }
+    .nav-link:hover { color: var(--white); }
+    .nav-login {
+      color: var(--muted); font-size: 0.875rem; text-decoration: none;
+      padding: 7px 16px; border-radius: 100px; border: 1px solid rgba(255,255,255,0.1);
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .nav-login:hover { color: var(--white); border-color: rgba(255,255,255,0.25); }
+    .nav-cta { background: var(--green); color: var(--black); padding: 8px 20px; border-radius: 100px; font-family: var(--font-display); font-weight: 700; font-size: 0.85rem; text-decoration: none; transition: box-shadow 0.2s; }
+    .nav-cta:hover { box-shadow: 0 0 20px rgba(0,255,136,0.4); }
+
+    /* LAYOUT */
+    .page-wrap { max-width: 1160px; margin: 0 auto; padding: 60px 40px 100px; display: grid; grid-template-columns: 1fr 300px; gap: 60px; align-items: start; }
+
+    /* ARTICLE */
+    article { min-width: 0; }
+    .article-meta { display: flex; align-items: center; gap: 16px; margin-bottom: 28px; flex-wrap: wrap; }
+    .meta-tag { background: rgba(0,255,136,0.08); border: 1px solid rgba(0,255,136,0.2); color: var(--green); padding: 4px 12px; border-radius: 100px; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
+    .meta-date { color: var(--muted); font-size: 0.85rem; }
+    .meta-read { color: var(--muted); font-size: 0.85rem; }
+
+    h1 { font-family: var(--font-display); font-size: clamp(1.9rem, 3.5vw, 2.8rem); font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 24px; }
+    .article-lead { font-size: 1.1rem; color: rgba(240,240,248,0.85); line-height: 1.75; margin-bottom: 40px; border-left: 3px solid var(--green); padding-left: 20px; }
+
+    .article-body h2 { font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; margin: 48px 0 16px; letter-spacing: -0.02em; scroll-margin-top: 80px; }
+    .article-body h3 { font-family: var(--font-display); font-size: 1.15rem; font-weight: 700; margin: 28px 0 12px; color: rgba(240,240,248,0.9); }
+    .article-body p { color: rgba(240,240,248,0.8); line-height: 1.8; margin-bottom: 18px; font-size: 1rem; }
+    .article-body ul, .article-body ol { margin: 16px 0 20px 0; display: flex; flex-direction: column; gap: 10px; }
+    .article-body ul li, .article-body ol li { color: rgba(240,240,248,0.8); line-height: 1.65; padding-left: 22px; position: relative; font-size: 0.975rem; }
+    .article-body ul li::before { content: '→'; position: absolute; left: 0; color: var(--green); font-weight: 700; }
+    .article-body ol { counter-reset: ol; }
+    .article-body ol li { counter-increment: ol; }
+    .article-body ol li::before { content: counter(ol)'.'; position: absolute; left: 0; color: var(--green); font-family: var(--font-display); font-weight: 700; }
+
+    .tip-box { background: rgba(0,255,136,0.05); border: 1px solid rgba(0,255,136,0.18); border-radius: 14px; padding: 20px 24px; margin: 24px 0; }
+    .tip-box strong { color: var(--green); font-family: var(--font-display); display: block; margin-bottom: 8px; font-size: 0.9rem; letter-spacing: 0.05em; text-transform: uppercase; }
+    .tip-box p { color: rgba(240,240,248,0.8); font-size: 0.9rem; margin: 0; line-height: 1.65; }
+
+    .warn-box { background: rgba(255,77,109,0.05); border: 1px solid rgba(255,77,109,0.2); border-radius: 14px; padding: 20px 24px; margin: 24px 0; }
+    .warn-box strong { color: #ff4d6d; font-family: var(--font-display); display: block; margin-bottom: 8px; font-size: 0.9rem; letter-spacing: 0.05em; text-transform: uppercase; }
+    .warn-box p { color: rgba(240,240,248,0.8); font-size: 0.9rem; margin: 0; line-height: 1.65; }
+
+    .code-block { background: var(--dark); border: 1px solid var(--border); border-radius: 12px; padding: 20px 24px; margin: 20px 0; font-family: 'Courier New', monospace; font-size: 0.85rem; color: var(--green); overflow-x: auto; line-height: 1.7; }
+
+    .cta-block { background: var(--card); border: 1px solid rgba(0,255,136,0.2); border-radius: 20px; padding: 32px; margin: 48px 0; text-align: center; }
+    .cta-block h3 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 800; margin-bottom: 10px; }
+    .cta-block p { color: var(--muted); margin-bottom: 24px; font-size: 0.95rem; }
+    .cta-block a { display: inline-flex; background: var(--green); color: var(--black); padding: 14px 32px; border-radius: 100px; font-family: var(--font-display); font-weight: 700; text-decoration: none; transition: box-shadow 0.2s; }
+    .cta-block a:hover { box-shadow: 0 0 30px rgba(0,255,136,0.4); }
+
+    .divider { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
+
+    /* METRIC CARDS */
+    .metric-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 28px 0; }
+    .metric-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 24px 20px; text-align: center; }
+    .metric-card.good { border-color: rgba(0,255,136,0.2); }
+    .metric-card.needs { border-color: rgba(255,208,96,0.2); }
+    .metric-card.poor { border-color: rgba(255,80,80,0.2); }
+    .metric-icon { font-size: 2rem; margin-bottom: 12px; }
+    .metric-name { font-family: var(--font-display); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+    .metric-val { font-family: var(--font-display); font-size: 1.4rem; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 4px; }
+    .metric-val.green { color: var(--green); }
+    .metric-val.gold { color: #ffd060; }
+    .metric-val.red { color: #ff5050; }
+    .metric-label { font-size: 0.75rem; color: var(--muted); }
+    .compare-table { width: 100%; border-collapse: collapse; margin: 24px 0; font-size: 0.875rem; }
+    .compare-table th { background: rgba(0,255,136,0.06); color: var(--green); font-family: var(--font-display); font-size: 0.78rem; letter-spacing: 0.06em; text-transform: uppercase; padding: 12px 16px; text-align: left; border-bottom: 1px solid var(--border); }
+    .compare-table td { padding: 12px 16px; border-bottom: 1px solid var(--border); color: #c8c8d8; vertical-align: top; }
+
+    /* ARTICLE NAV */
+    .article-nav { display: flex; gap: 16px; margin-top: 60px; padding-top: 40px; border-top: 1px solid var(--border); flex-wrap: wrap; }
+    .article-nav a { flex: 1; min-width: 200px; background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 20px; transition: border-color 0.2s; text-decoration: none; display: block; }
+    .article-nav a:hover { border-color: rgba(0,255,136,0.2); }
+    .article-nav-label { font-size: 0.72rem; color: var(--muted); font-family: var(--font-display); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 6px; display: block; }
+    .article-nav-title { color: var(--white); font-weight: 500; line-height: 1.4; display: block; font-size: 0.95rem; }
+
+    /* SIDEBAR */
+    .sidebar { position: sticky; top: 100px; }
+    .sidebar-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 24px; margin-bottom: 20px; }
+    .sidebar-card h4 { font-family: var(--font-display); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 16px; }
+    .toc-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+    .toc-list a { color: var(--muted); text-decoration: none; font-size: 0.85rem; line-height: 1.5; transition: color 0.2s; display: block; padding: 4px 0 4px 10px; border-left: 2px solid transparent; }
+    .toc-list a:hover { color: var(--white); border-left-color: var(--green); }
+    .related-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .related-list a { color: rgba(240,240,248,0.75); text-decoration: none; font-size: 0.875rem; line-height: 1.4; transition: color 0.2s; }
+    .related-list a:hover { color: var(--green); }
+    .related-list a::before { content: '→ '; color: var(--green); font-size: 0.75rem; }
+
+    /* FOOTER */
     footer { background: var(--dark); border-top: 1px solid var(--border); padding: 60px 40px 40px; text-align: left; }
     .footer-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 60px; }
     .footer-brand p { color: var(--muted); font-size: 0.9rem; line-height: 1.7; margin-top: 16px; max-width: 280px; }
@@ -118,26 +205,8 @@
     .footer-bottom { max-width: 1200px; margin: 48px auto 0; padding-top: 28px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; color: var(--muted); }
     .footer-bottom a { color: var(--muted); text-decoration: none; }
     .footer-bottom a:hover { color: var(--white); }
-    @media (max-width: 900px) {
-      .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
-      .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
-      footer { padding: 40px 20px; }
-    }
-    @media (max-width: 640px) { nav { padding: 0 20px; } .article-nav { flex-direction: column; } }
-      .nav-login {
-      color: var(--muted, #7a7a95);
-      font-size: 0.875rem;
-      text-decoration: none;
-      padding: 7px 16px;
-      border-radius: 100px;
-      border: 1px solid rgba(255,255,255,0.1);
-      transition: color 0.2s, border-color 0.2s;
-    }
-    .nav-login:hover {
-      color: var(--white, #f0f0f8);
-      border-color: rgba(255,255,255,0.25);
-    }
-      /* BACK TO TOP */
+
+    /* BACK TO TOP */
     .back-to-top {
       position: fixed; bottom: 30px; right: 30px; width: 50px; height: 50px;
       background: rgba(0, 255, 136, 0.1); backdrop-filter: blur(10px);
@@ -147,13 +216,23 @@
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
     }
     .back-to-top.visible { opacity: 1; visibility: visible; bottom: 40px; }
-    .back-to-top:hover {
-      background: var(--green); color: var(--black); transform: translateY(-5px);
-      box-shadow: 0 0 30px rgba(0, 255, 136, 0.4);
+    .back-to-top:hover { background: var(--green); color: var(--black); transform: translateY(-5px); box-shadow: 0 0 30px rgba(0, 255, 136, 0.4); }
+
+    @media (max-width: 900px) {
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+      .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+      footer { padding: 40px 20px; }
+    }
+    @media (max-width: 860px) {
+      nav { padding: 16px 20px; }
+      .page-wrap { grid-template-columns: 1fr; padding: 40px 20px 60px; gap: 40px; }
+      .sidebar { position: static; }
+      .metric-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
+
 <nav>
   <a href="/" class="logo">Index<span>Fast</span></a>
   <div class="nav-right">
@@ -166,10 +245,12 @@
 <div class="page-wrap">
   <article>
     <div class="article-meta">
+      
       <span class="meta-tag">Автоматизація</span>
       <span class="meta-tag" style="background:rgba(255,208,96,0.08);border-color:rgba(255,208,96,0.2);color:#ffd060;">Linux</span>
       <span class="meta-date">5 березня 2026</span>
       <span class="meta-read">⏱ 9 хвилин читання</span>
+    
     </div>
 
     <h1>Cron jobs для SEO: автоматизуємо рутину</h1>
@@ -180,6 +261,7 @@
     </p>
 
     <div class="article-body">
+      
 
       <h2 id="what-is-cron">Що таке cron і crontab</h2>
       <p><strong>Cron</strong> — демон (фонова служба) в Unix/Linux системах, який виконує заплановані команди у визначений час. <strong>Crontab</strong> — файл конфігурації, де описані завдання.</p>
@@ -196,11 +278,11 @@
       <h3>Щоденна індексація через IndexFast</h3>
       <p>Якщо ви використовуєте PHP-скрипт IndexFast для відправки URL через Google Indexing API:</p>
       <div class="code-block"><span class="cm"># Запускати щодня о 6:00 ранку</span>
-<span class="cv">0 6 * * *</span> <span class="ck">php /var/www/html/google_indexing.php</span> >> /var/log/indexing.log 2>&1</div>
+<span class="cv">0 6 * * *</span> <span class="ck">php /var/www/html/google_indexing.php</span> &gt;&gt; /var/log/indexing.log 2&gt;&amp;1</div>
 
       <div class="tip-box">
-        <strong>💡 >> та 2>&1</strong>
-        <p>Символ <code>>></code> дописує вивід у файл лога (не перезаписує). <code>2>&1</code> перенаправляє помилки туди ж. Завжди додавайте логування щоб розуміти що відбувається.</p>
+        <strong>💡 &gt;&gt; та 2&gt;&amp;1</strong>
+        <p>Символ <code>&gt;&gt;</code> дописує вивід у файл лога (не перезаписує). <code>2&gt;&amp;1</code> перенаправляє помилки туди ж. Завжди додавайте логування щоб розуміти що відбувається.</p>
       </div>
 
       <h3>Оновлення sitemap</h3>
@@ -209,11 +291,11 @@
 
       <h3>Щотижневий SEO-аудит</h3>
       <div class="code-block"><span class="cm"># Щонеділі о 3:00 — перевірка битих посилань</span>
-<span class="cv">0 3 * * 0</span> <span class="ck">python3 /scripts/check_links.py</span> >> /var/log/links_audit.log</div>
+<span class="cv">0 3 * * 0</span> <span class="ck">python3 /scripts/check_links.py</span> &gt;&gt; /var/log/links_audit.log</div>
 
       <h3>Пінгування Google після оновлення</h3>
       <div class="code-block"><span class="cm"># Кожні 30 хвилин пінгувати Google про оновлення sitemap</span>
-<span class="cv">*/30 * * * *</span> <span class="ck">curl -s</span> "https://www.google.com/ping?sitemap=https://yoursite.com/sitemap.xml" > /dev/null</div>
+<span class="cv">*/30 * * * *</span> <span class="ck">curl -s</span> "https://www.google.com/ping?sitemap=https://yoursite.com/sitemap.xml" &gt; /dev/null</div>
 
       <h2 id="setup">Як налаштувати crontab</h2>
       <ol>
@@ -249,29 +331,113 @@
 
       <h2 id="monitoring">Моніторинг cron jobs</h2>
       <p>Cron по замовчуванню надсилає вивід на пошту root. Щоб отримувати листи на свою пошту, додайте на початку crontab:</p>
-      <div class="code-block"><span class="ck">MAILTO</span>=<span class="cv">"<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="b1c8dec4c3f1d4dcd0d8dd9fd2dedc">[email&#160;protected]</a>"</span></div>
+      <div class="code-block"><span class="ck">MAILTO</span>=<span class="cv">"<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="b1c8dec4c3f1d4dcd0d8dd9fd2dedc">[email&nbsp;protected]</a>"</span></div>
       <p>Або перегляньте системний лог: <code>grep CRON /var/log/syslog</code></p>
 
+      
+    
+
       <div class="article-nav">
-        <a href="/blog/google-search-console-posibnyk.html">
-          <div class="article-nav-label">← Попередня стаття</div>
-          <div class="article-nav-title">Google Search Console: повний посібник 2026</div>
+        <a href="/blog/indeksaciya-pislya-redyzajnu.html">
+          <span class="article-nav-label">← Попередня стаття</span>
+          <span class="article-nav-title">Індексація сайту після редизайну: як не втратити трафік</span>
         </a>
-        <a href="/blog/core-web-vitals-2026.html" style="text-align:right;">
-          <div class="article-nav-label">Наступна стаття →</div>
-          <div class="article-nav-title">Core Web Vitals 2026: що важливо знати</div>
+        <a href="/blog/yak-pereviriti-indeksaciyu-saitu.html" style="text-align:right;">
+          <span class="article-nav-label">Наступна стаття →</span>
+          <span class="article-nav-title">Як перевірити індексацію сайту в Google — 7 методів у 2026 році</span>
         </a>
       </div>
+
     </div>
   </article>
+
+  <aside class="sidebar">
+    
+    <div class="sidebar-card">
+      <h4>Зміст статті</h4>
+      <ul class="toc-list">
+        <li><a href="#what-is-cron">Що таке cron і crontab</a></li>
+        <li><a href="#examples">Практичні приклади для SEO</a></li>
+        <li><a href="#setup">Як налаштувати crontab</a></li>
+        <li><a href="#indexfast-cron">Cron для автоматичної індексації з IndexFast</a></li>
+        <li><a href="#monitoring">Моніторинг cron jobs</a></li>
+      </ul>
+    </div>
+    
+    <div class="sidebar-card">
+      <h4>Читайте також</h4>
+      <ul class="related-list">
+        <li><a href="/blog/yak-pereviriti-indeksaciyu-saitu.html">Як перевірити індексацію сайту в Google — 7 методів у 2026 році</a></li>
+        <li><a href="/blog/core-web-vitals-2026.html">Core Web Vitals 2026: що важливо знати</a></li>
+        <li><a href="/blog/google-indexing-api-vs-sitemap.html">Google Indexing API vs Sitemap — що ефективніше для індексації у 2026 році</a></li>
+      </ul>
+    </div>
+    <div class="sidebar-card" style="background: rgba(0,255,136,0.05); border-color: rgba(0,255,136,0.2);">
+      <h4 style="color: var(--green);">Спробуйте IndexFast</h4>
+      <p style="font-size:0.85rem; color:var(--muted); margin-bottom:16px; line-height:1.5;">Автоматична індексація всіх сторінок через Google Indexing API</p>
+      <a href="/app/register" style="display:block; background:var(--green); color:var(--black); text-align:center; padding:10px; border-radius:100px; font-family:var(--font-display); font-weight:700; font-size:0.85rem; text-decoration:none;">Спробувати безкоштовно →</a>
+    </div>
+  </aside>
 </div>
 
-<footer>
-  <p>
-    <a href="/">Головна</a>
-    <a href="/blog/">Блог</a>
-    <a href="/docs/">Документація</a>
-    <a href="/privacy-policy.html">Конфіденційність</a>
-    <a href="/terms.html">Умови</a>
-  </p
+<footer role="contentinfo">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="/" class="logo">Index<span>Fast</span></a>
+      <p>Automatic indexing service for Google and IndexNow via the official Google Indexing API.</p>
+    </div>
+    <div class="footer-col">
+      <p class="footer-title">Product</p>
+      <ul>
+        <li><a href="/#how-it-works">How it works</a></li>
+        <li><a href="/#features">Features</a></li>
+        <li><a href="/#pricing">Pricing</a></li>
+        <li><a href="/docs/">Documentation</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <p class="footer-title">Company</p>
+      <ul>
+        <li><a href="/about.html">About</a></li>
+        <li><a href="/blog/">Blog</a></li>
+        <li><a href="/affiliate.html">Affiliate Program</a></li>
+        <li><a href="/contacts.html">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <p class="footer-title">Support</p>
+      <ul>
+        <li><a href="/#faq">FAQ</a></li>
+        <li><a href="https://t.me/indexfastgoogle" target="_blank" rel="noopener noreferrer">Telegram Chat</a></li>
+        <li><a href="mailto:indexfastapp@gmail.com">Email Support</a></li>
+        <li><a href="/status.html">Service Status</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 IndexFast. All rights reserved.</p>
+    <div style="display:flex; gap:20px;">
+      <a href="/privacy-policy.html">Privacy</a>
+      <a href="/terms.html">Terms</a>
+    </div>
+  </div>
+  <button id="backToTop" class="back-to-top" aria-label="Back to top">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+  </button>
+</footer>
 
+<script>
+  const backToTop = document.getElementById('backToTop');
+  window.addEventListener('scroll', () => {
+    if (window.pageYOffset > 500) {
+      backToTop.classList.add('visible');
+    } else {
+      backToTop.classList.remove('visible');
+    }
+  });
+  backToTop.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+</script>
+</body>
+</html>
