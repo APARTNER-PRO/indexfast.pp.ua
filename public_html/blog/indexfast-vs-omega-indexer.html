@@ -189,6 +189,7 @@
     .toc-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
     .toc-list a { color: var(--muted); text-decoration: none; font-size: 0.85rem; line-height: 1.5; transition: color 0.2s; display: block; padding: 4px 0 4px 10px; border-left: 2px solid transparent; }
     .toc-list a:hover { color: var(--white); border-left-color: var(--green); }
+    .toc-list a.active { color: var(--green); border-left-color: var(--green); font-weight: 500; }
     .related-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
     .related-list a { color: rgba(240,240,248,0.75); text-decoration: none; font-size: 0.875rem; line-height: 1.4; transition: color 0.2s; }
     .related-list a:hover { color: var(--green); }
@@ -245,7 +246,9 @@
 <div class="page-wrap">
   <article>
     <div class="article-meta">
+      
       <span class="meta-tag">SEO</span>
+    
     </div>
 
     <h1>IndexFast vs Omega Indexer: Which is Better in 2026?</h1>
@@ -254,7 +257,12 @@
     
 
     <div class="article-body">
+      
       null
+
+      
+
+    
 
       <div class="article-nav">
         <a href="/blog/best-google-indexing-tools-2026.html">
@@ -346,6 +354,28 @@
   backToTop.addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
+
+  // TOC ScrollSpy
+  const tocLinks = document.querySelectorAll('.toc-list a');
+  if (tocLinks.length > 0 && "IntersectionObserver" in window) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          tocLinks.forEach(link => link.classList.remove('active'));
+          const activeLink = document.querySelector(`.toc-list a[href="#${entry.target.id}"]`);
+          if (activeLink) activeLink.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-100px 0px -60% 0px' });
+
+    tocLinks.forEach(link => {
+      const targetId = link.getAttribute('href');
+      if (targetId && targetId.startsWith('#')) {
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) observer.observe(targetElement);
+      }
+    });
+  }
 </script>
 </body>
 </html>
