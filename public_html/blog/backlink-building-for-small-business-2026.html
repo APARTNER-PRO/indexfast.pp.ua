@@ -189,6 +189,7 @@
     .toc-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
     .toc-list a { color: var(--muted); text-decoration: none; font-size: 0.85rem; line-height: 1.5; transition: color 0.2s; display: block; padding: 4px 0 4px 10px; border-left: 2px solid transparent; }
     .toc-list a:hover { color: var(--white); border-left-color: var(--green); }
+    .toc-list a.active { color: var(--green); border-left-color: var(--green); font-weight: 500; }
     .related-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
     .related-list a { color: rgba(240,240,248,0.75); text-decoration: none; font-size: 0.875rem; line-height: 1.4; transition: color 0.2s; }
     .related-list a:hover { color: var(--green); }
@@ -246,9 +247,11 @@
   <article>
     <div class="article-meta">
       
+      
       <span class="meta-tag">SEO</span>
       <span class="meta-date">29 червня 2026</span>
       <span class="meta-read">⏱ 10 хвилин читання</span>
+    
     
     </div>
 
@@ -258,6 +261,7 @@
     <p class="article-lead">Збір посилань — це найскладніша, але найпотужніша частина SEO. Як отримати якісні backlinks для малого бізнесу в Україні без великого бюджету? У цьому гайді — 7 працюючих методів, інструменти та реальні кейси.</p>
 
     <div class="article-body">
+      
       
 
       <h2 id="what-are-backlinks">Що таке backlinks і чому вони все ще важливі в 2026</h2>
@@ -335,6 +339,10 @@
 
       <h2 id="conclusion">Висновок</h2>
       <p>Backlink building для малого бізнесу — це не про мільйони бюджету, а про креативність та системність. Почніть з аналізу конкурентів, додайте 2–3 методи (Digital PR, каталоги, guest posting), відстежуйте результат в Google Search Console. А щоб кожне нове посилання швидко потрапило в індекс Google — скористайтеся IndexFast.</p>
+    
+
+      
+
     
 
       <div class="article-nav">
@@ -440,6 +448,28 @@
   backToTop.addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
+
+  // TOC ScrollSpy
+  const tocLinks = document.querySelectorAll('.toc-list a');
+  if (tocLinks.length > 0 && "IntersectionObserver" in window) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          tocLinks.forEach(link => link.classList.remove('active'));
+          const activeLink = document.querySelector(`.toc-list a[href="#${entry.target.id}"]`);
+          if (activeLink) activeLink.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-100px 0px -60% 0px' });
+
+    tocLinks.forEach(link => {
+      const targetId = link.getAttribute('href');
+      if (targetId && targetId.startsWith('#')) {
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) observer.observe(targetElement);
+      }
+    });
+  }
 </script>
 </body>
 </html>

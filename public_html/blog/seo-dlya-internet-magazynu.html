@@ -189,6 +189,7 @@
     .toc-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
     .toc-list a { color: var(--muted); text-decoration: none; font-size: 0.85rem; line-height: 1.5; transition: color 0.2s; display: block; padding: 4px 0 4px 10px; border-left: 2px solid transparent; }
     .toc-list a:hover { color: var(--white); border-left-color: var(--green); }
+    .toc-list a.active { color: var(--green); border-left-color: var(--green); font-weight: 500; }
     .related-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
     .related-list a { color: rgba(240,240,248,0.75); text-decoration: none; font-size: 0.875rem; line-height: 1.4; transition: color 0.2s; }
     .related-list a:hover { color: var(--green); }
@@ -246,9 +247,11 @@
   <article>
     <div class="article-meta">
       
+      
       <span class="meta-tag">E-commerce</span>
       <span class="meta-date">20 червня 2026</span>
       <span class="meta-read">⏱ 10 хвилин читання</span>
+    
     
     </div>
 
@@ -258,6 +261,7 @@
     <p class="article-lead">Тисячі товарів, фільтри що генерують тисячі URL-дублів, нові надходження що місяцями не в пошуку — e-commerce має свої унікальні SEO-виклики. Розбираємо кожен і даємо конкретні рішення.</p>
 
     <div class="article-body">
+      
       
       <h2 id="why">Чому магазини мають особливі проблеми з індексацією</h2>
       <p>Інтернет-магазини — одні з найскладніших сайтів для SEO. Тисячі товарних сторінок, категорії з фільтрами, пагінація, варіанти кольорів і розмірів — все це створює унікальні виклики.</p>
@@ -351,6 +355,10 @@
         <li>301-редіректи або 410 для видалених товарів</li>
         <li>Google Indexing API для нових і оновлених товарів</li>
       </ul>
+    
+
+      
+
     
 
       <div class="article-nav">
@@ -457,6 +465,28 @@
   backToTop.addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
+
+  // TOC ScrollSpy
+  const tocLinks = document.querySelectorAll('.toc-list a');
+  if (tocLinks.length > 0 && "IntersectionObserver" in window) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          tocLinks.forEach(link => link.classList.remove('active'));
+          const activeLink = document.querySelector(`.toc-list a[href="#${entry.target.id}"]`);
+          if (activeLink) activeLink.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-100px 0px -60% 0px' });
+
+    tocLinks.forEach(link => {
+      const targetId = link.getAttribute('href');
+      if (targetId && targetId.startsWith('#')) {
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) observer.observe(targetElement);
+      }
+    });
+  }
 </script>
 </body>
 </html>
