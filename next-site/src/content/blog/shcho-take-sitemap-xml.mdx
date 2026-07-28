@@ -1,0 +1,228 @@
+---
+title: "Що таке sitemap.xml і навіщо він потрібен — IndexFast"
+description: "Повний посібник по sitemap.xml: що це таке, як він виглядає, як створити та зареєструвати в Google Search Console. Типи sitemap, помилки та найкращі практики 2026."
+date: "2026-07-04"
+image: "/blog-images/blog_what_is_sitemap.png"
+tag: "SEOТехнічне SEO"
+readTime: "⏱ 7 хвилин читання"
+---
+
+## Що таке sitemap.xml?
+
+      
+Sitemap (карта сайту) — це XML-файл, який містить список всіх важливих URL вашого сайту. Він розміщується за адресою <code>https://your-site.com/sitemap.xml</code> і є своєрідним «путівником» для пошукових роботів.
+
+      
+Уявіть, що ваш сайт — це великий офісний будинок. Без плану поверхів прибиральник (Googlebot) буде блукати коридорами навмання, можливо так і не знайшовши деяких кімнат. Sitemap — це саме той план, який показує де що знаходиться.
+
+
+      <div>
+        **📌 Офіційна позиція Google**
+        
+Google рекомендує використовувати sitemap для будь-якого сайту з більш ніж 500 сторінок, нових сайтів з мало зовнішніх посилань, а також для сайтів з медіаконтентом (відео, зображення).
+
+      </div>
+
+      
+## Структура sitemap.xml
+
+      
+Базовий sitemap виглядає так:
+
+
+      <div><span>&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span>&lt;urlset</span> xmlns=<span>"http://www.sitemaps.org/schemas/sitemap/0.9"</span><span>&gt;</span>
+
+  <span>&lt;url&gt;</span>
+    <span>&lt;loc&gt;</span>https://your-site.com/about<span>&lt;/loc&gt;</span>
+    <span>&lt;lastmod&gt;</span>2026-01-20<span>&lt;/lastmod&gt;</span>
+    <span>&lt;changefreq&gt;</span>monthly<span>&lt;/changefreq&gt;</span>
+    <span>&lt;priority&gt;</span>0.8<span>&lt;/priority&gt;</span>
+  <span>&lt;/url&gt;</span>
+
+  <span>&lt;url&gt;</span>
+    <span>&lt;loc&gt;</span>https://your-site.com/blog/post-1<span>&lt;/loc&gt;</span>
+    <span>&lt;lastmod&gt;</span>2026-01-15<span>&lt;/lastmod&gt;</span>
+    <span>&lt;changefreq&gt;</span>weekly<span>&lt;/changefreq&gt;</span>
+    <span>&lt;priority&gt;</span>0.6<span>&lt;/priority&gt;</span>
+  <span>&lt;/url&gt;</span>
+
+<span>&lt;/urlset&gt;</span></div>
+
+      
+### Що означають теги:
+
+      <table>
+        <thead>
+          <tr><th>Тег</th><th>Обов'язковий</th><th>Опис</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>&lt;loc&gt;</code></td><td>✅ Так</td><td>Повна URL-адреса сторінки з https://</td></tr>
+          <tr><td><code>&lt;lastmod&gt;</code></td><td>❌ Ні</td><td>Дата останнього оновлення (формат YYYY-MM-DD)</td></tr>
+          <tr><td><code>&lt;changefreq&gt;</code></td><td>❌ Ні</td><td>Частота змін: always, hourly, daily, weekly, monthly, yearly, never</td></tr>
+          <tr><td><code>&lt;priority&gt;</code></td><td>❌ Ні</td><td>Пріоритет від 0.0 до 1.0 (за замовчуванням 0.5)</td></tr>
+        </tbody>
+      </table>
+
+      <div>
+        **⚠️ Важливо знати**
+        
+Google офіційно заявив, що <code>changefreq</code> та <code>priority</code> здебільшого ігноруються. Натомість <code>lastmod</code> реально впливає — Google надає пріоритет сторінкам з недавньою датою оновлення.
+
+      </div>
+
+      
+## Типи sitemap
+
+
+      
+### Звичайний sitemap
+
+      
+Перелік URL у форматі XML. Підходить для сайтів до 50 000 сторінок.
+
+
+      
+### Sitemap Index
+
+      
+Якщо у вас більше 50 000 URL або файл перевищує 50 МБ — використовуйте sitemap index. Це «файл-батько», який посилається на окремі sitemap-файли:
+
+
+      <div><span>&lt;sitemapindex</span> xmlns=<span>"http://www.sitemaps.org/schemas/sitemap/0.9"</span><span>&gt;</span>
+  <span>&lt;sitemap&gt;</span>
+    <span>&lt;loc&gt;</span>https://your-site.com/sitemap-pages.xml<span>&lt;/loc&gt;</span>
+  <span>&lt;/sitemap&gt;</span>
+  <span>&lt;sitemap&gt;</span>
+    <span>&lt;loc&gt;</span>https://your-site.com/sitemap-products.xml<span>&lt;/loc&gt;</span>
+  <span>&lt;/sitemap&gt;</span>
+  <span>&lt;sitemap&gt;</span>
+    <span>&lt;loc&gt;</span>https://your-site.com/sitemap-blog.xml<span>&lt;/loc&gt;</span>
+  <span>&lt;/sitemap&gt;</span>
+<span>&lt;/sitemapindex&gt;</span></div>
+
+      <div>
+        **✅ IndexFast підтримує Sitemap Index**
+        
+IndexFast автоматично розпізнає і обробляє як звичайні sitemap, так і sitemap index будь-якої глибини вкладеності.
+
+      </div>
+
+      
+## Як створити sitemap.xml
+
+
+      <div>
+        <div>
+          <div>1</div>
+          <div>
+            **WordPress**
+            
+Плагіни Yoast SEO або Rank Math автоматично генерують sitemap. Він доступний за адресою <code>/sitemap_index.xml</code>.
+
+          </div>
+        </div>
+        <div>
+          <div>2</div>
+          <div>
+            **Webflow**
+            
+Sitemap генерується автоматично та доступний за <code>/sitemap.xml</code>. Публікується разом із сайтом без додаткових налаштувань.
+
+          </div>
+        </div>
+        <div>
+          <div>3</div>
+          <div>
+            **Shopify / OpenCart**
+            
+Вбудована генерація sitemap. Shopify: <code>/sitemap.xml</code>. OpenCart: модуль SEO Sitemap.
+
+          </div>
+        </div>
+        <div>
+          <div>4</div>
+          <div>
+            **Власна розробка (PHP/Laravel)**
+            
+Генеруйте динамічно з бази даних або використайте бібліотеки: <code>spatie/laravel-sitemap</code> для Laravel.
+
+          </div>
+        </div>
+        <div>
+          <div>5</div>
+          <div>
+            **Онлайн-генератори**
+            
+Для невеликих сайтів: XML-Sitemaps.com, Screaming Frog (до 500 URL безкоштовно).
+
+          </div>
+        </div>
+      </div>
+
+      
+## Як зареєструвати sitemap в Google
+
+      
+Мати sitemap — недостатньо. Google має знати де він знаходиться. Є два способи:
+
+
+      
+### Спосіб 1: через robots.txt
+
+      <div>User-agent: *
+Allow: /
+
+Sitemap: https://your-site.com/sitemap.xml</div>
+
+      
+### Спосіб 2: через Google Search Console
+
+      
+
+        - Відкрийте Search Console → оберіть ваш сайт.
+
+        - У лівому меню: Індексування → Sitemap.
+
+        - Введіть URL вашого sitemap та натисніть «Надіслати».
+
+      
+
+
+      
+## Поширені помилки з sitemap
+
+      
+
+        - **URL з noindex** — не включайте в sitemap сторінки з тегом <code>noindex</code>.
+
+        - **Биті посилання** — всі URL у sitemap мають повертати код 200, не 301 або 404.
+
+        - **Неоновлена дата lastmod** — якщо вказуєте lastmod, оновлюйте її реально при змінах.
+
+        - **Sitemap не в robots.txt** — Google може просто не знайти ваш файл.
+
+        - **Відносні URL** — використовуйте тільки абсолютні URL з <code>https://</code>.
+
+      
+
+
+      
+## Sitemap + Indexing API = максимальна швидкість
+
+      
+Навіть зареєстрований в Search Console sitemap не гарантує швидкої індексації. Google може обробити його через тиждень, а може через місяць — залежно від авторитету вашого домену.
+
+      
+Найефективніша стратегія — це поєднання актуального sitemap з активним надсиланням URL через Google Indexing API. Ви не чекаєте коли Google сам прийде — ви самі кажете йому «ось нова сторінка, просканuj зараз».
+
+
+      <div>
+        
+### Відправте sitemap на індексацію прямо зараз
+
+        
+IndexFast зчитає ваш sitemap.xml і відправить всі URL через Google Indexing API. Результат — сторінки в Google вже завтра.
+
+        [Спробувати безкоштовно →](/#pricing)
+      </div>

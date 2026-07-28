@@ -14,7 +14,7 @@ $paymentMethod = trim($body['payment_method'] ?? '');
 $promoCode     = strtoupper(trim($body['promo_code'] ?? ''));
 
 if (!$planId || !array_key_exists($planId, Plans::CONFIG)) respond(400, 'Невірний тариф');
-if (!in_array($period, ['month','year','3_years','custom'], true))   respond(400, 'Невірний period');
+if (!in_array($period, ['month','year','3_years','lifetime','custom'], true))   respond(400, 'Невірний period');
 if (!$paymentMethod)                                        respond(400, 'Не вказано метод оплати');
 
 $manager  = PaymentManager::getInstance();

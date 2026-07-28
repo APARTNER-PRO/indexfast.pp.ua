@@ -11,7 +11,7 @@ const BASE = (typeof import.meta !== 'undefined' && import.meta?.env?.VITE_API_U
   : '/api';
 
 const PLAN_LABELS   = { pro: 'PRO', agency: 'Агенція', enterprise: 'Enterprise', start: 'Старт' };
-const PERIOD_LABELS = { month: 'місяць', year: 'рік', '3_years': '3 роки' };
+const PERIOD_LABELS = { month: 'місяць', year: 'рік', '3_years': '3 роки', lifetime: 'назавжди' };
 const CURRENCY_SYMBOLS = { UAH: '₴', USD: '$', EUR: '€', GBP: '£' };
 
 const PaymentIcon = ({ id }) => {
@@ -373,8 +373,8 @@ export default function Billing() {
             {/* Перемикач місяць/рік/3 роки */}
             <div style={{ display: 'flex', gap: 4, background: 'rgba(255,255,255,0.05)',
                           borderRadius: 12, padding: 4 }}>
-              {['month', 'year', '3_years'].map(per => {
-                let label = per === 'month' ? t("billing.month") : per === 'year' ? t("billing.year") : t("billing.threeYears");
+              {['month', 'year', '3_years', 'lifetime'].map(per => {
+                let label = per === 'month' ? t("billing.month") : per === 'year' ? t("billing.year") : per === '3_years' ? t("billing.threeYears") : 'Назавжди';
                 let discountText = '';
                 const pData = plans[selPlan] || plans['pro'];
                 if (per === 'year') {
@@ -391,6 +391,8 @@ export default function Billing() {
                   } else {
                     discountText = ' −34%';
                   }
+                } else if (per === 'lifetime') {
+                  discountText = '';
                 }
                 return (
                   <button
@@ -422,7 +424,7 @@ export default function Billing() {
                     const isEnterprise = !!p.enterprise;
                     const priceNum     = isEnterprise ? '' : (priceVal > 0 ? priceVal.toLocaleString('uk-UA') : '0');
                     const priceUah     = isEnterprise ? 0 : (p[selPeriod + '_uah'] || 0);
-                     const desc         = isEnterprise ? t("billing.underNeeds") : (priceVal > 0 ? t("billing." + (selPeriod === '3_years' ? 'per3Years' : selPeriod === 'year' ? 'perYear' : 'perMonth')) : t("billing.freeForever"));
+                     const desc = isEnterprise ? t("billing.underNeeds") : (priceVal > 0 ? (selPeriod === 'lifetime' ? 'Один раз, назавжди' : t("billing." + (selPeriod === '3_years' ? 'per3Years' : selPeriod === 'year' ? 'perYear' : 'perMonth'))) : t("billing.freeForever"));
                     return (
                       <div key={id} style={{ flex: '1 1 0', minWidth: 260 }}>
                         <PlanCard
@@ -451,7 +453,7 @@ export default function Billing() {
             const isEnterprise = !!p.enterprise;
             const priceNum     = isEnterprise ? '' : (priceVal > 0 ? priceVal.toLocaleString('uk-UA') : '0');
             const priceUah     = isEnterprise ? 0 : (p[selPeriod + '_uah'] || 0);
-             const desc         = isEnterprise ? t("billing.underNeeds") : (priceVal > 0 ? t("billing." + (selPeriod === '3_years' ? 'per3Years' : selPeriod === 'year' ? 'perYear' : 'perMonth')) : t("billing.freeForever"));
+             const desc = isEnterprise ? t("billing.underNeeds") : (priceVal > 0 ? (selPeriod === 'lifetime' ? 'Один раз, назавжди' : t("billing." + (selPeriod === '3_years' ? 'per3Years' : selPeriod === 'year' ? 'perYear' : 'perMonth'))) : t("billing.freeForever"));
 
             return (
               <div style={{ paddingTop: 20 }}>

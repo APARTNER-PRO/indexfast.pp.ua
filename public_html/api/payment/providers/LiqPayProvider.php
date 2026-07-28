@@ -20,26 +20,31 @@ class LiqPayProvider implements PaymentProviderInterface
     {
         $pub    = env('LIQPAY_PUBLIC_KEY');
         $priv   = env('LIQPAY_PRIVATE_KEY');
+        $isRecurring = ($params['period'] !== 'custom' && $params['period'] !== 'lifetime');
+        $action = $isRecurring ? 'subscribe' : 'pay';
         $period = in_array($params['period'], ['year', '3_years'], true) ? 'year' : 'month';
 
         $data = [
             'version'              => 3,
             'public_key'           => $pub,
-            'action'               => 'subscribe',
+            'action'               => $action,
             'amount'               => number_format($params['amount'] ?? 0, 2, '.', ''),
             'currency'             => strtoupper($params['currency'] ?? 'UAH'),
-            'description'          => 'IndexFast ' . strtoupper($params['plan_id']) . ' (' . $period . ')',
+            'description'          => 'IndexFast ' . strtoupper($params['plan_id']) . ' (' . $params['period'] . ')',
             'order_id'             => 'sub_' . $params['sub_id'] . '_' . time(),
             'result_url'           => $params['success_url'],
             'server_url'           => env('APP_URL') . '/api/payment/webhooks/liqpay_webhook.php',
-            'subscribe_date_start' => date('Y-m-d H:i:s'),
-            'subscribe_periodicity'=> $period,
             'info'                 => json_encode([
                 'user_id' => $params['user_id'],
                 'plan_id' => $params['plan_id'],
                 'sub_id'  => $params['sub_id'],
             ]),
         ];
+        
+        if ($isRecurring) {
+            $data['subscribe_date_start'] = date('Y-m-d H:i:s');
+            $data['subscribe_periodicity'] = $period;
+        }
 
         $enc = base64_encode(json_encode($data));
         $sig = base64_encode(sha1($priv . $enc . $priv, true));

@@ -5,7 +5,7 @@ import {
 } from "react";
 import { useNavigate } from "react-router-dom";
 import { useQueryClient }              from "@tanstack/react-query";
-import { useStats, useDeleteSite, useToggleSite } from "./hooks/useStats.js";
+import { useStats, useDeleteSite, useToggleSite, resetStatsPollFailures } from "./hooks/useStats.js";
 import { apiClient } from "./api/client.js";
 import { useToast }          from "./hooks/useToast.js";
 import i18n from "./i18n/index.js";
@@ -385,18 +385,82 @@ export default function App() {
 
   if (isError && !cachedStats) {
     if (error?.status === 415) {
+      // Перевіряємо чи не вичерпано ліміт спроб (навідь про react-query failureCount)
+      const failureCount = error?.__failureCount ?? 99;
+      const isStopped = failureCount >= 5;
+
+      if (!isStopped) {
+        return (
+          <div style={{ background: C.black, minHeight: "100vh",
+            display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <div style={{ textAlign: "center" }}>
+              <div style={{ fontFamily: "Syne,sans-serif", fontSize: 24, fontWeight: 800,
+                marginBottom: 24, letterSpacing: "-0.04em" }}>
+                Index<span style={{ color: C.green }}>Fast</span>
+              </div>
+              <div style={{ color: C.muted, fontSize: 13, marginBottom: 16 }}>
+                З'єднання...
+              </div>
+              <Spinner size={32}/>
+            </div>
+          </div>
+        );
+      }
+
+      // Після 5 спроб — показуємо повідомлення про помилку
       return (
         <div style={{ background: C.black, minHeight: "100vh",
-          display: "flex", alignItems: "center", justifyContent: "center" }}>
-          <div style={{ textAlign: "center" }}>
+          display: "flex", alignItems: "center", justifyContent: "center",
+          padding: 24 }}>
+          <div style={{ textAlign: "center", maxWidth: 420 }}>
             <div style={{ fontFamily: "Syne,sans-serif", fontSize: 24, fontWeight: 800,
-              marginBottom: 24, letterSpacing: "-0.04em" }}>
+              marginBottom: 28, letterSpacing: "-0.04em" }}>
               Index<span style={{ color: C.green }}>Fast</span>
             </div>
-            <div style={{ color: C.muted, fontSize: 13, marginBottom: 16 }}>
-              З'єднання...
+
+            {/* Іконка помилки */}
+            <div style={{ width: 64, height: 64, borderRadius: "50%",
+              background: "rgba(248,113,113,0.08)", border: "1px solid rgba(248,113,113,0.2)",
+              display: "flex", alignItems: "center", justifyContent: "center",
+              fontSize: 28, margin: "0 auto 20px" }}>
+              ⚠️
             </div>
-            <Spinner size={32}/>
+
+            {/* Заголовок */}
+            <div style={{ fontFamily: "Syne,sans-serif", fontSize: 18, fontWeight: 700,
+              color: "#f87171", marginBottom: 12 }}>
+              Не вдалось з'єднатись з сервером
+            </div>
+
+            {/* Описання */}
+            <div style={{ color: C.muted, fontSize: 14, lineHeight: 1.6, marginBottom: 28 }}>
+              Після <strong style={{ color: "#d0d0e8" }}>5 спроб</strong> автоматичне оновлення зупинено.
+              <br/>Це може бути спричинено захистом Cloudflare або
+              <br/>тимчасовою недоступністю сервера.
+            </div>
+
+            {/* Кнопка повторити */}
+            <button
+              onClick={() => {
+                resetStatsPollFailures();
+                handleRefresh();
+              }}
+              style={{
+                padding: "12px 28px", borderRadius: 12, border: "none",
+                background: C.green, color: C.black,
+                fontFamily: "Syne,sans-serif", fontWeight: 700, fontSize: 15,
+                cursor: "pointer", transition: "opacity .15s",
+              }}
+              onMouseOver={e => e.currentTarget.style.opacity = "0.85"}
+              onMouseOut={e => e.currentTarget.style.opacity = "1"}
+            >
+              Спробувати знову
+            </button>
+
+            {/* Hint */}
+            <div style={{ color: "#4a4a68", fontSize: 12, marginTop: 16 }}>
+              Код помилки: 415 • {new Date().toLocaleTimeString("uk-UA")}
+            </div>
           </div>
         </div>
       );

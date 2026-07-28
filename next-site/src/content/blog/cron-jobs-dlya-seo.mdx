@@ -1,0 +1,132 @@
+---
+title: "Cron jobs для SEO: автоматизуємо рутину — IndexFast"
+description: "Як налаштувати cron jobs для автоматичного запуску SEO-скриптів на сервері. Покроковий гайд для власників сайтів і розробників."
+date: "2026-07-04"
+image: "/blog-images/blog_cron_jobs.png"
+tag: "АвтоматизаціяLinux"
+readTime: "⏱ 9 хвилин читання"
+---
+
+## Що таке cron і crontab
+
+      
+**Cron** — демон (фонова служба) в Unix/Linux системах, який виконує заплановані команди у визначений час. **Crontab** — файл конфігурації, де описані завдання.
+
+      
+Кожен рядок crontab має формат:
+
+      <div><span>* * * * *</span>  <span>команда</span>
+<span>│ │ │ │ └── день тижня (0-7, де 0 і 7 = неділя)</span>
+<span>│ │ │ └──── місяць (1-12)</span>
+<span>│ │ └────── день місяця (1-31)</span>
+<span>│ └──────── година (0-23)</span>
+<span>└────────── хвилина (0-59)</span></div>
+
+      
+## Практичні приклади для SEO
+
+
+      
+### Щоденна індексація через IndexFast
+
+      
+Якщо ви використовуєте PHP-скрипт IndexFast для відправки URL через Google Indexing API:
+
+      <div><span># Запускати щодня о 6:00 ранку</span>
+<span>0 6 * * *</span> <span>php /var/www/html/google_indexing.php</span> &gt;&gt; /var/log/indexing.log 2&gt;&amp;1</div>
+
+      <div>
+        **💡 &gt;&gt; та 2&gt;&amp;1**
+        
+Символ <code>&gt;&gt;</code> дописує вивід у файл лога (не перезаписує). <code>2&gt;&amp;1</code> перенаправляє помилки туди ж. Завжди додавайте логування щоб розуміти що відбувається.
+
+      </div>
+
+      
+### Оновлення sitemap
+
+      <div><span># Кожні 6 годин оновлювати sitemap</span>
+<span>0 */6 * * *</span> <span>php /var/www/html/generate_sitemap.php</span></div>
+
+      
+### Щотижневий SEO-аудит
+
+      <div><span># Щонеділі о 3:00 — перевірка битих посилань</span>
+<span>0 3 * * 0</span> <span>python3 /scripts/check_links.py</span> &gt;&gt; /var/log/links_audit.log</div>
+
+      
+### Пінгування Google після оновлення
+
+      <div><span># Кожні 30 хвилин пінгувати Google про оновлення sitemap</span>
+<span>*/30 * * * *</span> <span>curl -s</span> "https://www.google.com/ping?sitemap=https://yoursite.com/sitemap.xml" &gt; /dev/null</div>
+
+      
+## Як налаштувати crontab
+
+      
+
+        - Підключіться до сервера по SSH
+
+        - Відкрийте редактор crontab: <code>crontab -e</code>
+
+        - Додайте рядки з завданнями (формат описаний вище)
+
+        - Збережіть файл (у nano: Ctrl+O, Enter, Ctrl+X)
+
+        - Перевірте що завдання додано: <code>crontab -l</code>
+
+      
+
+
+      
+### Якщо немає доступу до SSH
+
+      
+Більшість хостинг-панелей (cPanel, Plesk, ISPmanager) мають графічний інтерфейс для cron jobs. Шукайте розділ «Cron Jobs» або «Планувальник задач» у панелі керування хостингом.
+
+
+      <div>
+        **⚠️ Важливо: абсолютні шляхи**
+        
+У cron не завантажується оточення користувача, тому завжди вказуйте повні шляхи до виконуваних файлів: не <code>php script.php</code>, а <code>/usr/bin/php /var/www/html/script.php</code>. Шлях до php: <code>which php</code>
+
+      </div>
+
+      
+## Cron для автоматичної індексації з IndexFast
+
+      
+PHP-скрипт IndexFast ідеально підходить для запуску через cron. Він:
+
+      
+
+        - Читає URL зі свого sitemap.xml
+
+        - Відправляє їх через Google Indexing API
+
+        - Логує результати кожного запиту
+
+        - Зупиняється при досягненні денної квоти (200 URL)
+
+      
+
+
+      <div>
+        
+### Хочете без cron і SSH?
+
+        
+IndexFast PRO має вбудований планувальник — налаштуйте розклад прямо в кабінеті, без доступу до сервера.
+
+        [🚀 Спробувати безкоштовно →](/app/register" class="btn-cta)
+      </div>
+
+      
+## Моніторинг cron jobs
+
+      
+Cron по замовчуванню надсилає вивід на пошту root. Щоб отримувати листи на свою пошту, додайте на початку crontab:
+
+      <div><span>MAILTO</span>=<span>"[[email&nbsp;protected]](/cdn-cgi/l/email-protection" data-cfemail="b1c8dec4c3f1d4dcd0d8dd9fd2dedc)"</span></div>
+      
+Або перегляньте системний лог: <code>grep CRON /var/log/syslog</code>

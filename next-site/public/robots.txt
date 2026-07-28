@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+Disallow: /app/
+Disallow: /api/
+
+User-agent: Googlebot
+Allow: /
+
+Sitemap: https://indexfast.pro/sitemap.xml
+Host: https://indexfast.pro

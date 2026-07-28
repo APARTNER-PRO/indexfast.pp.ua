@@ -79,7 +79,8 @@ class SubscriptionService
                 $periodLabels = [
                     'month'       => 'місяць',
                     'year'        => 'рік',
-                    'three_years' => '3 роки'
+                    'three_years' => '3 роки',
+                    'lifetime'    => 'назавжди'
                 ];
                 $targetLabel = $periodLabels[$promo['target_period']] ?? $promo['target_period'];
                 throw new RuntimeException("Промокод '{$promoCode}' дійсний лише при оплаті на {$targetLabel}.");
@@ -420,7 +421,7 @@ class SubscriptionService
         if ($period === '3_years') {
             return date('Y-m-d H:i:s', strtotime('+3 years'));
         }
-        if ($period === 'custom') {
+        if ($period === 'custom' || $period === 'lifetime') {
             return null;
         }
         // month та будь-який інший

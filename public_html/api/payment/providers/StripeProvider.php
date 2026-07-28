@@ -19,7 +19,7 @@ class StripeProvider implements PaymentProviderInterface
     public function createPaymentSession(array $params): array
     {
         $secretKey   = env('STRIPE_SECRET_KEY');
-        $isRecurring = ($params['period'] !== 'custom');
+        $isRecurring = ($params['period'] !== 'custom' && $params['period'] !== 'lifetime');
         $mode        = $isRecurring ? 'subscription' : 'payment';
         $interval    = in_array($params['period'], ['year', '3_years'], true) ? 'year' : 'month';
 

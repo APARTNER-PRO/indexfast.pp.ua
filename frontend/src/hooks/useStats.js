@@ -16,24 +16,47 @@ export const KEYS = {
 // ── Головні дані дашборду
 //    staleTime: 30s — не рефетчимо якщо дані свіжі
 //    refetchOnWindowFocus: true — оновлюємо коли юзер повертається на вкладку
+
+// Лічильник невдалих спроб отримання stats (окремо від react-query retry)
+// Зберігаємо у модулі, щоб зберігалось між рендерами без useState
+let _statsPollFailures = 0;
+const MAX_POLL_FAILURES = 5;
+
+export function resetStatsPollFailures() {
+  _statsPollFailures = 0;
+}
+
 export function useStats() {
   return useQuery({
     queryKey:           KEYS.stats,
-    queryFn:            () => apiClient.stats(),
+    queryFn:            async () => {
+      try {
+        const result = await apiClient.stats();
+        // Успіх — скидаємо лічильник
+        _statsPollFailures = 0;
+        return result;
+      } catch (err) {
+        _statsPollFailures += 1;
+        throw err;
+      }
+    },
     staleTime:          30_000,
     refetchInterval:    (query) => {
+      // Якщо вже було 5+ невдалих спроб — зупиняємо автоопитування
+      if (_statsPollFailures >= MAX_POLL_FAILURES) return false;
+
       const data = query?.state?.data;
       const error = query?.state?.error;
-      // Якщо з'єднання тільки встановлюється (немає даних) або була помилка, опитуємо частіше (кожні 10 секунд)
+      // Якщо з'єднання тільки встановлюється (немає даних) або була помилка, опитуємо кожні 15 секунд
       if (!data || error || !data.user) {
-        return 10_000;
+        return 15_000;
       }
-      // Коли дані успішно отримано, опитуємо значно рідше (кожні 5 хвилин)
-      return 300_000;
+      // Коли дані успішно отримано, опитуємо значно рідше (кожні 30 секунд)
+      return 15_000;
     },
     refetchOnWindowFocus: true,
     retry:              2,
-    retryDelay:         (attempt) => Math.min(1000 * 2 ** attempt, 10_000),
+    retryDelay:         (attempt) => Math.min(1000 * 2 ** attempt, 15_000),
   });
 }
 

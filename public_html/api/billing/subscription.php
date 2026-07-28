@@ -39,9 +39,11 @@ foreach (Plans::CONFIG as $pid => $cfg) {
         'month'      => (float)env('PRICE_' . strtoupper($pid) . '_MONTH', 0),
         'year'       => (float)env('PRICE_' . strtoupper($pid) . '_YEAR',  0),
         '3_years'    => (float)env('PRICE_' . strtoupper($pid) . '_3_YEARS', 0),
+        'lifetime'   => (float)env('PRICE_' . strtoupper($pid) . '_LIFETIME', 0),
         'month_uah'  => round((float)env('PRICE_' . strtoupper($pid) . '_MONTH', 0) * $rateToUah, 2),
         'year_uah'   => round((float)env('PRICE_' . strtoupper($pid) . '_YEAR',  0) * $rateToUah, 2),
         '3_years_uah'=> round((float)env('PRICE_' . strtoupper($pid) . '_3_YEARS', 0) * $rateToUah, 2),
+        'lifetime_uah'=> round((float)env('PRICE_' . strtoupper($pid) . '_LIFETIME', 0) * $rateToUah, 2),
     ];
     $plans[$pid] = $planData;
 }

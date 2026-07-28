@@ -16,7 +16,7 @@ class ManualTransferProvider implements PaymentProviderInterface
 
     public function createPaymentSession(array $params): array
     {
-        $period = ($params['period'] === 'year') ? 'рік' : (($params['period'] === '3_years') ? '3 роки' : 'місяць');
+        $period = ($params['period'] === 'lifetime') ? 'назавжди' : (($params['period'] === 'year') ? 'рік' : (($params['period'] === '3_years') ? '3 роки' : 'місяць'));
         return [
             'redirect_url' => null,
             'payment_id'   => 'manual_' . $params['sub_id'] . '_' . time(),
