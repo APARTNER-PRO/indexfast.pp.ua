@@ -430,6 +430,11 @@
             "source": "/blog/indeksaciya-pislya-redyzajnu.html",
             "destination": "/blog/indexing-after-redesign.html",
             "permanent": true
+        },
+        {
+            "source": "/blog/avtomatychna-indeksaciya.html",
+            "destination": "/blog/automatic-indexing.html",
+            "permanent": true
         }
     ],
     "rewrites": [
