@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Що таке sitemap.xml і навіщо він потрібен — IndexFast</title>
+  <meta name="description" content="Повний посібник по sitemap.xml: що це таке, як він виглядає, як створити та зареєструвати в Google Search Console. Типи sitemap, помилки та найкращі практики 2026.">
+  <meta name="keywords" content="що таке sitemap xml, sitemap xml приклад, як створити sitemap, sitemap google, sitemap index, зареєструвати sitemap search console">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+  <link rel="canonical" href="https://indexfast.pro/uk/blog/what-is-sitemap-xml.html">
+
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://indexfast.pro/uk/blog/what-is-sitemap-xml.html">
+  <meta property="og:title" content="Що таке sitemap.xml і навіщо він потрібен — IndexFast">
+  <meta property="og:description" content="Повний посібник по sitemap.xml: що це таке, як він виглядає, як створити та зареєструвати в Google Search Console. Типи sitemap, помилки та найкращі практики 2026.">
+  <meta property="og:image" content="https://indexfast.pro/blog-images/blog_what_is_sitemap.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="uk_UA">
+  <meta property="article:published_time" content="2026-01-20T10:00:00+02:00">
+  <meta property="article:modified_time" content="2026-01-20T10:00:00+02:00">
+  <meta property="article:author" content="IndexFast">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Що таке sitemap.xml і навіщо він потрібен — IndexFast",
+    "description": "Повний посібник по sitemap.xml: що це таке, як він виглядає, як створити та зареєструвати в Google Search Console. Типи sitemap, помилки та найкращі практики 2026.",
+    "inLanguage": "uk",
+    "author": {
+      "@type": "Organization",
+      "name": "IndexFast",
+      "url": "https://indexfast.pro"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "IndexFast",
+      "url": "https://indexfast.pro",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://indexfast.pro/logo.png"
+      }
+    },
+    "datePublished": "2026-01-20T10:00:00+02:00",
+    "dateModified": "2026-01-20T10:00:00+02:00",
+    "url": "https://indexfast.pro/uk/blog/what-is-sitemap-xml.html",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://indexfast.pro/uk/blog/what-is-sitemap-xml.html"
+    },
+    "image": {
+      "@type": "ImageObject",
+      "url": "https://indexfast.pro/blog-images/blog_what_is_sitemap.png",
+      "width": 1200,
+      "height": 630
+    }
+  }
+  </script>
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Що таке sitemap.xml і навіщо він потрібен — IndexFast">
+  <meta name="twitter:description" content="Повний посібник по sitemap.xml: що це таке, як він виглядає, як створити та зареєструвати в Google Search Console. Типи sitemap, помилки та найкращі практики 2026.">
+  <meta name="twitter:image" content="https://indexfast.pro/blog-images/blog_what_is_sitemap.png">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Головна", "item": "https://indexfast.pro/" },
+      { "@type": "ListItem", "position": 2, "name": "Блог", "item": "https://indexfast.pro/uk/blog/" },
+      { "@type": "ListItem", "position": 3, "name": "Що таке sitemap.xml і навіщо він потрібен", "item": "https://indexfast.pro/uk/blog/what-is-sitemap-xml.html" }
+    ]
+  }
+  </script>
+
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/blog.css">
+</head>
+<body>
+
+<nav id="navbar" role="navigation" aria-label="Main menu" class="">
+    <a href="/uk/" class="logo" aria-label="IndexFast">Index<span>Fast</span></a>
+    <ul class="nav-links">
+      <li><a href="/uk/#how-it-works">Як це працює</a></li>
+      <li><a href="/uk/#for-whom">Для кого</a></li>
+      <li><a href="/uk/#features">Переваги</a></li>
+      <li><a href="/uk/#pricing">Ціни</a></li>
+      <li><a href="/uk/#faq">FAQ</a></li>
+      <li class="mobile-auth">
+        <a href="/app/login" class="mobile-login">Увійти</a>
+        <a href="/app/register" class="mobile-register">Розпочати безкоштовно →</a>
+      </li>
+    </ul>
+    <div class="nav-actions">
+      <div class="nav-lang-dropdown">
+        <button class="nav-lang-btn">UK ▾</button>
+        <div class="nav-lang-menu">
+        <a href="/blog/what-is-sitemap-xml.html" >English</a>
+        <a href="/uk/blog/what-is-sitemap-xml.html" class="active">Українська</a>
+        <a href="/es/blog/what-is-sitemap-xml.html" >Español</a>
+        <a href="/pt/blog/what-is-sitemap-xml.html" >Português</a>
+        <a href="/ru/blog/what-is-sitemap-xml.html" >Русский</a>
+        <a href="/de/blog/what-is-sitemap-xml.html" >Deutsch</a>
+        <a href="/fr/blog/what-is-sitemap-xml.html" >Français</a>
+        <a href="/pl/blog/what-is-sitemap-xml.html" >Polski</a>
+        </div>
+      </div>
+      <a href="/app/login" class="nav-login">Увійти</a>
+      <a href="/app/register" class="nav-cta">Розпочати безкоштовно →</a>
+      <button class="mobile-menu-btn" onclick="document.querySelector('.nav-links').classList.toggle('active')" aria-label="Main menu">☰</button>
+    </div>
+  </nav>
+
+<div class="page-wrap">
+  <article>
+    <div class="article-meta">
+      <span class="meta-tag">SEO</span>
+      <span class="meta-tag" style="background:rgba(0,212,255,0.08);border-color:rgba(0,212,255,0.2);color:#00d4ff;">Технічне SEO</span>
+      <span class="meta-date">20 січня 2026</span>
+      <span class="meta-read">⏱ 7 хвилин читання</span>
+    </div>
+
+    <h1>Що таке sitemap.xml і навіщо він потрібен</h1>
+    <img src="/blog-images/blog_what_is_sitemap.png" alt="Що таке sitemap.xml - структура дерева сайту" loading="lazy" decoding="async" class="article-main-image" style="width:100%; border-radius:16px; margin: 24px 0; object-fit: cover; aspect-ratio: 1200/630;">
+
+    <div class="article-body">
+
+      <p class="article-lead">Sitemap.xml — один з найважливіших файлів для SEO, про який часто забувають або налаштовують неправильно. Розбираємо що це таке, як він виглядає, як його створити і чому він напряму впливає на швидкість індексації вашого сайту.</p>
+      <h2 id="what-is">Що таке sitemap.xml?</h2>
+      <p>Sitemap (карта сайту) — це XML-файл, який містить список всіх важливих URL вашого сайту. Він розміщується за адресою <code>https://your-site.com/sitemap.xml</code> і є своєрідним «путівником» для пошукових роботів.</p>
+      <p>Уявіть, що ваш сайт — це великий офісний будинок. Без плану поверхів прибиральник (Googlebot) буде блукати коридорами навмання, можливо так і не знайшовши деяких кімнат. Sitemap — це саме той план, який показує де що знаходиться.</p>
+      <div class="tip-box">
+        <strong>📌 Офіційна позиція Google</strong>
+        <p>Google рекомендує використовувати sitemap для будь-якого сайту з більш ніж 500 сторінок, нових сайтів з мало зовнішніх посилань, а також для сайтів з медіаконтентом (відео, зображення).</p>
+      </div>
+      <h2 id="structure">Структура sitemap.xml</h2>
+      <p>Базовий sitemap виглядає так:</p>
+      <div class="code-block"><span class="cm">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="ct">&lt;urlset</span> xmlns=<span class="cv">"http://www.sitemaps.org/schemas/sitemap/0.9"</span><span class="ct">&gt;</span>
+
+  <span class="ct">&lt;url&gt;</span>
+    <span class="ct">&lt;loc&gt;</span>https://your-site.com/about<span class="ct">&lt;/loc&gt;</span>
+    <span class="ct">&lt;lastmod&gt;</span>2026-01-20<span class="ct">&lt;/lastmod&gt;</span>
+    <span class="ct">&lt;changefreq&gt;</span>monthly<span class="ct">&lt;/changefreq&gt;</span>
+    <span class="ct">&lt;priority&gt;</span>0.8<span class="ct">&lt;/priority&gt;</span>
+  <span class="ct">&lt;/url&gt;</span>
+
+<span class="ct">&lt;/urlset&gt;</span></div>
+      <h3>Що означають теги:</h3>
+      <table class="compare-table">
+        <thead>
+          <tr><th>Тег</th><th>Обов'язковий</th><th>Опис</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>&lt;loc&gt;</code></td><td>✅ Так</td><td>Повна URL-адреса сторінки з https://</td></tr>
+          <tr><td><code>&lt;lastmod&gt;</code></td><td>❌ Ні</td><td>Дата останнього оновлення (формат YYYY-MM-DD)</td></tr>
+          <tr><td><code>&lt;changefreq&gt;</code></td><td>❌ Ні</td><td>Частота змін: always, hourly, daily, weekly, monthly, yearly, never</td></tr>
+          <tr><td><code>&lt;priority&gt;</code></td><td>❌ Ні</td><td>Пріоритет від 0.0 до 1.0 (за замовчуванням 0.5)</td></tr>
+        </tbody>
+      </table>
+      <div class="warn-box">
+        <strong>⚠️ Важливо знати</strong>
+        <p>Google офіційно заявив, що <code>changefreq</code> та <code>priority</code> здебільшого ігноруються. Натомість <code>lastmod</code> реально впливає — Google надає пріоритет сторінкам з недавньою датою оновлення.</p>
+      </div>
+      <h2 id="types">Типи sitemap</h2>
+      <h3>Звичайний sitemap</h3>
+      <p>Перелік URL у форматі XML. Підходить для сайтів до 50 000 сторінок.</p>
+      <h3>Sitemap Index</h3>
+      <p>Якщо у вас більше 50 000 URL або файл перевищує 50 МБ — використовуйте sitemap index. Це «файл-батько», який посилається на окремі sitemap-файли.</p>
+      <div class="tip-box">
+        <strong>✅ IndexFast підтримує Sitemap Index</strong>
+        <p>IndexFast автоматично розпізнає і обробляє як звичайні sitemap, так і sitemap index будь-якої глибини вкладеності.</p>
+      </div>
+      <h2 id="create">Як створити sitemap.xml</h2>
+      <div class="steps-list">
+        <div class="step-item"><div class="step-num">1</div><div class="step-content"><strong>WordPress</strong><p>Плагіни Yoast SEO або Rank Math автоматично генерують sitemap. Він доступний за адресою <code>/sitemap_index.xml</code>.</p></div></div>
+        <div class="step-item"><div class="step-num">2</div><div class="step-content"><strong>Webflow / Shopify</strong><p>Sitemap генерується автоматично та доступний за <code>/sitemap.xml</code>. Публікується разом із сайтом без додаткових налаштувань.</p></div></div>
+        <div class="step-item"><div class="step-num">3</div><div class="step-content"><strong>Власна розробка (PHP/Node)</strong><p>Генеруйте динамічно з бази даних або використайте бібліотеки.</p></div></div>
+      </div>
+      <h2 id="register">Як зареєструвати sitemap в Google</h2>
+      <p>Мати sitemap — недостатньо. Google має знати де він знаходиться. Є два способи:</p>
+      <h3>Спосіб 1: через robots.txt</h3>
+      <div class="code-block">User-agent: *
+Allow: /
+Sitemap: https://your-site.com/sitemap.xml</div>
+      <h3>Спосіб 2: через Google Search Console</h3>
+      <ol>
+        <li>Відкрийте Search Console → оберіть ваш сайт.</li>
+        <li>У лівому меню: Індексування → Sitemap.</li>
+        <li>Введіть URL вашого sitemap та натисніть «Надіслати».</li>
+      </ol>
+      <h2 id="mistakes">Поширені помилки з sitemap</h2>
+      <ul>
+        <li><strong>URL з noindex</strong> — не включайте в sitemap сторінки з тегом <code>noindex</code>.</li>
+        <li><strong>Биті посилання</strong> — всі URL у sitemap мають повертати код 200, не 301 або 404.</li>
+        <li><strong>Неоновлена дата lastmod</strong> — якщо вказуєте lastmod, оновлюйте її реально при змінах.</li>
+        <li><strong>Sitemap не в robots.txt</strong> — Google може просто не знайти ваш файл.</li>
+      </ul>
+      <h2 id="sitemap-and-indexing">Sitemap + Indexing API = максимальна швидкість</h2>
+      <p>Навіть зареєстрований в Search Console sitemap не гарантує швидкої індексації. Google може обробити його через тиждень, а може через місяць — залежно від авторитету вашого домену.</p>
+      <p>Найефективніша стратегія — це поєднання актуального sitemap з активним надсиланням URL через Google Indexing API. Ви не чекаєте коли Google сам прийде — ви самі кажете йому «ось нова сторінка, проскануй зараз».</p>
+      <div class="cta-block">
+        <h3>Відправте sitemap на індексацію прямо зараз</h3>
+        <p>IndexFast зчитає ваш sitemap.xml і відправить всі URL через Google Indexing API. Результат — сторінки в Google вже завтра.</p>
+        <a href="/#pricing">Спробувати безкоштовно →</a>
+      </div>
+
+      <div class="article-nav">
+        <a href="/uk/blog/yak-pryskoriti-indeksaciyu-saitu-v-google.html">
+          <span class="article-nav-label">← Попередня стаття</span>
+          <span class="article-nav-title">Як прискорити індексацію сайту в Google у 2026 році</span>
+        </a>
+        <a href="/uk/blog/google-search-console-posibnyk.html" style="text-align:right;">
+          <span class="article-nav-label">Наступна стаття →</span>
+          <span class="article-nav-title">Google Search Console: повний посібник 2026</span>
+        </a>
+      </div>
+
+    </div>
+  </article>
+
+  <aside class="sidebar">
+    <div class="sidebar-card">
+      <h4>Зміст статті</h4>
+      <ul class="toc-list">
+        <li><a href="#what-is">Що таке sitemap.xml?</a></li>
+        <li><a href="#structure">Структура sitemap.xml</a></li>
+        <li><a href="#types">Типи sitemap</a></li>
+        <li><a href="#create">Як створити sitemap.xml</a></li>
+        <li><a href="#register">Як зареєструвати sitemap в Google</a></li>
+        <li><a href="#mistakes">Поширені помилки з sitemap</a></li>
+        <li><a href="#sitemap-and-indexing">Sitemap + Indexing API = максимальна швидкість</a></li>
+      </ul>
+    </div>
+    
+    <div class="sidebar-card">
+      <h4>Читайте також</h4>
+      <ul class="related-list">
+        <li><a href="/uk/blog/google-search-console-posibnyk.html">Google Search Console: повний посібник 2026</a></li>
+        <li><a href="/uk/blog/indeksaciya-pislya-redyzajnu.html">Індексація сайту після редизайну: як не втратити трафік</a></li>
+        <li><a href="/uk/blog/cron-jobs-dlya-seo.html">Cron jobs для SEO: автоматизуємо рутину</a></li>
+      </ul>
+    </div>
+    <div class="sidebar-card" style="background: rgba(0,255,136,0.05); border-color: rgba(0,255,136,0.2);">
+      <h4 style="color: var(--green);">Спробуйте IndexFast</h4>
+      <p style="font-size:0.85rem; color:var(--muted); margin-bottom:16px; line-height:1.5;">Автоматична індексація всіх сторінок через Google Indexing API</p>
+      <a href="/app/register" style="display:block; background:var(--green); color:var(--black); text-align:center; padding:10px; border-radius:100px; font-family:var(--font-display); font-weight:700; font-size:0.85rem; text-decoration:none;">Спробувати безкоштовно →</a>
+    </div>
+  </aside>
+</div>
+
+<footer role="contentinfo">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="/uk/" class="logo">Index<span>Fast</span></a>
+      <p>Сервіс автоматичної індексації сторінок сайту в Google через офіційний Google Indexing API.</p>
+    </div>
+    <div class="footer-col">
+      <p class="footer-title">Продукт</p>
+      <ul>
+        <li><a href="/uk/#how-it-works">Як це працює</a></li>
+        <li><a href="/uk/#features">Переваги</a></li>
+        <li><a href="/uk/#pricing">Ціни</a></li>
+        <li><a href="/uk/docs/">Документація</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <p class="footer-title">Компанія</p>
+      <ul>
+        <li><a href="/uk/about.html">Про нас</a></li>
+        <li><a href="/uk/blog/">Блог</a></li>
+        <li><a href="/uk/affiliate.html">Партнерська програма</a></li>
+        <li><a href="/uk/contacts.html">Контакти</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <p class="footer-title">Підтримка</p>
+      <ul>
+        <li><a href="/uk/#faq">FAQ</a></li>
+        <li><a href="https://t.me/indexfastgoogle" target="_blank" rel="noopener noreferrer">Telegram чат</a></li>
+        <li><a href="mailto:indexfastapp@gmail.com">Email підтримка</a></li>
+        <li><a href="/uk/status.html">Статус сервісу</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 IndexFast. Всі права захищені.</p>
+    <div style="display:flex; gap:20px;">
+      <a href="/uk/privacy-policy.html">Конфіденційність</a>
+      <a href="/uk/terms.html">Умови</a>
+    </div>
+  </div>
+  <button id="backToTop" class="back-to-top" aria-label="Вгору">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+  </button>
+</footer>
+
+<script src="/js/blog.js" defer></script>
+</body>
+</html>
