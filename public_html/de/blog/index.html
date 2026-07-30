@@ -387,16 +387,38 @@
 </head>
 <body>
 
-<nav>
-  <a href="/de/" class="logo">Index<span>Fast</span></a>
-  <div class="nav-right">
-    <a href="/de/" class="nav-link">Startseite</a>
-    <a href="/docs/" class="nav-link">Dokumentation</a>
-    <a href="/de/blog/" class="nav-link active">Blog</a>
-    <a href="/de/app/login" class="nav-login">Anmelden</a>
-    <a href="/de/app/register" class="nav-cta">Kostenlos starten</a>
-  </div>
-</nav>
+<nav id="navbar" role="navigation" aria-label="Hauptmenü" class="">
+    <a href="/de" class="logo" aria-label="IndexFast">Index<span>Fast</span></a>
+    <ul class="nav-links">
+      <li><a href="#how-it-works">Wie es funktioniert</a></li>
+      <li><a href="#for-whom">Für wen</a></li>
+      <li><a href="#features">Vorteile</a></li>
+      <li><a href="#pricing">Preise</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li class="mobile-auth">
+        <a href="/de/app/login" class="mobile-login">Anmelden</a>
+        <a href="/de/app/register" class="mobile-register">Kostenlos starten →</a>
+      </li>
+    </ul>
+    <div class="nav-actions">
+      <div class="nav-lang-dropdown">
+        <button class="nav-lang-btn">DE ▾</button>
+        <div class="nav-lang-menu">
+        <a href="/">English</a>
+        <a href="/uk/">Українська</a>
+        <a href="/es/">Español</a>
+        <a href="/pt/">Português</a>
+        <a href="/ru/">Русский</a>
+        <a href="/de/" class="active">Deutsch</a>
+        <a href="/fr/">Français</a>
+        <a href="/pl/">Polski</a>
+        </div>
+      </div>
+      <a href="/de/app/login" class="nav-login">Anmelden</a>
+      <a href="/de/app/register" class="nav-cta">Kostenlos starten →</a>
+      <button class="mobile-menu-btn" onclick="document.querySelector('.nav-links').classList.toggle('active')" aria-label="Hauptmenü">☰</button>
+    </div>
+  </nav>
 
 <div class="blog-hero">
   <div class="hero-eyebrow"><span class="hero-dot"></span>IndexFast Blog</div>
