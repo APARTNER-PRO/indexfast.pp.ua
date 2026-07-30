@@ -97,6 +97,10 @@
     ],
     "redirects": [
         {
+            "source": "/blog/backlink-building-for-small-business-2026.html",
+            "destination": "/blog/backlink-building-for-small-business.html",
+            "permanent": true
+        },{
             "source": "/blog/cron-jobs-dlya-seo.html",
             "destination": "/blog/cron-jobs-for-seo.html",
             "permanent": true
