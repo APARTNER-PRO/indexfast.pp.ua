@@ -1,4 +1,5 @@
 export const blogPosts = [
+  { slug: 'fast-index-website-secrets', tag: 'SEO', readTime: '7 minutes', title: 'Fast Index Website: секрети швидкого SEO-просування та індексації сайту', desc: 'Як зробити так, щоб ваш сайт індексувався швидко і приносив прибуток. SEO-оптимізація, фактори індексації та інструменти для швидкого просування в Google.' },
   { slug: 'yak-pryskoriti-indeksaciyu-saitu-v-google', tag: 'Indexing', readTime: '10 minutes', title: 'How to speed up the indexing of your site in Google in 2025', desc: 'Step-by-step guide: from sitemap setup to Google Indexing API. Real methods that work.' },
   { slug: 'shcho-take-sitemap-xml', tag: 'SEO', readTime: '7 minutes', title: 'What is sitemap.xml and why does your site need it?', desc: 'Full breakdown: structure, types, mistakes and how to properly set up a sitemap for Google.' },
   { slug: 'google-indexing-api-vs-sitemap', tag: 'Indexing', readTime: '8 minutes', title: 'Google Indexing API vs sitemap: what works better?', desc: 'Comparison of two methods for getting pages into Google search.' },

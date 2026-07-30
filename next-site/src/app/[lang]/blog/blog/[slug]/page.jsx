@@ -13,8 +13,8 @@ const mdxComponents = {
 };
 
 export async function generateMetadata({ params }) {
-  const { slug } = await params;
-  const post = getPostBySlug(slug);
+  const { slug, lang } = await params;
+  const post = getPostBySlug(slug, 'blog', lang);
   
   if (!post) {
     return { title: 'Not Found' };
@@ -32,14 +32,13 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function BlogPost({ params }) {
-  const { slug } = await params;
+  const { slug, lang } = await params;
   
-  // Ensure the request is for a .html file if we strictly enforce it
   if (!slug.endsWith('.html')) {
     return notFound();
   }
 
-  const post = getPostBySlug(slug);
+  const post = getPostBySlug(slug, 'blog', lang);
   
   if (!post) {
     return notFound();
