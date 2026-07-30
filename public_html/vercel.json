@@ -95,12 +95,16 @@
             ]
         }
     ],
-    "redirects": [{,
+    "redirects": [
         {
             "source": "/blog/cron-jobs-dlya-seo.html",
             "destination": "/blog/cron-jobs-for-seo.html",
             "permanent": true
-        }
+        },{
+            "source": "/blog/on-page-seo-complete-guide-2026.html",
+            "destination": "/blog/on-page-seo-complete-guide.html",
+            "permanent": true
+        },{
             "source": "/blog/on-page-seo-complete-guide-2026.html",
             "destination": "/blog/on-page-seo-complete-guide.html",
             "permanent": true
