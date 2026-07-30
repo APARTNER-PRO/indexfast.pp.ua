@@ -430,15 +430,32 @@
 <nav id="navbar" role="navigation" aria-label="Головне меню">
     <a href="/" class="logo" aria-label="IndexFast — Головна">Index<span>Fast</span></a>
     <ul class="nav-links">
-      <li><a href="#how-it-works">How it works</a></li>
-      <li><a href="#for-whom">For whom</a></li>
-      <li><a href="#features">Advantages</a></li>
-      <li><a href="#pricing">Prices</a></li>
-      <li><a href="#faq">FAQ</a></li>
+      <li><a href="/#how-it-works">How it works</a></li>
+      <li><a href="/#pricing">Prices</a></li>
+      <li><a href="/blog/">Blog</a></li>
+      <li><a href="/docs/">Documentation</a></li>
       <li class="mobile-auth">
-        <a href="/app/login" class="nav-login">Sign in</a>
-        <a href="/app/register" class="nav-cta">Become a partner →</a>
-      <button class="mobile-menu-btn" onclick="document.querySelector('.nav-links').classList.toggle('active')" aria-label="Відкрити меню">☰</button>
+        <a href="/app/login" class="mobile-login">Sign in</a>
+        <a href="/app/register" class="mobile-register">Become a partner →</a>
+      </li>
+    </ul>
+    <div class="nav-actions">
+      <div class="nav-lang-dropdown">
+        <button class="nav-lang-btn">EN ▾</button>
+        <div class="nav-lang-menu">
+          <a href="/affiliate.html" class="active">English</a>
+          <a href="/uk/affiliate.html" class="">Українська</a>
+          <a href="/es/affiliate.html" class="">Español</a>
+          <a href="/pt/affiliate.html" class="">Português</a>
+          <a href="/ru/affiliate.html" class="">Русский</a>
+          <a href="/de/affiliate.html" class="">Deutsch</a>
+          <a href="/fr/affiliate.html" class="">Français</a>
+          <a href="/pl/affiliate.html" class="">Polski</a>
+        </div>
+      </div>
+      <a href="/app/login" class="nav-login">Sign in</a>
+      <a href="/app/register" class="nav-cta">Become a partner →</a>
+      <button class="mobile-menu-btn" onclick="document.querySelector('.nav-links').classList.toggle('active')" aria-label="Menu">☰</button>
     </div>
   </nav>
 
