@@ -35,4 +35,43 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
+
+  // Dynamic Language Switcher
+  // Extracts filename from /blog/article.html or /uk/blog/article.html
+  // and rebuilds each language link to point to the same article
+  const pathParts = window.location.pathname.split('/').filter(Boolean);
+  const blogIdx = pathParts.lastIndexOf('blog');
+  const filename = (blogIdx >= 0 && pathParts[blogIdx + 1]) ? pathParts[blogIdx + 1] : null;
+
+  if (filename) {
+    const langMap = {
+      'English':    '/blog/' + filename,
+      'Українська': '/uk/blog/' + filename,
+      'Español':    '/es/blog/' + filename,
+      'Português':  '/pt/blog/' + filename,
+      'Русский':    '/ru/blog/' + filename,
+      'Deutsch':    '/de/blog/' + filename,
+      'Français':   '/fr/blog/' + filename,
+      'Polski':     '/pl/blog/' + filename,
+    };
+
+    document.querySelectorAll('.nav-lang-menu a').forEach(function(a) {
+      var label = a.textContent.trim();
+      if (langMap[label]) {
+        a.href = langMap[label];
+      }
+    });
+  }
+
+  // Navbar scroll effect
+  var navbar = document.getElementById('navbar');
+  if (navbar) {
+    window.addEventListener('scroll', function() {
+      if (window.pageYOffset > 20) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    }, { passive: true });
+  }
 });
