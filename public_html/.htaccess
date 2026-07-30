@@ -18,6 +18,7 @@ RewriteRule ^blog/backlink-building-for-small-business-2026\.html$ /blog/backlin
 RewriteRule ^blog/cron-jobs-dlya-seo\.html$ /blog/cron-jobs-for-seo.html [R=301,L]
 RewriteRule ^blog/on-page-seo-complete-guide-2026\.html$ /blog/on-page-seo-complete-guide.html [R=301,L]
 RewriteRule ^blog/google-search-console-posibnyk\.html$ /blog/google-search-console-guide.html [R=301,L]
+RewriteRule ^blog/core-web-vitals-2026\.html$ /blog/core-web-vitals.html [R=301,L]
 
 # ── Serve manual payment receipts securely from outside public_html
 RewriteRule ^storage/receipts/([^/]+)$ api/billing/serve_receipt.php?file=$1 [L,QSA]

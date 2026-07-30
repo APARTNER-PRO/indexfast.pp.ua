@@ -97,6 +97,10 @@
     ],
     "redirects": [
         {
+            "source": "/blog/core-web-vitals-2026.html",
+            "destination": "/blog/core-web-vitals.html",
+            "permanent": true
+        },{
             "source": "/blog/google-search-console-posibnyk.html",
             "destination": "/blog/google-search-console-guide.html",
             "permanent": true
