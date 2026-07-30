@@ -97,6 +97,86 @@
   ],
   "redirects": [
     {
+      "source": "/pt/blog/indexing-api-ta-ruchni-metodi-2026.html",
+      "destination": "/pt/blog/indexing-api-and-manual-methods.html",
+      "permanent": true
+    },
+    {
+      "source": "/pt/blog/shcho-take-sitemap-xml.html",
+      "destination": "/pt/blog/what-is-sitemap-xml.html",
+      "permanent": true
+    },
+    {
+      "source": "/pl/blog/indexing-api-ta-ruchni-metodi-2026.html",
+      "destination": "/pl/blog/indexing-api-and-manual-methods.html",
+      "permanent": true
+    },
+    {
+      "source": "/pl/blog/shcho-take-sitemap-xml.html",
+      "destination": "/pl/blog/what-is-sitemap-xml.html",
+      "permanent": true
+    },
+    {
+      "source": "/fr/blog/indexing-api-ta-ruchni-metodi-2026.html",
+      "destination": "/fr/blog/indexing-api-and-manual-methods.html",
+      "permanent": true
+    },
+    {
+      "source": "/fr/blog/shcho-take-sitemap-xml.html",
+      "destination": "/fr/blog/what-is-sitemap-xml.html",
+      "permanent": true
+    },
+    {
+      "source": "/de/blog/indexing-api-ta-ruchni-metodi-2026.html",
+      "destination": "/de/blog/indexing-api-and-manual-methods.html",
+      "permanent": true
+    },
+    {
+      "source": "/de/blog/shcho-take-sitemap-xml.html",
+      "destination": "/de/blog/what-is-sitemap-xml.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/blog/indexing-api-ta-ruchni-metodi-2026.html",
+      "destination": "/es/blog/indexing-api-and-manual-methods.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/blog/shcho-take-sitemap-xml.html",
+      "destination": "/es/blog/what-is-sitemap-xml.html",
+      "permanent": true
+    },
+    {
+      "source": "/ru/blog/indexing-api-ta-ruchni-metodi-2026.html",
+      "destination": "/ru/blog/indexing-api-and-manual-methods.html",
+      "permanent": true
+    },
+    {
+      "source": "/ru/blog/shcho-take-sitemap-xml.html",
+      "destination": "/ru/blog/what-is-sitemap-xml.html",
+      "permanent": true
+    },
+    {
+      "source": "/uk/blog/indexing-api-ta-ruchni-metodi-2026.html",
+      "destination": "/uk/blog/indexing-api-and-manual-methods.html",
+      "permanent": true
+    },
+    {
+      "source": "/uk/blog/shcho-take-sitemap-xml.html",
+      "destination": "/uk/blog/what-is-sitemap-xml.html",
+      "permanent": true
+    },
+    {
+      "source": "/blog/indexing-api-ta-ruchni-metodi-2026.html",
+      "destination": "/blog/indexing-api-and-manual-methods.html",
+      "permanent": true
+    },
+    {
+      "source": "/blog/shcho-take-sitemap-xml.html",
+      "destination": "/blog/what-is-sitemap-xml.html",
+      "permanent": true
+    },
+    {
       "source": "/privacy-policy",
       "destination": "/privacy-policy.html",
       "permanent": true
