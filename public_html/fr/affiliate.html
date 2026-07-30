@@ -423,6 +423,10 @@
 </head>
 <body>
 
+<!-- Cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
 <div class="bg-grid"></div>
 <div class="bg-blob bg-blob-1"></div>
 <div class="bg-blob bg-blob-2"></div>
@@ -787,6 +791,30 @@
   }
 
 document.addEventListener('DOMContentLoaded', function() {
+
+// ── Cursor
+      const cursor = document.getElementById('cursor');
+      const cursorRing = document.getElementById('cursorRing');
+      let cx = 0, cy = 0, rx = 0, ry = 0;
+      document.addEventListener('mousemove', e => { cx = e.clientX; cy = e.clientY; });
+      function animateCursor() {
+        if(cursor && cursorRing) {
+            cursor.style.left = cx + 'px'; cursor.style.top = cy + 'px';
+            rx += (cx - rx) * 0.12; ry += (cy - ry) * 0.12;
+            cursorRing.style.left = rx + 'px'; cursorRing.style.top = ry + 'px';
+            requestAnimationFrame(animateCursor);
+        }
+      }
+      animateCursor();
+      document.querySelectorAll('a, button').forEach(el => {
+        el.addEventListener('mouseenter', () => { if(cursor) cursor.style.transform = 'translate(-50%,-50%) scale(2)'; if(cursorRing) cursorRing.style.transform = 'translate(-50%,-50%) scale(1.5)'; });
+        el.addEventListener('mouseleave', () => { if(cursor) cursor.style.transform = 'translate(-50%,-50%) scale(1)'; if(cursorRing) cursorRing.style.transform = 'translate(-50%,-50%) scale(1)'; });
+      });
+
+      // ── Navbar scroll
+      window.addEventListener('scroll', () => {
+        document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+      });
 
   // ── Початковий розрахунок
   calcIncome();
