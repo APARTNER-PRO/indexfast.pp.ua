@@ -95,8 +95,12 @@
             ]
         }
     ],
-    "redirects": [
+    "redirects": [{,
         {
+            "source": "/blog/google-search-console-posibnyk.html",
+            "destination": "/blog/google-search-console-guide.html",
+            "permanent": true
+        }
             "source": "/blog/backlink-building-for-small-business-2026.html",
             "destination": "/blog/backlink-building-for-small-business.html",
             "permanent": true
