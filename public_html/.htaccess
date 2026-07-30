@@ -28,6 +28,8 @@ RewriteRule ^blog/chomu-sait-ne-indeksuyetsya\.html$ /blog/why-is-site-not-index
 
 RewriteRule ^blog/seo-dlya-internet-magazynu\.html$ /blog/ecommerce-seo.html [R=301,L]
 
+RewriteRule ^blog/wordpress-indeksaciya\.html$ /blog/wordpress-indexing.html [R=301,L]
+
 # ── Serve manual payment receipts securely from outside public_html
 RewriteRule ^storage/receipts/([^/]+)$ api/billing/serve_receipt.php?file=$1 [L,QSA]
 

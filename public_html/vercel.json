@@ -400,6 +400,11 @@
             "source": "/blog/seo-dlya-internet-magazynu.html",
             "destination": "/blog/ecommerce-seo.html",
             "permanent": true
+        },
+        {
+            "source": "/blog/wordpress-indeksaciya.html",
+            "destination": "/blog/wordpress-indexing.html",
+            "permanent": true
         }
     ],
     "rewrites": [

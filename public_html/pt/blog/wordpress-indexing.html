@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>WordPress Site Indexing: Yoast SEO Settings and Common Mistakes in 2026</title>
+  <meta name="description" content="How to correctly configure WordPress indexing: Yoast SEO, tags, categories, attachment pages, sitemap, and acceleration via Google Indexing API.">
+  <meta name="keywords" content="wordpress indexing, yoast seo settings, wordpress google indexing, attachment pages wordpress, wordpress seo tags">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+  <link rel="canonical" href="https://indexfast.pro/blog/wordpress-indexing.html">
+
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://indexfast.pro/blog/wordpress-indexing.html">
+  <meta property="og:title" content="WordPress Site Indexing: Yoast SEO Settings and Common Mistakes in 2026">
+  <meta property="og:description" content="How to correctly configure WordPress indexing: Yoast SEO, tags, categories, attachment pages, sitemap, and acceleration via Google Indexing API.">
+  <meta property="og:image" content="https://indexfast.pro/blog-images/blog_wordpress_indexing.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="uk_UA">
+  <meta property="article:published_time" content="2026-07-15T10:00:00+02:00">
+  <meta property="article:modified_time" content="2026-07-15T10:00:00+02:00">
+  <meta property="article:author" content="IndexFast">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "WordPress Site Indexing: Yoast SEO Settings and Common Mistakes in 2026",
+    "description": "How to correctly configure WordPress indexing: Yoast SEO, tags, categories, attachment pages, sitemap, and acceleration via Google Indexing API.",
+    "inLanguage": "en",
+    "author": {
+      "@type": "Organization",
+      "name": "IndexFast",
+      "url": "https://indexfast.pro"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "IndexFast",
+      "url": "https://indexfast.pro",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://indexfast.pro/logo.png"
+      }
+    },
+    "datePublished": "2026-07-15T10:00:00+02:00",
+    "dateModified": "2026-07-15T10:00:00+02:00",
+    "url": "https://indexfast.pro/blog/wordpress-indexing.html",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://indexfast.pro/blog/wordpress-indexing.html"
+    },
+    "image": {
+      "@type": "ImageObject",
+      "url": "https://indexfast.pro/blog-images/blog_wordpress_indexing.png",
+      "width": 1200,
+      "height": 630
+    }
+  }
+  </script>
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="WordPress Site Indexing: Yoast SEO Settings and Common Mistakes in 2026">
+  <meta name="twitter:description" content="How to correctly configure WordPress indexing: Yoast SEO, tags, categories, attachment pages, sitemap, and acceleration via Google Indexing API.">
+  <meta name="twitter:image" content="https://indexfast.pro/blog-images/blog_wordpress_indexing.png">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://indexfast.pro/" },
+      { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://indexfast.pro/blog/" },
+      { "@type": "ListItem", "position": 3, "name": "WordPress Site Indexing: Yoast SEO Settings and Common Mistakes in 2026", "item": "https://indexfast.pro/blog/wordpress-indexing.html" }
+    ]
+  }
+  </script>
+
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/blog.css">
+<style>
+
+/* ─── CUSTOM SCROLLBAR ─── */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--black, #050508); }
+::-webkit-scrollbar-thumb { background: rgba(0, 255, 136, 0.4); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(0, 255, 136, 0.8); }
+html { overflow-y: scroll !important; }
+
+</style>
+</head>
+<body>
+
+<nav id="navbar" role="navigation" aria-label="Main menu" class="">
+    <a href="/" class="logo" aria-label="IndexFast">Index<span>Fast</span></a>
+    <ul class="nav-links">
+      <li><a href="/#how-it-works">How it works</a></li>
+      <li><a href="/#for-whom">For whom</a></li>
+      <li><a href="/#features">Advantages</a></li>
+      <li><a href="/#pricing">Prices</a></li>
+      <li><a href="/#faq">FAQ</a></li>
+      <li class="mobile-auth">
+        <a href="/app/login" class="mobile-login">Sign in</a>
+        <a href="/app/register" class="mobile-register">Get started for free →</a>
+      </li>
+    </ul>
+    <div class="nav-actions">
+      <div class="nav-lang-dropdown">
+        <button class="nav-lang-btn">PT ▾</button>
+        <div class="nav-lang-menu">
+        <a href="/blog/wordpress-indexing.html">English</a>
+        <a href="/uk/blog/wordpress-indexing.html">Українська</a>
+        <a href="/pl/blog/wordpress-indexing.html">Polski</a>
+        <a href="/ru/blog/wordpress-indexing.html">Русский</a>
+        <a href="/de/blog/wordpress-indexing.html">Deutsch</a>
+        <a href="/fr/blog/wordpress-indexing.html">Français</a>
+        <a href="/es/blog/wordpress-indexing.html">Español</a>
+        <a href="/pt/blog/wordpress-indexing.html" class="active">Português</a>
+      </div>
+      </div>
+      <a href="/app/login" class="nav-login">Sign in</a>
+      <a href="/app/register" class="nav-cta">Get started for free →</a>
+      <button class="mobile-menu-btn" onclick="document.querySelector('.nav-links').classList.toggle('active')" aria-label="Main menu">☰</button>
+    </div>
+  </nav>
+
+<div class="page-wrap">
+  <article>
+    <div class="article-meta">
+      
+      
+      
+      
+      <span class="meta-tag">WordPress</span>
+      <span class="meta-date">July 15, 2026</span>
+      <span class="meta-read">⏱ 9 min read</span>
+    
+    
+    
+    
+    </div>
+
+    <h1>WordPress Site Indexing: Yoast SEO Settings and Common Mistakes in 2026</h1>
+    <img src="/blog-images/blog_wordpress_indexing.png" alt="Індексація WordPress - налаштування Yoast SEO і типові помилки" loading="lazy" decoding="async" class="article-main-image" style="width:100%; border-radius:16px; margin: 24px 0; object-fit: cover; aspect-ratio: 1200/630;">
+
+    <p class="article-lead">WordPress is the most popular CMS, but its default settings are not optimized for SEO. Thousands of attachment pages, tags that duplicate content, author archives — all this harms indexing. Let's figure out how to fix it in 30 minutes.</p>
+
+    <div class="article-body">
+      
+      
+      
+      
+      <h2 id="why-wp">Why WordPress Sites Often Have Indexing Problems</h2>
+      <p>WordPress is the most popular CMS in the world, but its default settings are not optimized for SEO. Hundreds of thousands of WordPress sites have the same common mistakes: tag pages duplicate content, author archives output the same articles, pagination is not configured.</p>
+      <p>The good news: most problems are solved in 15–30 minutes through Yoast SEO or RankMath plugins.</p>
+
+      <h2 id="yoast">Yoast SEO: Basic Settings for Indexing</h2>
+      <p>Yoast SEO → Search Appearance → Content Types:</p>
+      <ul>
+        <li><strong>Posts</strong> — index: Yes, Show in results: Yes</li>
+        <li><strong>Pages</strong> — index: Yes</li>
+        <li><strong>Media (Attachments)</strong> — index: No (must be turned off)</li>
+        <li><strong>Tags</strong> — index: No if fewer than 5 posts per tag</li>
+        <li><strong>Author Archives</strong> — index: No if only one author</li>
+      </ul>
+
+      <div class="warn-box">
+        <strong>⚠ Media Pages — The Hidden Duplicator</strong>
+        <p>By default, WordPress creates a separate page for each uploaded image (attachment page). These pages are almost empty content and seriously waste crawl budget. Turn them off in Yoast SEO → Search Appearance → Media → disable attachment pages.</p>
+      </div>
+
+      <h2 id="tags-categories">Tags and Categories</h2>
+      <p>WordPress tags are one of the biggest SEO traps. Each tag creates a separate archive page that outputs the same articles as the category. The result: content duplication and dilution of the crawl budget.</p>
+      <ul>
+        <li>If a tag is used on fewer than 5 articles → noindex or delete it</li>
+        <li>If the category and tag output the same content → delete tags altogether</li>
+        <li>For active tags: add a unique description via Yoast (minimum 100 words)</li>
+      </ul>
+
+      <h2 id="sitemap-wp">XML Sitemap in WordPress</h2>
+      <p>WordPress 5.5+ has a built-in sitemap (/wp-sitemap.xml), but it includes everything: attachment pages, empty archives, author pages. It's better to use the Yoast SEO sitemap:</p>
+      <ul>
+        <li>Yoast SEO automatically excludes pages with noindex</li>
+        <li>Allows you to separately configure what to include</li>
+        <li>Automatically updates upon publishing new content</li>
+      </ul>
+
+      <div class="code-block">https://yoursite.com/sitemap_index.xml  ← Yoast sitemap index
+https://yoursite.com/post-sitemap.xml   ← posts
+https://yoursite.com/page-sitemap.xml   ← pages
+https://yoursite.com/category-sitemap.xml ← categories</div>
+
+      <div class="tip-box">
+        <strong>💡 Connect to IndexFast</strong>
+        <p>Copy your sitemap URL into IndexFast — and new articles will automatically be sent via the Google Indexing API immediately after publication. No manual work required.</p>
+      </div>
+
+      <h2 id="speed-wp">WordPress Speed and SEO</h2>
+      <p>A slow WordPress site gets a smaller crawl budget and ranks worse. Main reasons for slow performance:</p>
+      <ul>
+        <li>Too many plugins (especially visual builders)</li>
+        <li>Unoptimized images without WebP</li>
+        <li>Lack of caching (WP Super Cache, W3 Total Cache)</li>
+        <li>Slow hosting or shared server</li>
+      </ul>
+
+      <h2 id="common-errors">Common WordPress Errors in Search Console</h2>
+      <ul>
+        <li><strong>"Discovered - currently not indexed"</strong> — usually low-quality pages or a crawl budget problem</li>
+        <li><strong>"Duplicate without user-selected canonical"</strong> — www and non-www versions, or URL parameters</li>
+        <li><strong>"Crawler anomaly"</strong> — plugin or theme generates erroneous URLs</li>
+        <li><strong>"Soft 404"</strong> — page looks empty but returns a 200 code</li>
+      </ul>
+
+      <div class="cta-block">
+        <h3>Accelerate WordPress Site Indexing</h3>
+        <p>IndexFast automatically reads the Yoast sitemap and sends new articles via the Google Indexing API. Setup takes 5 minutes.</p>
+        <a href="/app/register">Try for free →</a>
+      </div>
+
+      <h2 id="checklist-wp">WordPress SEO Indexing Checklist</h2>
+      <ul>
+        <li>Yoast SEO or RankMath installed</li>
+        <li>Attachment pages disabled</li>
+        <li>Tags without content are closed via noindex</li>
+        <li>Author archives disabled (for a single-author blog)</li>
+        <li>Yoast XML sitemap registered in Search Console</li>
+        <li>Site speed tested via PageSpeed Insights</li>
+        <li>Caching configured</li>
+        <li>Google Indexing API connected via IndexFast</li>
+      </ul>
+    
+
+      
+
+    
+
+      
+
+    
+
+      
+
+    
+
+      <div class="article-nav">
+        <a href="/blog/how-to-choose-an-expired-domain-for-pbn.html">
+          <span class="article-nav-label">← Previous Article</span>
+          <span class="article-nav-title">How to Choose an Expired Domain for PBN: Step-by-Step Guide 2026</span>
+        </a>
+        <a href="/blog/lokalne-seo.html" style="text-align:right;">
+          <span class="article-nav-label">Next Article →</span>
+          <span class="article-nav-title">Local SEO: How to Get into Google Maps and Top Search Results in 2026</span>
+        </a>
+      </div>
+
+    </div>
+  </article>
+
+  <aside class="sidebar">
+    
+    <div class="sidebar-card">
+      <h4>Table of Contents</h4>
+      <ul class="toc-list">
+        <li><a href="#why-wp">Why WordPress Sites Often Have Indexing Problems</a></li>
+        <li><a href="#yoast">Yoast SEO: Basic Settings for Indexing</a></li>
+        <li><a href="#tags-categories">Tags and Categories</a></li>
+        <li><a href="#sitemap-wp">XML Sitemap in WordPress</a></li>
+        <li><a href="#speed-wp">WordPress Speed and SEO</a></li>
+        <li><a href="#common-errors">Common WordPress Errors in Search Console</a></li>
+        <li><a href="#checklist-wp">WordPress SEO Indexing Checklist</a></li>
+      </ul>
+    </div>
+    
+    <div class="sidebar-card">
+      <h4>Read Also</h4>
+      <ul class="related-list">
+        <li><a href="/blog/lokalne-seo.html">Local SEO: How to Get into Google Maps and Top Search Results in 2026</a></li>
+        <li><a href="/blog/seo-audit-checklyst.html">Website SEO Audit: Complete 50-Point Checklist in 2026</a></li>
+        <li><a href="/blog/shvydkist-saitu-seo.html">Site Speed and SEO: Core Web Vitals, LCP, INP, CLS in 2026</a></li>
+      </ul>
+    </div>
+    <div class="sidebar-card" style="background: rgba(0,255,136,0.05); border-color: rgba(0,255,136,0.2);">
+      <h4 style="color: var(--green);">Try IndexFast</h4>
+      <p style="font-size:0.85rem; color:var(--muted); margin-bottom:16px; line-height:1.5;">Automatic indexing of all pages via Google Indexing API</p>
+      <a href="/app/register" style="display:block; background:var(--green); color:var(--black); text-align:center; padding:10px; border-radius:100px; font-family:var(--font-display); font-weight:700; font-size:0.85rem; text-decoration:none;">Try for free →</a>
+    </div>
+  </aside>
+</div>
+
+<footer role="contentinfo">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="/" class="logo">Index<span>Fast</span></a>
+      <p>Automatic indexing service for Google and IndexNow via the official Google Indexing API.</p>
+    </div>
+    <div class="footer-col">
+      <p class="footer-title">Product</p>
+      <ul>
+        <li><a href="/#how-it-works">How it works</a></li>
+        <li><a href="/#features">Features</a></li>
+        <li><a href="/#pricing">Pricing</a></li>
+        <li><a href="/docs/">Documentation</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <p class="footer-title">Company</p>
+      <ul>
+        <li><a href="/about.html">About</a></li>
+        <li><a href="/blog/">Blog</a></li>
+        <li><a href="/affiliate.html">Affiliate Program</a></li>
+        <li><a href="/contacts.html">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <p class="footer-title">Support</p>
+      <ul>
+        <li><a href="/#faq">FAQ</a></li>
+        <li><a href="https://t.me/indexfastgoogle" target="_blank" rel="noopener noreferrer">Telegram Chat</a></li>
+        <li><a href="mailto:indexfastapp@gmail.com">Email Support</a></li>
+        <li><a href="/status.html">Service Status</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 IndexFast. All rights reserved.</p>
+    <div style="display:flex; gap:20px;">
+      <a href="/privacy-policy.html">Privacy</a>
+      <a href="/terms.html">Terms</a>
+    </div>
+  </div>
+  <button id="backToTop" class="back-to-top" aria-label="Back to top">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+  </button>
+</footer>
+
+<script src="/js/blog.js" defer></script>
+</body>
+</html>
