@@ -97,6 +97,11 @@
     ],
     "redirects": [
         {
+            "source": "/blog/yak-vybraty-drop-domen-dlya-pbn.html",
+            "destination": "/blog/how-to-choose-an-expired-domain-for-pbn.html",
+            "permanent": true
+        },
+        {
             "source": "/blog/yak-pryskoriti-indeksaciyu-saitu-v-google.html",
             "destination": "/blog/how-to-speed-up-site-indexing-in-google.html",
             "permanent": true
