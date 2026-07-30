@@ -405,6 +405,11 @@
             "source": "/blog/wordpress-indeksaciya.html",
             "destination": "/blog/wordpress-indexing.html",
             "permanent": true
+        },
+        {
+            "source": "/blog/lokalne-seo.html",
+            "destination": "/blog/local-seo.html",
+            "permanent": true
         }
     ],
     "rewrites": [

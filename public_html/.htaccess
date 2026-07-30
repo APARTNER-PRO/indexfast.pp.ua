@@ -30,6 +30,8 @@ RewriteRule ^blog/seo-dlya-internet-magazynu\.html$ /blog/ecommerce-seo.html [R=
 
 RewriteRule ^blog/wordpress-indeksaciya\.html$ /blog/wordpress-indexing.html [R=301,L]
 
+RewriteRule ^blog/lokalne-seo\.html$ /blog/local-seo.html [R=301,L]
+
 # ── Serve manual payment receipts securely from outside public_html
 RewriteRule ^storage/receipts/([^/]+)$ api/billing/serve_receipt.php?file=$1 [L,QSA]
 
