@@ -410,6 +410,11 @@
             "source": "/blog/lokalne-seo.html",
             "destination": "/blog/local-seo.html",
             "permanent": true
+        },
+        {
+            "source": "/blog/seo-audit-checklyst.html",
+            "destination": "/blog/seo-audit-checklist.html",
+            "permanent": true
         }
     ],
     "rewrites": [
