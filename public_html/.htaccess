@@ -14,6 +14,7 @@ AddType application/xml .xml
 
 # ── HTTPS redirect
 RewriteEngine On
+RewriteRule ^blog/cron-jobs-dlya-seo.html$ /blog/cron-jobs-for-seo.html [R=301,L]
 RewriteRule ^blog/on-page-seo-complete-guide-2026\.html$ /blog/on-page-seo-complete-guide.html [R=301,L]
 
 # ── Serve manual payment receipts securely from outside public_html

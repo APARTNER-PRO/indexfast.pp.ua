@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Cron Jobs for SEO: Automate the Routine — IndexFast</title>
+  <meta name="description" content="How to configure cron jobs to automatically run SEO scripts on a server. A step-by-step guide for site owners.">
+  
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+  <link rel="canonical" href="https://indexfast.pro/blog/cron-jobs-for-seo.html">
+
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://indexfast.pro/blog/cron-jobs-for-seo.html">
+  <meta property="og:title" content="Cron Jobs for SEO: Automate the Routine — IndexFast">
+  <meta property="og:description" content="How to configure cron jobs to automatically run SEO scripts on a server. A step-by-step guide for site owners.">
+  <meta property="og:image" content="https://indexfast.pro/blog-images/blog_cron_jobs.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="uk_UA">
+  <meta property="article:published_time" content="2026-03-05">
+  <meta property="article:modified_time" content="2026-03-05">
+  <meta property="article:author" content="IndexFast">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Cron Jobs for SEO: Automate the Routine — IndexFast",
+    "description": "How to configure cron jobs to automatically run SEO scripts on a server. A step-by-step guide for site owners.",
+    "inLanguage": "en",
+    "author": {
+      "@type": "Organization",
+      "name": "IndexFast",
+      "url": "https://indexfast.pro"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "IndexFast",
+      "url": "https://indexfast.pro",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://indexfast.pro/logo.png"
+      }
+    },
+    "datePublished": "2026-03-05",
+    "dateModified": "2026-03-05",
+    "url": "https://indexfast.pro/blog/cron-jobs-for-seo.html",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://indexfast.pro/blog/cron-jobs-for-seo.html"
+    },
+    "image": {
+      "@type": "ImageObject",
+      "url": "https://indexfast.pro/blog-images/blog_cron_jobs.png",
+      "width": 1200,
+      "height": 630
+    }
+  }
+  </script>
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Cron Jobs for SEO: Automate the Routine — IndexFast">
+  <meta name="twitter:description" content="How to configure cron jobs to automatically run SEO scripts on a server. A step-by-step guide for site owners.">
+  <meta name="twitter:image" content="https://indexfast.pro/blog-images/blog_cron_jobs.png">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://indexfast.pro/" },
+      { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://indexfast.pro/blog/" },
+      { "@type": "ListItem", "position": 3, "name": "Cron Jobs for SEO: Automate the Routine", "item": "https://indexfast.pro/blog/cron-jobs-for-seo.html" }
+    ]
+  }
+  </script>
+
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/blog.css">
+<style>
+
+/* ─── CUSTOM SCROLLBAR ─── */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--black, #050508); }
+::-webkit-scrollbar-thumb { background: rgba(0, 255, 136, 0.4); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(0, 255, 136, 0.8); }
+html { overflow-y: scroll !important; }
+
+</style>
+</head>
+<body>
+
+<nav id="navbar" role="navigation" aria-label="Main menu" class="">
+    <a href="/" class="logo" aria-label="IndexFast">Index<span>Fast</span></a>
+    <ul class="nav-links">
+      <li><a href="/#how-it-works">How it works</a></li>
+      <li><a href="/#for-whom">For whom</a></li>
+      <li><a href="/#features">Advantages</a></li>
+      <li><a href="/#pricing">Prices</a></li>
+      <li><a href="/#faq">FAQ</a></li>
+      <li class="mobile-auth">
+        <a href="/app/login" class="mobile-login">Sign in</a>
+        <a href="/app/register" class="mobile-register">Get started for free →</a>
+      </li>
+    </ul>
+    <div class="nav-actions">
+      <div class="nav-lang-dropdown">
+        <button class="nav-lang-btn">EN ▾</button>
+        <div class="nav-lang-menu">
+        <a href="/" class="active">English</a>
+        <a href="/uk/">Українська</a>
+        <a href="/es/">Español</a>
+        <a href="/pt/">Português</a>
+        <a href="/ru/">Русский</a>
+        <a href="/de/">Deutsch</a>
+        <a href="/fr/">Français</a>
+        <a href="/pl/">Polski</a>
+        </div>
+      </div>
+      <a href="/app/login" class="nav-login">Sign in</a>
+      <a href="/app/register" class="nav-cta">Get started for free →</a>
+      <button class="mobile-menu-btn" onclick="document.querySelector('.nav-links').classList.toggle('active')" aria-label="Main menu">☰</button>
+    </div>
+  </nav>
+
+<div class="page-wrap">
+  <article>
+    <div class="article-meta">
+      
+      
+      
+      
+      <span class="meta-tag">Automation</span>
+      <span class="meta-tag" style="background:rgba(255,208,96,0.08);border-color:rgba(255,208,96,0.2);color:#ffd060;">Linux</span>
+      <span class="meta-date">March 5, 2026</span>
+      <span class="meta-read">⏱ 9 min read</span>
+    
+    
+    
+    
+    </div>
+
+    <h1>Cron Jobs for SEO: Automate the Routine</h1>
+    <img src="/blog-images/blog_cron_jobs.png" alt="Cron Jobs for SEO: Automate the Routine" class="article-main-image" style="width:100%; border-radius:16px; margin: 24px 0; object-fit: cover; aspect-ratio: 1200/630;">
+
+    <p class="article-lead">
+      Cron is a task scheduler in Linux that allows you to run scripts on a schedule. For SEO, this means automatic updates of sitemap, etc.
+    </p>
+
+    <div class="article-body">
+      
+      
+      
+      
+
+      <h2 id="what-is-cron">What is Cron and Crontab?</h2>
+      <p><strong>Cron</strong> is a daemon that runs scheduled commands. <strong>Crontab</strong> is the configuration file.</p>
+      <p>Each line in crontab has the format:</p>
+      <div class="code-block"><span class="cv">* * * * *</span>  <span class="ck">command</span>
+<span class="cm">│ │ │ │ └── day of the week (0-7, 0 and 7 = Sunday)</span>
+<span class="cm">│ │ │ └──── month (1-12)</span>
+<span class="cm">│ │ └────── day of the month (1-31)</span>
+<span class="cm">│ └──────── hour (0-23)</span>
+<span class="cm">└────────── minute (0-59)</span></div>
+
+      <h2 id="examples">Practical Examples for SEO</h2>
+
+      <h3>Daily Indexing via IndexFast</h3>
+      <p>If you use the IndexFast PHP script to send URLs via Google Indexing API:</p>
+      <div class="code-block"><span class="cm"># Run daily at 6:00 AM</span>
+<span class="cv">0 6 * * *</span> <span class="ck">php /var/www/html/google_indexing.php</span> &gt;&gt; /var/log/indexing.log 2&gt;&amp;1</div>
+
+      <div class="tip-box">
+        <strong>💡 &gt;&gt; and 2&gt;&amp;1</strong>
+        <p>The <code>&gt;&gt;</code> symbol appends the output to the log file. <code>2&gt;&amp;1</code> redirects errors there as well.</p>
+      </div>
+
+      <h3>Updating Sitemap</h3>
+      <div class="code-block"><span class="cm"># Update sitemap every 6 hours</span>
+<span class="cv">0 */6 * * *</span> <span class="ck">php /var/www/html/generate_sitemap.php</span></div>
+
+      <h3>Weekly SEO Audit</h3>
+      <div class="code-block"><span class="cm"># Every Sunday at 3:00 — check broken links</span>
+<span class="cv">0 3 * * 0</span> <span class="ck">python3 /scripts/check_links.py</span> &gt;&gt; /var/log/links_audit.log</div>
+
+      <h3>Pinging Google after an update</h3>
+      <div class="code-block"><span class="cm"># Ping Google every 30 mins about sitemap update</span>
+<span class="cv">*/30 * * * *</span> <span class="ck">curl -s</span> "https://www.google.com/ping?sitemap=https://yoursite.com/sitemap.xml" &gt; /dev/null</div>
+
+      <h2 id="setup">How to Configure Crontab</h2>
+      <ol>
+        <li>Connect to the server via SSH</li>
+        <li>Open the crontab editor: <code>crontab -e</code></li>
+        <li>Add lines with tasks (format described above)</li>
+        <li>Save the file (in nano: Ctrl+O, Enter, Ctrl+X)</li>
+        <li>Check that the task is added: <code>crontab -l</code></li>
+      </ol>
+
+      <h3>If you have no SSH access</h3>
+      <p>Most hosting panels have a graphical interface for cron jobs.</p>
+
+      <div class="warn-box">
+        <strong>⚠️ Important: Absolute Paths</strong>
+        <p>Always specify absolute paths to executable files in cron.</p>
+      </div>
+
+      <h2 id="indexfast-cron">Cron for Automatic Indexing with IndexFast</h2>
+      <p>The IndexFast PHP script is perfect for cron. It:</p>
+      <ul>
+        <li>Reads URLs from sitemap.xml</li>
+        <li>Sends them via Google Indexing API</li>
+        <li>Logs the results of each request</li>
+        <li>Stops when the daily quota (200 URLs) is reached</li>
+      </ul>
+
+      <div class="cta-inline">
+        <h3>Want to do this without cron and SSH?</h3>
+        <p>IndexFast PRO has a built-in scheduler — configure it directly in the dashboard.</p>
+        <a href="/app/register" class="btn-cta">🚀 Try for free →</a>
+      </div>
+
+      <h2 id="monitoring">Monitoring Cron Jobs</h2>
+      <p>By default, cron sends output to root email. To get emails, add:</p>
+      <div class="code-block"><span class="ck">MAILTO</span>=<span class="cv">"<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="b1c8dec4c3f1d4dcd0d8dd9fd2dedc">[email&nbsp;protected]</a>"</span></div>
+      <p>Or view the system log: <code>grep CRON /var/log/syslog</code></p>
+
+      
+    
+
+      
+
+    
+
+      
+
+    
+
+      
+
+    
+
+      <div class="article-nav">
+        <a href="/blog/indeksaciya-pislya-redyzajnu.html">
+          <span class="article-nav-label">← Previous Article</span>
+          <span class="article-nav-title">Site Indexing After a Redesign</span>
+        </a>
+        <a href="/blog/yak-pereviriti-indeksaciyu-saitu.html" style="text-align:right;">
+          <span class="article-nav-label">Next Article →</span>
+          <span class="article-nav-title">How to Check Site Indexing in Google in 2026</span>
+        </a>
+      </div>
+
+    </div>
+  </article>
+
+  <aside class="sidebar">
+    
+    <div class="sidebar-card">
+      <h4>Table of Contents</h4>
+      <ul class="toc-list">
+        <li><a href="#what-is-cron">What is Cron and Crontab?</a></li>
+        <li><a href="#examples">Practical Examples for SEO</a></li>
+        <li><a href="#setup">How to Configure Crontab</a></li>
+        <li><a href="#indexfast-cron">Cron for Automatic Indexing with IndexFast</a></li>
+        <li><a href="#monitoring">Monitoring Cron Jobs</a></li>
+      </ul>
+    </div>
+    
+    <div class="sidebar-card">
+      <h4>Read Also</h4>
+      <ul class="related-list">
+        <li><a href="/blog/yak-pereviriti-indeksaciyu-saitu.html">How to Check Site Indexing in Google in 2026</a></li>
+        <li><a href="/blog/core-web-vitals-2026.html">Core Web Vitals 2026</a></li>
+        <li><a href="/blog/google-indexing-api-vs-sitemap.html">Google Indexing API vs Sitemap in 2026</a></li>
+      </ul>
+    </div>
+    <div class="sidebar-card" style="background: rgba(0,255,136,0.05); border-color: rgba(0,255,136,0.2);">
+      <h4 style="color: var(--green);">Try IndexFast</h4>
+      <p style="font-size:0.85rem; color:var(--muted); margin-bottom:16px; line-height:1.5;">Automatic indexing of all pages via Google Indexing API</p>
+      <a href="/app/register" style="display:block; background:var(--green); color:var(--black); text-align:center; padding:10px; border-radius:100px; font-family:var(--font-display); font-weight:700; font-size:0.85rem; text-decoration:none;">Try for free →</a>
+    </div>
+  </aside>
+</div>
+
+<footer role="contentinfo">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="/" class="logo">Index<span>Fast</span></a>
+      <p>Automatic indexing service for Google and IndexNow via the official Google Indexing API.</p>
+    </div>
+    <div class="footer-col">
+      <p class="footer-title">Product</p>
+      <ul>
+        <li><a href="/#how-it-works">How it works</a></li>
+        <li><a href="/#features">Features</a></li>
+        <li><a href="/#pricing">Pricing</a></li>
+        <li><a href="/docs/">Documentation</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <p class="footer-title">Company</p>
+      <ul>
+        <li><a href="/about.html">About</a></li>
+        <li><a href="/blog/">Blog</a></li>
+        <li><a href="/affiliate.html">Affiliate Program</a></li>
+        <li><a href="/contacts.html">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <p class="footer-title">Support</p>
+      <ul>
+        <li><a href="/#faq">FAQ</a></li>
+        <li><a href="https://t.me/indexfastgoogle" target="_blank" rel="noopener noreferrer">Telegram Chat</a></li>
+        <li><a href="mailto:indexfastapp@gmail.com">Email Support</a></li>
+        <li><a href="/status.html">Service Status</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 IndexFast. All rights reserved.</p>
+    <div style="display:flex; gap:20px;">
+      <a href="/privacy-policy.html">Privacy</a>
+      <a href="/terms.html">Terms</a>
+    </div>
+  </div>
+  <button id="backToTop" class="back-to-top" aria-label="Back to top">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+  </button>
+</footer>
+
+<script src="/js/blog.js" defer></script>
+</body>
+</html>
