@@ -415,6 +415,11 @@
             "source": "/blog/seo-audit-checklyst.html",
             "destination": "/blog/seo-audit-checklist.html",
             "permanent": true
+        },
+        {
+            "source": "/blog/shvydkist-saitu-seo.html",
+            "destination": "/blog/site-speed-seo.html",
+            "permanent": true
         }
     ],
     "rewrites": [

@@ -34,6 +34,8 @@ RewriteRule ^blog/lokalne-seo\.html$ /blog/local-seo.html [R=301,L]
 
 RewriteRule ^blog/seo-audit-checklyst\.html$ /blog/seo-audit-checklist.html [R=301,L]
 
+RewriteRule ^blog/shvydkist-saitu-seo\.html$ /blog/site-speed-seo.html [R=301,L]
+
 # ── Serve manual payment receipts securely from outside public_html
 RewriteRule ^storage/receipts/([^/]+)$ api/billing/serve_receipt.php?file=$1 [L,QSA]
 

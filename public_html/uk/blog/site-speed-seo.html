@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Швидкість сайту і SEO: Core Web Vitals, LCP, INP, CLS у 2026 році — IndexFast</title>
+  <meta name="description" content="Як швидкість сайту впливає на SEO і позиції в Google. Core Web Vitals: LCP, INP, CLS — що це, як виміряти і як покращити. Практичний чеклист.">
+  <meta name="keywords" content="швидкість сайту seo, core web vitals, lcp seo, cls google, pagespeed seo, оптимізація швидкості сайту">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+  <link rel="canonical" href="https://indexfast.pro/blog/site-speed-seo.html">
+
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://indexfast.pro/blog/site-speed-seo.html">
+  <meta property="og:title" content="Швидкість сайту і SEO: Core Web Vitals, LCP, INP, CLS у 2026 році — IndexFast">
+  <meta property="og:description" content="Як швидкість сайту впливає на SEO і позиції в Google. Core Web Vitals: LCP, INP, CLS — що це, як виміряти і як покращити. Практичний чеклист.">
+  <meta property="og:image" content="https://indexfast.pro/blog-images/blog_speed_seo.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="uk_UA">
+  <meta property="article:published_time" content="2026-10-20T10:00:00+02:00">
+  <meta property="article:modified_time" content="2026-10-20T10:00:00+02:00">
+  <meta property="article:author" content="IndexFast">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Швидкість сайту і SEO: Core Web Vitals, LCP, INP, CLS у 2026 році — IndexFast",
+    "description": "Як швидкість сайту впливає на SEO і позиції в Google. Core Web Vitals: LCP, INP, CLS — що це, як виміряти і як покращити. Практичний чеклист.",
+    "inLanguage": "uk",
+    "author": {
+      "@type": "Organization",
+      "name": "IndexFast",
+      "url": "https://indexfast.pro"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "IndexFast",
+      "url": "https://indexfast.pro",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://indexfast.pro/logo.png"
+      }
+    },
+    "datePublished": "2026-10-20T10:00:00+02:00",
+    "dateModified": "2026-10-20T10:00:00+02:00",
+    "url": "https://indexfast.pro/blog/site-speed-seo.html",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://indexfast.pro/blog/site-speed-seo.html"
+    },
+    "image": {
+      "@type": "ImageObject",
+      "url": "https://indexfast.pro/blog-images/blog_speed_seo.png",
+      "width": 1200,
+      "height": 630
+    }
+  }
+  </script>
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Швидкість сайту і SEO: Core Web Vitals, LCP, INP, CLS у 2026 році — IndexFast">
+  <meta name="twitter:description" content="Як швидкість сайту впливає на SEO і позиції в Google. Core Web Vitals: LCP, INP, CLS — що це, як виміряти і як покращити. Практичний чеклист.">
+  <meta name="twitter:image" content="https://indexfast.pro/blog-images/blog_speed_seo.png">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Головна", "item": "https://indexfast.pro/" },
+      { "@type": "ListItem", "position": 2, "name": "Блог", "item": "https://indexfast.pro/blog/" },
+      { "@type": "ListItem", "position": 3, "name": "Швидкість сайту і SEO: Core Web Vitals, LCP, INP, CLS у 2026 році", "item": "https://indexfast.pro/blog/site-speed-seo.html" }
+    ]
+  }
+  </script>
+
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/blog.css">
+<style>
+
+/* ─── CUSTOM SCROLLBAR ─── */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--black, #050508); }
+::-webkit-scrollbar-thumb { background: rgba(0, 255, 136, 0.4); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(0, 255, 136, 0.8); }
+html { overflow-y: scroll !important; }
+
+</style>
+</head>
+<body>
+
+<nav id="navbar" role="navigation" aria-label="Main menu" class="">
+    <a href="/" class="logo" aria-label="IndexFast">Index<span>Fast</span></a>
+    <ul class="nav-links">
+      <li><a href="/#how-it-works">How it works</a></li>
+      <li><a href="/#for-whom">For whom</a></li>
+      <li><a href="/#features">Advantages</a></li>
+      <li><a href="/#pricing">Prices</a></li>
+      <li><a href="/#faq">FAQ</a></li>
+      <li class="mobile-auth">
+        <a href="/app/login" class="mobile-login">Sign in</a>
+        <a href="/app/register" class="mobile-register">Get started for free →</a>
+      </li>
+    </ul>
+    <div class="nav-actions">
+      <div class="nav-lang-dropdown">
+        <button class="nav-lang-btn">UK ▾</button>
+        <div class="nav-lang-menu">
+        <a href="/blog/site-speed-seo.html">English</a>
+        <a href="/uk/blog/site-speed-seo.html" class="active">Українська</a>
+        <a href="/pl/blog/site-speed-seo.html">Polski</a>
+        <a href="/ru/blog/site-speed-seo.html">Русский</a>
+        <a href="/de/blog/site-speed-seo.html">Deutsch</a>
+        <a href="/fr/blog/site-speed-seo.html">Français</a>
+        <a href="/es/blog/site-speed-seo.html">Español</a>
+        <a href="/pt/blog/site-speed-seo.html">Português</a>
+      </div>
+      </div>
+      <a href="/app/login" class="nav-login">Sign in</a>
+      <a href="/app/register" class="nav-cta">Get started for free →</a>
+      <button class="mobile-menu-btn" onclick="document.querySelector('.nav-links').classList.toggle('active')" aria-label="Main menu">☰</button>
+    </div>
+  </nav>
+
+<div class="page-wrap">
+  <article>
+    <div class="article-meta">
+      
+      
+      
+      <span class="meta-tag">Швидкість</span>
+      <span class="meta-date">20 жовтня 2026</span>
+      <span class="meta-read">⏱ 11 хвилин читання</span>
+    
+    
+    
+    </div>
+
+    <h1>Швидкість сайту і SEO: Core Web Vitals, LCP, INP, CLS у 2026 році</h1>
+    <img src="/blog-images/blog_speed_seo.png" alt="швидкість сайту seo, core web vitals, lcp seo, cls google, pagespeed seo, оптимізація швидкості сайту Швидкість сайту і SEO: Core Web Vitals, LCP, INP, CLS у 2026 році" class="article-main-image" style="width:100%; border-radius:16px; margin: 24px 0; object-fit: cover; aspect-ratio: 1200/630;">
+
+    <p class="article-lead">Google офіційно враховує Core Web Vitals при ранжуванні з 2021 року. LCP, INP, CLS — три метрики що визначають чи отримає ваш сайт бонус або штраф у пошуку. Розбираємо кожну метрику, причини поганих показників і конкретні рішення.</p>
+
+    <div class="article-body">
+      
+      
+      
+      <h2 id="why-speed">Чому швидкість сайту критична для SEO</h2>
+      <p>З 2021 року Google офіційно враховує Core Web Vitals при ранжуванні — це метрики швидкості і зручності що вимірюються в реальних умовах на реальних пристроях користувачів. Сайти що проходять поріг Core Web Vitals отримують невелику перевагу в пошуку.</p>
+      <p>Але важливіший непрямий вплив: повільний сайт → вищий показник відмов → менше часу на сторінці → гірші поведінкові сигнали → нижчі позиції. Крім того, Google виділяє менший crawl budget повільним сайтам.</p>
+
+      <h2 id="cwv">Core Web Vitals: три ключові метрики</h2>
+
+      <h3 id="lcp">LCP — Largest Contentful Paint</h3>
+      <p>Час до появи найбільшого видимого елементу (зазвичай головне зображення або заголовок). Показує коли користувач бачить основний контент.</p>
+      <ul>
+        <li><span style="color:#00ff88;font-weight:700">Добре: до 2.5 секунди</span></li>
+        <li><span style="color:#ffd060;font-weight:700">Потребує покращення: 2.5–4 с</span></li>
+        <li><span style="color:#ff4d6d;font-weight:700">Погано: більше 4 секунд</span></li>
+      </ul>
+      <p>Основні причини поганого LCP: великі незастиснуті зображення, повільний сервер, блокуючі ресурси (JS, CSS), відсутність CDN.</p>
+
+      <h3 id="inp">INP — Interaction to Next Paint</h3>
+      <p>Час відгуку на взаємодію користувача (клік, тап, введення). Замінив FID з березня 2024.</p>
+      <ul>
+        <li><span style="color:#00ff88;font-weight:700">Добре: до 200 мс</span></li>
+        <li><span style="color:#ffd060;font-weight:700">Потребує покращення: 200–500 мс</span></li>
+        <li><span style="color:#ff4d6d;font-weight:700">Погано: більше 500 мс</span></li>
+      </ul>
+
+      <h3 id="cls">CLS — Cumulative Layout Shift</h3>
+      <p>Сумарне зміщення елементів під час завантаження. «Стрибки» контенту коли завантажуються зображення або реклама.</p>
+      <ul>
+        <li><span style="color:#00ff88;font-weight:700">Добре: до 0.1</span></li>
+        <li><span style="color:#ffd060;font-weight:700">Потребує покращення: 0.1–0.25</span></li>
+        <li><span style="color:#ff4d6d;font-weight:700">Погано: більше 0.25</span></li>
+      </ul>
+
+      <div class="tip-box">
+        <strong>🔧 Як перевірити</strong>
+        <p>pagespeed.web.dev — введіть URL і отримайте детальний звіт по всіх трьох метриках для мобільної і десктопної версій. Також перевірте Search Console → Core Web Vitals для даних з реальних пристроїв.</p>
+      </div>
+
+      <h2 id="images">Оптимізація зображень — найшвидший виграш</h2>
+      <p>Зображення — головна причина повільного LCP. Декілька правил:</p>
+      <ul>
+        <li><strong>WebP формат</strong> — на 25–35% менше ніж JPEG при тій самій якості</li>
+        <li><strong>Lazy loading</strong> — <code style="background:rgba(255,255,255,0.06);padding:1px 5px;border-radius:3px">loading="lazy"</code> для зображень нижче першого екрану</li>
+        <li><strong>Розміри в HTML</strong> — завжди вказуйте width і height щоб уникнути CLS</li>
+        <li><strong>Preload LCP зображення</strong> — додайте <code style="background:rgba(255,255,255,0.06);padding:1px 5px;border-radius:3px">&lt;link rel="preload" as="image"&gt;</code> для головного зображення</li>
+        <li><strong>CDN для зображень</strong> — Cloudflare Images або аналог для глобальної доставки</li>
+      </ul>
+
+      <h2 id="server">Швидкість сервера і TTFB</h2>
+      <p>TTFB (Time to First Byte) — час до першого байту відповіді сервера. Google вважає хорошим TTFB до 800мс.</p>
+      <ul>
+        <li><strong>Кешування</strong> — сторінки мають повертатись з кешу, не генеруватись кожен раз</li>
+        <li><strong>Хостинг</strong> — VPS або хмарний хостинг значно швидший за shared</li>
+        <li><strong>CDN</strong> — Cloudflare безкоштовно зменшує TTFB для відвідувачів з різних країн</li>
+        <li><strong>Бази даних</strong> — повільні SQL-запити найчастіша причина поганого TTFB</li>
+      </ul>
+
+      <h2 id="js-css">JavaScript і CSS оптимізація</h2>
+      <p>Браузер не може рендерити сторінку поки завантажуються і виконуються блокуючі ресурси:</p>
+      <ul>
+        <li>Перенесіть JS в кінець body або додайте <code style="background:rgba(255,255,255,0.06);padding:1px 5px;border-radius:3px">defer</code> / <code style="background:rgba(255,255,255,0.06);padding:1px 5px;border-radius:3px">async</code></li>
+        <li>Виділіть критичний CSS (above-the-fold) і вбудуйте його в head</li>
+        <li>Мінімізуйте і стискайте JS і CSS файли</li>
+        <li>Видаліть невикористаний CSS (Coverage tab в DevTools)</li>
+        <li>Розбийте великий JS на chunks і завантажуйте lazy</li>
+      </ul>
+
+      <div class="warn-box">
+        <strong>⚠ Сторонні скрипти — головний ворог швидкості</strong>
+        <p>Google Analytics, Facebook Pixel, чати, рекламні мережі — кожен сторонній скрипт додає 100–500мс до часу завантаження. Аудит сторонніх скриптів через Lighthouse Network tab — обов'язковий крок.</p>
+      </div>
+
+      <h2 id="fonts">Шрифти і швидкість</h2>
+      <ul>
+        <li>Використовуйте <code style="background:rgba(255,255,255,0.06);padding:1px 5px;border-radius:3px">font-display: swap</code> — текст видно одразу, шрифт підвантажується</li>
+        <li>Preconnect до fonts.googleapis.com і fonts.gstatic.com</li>
+        <li>Обмежте варіанти шрифтів — тільки ті weights що реально використовуються</li>
+        <li>Розгляньте системні шрифти для критичного тексту (нульовий час завантаження)</li>
+      </ul>
+
+      <div class="cta-block">
+        <h3>Швидкий сайт — швидка індексація</h3>
+        <p>Після покращення швидкості запустіть переіндексацію оновлених сторінок через IndexFast. Google побачить покращення в Core Web Vitals і швидше оновить дані.</p>
+        <a href="/app/register">Спробувати безкоштовно →</a>
+      </div>
+
+      <h2 id="mobile">Мобільна оптимізація</h2>
+      <p>Google використовує Mobile-First Indexing — індексує мобільну версію сайту як основну. Тому мобільна швидкість важливіша за десктопну.</p>
+      <ul>
+        <li>Перевірте мобільний PageSpeed окремо від десктопного</li>
+        <li>Тестуйте на реальних пристроях, не тільки в DevTools</li>
+        <li>Кнопки мінімум 48x48px для зручного тапу</li>
+        <li>Уникайте горизонтального скролу</li>
+        <li>Попапи не мають перекривати основний контент (штраф за intrusive interstitials)</li>
+      </ul>
+
+      <h2 id="checklist-speed">Чеклист швидкості сайту</h2>
+      <ul>
+        <li>LCP менше 2.5 секунди на мобільному</li>
+        <li>INP менше 200мс</li>
+        <li>CLS менше 0.1</li>
+        <li>Всі зображення в WebP форматі</li>
+        <li>lazy loading для зображень нижче першого екрану</li>
+        <li>Підключено CDN (Cloudflare або аналог)</li>
+        <li>JS перенесено в кінець або додано defer</li>
+        <li>Кешування на сервері налаштовано</li>
+        <li>TTFB менше 800мс</li>
+        <li>font-display: swap для кастомних шрифтів</li>
+        <li>Аудит сторонніх скриптів проведено</li>
+      </ul>
+    
+
+      
+
+    
+
+      
+
+    
+
+      <div class="article-nav">
+        <a href="/blog/seo-audit-checklist.html">
+          <span class="article-nav-label">← Попередня стаття</span>
+          <span class="article-nav-title">SEO аудит сайту: повний чеклист з 50 пунктів у 2026 році</span>
+        </a>
+        <a href="/blog/masova-indeksaciya-saitu.html" style="text-align:right;">
+          <span class="article-nav-label">Наступна стаття →</span>
+          <span class="article-nav-title">Масова індексація сайту в Google: як проіндексувати 500+ сторінок за 24 години</span>
+        </a>
+      </div>
+
+    </div>
+  </article>
+
+  <aside class="sidebar">
+    
+    <div class="sidebar-card">
+      <h4>Зміст статті</h4>
+      <ul class="toc-list">
+        <li><a href="#why-speed">Чому швидкість сайту критична для SEO</a></li>
+        <li><a href="#cwv">Core Web Vitals: три ключові метрики</a></li>
+        <li><a href="#images">Оптимізація зображень — найшвидший виграш</a></li>
+        <li><a href="#server">Швидкість сервера і TTFB</a></li>
+        <li><a href="#js-css">JavaScript і CSS оптимізація</a></li>
+        <li><a href="#fonts">Шрифти і швидкість</a></li>
+        <li><a href="#mobile">Мобільна оптимізація</a></li>
+        <li><a href="#checklist-speed">Чеклист швидкості сайту</a></li>
+      </ul>
+    </div>
+    
+    <div class="sidebar-card">
+      <h4>Читайте також</h4>
+      <ul class="related-list">
+        <li><a href="/blog/masova-indeksaciya-saitu.html">Масова індексація сайту в Google: як проіндексувати 500+ сторінок за 24 години</a></li>
+        <li><a href="/blog/avtomatychna-indeksaciya.html">Автоматична індексація сайту в Google: налаштуйте раз — працює завжди</a></li>
+        <li><a href="/blog/how-to-speed-up-site-indexing-in-google.html">Як прискорити індексацію сайту в Google у 2026 році</a></li>
+      </ul>
+    </div>
+    <div class="sidebar-card" style="background: rgba(0,255,136,0.05); border-color: rgba(0,255,136,0.2);">
+      <h4 style="color: var(--green);">Спробуйте IndexFast</h4>
+      <p style="font-size:0.85rem; color:var(--muted); margin-bottom:16px; line-height:1.5;">Автоматична індексація всіх сторінок через Google Indexing API</p>
+      <a href="/app/register" style="display:block; background:var(--green); color:var(--black); text-align:center; padding:10px; border-radius:100px; font-family:var(--font-display); font-weight:700; font-size:0.85rem; text-decoration:none;">Спробувати безкоштовно →</a>
+    </div>
+  </aside>
+</div>
+
+<footer role="contentinfo">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="/" class="logo">Index<span>Fast</span></a>
+      <p>Automatic indexing service for Google and IndexNow via the official Google Indexing API.</p>
+    </div>
+    <div class="footer-col">
+      <p class="footer-title">Product</p>
+      <ul>
+        <li><a href="/#how-it-works">How it works</a></li>
+        <li><a href="/#features">Features</a></li>
+        <li><a href="/#pricing">Pricing</a></li>
+        <li><a href="/docs/">Documentation</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <p class="footer-title">Company</p>
+      <ul>
+        <li><a href="/about.html">About</a></li>
+        <li><a href="/blog/">Blog</a></li>
+        <li><a href="/affiliate.html">Affiliate Program</a></li>
+        <li><a href="/contacts.html">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <p class="footer-title">Support</p>
+      <ul>
+        <li><a href="/#faq">FAQ</a></li>
+        <li><a href="https://t.me/indexfastgoogle" target="_blank" rel="noopener noreferrer">Telegram Chat</a></li>
+        <li><a href="mailto:indexfastapp@gmail.com">Email Support</a></li>
+        <li><a href="/status.html">Service Status</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 IndexFast. All rights reserved.</p>
+    <div style="display:flex; gap:20px;">
+      <a href="/privacy-policy.html">Privacy</a>
+      <a href="/terms.html">Terms</a>
+    </div>
+  </div>
+  <button id="backToTop" class="back-to-top" aria-label="Back to top">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+  </button>
+</footer>
+
+<script src="/js/blog.js" defer></script>
+</body>
+</html>
