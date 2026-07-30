@@ -63,22 +63,41 @@
 
     html { scroll-behavior: smooth; }
     body { background: var(--black); color: var(--white); font-family: var(--font-body); font-weight: 300; overflow-x: hidden; }
-
+    /* ── NAV ── */
     nav {
-      position: sticky; top: 0; z-index: 100;
+      position: sticky; top: 0; z-index: 500;
       padding: 0 60px; height: 64px;
       display: flex; align-items: center; justify-content: space-between;
       background: rgba(5,5,8,0.96); backdrop-filter: blur(14px);
       border-bottom: 1px solid var(--border);
+      transition: border-color 0.3s;
     }
     .logo { font-family: var(--font-display); font-size: 1.35rem; font-weight: 800; letter-spacing: -0.03em; color: var(--white); text-decoration: none; }
     .logo span { color: var(--green); }
-    .nav-right { display: flex; align-items: center; gap: 24px; }
-    .nav-link { color: var(--muted); text-decoration: none; font-size: 0.875rem; transition: color 0.2s; }
-    .nav-link:hover { color: var(--white); }
-    .nav-link.active { color: var(--green); }
-    .nav-cta { background: var(--green); color: var(--black); padding: 8px 20px; border-radius: 100px; font-family: var(--font-display); font-weight: 700; font-size: 0.82rem; text-decoration: none; transition: box-shadow 0.2s; }
-    .nav-cta:hover { box-shadow: 0 0 20px rgba(0,255,136,0.4); }
+
+    .nav-links { display: flex; gap: 36px; list-style: none; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.875rem; letter-spacing: 0.05em; text-transform: uppercase; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--white); }
+
+    .nav-actions { display: flex; align-items: center; gap: 16px; }
+
+    .nav-login { color: var(--muted); font-size: 0.875rem; text-decoration: none; padding: 7px 16px; border-radius: 100px; border: 1px solid rgba(255,255,255,0.1); transition: color 0.2s, border-color 0.2s; }
+    .nav-login:hover { color: var(--white); border-color: rgba(255,255,255,0.25); }
+
+    .nav-cta { background: var(--green); color: var(--black); padding: 9px 22px; border-radius: 100px; font-family: var(--font-display); font-weight: 700; font-size: 0.875rem; text-decoration: none; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 0 20px rgba(0,255,136,0.25); }
+    .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 0 40px rgba(0,255,136,0.5); }
+
+    .nav-lang-dropdown { position: relative; display: inline-block; margin-right: 4px; }
+    .nav-lang-btn { background: none; border: none; color: var(--muted); font-family: var(--font-body); font-weight: 600; font-size: 0.875rem; cursor: pointer; padding: 8px 0; transition: color 0.2s; }
+    .nav-lang-btn:hover { color: var(--white); }
+    .nav-lang-menu { position: absolute; top: calc(100% + 8px); right: 0; background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 8px 0; min-width: 140px; opacity: 0; visibility: hidden; transform: translateY(10px); transition: all 0.2s; box-shadow: 0 10px 40px rgba(0,0,0,0.5); z-index: 1000; }
+    .nav-lang-dropdown:hover .nav-lang-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+    .nav-lang-menu a { display: block; padding: 8px 20px; color: var(--muted); text-decoration: none; font-size: 0.875rem; transition: background 0.2s, color 0.2s; }
+    .nav-lang-menu a:hover { background: rgba(255,255,255,0.05); color: var(--white); }
+    .nav-lang-menu a.active { color: var(--green); font-weight: 600; background: rgba(0,255,136,0.05); }
+
+    .mobile-menu-btn { display: none; background: none; border: none; color: var(--white); font-size: 1.5rem; cursor: pointer; padding: 0; line-height: 1; }
+    .mobile-auth { display: none !important; }
 
     .blog-hero {
       padding: 80px 60px 60px;
@@ -333,8 +352,27 @@
       box-shadow: 0 0 30px rgba(0, 255, 136, 0.4);
     }
 
-    @media (max-width: 900px) {
+    @media (max-width: 1100px) {
+      /* Mobile nav */
       nav { padding: 0 20px; }
+      .mobile-menu-btn { display: block; }
+      .nav-login, .nav-cta { display: none; }
+      .nav-lang-dropdown { margin-right: 0; }
+      .nav-links {
+        display: none; flex-direction: column; gap: 0;
+        position: fixed; top: 64px; left: 0; right: 0;
+        background: rgba(5,5,8,0.98); backdrop-filter: blur(14px);
+        padding: 16px 20px 24px; border-bottom: 1px solid var(--border);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.5); z-index: 499; list-style: none;
+      }
+      .nav-links li { border-bottom: 1px solid var(--border); }
+      .nav-links li:last-child { border-bottom: none; }
+      .nav-links li a { display: block; padding: 14px 0; font-size: 1rem; color: var(--white); text-transform: none; letter-spacing: 0; }
+      .nav-links.active { display: flex; }
+      .nav-links .mobile-auth { display: flex !important; gap: 12px; padding: 16px 0 4px; margin-top: 4px; border-top: 1px solid rgba(0,255,136,0.15); }
+      .nav-links .mobile-auth a { padding: 10px 20px; border-radius: 100px; font-size: 0.875rem; font-weight: 600; font-family: var(--font-display); text-decoration: none; text-transform: none; letter-spacing: 0; }
+      .nav-links .mobile-auth .mobile-login { color: var(--muted); border: 1px solid var(--border); }
+      .nav-links .mobile-auth .mobile-register { background: var(--green); color: var(--black); flex: 1; text-align: center; }
       .blog-hero { padding: 48px 20px 36px; }
       .filters-wrap { padding: 0 20px 28px; }
       .articles-wrap { padding: 0 20px 60px; }
@@ -348,19 +386,6 @@
       .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
       .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
       footer { padding: 40px 20px; }
-    }
-    .nav-login {
-      color: var(--muted, #7a7a95);
-      font-size: 0.875rem;
-      text-decoration: none;
-      padding: 7px 16px;
-      border-radius: 100px;
-      border: 1px solid rgba(255,255,255,0.1);
-      transition: color 0.2s, border-color 0.2s;
-    }
-    .nav-login:hover {
-      color: var(--white, #f0f0f8);
-      border-color: rgba(255,255,255,0.25);
     }
   </style>
 
@@ -1097,5 +1122,6 @@
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 </script>
+  <script src="/js/blog.js" defer></script>
 </body>
 </html>
