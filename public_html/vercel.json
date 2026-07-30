@@ -1,359 +1,369 @@
 {
-  "headers": [
-    {
-      "source": "/sitemap.xml",
-      "headers": [
+    "headers": [
         {
-          "key": "Content-Type",
-          "value": "application/xml; charset=UTF-8"
+            "source": "/sitemap.xml",
+            "headers": [
+                {
+                    "key": "Content-Type",
+                    "value": "application/xml; charset=UTF-8"
+                }
+            ]
+        },
+        {
+            "source": "/sitemap-pages.xml",
+            "headers": [
+                {
+                    "key": "Content-Type",
+                    "value": "application/xml; charset=UTF-8"
+                }
+            ]
+        },
+        {
+            "source": "/sitemap-blog.xml",
+            "headers": [
+                {
+                    "key": "Content-Type",
+                    "value": "application/xml; charset=UTF-8"
+                }
+            ]
+        },
+        {
+            "source": "/robots.txt",
+            "headers": [
+                {
+                    "key": "Content-Type",
+                    "value": "text/plain; charset=UTF-8"
+                }
+            ]
+        },
+        {
+            "source": "/((?!app/|api/|admin/).*)",
+            "headers": [
+                {
+                    "key": "X-Content-Type-Options",
+                    "value": "nosniff"
+                },
+                {
+                    "key": "Referrer-Policy",
+                    "value": "no-referrer-when-downgrade"
+                },
+                {
+                    "key": "Strict-Transport-Security",
+                    "value": "max-age=31536000; includeSubDomains"
+                },
+                {
+                    "key": "Permissions-Policy",
+                    "value": "geolocation=(), microphone=(), camera=()"
+                },
+                {
+                    "key": "X-Frame-Options",
+                    "value": "SAMEORIGIN"
+                },
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self' https://*.paddle.com https://*.paddleapi.com; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.paddle.com https://*.paddleapi.com https://cdn.paddle.com https://public.profitwell.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.paddle.com https://*.paddle.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https: https://cdn.paddle.com https://*.paddle.com; connect-src 'self' https://indexfast.pro https://*.paddle.com https://*.paddleapi.com https://checkout.paddle.com https://checkout-service.paddle.com https://cdn.paddle.com https://public.profitwell.com; frame-src 'self' https://*.paddle.com https://*.paddleapi.com https://checkout.paddle.com https://buy.paddle.com; frame-ancestors 'none'; form-action 'self' https://t.me; base-uri 'self'"
+                }
+            ]
+        },
+        {
+            "source": "/app/(.*)",
+            "headers": [
+                {
+                    "key": "X-Content-Type-Options",
+                    "value": "nosniff"
+                },
+                {
+                    "key": "Referrer-Policy",
+                    "value": "no-referrer-when-downgrade"
+                },
+                {
+                    "key": "Strict-Transport-Security",
+                    "value": "max-age=31536000; includeSubDomains"
+                },
+                {
+                    "key": "Permissions-Policy",
+                    "value": "geolocation=(), microphone=(), camera=()"
+                },
+                {
+                    "key": "X-Frame-Options",
+                    "value": "DENY"
+                },
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self' https://*.paddle.com https://*.paddleapi.com; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.paddle.com https://*.paddleapi.com https://cdn.paddle.com https://public.profitwell.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.paddle.com https://*.paddle.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https: https://cdn.paddle.com https://*.paddle.com; connect-src 'self' https://indexfast.pro https://*.indexfast.pro https://*.paddle.com https://*.paddleapi.com https://checkout.paddle.com https://checkout-service.paddle.com https://cdn.paddle.com https://public.profitwell.com; frame-src 'self' https://*.paddle.com https://*.paddleapi.com https://checkout.paddle.com https://buy.paddle.com; frame-ancestors 'none'; form-action 'self'; base-uri 'self'; object-src 'none'"
+                }
+            ]
         }
-      ]
-    },
-    {
-      "source": "/sitemap-pages.xml",
-      "headers": [
+    ],
+    "redirects": [
         {
-          "key": "Content-Type",
-          "value": "application/xml; charset=UTF-8"
+            "source": "/blog/yak-pryskoriti-indeksaciyu-saitu-v-google.html",
+            "destination": "/blog/how-to-speed-up-site-indexing-in-google.html",
+            "permanent": true
+        },
+        {
+            "source": "/blog-indexation.html",
+            "destination": "/blog/how-to-speed-up-site-indexing-in-google.html",
+            "permanent": true
+        },
+        {
+            "source": "/pt/blog/discovered-currently-not-indexed/",
+            "destination": "/pt/blog/discovered-currently-not-indexed.html",
+            "permanent": true
+        },
+        {
+            "source": "/pl/blog/discovered-currently-not-indexed/",
+            "destination": "/pl/blog/discovered-currently-not-indexed.html",
+            "permanent": true
+        },
+        {
+            "source": "/fr/blog/discovered-currently-not-indexed/",
+            "destination": "/fr/blog/discovered-currently-not-indexed.html",
+            "permanent": true
+        },
+        {
+            "source": "/de/blog/discovered-currently-not-indexed/",
+            "destination": "/de/blog/discovered-currently-not-indexed.html",
+            "permanent": true
+        },
+        {
+            "source": "/es/blog/discovered-currently-not-indexed/",
+            "destination": "/es/blog/discovered-currently-not-indexed.html",
+            "permanent": true
+        },
+        {
+            "source": "/ru/blog/discovered-currently-not-indexed/",
+            "destination": "/ru/blog/discovered-currently-not-indexed.html",
+            "permanent": true
+        },
+        {
+            "source": "/uk/blog/discovered-currently-not-indexed/",
+            "destination": "/uk/blog/discovered-currently-not-indexed.html",
+            "permanent": true
+        },
+        {
+            "source": "/blog/discovered-currently-not-indexed/",
+            "destination": "/blog/discovered-currently-not-indexed.html",
+            "permanent": true
+        },
+        {
+            "source": "/pt/blog/indexing-api-ta-ruchni-metodi-2026.html",
+            "destination": "/pt/blog/indexing-api-and-manual-methods.html",
+            "permanent": true
+        },
+        {
+            "source": "/pt/blog/shcho-take-sitemap-xml.html",
+            "destination": "/pt/blog/what-is-sitemap-xml.html",
+            "permanent": true
+        },
+        {
+            "source": "/pl/blog/indexing-api-ta-ruchni-metodi-2026.html",
+            "destination": "/pl/blog/indexing-api-and-manual-methods.html",
+            "permanent": true
+        },
+        {
+            "source": "/pl/blog/shcho-take-sitemap-xml.html",
+            "destination": "/pl/blog/what-is-sitemap-xml.html",
+            "permanent": true
+        },
+        {
+            "source": "/fr/blog/indexing-api-ta-ruchni-metodi-2026.html",
+            "destination": "/fr/blog/indexing-api-and-manual-methods.html",
+            "permanent": true
+        },
+        {
+            "source": "/fr/blog/shcho-take-sitemap-xml.html",
+            "destination": "/fr/blog/what-is-sitemap-xml.html",
+            "permanent": true
+        },
+        {
+            "source": "/de/blog/indexing-api-ta-ruchni-metodi-2026.html",
+            "destination": "/de/blog/indexing-api-and-manual-methods.html",
+            "permanent": true
+        },
+        {
+            "source": "/de/blog/shcho-take-sitemap-xml.html",
+            "destination": "/de/blog/what-is-sitemap-xml.html",
+            "permanent": true
+        },
+        {
+            "source": "/es/blog/indexing-api-ta-ruchni-metodi-2026.html",
+            "destination": "/es/blog/indexing-api-and-manual-methods.html",
+            "permanent": true
+        },
+        {
+            "source": "/es/blog/shcho-take-sitemap-xml.html",
+            "destination": "/es/blog/what-is-sitemap-xml.html",
+            "permanent": true
+        },
+        {
+            "source": "/ru/blog/indexing-api-ta-ruchni-metodi-2026.html",
+            "destination": "/ru/blog/indexing-api-and-manual-methods.html",
+            "permanent": true
+        },
+        {
+            "source": "/ru/blog/shcho-take-sitemap-xml.html",
+            "destination": "/ru/blog/what-is-sitemap-xml.html",
+            "permanent": true
+        },
+        {
+            "source": "/uk/blog/indexing-api-ta-ruchni-metodi-2026.html",
+            "destination": "/uk/blog/indexing-api-and-manual-methods.html",
+            "permanent": true
+        },
+        {
+            "source": "/uk/blog/shcho-take-sitemap-xml.html",
+            "destination": "/uk/blog/what-is-sitemap-xml.html",
+            "permanent": true
+        },
+        {
+            "source": "/blog/indexing-api-ta-ruchni-metodi-2026.html",
+            "destination": "/blog/indexing-api-and-manual-methods.html",
+            "permanent": true
+        },
+        {
+            "source": "/blog/shcho-take-sitemap-xml.html",
+            "destination": "/blog/what-is-sitemap-xml.html",
+            "permanent": true
+        },
+        {
+            "source": "/privacy-policy",
+            "destination": "/privacy-policy.html",
+            "permanent": true
+        },
+        {
+            "source": "/privacy-policy/",
+            "destination": "/privacy-policy.html",
+            "permanent": true
+        },
+        {
+            "source": "/terms-and-conditions/",
+            "destination": "/terms.html",
+            "permanent": true
+        },
+        {
+            "source": "/blog/create-a-landing-page-that-performs-great/",
+            "destination": "/blog/create-a-landing-page-that-performs-great.html",
+            "permanent": true
+        },
+        {
+            "source": "/blog/how-can-designers-prepare-for-the-future",
+            "destination": "/blog/how-can-designers-prepare-for-the-future.html",
+            "permanent": true
+        },
+        {
+            "source": "/blog/how-can-designers-prepare-for-the-future/",
+            "destination": "/blog/how-can-designers-prepare-for-the-future.html",
+            "permanent": true
+        },
+        {
+            "source": "/blog/starting-a-career-in-web-design",
+            "destination": "/blog/starting-a-career-in-web-design.html",
+            "permanent": true
+        },
+        {
+            "source": "/blog/starting-a-career-in-web-design/",
+            "destination": "/blog/starting-a-career-in-web-design.html",
+            "permanent": true
+        },
+        {
+            "source": "/blog/create-a-landing-page-that-performs-great",
+            "destination": "/blog/create-a-landing-page-that-performs-great.html",
+            "permanent": true
+        },
+        {
+            "source": "/blog/create-a-landing-page-that-performs-great/",
+            "destination": "/blog/create-a-landing-page-that-performs-great.html",
+            "permanent": true
+        },
+        {
+            "source": "/blog/create-a-landing-page-that-performs-great",
+            "destination": "/blog/create-a-landing-page-that-performs-great.html",
+            "permanent": true
+        },
+        {
+            "source": "/blog/create-a-landing-page-that-performs-great/",
+            "destination": "/blog/create-a-landing-page-that-performs-great.html",
+            "permanent": true
+        },
+        {
+            "source": "/contact",
+            "destination": "/contacts.html",
+            "permanent": true
+        },
+        {
+            "source": "/contact/",
+            "destination": "/contacts.html",
+            "permanent": true
+        },
+        {
+            "source": "/blog/core-web-vitals-2025.html",
+            "destination": "/blog/core-web-vitals-2026.html",
+            "permanent": true
+        },
+        {
+            "source": "/blog/how-to-create-an-effective-design-portfolio",
+            "destination": "/blog/how-to-create-an-effective-design-portfolio.html",
+            "permanent": true
+        },
+        {
+            "source": "/blog/how-to-create-an-effective-design-portfolio/",
+            "destination": "/blog/how-to-create-an-effective-design-portfolio.html",
+            "permanent": true
+        },
+        {
+            "source": "/blog/building-a-navigation-component",
+            "destination": "/blog/building-a-navigation-component.html",
+            "permanent": true
+        },
+        {
+            "source": "/blog/building-a-navigation-component/",
+            "destination": "/blog/building-a-navigation-component.html",
+            "permanent": true
+        },
+        {
+            "source": "/faqs",
+            "destination": "/faqs.html",
+            "permanent": true
+        },
+        {
+            "source": "/faqs/",
+            "destination": "/faqs.html",
+            "permanent": true
+        },
+        {
+            "source": "/pricing-ltd",
+            "destination": "/pricing-ltd.html",
+            "permanent": true
+        },
+        {
+            "source": "/pricing-ltd/",
+            "destination": "/pricing-ltd.html",
+            "permanent": true
+        },
+        {
+            "source": "/api/auth/google/:match*",
+            "destination": "https://test.developer.pp.ua/api/auth/google/:match*",
+            "permanent": false
         }
-      ]
-    },
-    {
-      "source": "/sitemap-blog.xml",
-      "headers": [
+    ],
+    "rewrites": [
         {
-          "key": "Content-Type",
-          "value": "application/xml; charset=UTF-8"
+            "source": "/api/:match*",
+            "destination": "https://test.developer.pp.ua/api/:match*"
+        },
+        {
+            "source": "/admin/:match*",
+            "destination": "https://test.developer.pp.ua/admin/:match*"
+        },
+        {
+            "source": "/docs",
+            "destination": "/docs/"
+        },
+        {
+            "source": "/app/(.*)",
+            "destination": "/app/index.html"
         }
-      ]
-    },
-    {
-      "source": "/robots.txt",
-      "headers": [
-        {
-          "key": "Content-Type",
-          "value": "text/plain; charset=UTF-8"
-        }
-      ]
-    },
-    {
-      "source": "/((?!app/|api/|admin/).*)",
-      "headers": [
-        {
-          "key": "X-Content-Type-Options",
-          "value": "nosniff"
-        },
-        {
-          "key": "Referrer-Policy",
-          "value": "no-referrer-when-downgrade"
-        },
-        {
-          "key": "Strict-Transport-Security",
-          "value": "max-age=31536000; includeSubDomains"
-        },
-        {
-          "key": "Permissions-Policy",
-          "value": "geolocation=(), microphone=(), camera=()"
-        },
-        {
-          "key": "X-Frame-Options",
-          "value": "SAMEORIGIN"
-        },
-        {
-          "key": "Content-Security-Policy",
-          "value": "default-src 'self' https://*.paddle.com https://*.paddleapi.com; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.paddle.com https://*.paddleapi.com https://cdn.paddle.com https://public.profitwell.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.paddle.com https://*.paddle.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https: https://cdn.paddle.com https://*.paddle.com; connect-src 'self' https://indexfast.pro https://*.paddle.com https://*.paddleapi.com https://checkout.paddle.com https://checkout-service.paddle.com https://cdn.paddle.com https://public.profitwell.com; frame-src 'self' https://*.paddle.com https://*.paddleapi.com https://checkout.paddle.com https://buy.paddle.com; frame-ancestors 'none'; form-action 'self' https://t.me; base-uri 'self'"
-        }
-      ]
-    },
-    {
-      "source": "/app/(.*)",
-      "headers": [
-        {
-          "key": "X-Content-Type-Options",
-          "value": "nosniff"
-        },
-        {
-          "key": "Referrer-Policy",
-          "value": "no-referrer-when-downgrade"
-        },
-        {
-          "key": "Strict-Transport-Security",
-          "value": "max-age=31536000; includeSubDomains"
-        },
-        {
-          "key": "Permissions-Policy",
-          "value": "geolocation=(), microphone=(), camera=()"
-        },
-        {
-          "key": "X-Frame-Options",
-          "value": "DENY"
-        },
-        {
-          "key": "Content-Security-Policy",
-          "value": "default-src 'self' https://*.paddle.com https://*.paddleapi.com; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.paddle.com https://*.paddleapi.com https://cdn.paddle.com https://public.profitwell.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.paddle.com https://*.paddle.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https: https://cdn.paddle.com https://*.paddle.com; connect-src 'self' https://indexfast.pro https://*.indexfast.pro https://*.paddle.com https://*.paddleapi.com https://checkout.paddle.com https://checkout-service.paddle.com https://cdn.paddle.com https://public.profitwell.com; frame-src 'self' https://*.paddle.com https://*.paddleapi.com https://checkout.paddle.com https://buy.paddle.com; frame-ancestors 'none'; form-action 'self'; base-uri 'self'; object-src 'none'"
-        }
-      ]
-    }
-  ],
-  "redirects": [
-    {
-      "source": "/pt/blog/discovered-currently-not-indexed/",
-      "destination": "/pt/blog/discovered-currently-not-indexed.html",
-      "permanent": true
-    },
-    {
-      "source": "/pl/blog/discovered-currently-not-indexed/",
-      "destination": "/pl/blog/discovered-currently-not-indexed.html",
-      "permanent": true
-    },
-    {
-      "source": "/fr/blog/discovered-currently-not-indexed/",
-      "destination": "/fr/blog/discovered-currently-not-indexed.html",
-      "permanent": true
-    },
-    {
-      "source": "/de/blog/discovered-currently-not-indexed/",
-      "destination": "/de/blog/discovered-currently-not-indexed.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/blog/discovered-currently-not-indexed/",
-      "destination": "/es/blog/discovered-currently-not-indexed.html",
-      "permanent": true
-    },
-    {
-      "source": "/ru/blog/discovered-currently-not-indexed/",
-      "destination": "/ru/blog/discovered-currently-not-indexed.html",
-      "permanent": true
-    },
-    {
-      "source": "/uk/blog/discovered-currently-not-indexed/",
-      "destination": "/uk/blog/discovered-currently-not-indexed.html",
-      "permanent": true
-    },
-    {
-      "source": "/blog/discovered-currently-not-indexed/",
-      "destination": "/blog/discovered-currently-not-indexed.html",
-      "permanent": true
-    },
-    {
-      "source": "/pt/blog/indexing-api-ta-ruchni-metodi-2026.html",
-      "destination": "/pt/blog/indexing-api-and-manual-methods.html",
-      "permanent": true
-    },
-    {
-      "source": "/pt/blog/shcho-take-sitemap-xml.html",
-      "destination": "/pt/blog/what-is-sitemap-xml.html",
-      "permanent": true
-    },
-    {
-      "source": "/pl/blog/indexing-api-ta-ruchni-metodi-2026.html",
-      "destination": "/pl/blog/indexing-api-and-manual-methods.html",
-      "permanent": true
-    },
-    {
-      "source": "/pl/blog/shcho-take-sitemap-xml.html",
-      "destination": "/pl/blog/what-is-sitemap-xml.html",
-      "permanent": true
-    },
-    {
-      "source": "/fr/blog/indexing-api-ta-ruchni-metodi-2026.html",
-      "destination": "/fr/blog/indexing-api-and-manual-methods.html",
-      "permanent": true
-    },
-    {
-      "source": "/fr/blog/shcho-take-sitemap-xml.html",
-      "destination": "/fr/blog/what-is-sitemap-xml.html",
-      "permanent": true
-    },
-    {
-      "source": "/de/blog/indexing-api-ta-ruchni-metodi-2026.html",
-      "destination": "/de/blog/indexing-api-and-manual-methods.html",
-      "permanent": true
-    },
-    {
-      "source": "/de/blog/shcho-take-sitemap-xml.html",
-      "destination": "/de/blog/what-is-sitemap-xml.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/blog/indexing-api-ta-ruchni-metodi-2026.html",
-      "destination": "/es/blog/indexing-api-and-manual-methods.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/blog/shcho-take-sitemap-xml.html",
-      "destination": "/es/blog/what-is-sitemap-xml.html",
-      "permanent": true
-    },
-    {
-      "source": "/ru/blog/indexing-api-ta-ruchni-metodi-2026.html",
-      "destination": "/ru/blog/indexing-api-and-manual-methods.html",
-      "permanent": true
-    },
-    {
-      "source": "/ru/blog/shcho-take-sitemap-xml.html",
-      "destination": "/ru/blog/what-is-sitemap-xml.html",
-      "permanent": true
-    },
-    {
-      "source": "/uk/blog/indexing-api-ta-ruchni-metodi-2026.html",
-      "destination": "/uk/blog/indexing-api-and-manual-methods.html",
-      "permanent": true
-    },
-    {
-      "source": "/uk/blog/shcho-take-sitemap-xml.html",
-      "destination": "/uk/blog/what-is-sitemap-xml.html",
-      "permanent": true
-    },
-    {
-      "source": "/blog/indexing-api-ta-ruchni-metodi-2026.html",
-      "destination": "/blog/indexing-api-and-manual-methods.html",
-      "permanent": true
-    },
-    {
-      "source": "/blog/shcho-take-sitemap-xml.html",
-      "destination": "/blog/what-is-sitemap-xml.html",
-      "permanent": true
-    },
-    {
-      "source": "/privacy-policy",
-      "destination": "/privacy-policy.html",
-      "permanent": true
-    },
-    {
-      "source": "/privacy-policy/",
-      "destination": "/privacy-policy.html",
-      "permanent": true
-    },
-    {
-      "source": "/terms-and-conditions/",
-      "destination": "/terms.html",
-      "permanent": true
-    },
-    {
-      "source": "/blog/create-a-landing-page-that-performs-great/",
-      "destination": "/blog/create-a-landing-page-that-performs-great.html",
-      "permanent": true
-    },
-    {
-      "source": "/blog/how-can-designers-prepare-for-the-future",
-      "destination": "/blog/how-can-designers-prepare-for-the-future.html",
-      "permanent": true
-    },
-    {
-      "source": "/blog/how-can-designers-prepare-for-the-future/",
-      "destination": "/blog/how-can-designers-prepare-for-the-future.html",
-      "permanent": true
-    },
-    {
-      "source": "/blog/starting-a-career-in-web-design",
-      "destination": "/blog/starting-a-career-in-web-design.html",
-      "permanent": true
-    },
-    {
-      "source": "/blog/starting-a-career-in-web-design/",
-      "destination": "/blog/starting-a-career-in-web-design.html",
-      "permanent": true
-    },
-    {
-      "source": "/blog/create-a-landing-page-that-performs-great",
-      "destination": "/blog/create-a-landing-page-that-performs-great.html",
-      "permanent": true
-    },
-    {
-      "source": "/blog/create-a-landing-page-that-performs-great/",
-      "destination": "/blog/create-a-landing-page-that-performs-great.html",
-      "permanent": true
-    },
-    {
-      "source": "/blog/create-a-landing-page-that-performs-great",
-      "destination": "/blog/create-a-landing-page-that-performs-great.html",
-      "permanent": true
-    },
-    {
-      "source": "/blog/create-a-landing-page-that-performs-great/",
-      "destination": "/blog/create-a-landing-page-that-performs-great.html",
-      "permanent": true
-    },
-    {
-      "source": "/contact",
-      "destination": "/contacts.html",
-      "permanent": true
-    },
-    {
-      "source": "/contact/",
-      "destination": "/contacts.html",
-      "permanent": true
-    },
-    {
-      "source": "/blog/core-web-vitals-2025.html",
-      "destination": "/blog/core-web-vitals-2026.html",
-      "permanent": true
-    },
-    {
-      "source": "/blog/how-to-create-an-effective-design-portfolio",
-      "destination": "/blog/how-to-create-an-effective-design-portfolio.html",
-      "permanent": true
-    },
-    {
-      "source": "/blog/how-to-create-an-effective-design-portfolio/",
-      "destination": "/blog/how-to-create-an-effective-design-portfolio.html",
-      "permanent": true
-    },
-    {
-      "source": "/blog/building-a-navigation-component",
-      "destination": "/blog/building-a-navigation-component.html",
-      "permanent": true
-    },
-    {
-      "source": "/blog/building-a-navigation-component/",
-      "destination": "/blog/building-a-navigation-component.html",
-      "permanent": true
-    },
-    {
-      "source": "/faqs",
-      "destination": "/faqs.html",
-      "permanent": true
-    },
-    {
-      "source": "/faqs/",
-      "destination": "/faqs.html",
-      "permanent": true
-    },
-    {
-      "source": "/pricing-ltd",
-      "destination": "/pricing-ltd.html",
-      "permanent": true
-    },
-    {
-      "source": "/pricing-ltd/",
-      "destination": "/pricing-ltd.html",
-      "permanent": true
-    },
-    {
-      "source": "/api/auth/google/:match*",
-      "destination": "https://test.developer.pp.ua/api/auth/google/:match*",
-      "permanent": false
-    }
-  ],
-  "rewrites": [
-    {
-      "source": "/api/:match*",
-      "destination": "https://test.developer.pp.ua/api/:match*"
-    },
-    {
-      "source": "/admin/:match*",
-      "destination": "https://test.developer.pp.ua/admin/:match*"
-    },
-    {
-      "source": "/docs",
-      "destination": "/docs/"
-    },
-    {
-      "source": "/app/(.*)",
-      "destination": "/app/index.html"
-    }
-  ],
-  "trailingSlash": true
+    ],
+    "trailingSlash": true
 }

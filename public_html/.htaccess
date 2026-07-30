@@ -38,7 +38,8 @@ RewriteRule ^backlink-building-for-small-business-2026$ /blog/backlink-building-
 RewriteRule ^backlink-building-for-small-business-2026/$ /blog/backlink-building-for-small-business-2026.html [R=301,L]
 
 # ── 301 редіректи старих дублікатів блогу
-RewriteRule ^blog-indexation\.html$ /blog/yak-pryskoriti-indeksaciyu-saitu-v-google.html [R=301,L]
+RewriteRule ^blog-indexation\.html$ /blog/how-to-speed-up-site-indexing-in-google.html [R=301,L]
+RewriteRule ^blog/yak-pryskoriti-indeksaciyu-saitu-v-google\.html$ /blog/how-to-speed-up-site-indexing-in-google.html [R=301,L]
 RewriteRule ^blog-sitemap\.html$ /blog/shcho-take-sitemap-xml.html [R=301,L]
 
 RewriteCond %{HTTPS} off
