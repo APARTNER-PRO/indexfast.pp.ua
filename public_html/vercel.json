@@ -385,6 +385,11 @@
             "source": "/blog/yak-pereviriti-indeksaciyu-saitu.html",
             "destination": "/blog/how-to-check-site-indexing.html",
             "permanent": true
+        },
+        {
+            "source": "/blog/best-google-indexing-tools-2026.html",
+            "destination": "/blog/best-google-indexing-tools.html",
+            "permanent": true
         }
     ],
     "rewrites": [

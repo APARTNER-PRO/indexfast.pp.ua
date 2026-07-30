@@ -22,6 +22,8 @@ RewriteRule ^blog/core-web-vitals-2026\.html$ /blog/core-web-vitals.html [R=301,
 
 RewriteRule ^blog/yak-pereviriti-indeksaciyu-saitu\.html$ /blog/how-to-check-site-indexing.html [R=301,L]
 
+RewriteRule ^blog/best-google-indexing-tools-2026\.html$ /blog/best-google-indexing-tools.html [R=301,L]
+
 # ── Serve manual payment receipts securely from outside public_html
 RewriteRule ^storage/receipts/([^/]+)$ api/billing/serve_receipt.php?file=$1 [L,QSA]
 
