@@ -24,7 +24,15 @@
       animation: spin 0.7s linear infinite;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
-  </style>
+  
+/* ─── CUSTOM SCROLLBAR ─── */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--black, #050508); }
+::-webkit-scrollbar-thumb { background: rgba(0, 255, 136, 0.4); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(0, 255, 136, 0.8); }
+html { overflow-y: scroll !important; }
+
+</style>
   <script type="module" crossorigin src="/app/assets/index-RuKP_P36.js"></script>
 </head>
 <body>

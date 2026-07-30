@@ -456,7 +456,15 @@
       .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
       footer { padding: 40px 20px; }
     }
-  </style>
+  
+/* ─── CUSTOM SCROLLBAR ─── */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--black, #050508); }
+::-webkit-scrollbar-thumb { background: rgba(0, 255, 136, 0.4); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(0, 255, 136, 0.8); }
+html { overflow-y: scroll !important; }
+
+</style>
 </head>
 <body>
 

@@ -208,7 +208,15 @@
     .back-to-top.visible { opacity: 1; visibility: visible; transform: translateY(0); }
     .back-to-top:hover { background: var(--green); color: var(--black); border-color: var(--green); }
 
-  </style>
+  
+/* ─── CUSTOM SCROLLBAR ─── */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--black, #050508); }
+::-webkit-scrollbar-thumb { background: rgba(0, 255, 136, 0.4); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(0, 255, 136, 0.8); }
+html { overflow-y: scroll !important; }
+
+</style>
 </head>
 <body>
 <nav id="navbar" role="navigation" aria-label="Головне меню">

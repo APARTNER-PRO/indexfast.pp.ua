@@ -510,7 +510,15 @@
       color: var(--white, #f0f0f8);
       border-color: rgba(255,255,255,0.25);
     }
-  </style>
+  
+/* ─── CUSTOM SCROLLBAR ─── */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--black, #050508); }
+::-webkit-scrollbar-thumb { background: rgba(0, 255, 136, 0.4); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(0, 255, 136, 0.8); }
+html { overflow-y: scroll !important; }
+
+</style>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
