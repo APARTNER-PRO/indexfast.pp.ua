@@ -1,52 +1,28 @@
 # IndexFast
 
-> Full documentation: https://indexfast.pro/llms-full.txt
-> Last Updated: 2026-07-03 | Version: 2.1 | Language: English
+> IndexFast is a specialized SaaS platform for instant website indexing in Google using the official Google Indexing API.
 
-IndexFast is a specialized service for instant website indexing in Google using the official Google Indexing API.
+## Detailed Information
+- [Full Project Specification](https://indexfast.pro/llms-full.txt): Core features, pricing, target audience, integration, use cases, FAQs, and competitive advantages.
 
-## Technical Implementation
-- **API**: Google Search Console API & Google Indexing API.
-- **Authentication**: Google Service Account (JSON key).
-- **Processing**: Automatic extraction of URLs from XML sitemaps.
-- **Reporting**: Detailed logs with indexing status and timestamps.
+## Platform Resources
+- [Homepage](https://indexfast.pro/)
+- [Dashboard](https://indexfast.pro/app/dashboard)
+- [System Status](https://indexfast.pro/status.html)
 
-## Pricing Plans
-1. **Free (Start)**:
-   - $0/month (forever free)
-   - 10 pages per day
-   - 1 Website
-   - Web Interface access
-   - Sitemap Index support
-   - IndexNow support
-2. **PRO**:
-   - $9.99/month
-   - 100 pages per day
-   - Up to 5 Websites
-   - Detailed indexing logs
-   - All Free features
-3. **Agency**:
-   - $49/month
-   - 1000 pages per day
-   - Up to 50 Websites
-   - Automation (cron/scheduler)
-   - White-label reports
-   - Priority support 24/7
-   - Full API access
+## Documentation & Help
+- [Documentation](https://indexfast.pro/docs/)
+- [Frequently Asked Questions (FAQ)](https://indexfast.pro/faqs.html)
 
-## Target Audience
-- E-commerce (thousands of product pages).
-- News & Media (fast-paced content).
-- SEO Agencies (managing multiple clients).
-- SaaS & Startups (quick market entry).
+## Legal & Policies
+- [Terms of Service](https://indexfast.pro/terms.html)
+- [Privacy Policy](https://indexfast.pro/privacy-policy.html)
 
-## Usage Steps
-1. Register at indexfast.pro.
-2. Connect Google Search Console and upload Service Account JSON key.
-3. Provide Sitemap URL.
-4. Run indexing and monitor progress in the dashboard.
+## Pricing & Partnerships
+- [Pricing](https://indexfast.pro/pricing-ltd.html)
+- [Affiliate Program](https://indexfast.pro/affiliate.html)
 
 ## Contact & Support
-- Telegram: https://t.me/indexfastgoogle
-- Email: indexfastapp@gmail.com
-- Status Page: https://indexfast.pro/status.html
+- [Contact Us](https://indexfast.pro/contacts.html)
+- Email: [indexfastapp@gmail.com](mailto:indexfastapp@gmail.com)
+- Telegram Chat: [https://t.me/indexfastgoogle](https://t.me/indexfastgoogle)
