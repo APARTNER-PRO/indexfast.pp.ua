@@ -24,6 +24,8 @@ RewriteRule ^blog/yak-pereviriti-indeksaciyu-saitu\.html$ /blog/how-to-check-sit
 
 RewriteRule ^blog/best-google-indexing-tools-2026\.html$ /blog/best-google-indexing-tools.html [R=301,L]
 
+RewriteRule ^blog/chomu-sait-ne-indeksuyetsya\.html$ /blog/why-is-site-not-indexed.html [R=301,L]
+
 # ── Serve manual payment receipts securely from outside public_html
 RewriteRule ^storage/receipts/([^/]+)$ api/billing/serve_receipt.php?file=$1 [L,QSA]
 

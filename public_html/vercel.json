@@ -390,6 +390,11 @@
             "source": "/blog/best-google-indexing-tools-2026.html",
             "destination": "/blog/best-google-indexing-tools.html",
             "permanent": true
+        },
+        {
+            "source": "/blog/chomu-sait-ne-indeksuyetsya.html",
+            "destination": "/blog/why-is-site-not-indexed.html",
+            "permanent": true
         }
     ],
     "rewrites": [
