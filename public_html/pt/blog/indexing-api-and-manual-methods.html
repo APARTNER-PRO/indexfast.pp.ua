@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Como enviar seu site para indexação no Google e obter resultados rápidos?</title>
+  <meta name="description" content="API de indexação vs métodos manuais: como enviar corretamente seu site para indexação no Google. Comparação do Google Search Console, sitemap.xml, Indexing API e IndexFast.">
+  <meta name="keywords" content="enviar site ao google, indexação google, google indexing api, sitemap.xml, como indexar site rápido, indexação rápida de site">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+  <link rel="canonical" href="https://indexfast.pro/pt/blog/indexing-api-and-manual-methods.html">
+
+  <!-- hreflang -->
+  <link rel="alternate" hreflang="en" href="https://indexfast.pro/blog/indexing-api-and-manual-methods.html">
+  <link rel="alternate" hreflang="uk" href="https://indexfast.pro/uk/blog/indexing-api-and-manual-methods.html">
+  <link rel="alternate" hreflang="es" href="https://indexfast.pro/es/blog/indexing-api-and-manual-methods.html">
+  <link rel="alternate" hreflang="pt" href="https://indexfast.pro/pt/blog/indexing-api-and-manual-methods.html">
+  <link rel="alternate" hreflang="ru" href="https://indexfast.pro/ru/blog/indexing-api-and-manual-methods.html">
+  <link rel="alternate" hreflang="de" href="https://indexfast.pro/de/blog/indexing-api-and-manual-methods.html">
+  <link rel="alternate" hreflang="fr" href="https://indexfast.pro/fr/blog/indexing-api-and-manual-methods.html">
+  <link rel="alternate" hreflang="pl" href="https://indexfast.pro/pl/blog/indexing-api-and-manual-methods.html">
+  <link rel="alternate" hreflang="x-default" href="https://indexfast.pro/blog/indexing-api-and-manual-methods.html">
+
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://indexfast.pro/pt/blog/indexing-api-and-manual-methods.html">
+  <meta property="og:title" content="Como enviar seu site para indexação no Google e obter resultados rápidos?">
+  <meta property="og:description" content="API de indexação vs métodos manuais: como enviar corretamente seu site para indexação no Google. Comparação do Google Search Console, sitemap.xml, Indexing API e IndexFast.">
+  <meta property="og:image" content="https://indexfast.pro/blog-images/blog_indexing_api_methods.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="article:published_time" content="2026-07-04T10:00:00+02:00">
+  <meta property="article:modified_time" content="2026-07-30T10:00:00+02:00">
+  <meta property="article:author" content="IndexFast">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Como enviar seu site para indexação no Google e obter resultados rápidos?",
+    "description": "API de indexação vs métodos manuais: como enviar corretamente seu site para indexação no Google. Comparação do Google Search Console, sitemap.xml, Indexing API e IndexFast.",
+    "inLanguage": "pt",
+    "author": { "@type": "Organization", "name": "IndexFast", "url": "https://indexfast.pro" },
+    "publisher": { "@type": "Organization", "name": "IndexFast", "url": "https://indexfast.pro", "logo": { "@type": "ImageObject", "url": "https://indexfast.pro/logo.png" } },
+    "datePublished": "2026-07-04T10:00:00+02:00",
+    "dateModified": "2026-07-30T10:00:00+02:00",
+    "url": "https://indexfast.pro/pt/blog/indexing-api-and-manual-methods.html",
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://indexfast.pro/pt/blog/indexing-api-and-manual-methods.html" },
+    "image": { "@type": "ImageObject", "url": "https://indexfast.pro/blog-images/blog_indexing_api_methods.png", "width": 1200, "height": 630 }
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Início", "item": "https://indexfast.pro/pt/" },
+      { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://indexfast.pro/pt/blog/" },
+      { "@type": "ListItem", "position": 3, "name": "Como enviar seu site para indexação no Google e obter resultados rápidos?", "item": "https://indexfast.pro/pt/blog/indexing-api-and-manual-methods.html" }
+    ]
+  }
+  </script>
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Como enviar seu site para indexação no Google e obter resultados rápidos?">
+  <meta name="twitter:description" content="API de indexação vs métodos manuais: como enviar corretamente seu site para indexação no Google. Comparação do Google Search Console, sitemap.xml, Indexing API e IndexFast.">
+  <meta name="twitter:image" content="https://indexfast.pro/blog-images/blog_indexing_api_methods.png">
+
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/blog.css">
+</head>
+<body>
+
+<nav id="navbar" role="navigation" aria-label="Main menu" class="">
+    <a href="/pt" class="logo" aria-label="IndexFast">Index<span>Fast</span></a>
+    <ul class="nav-links">
+      <li><a href="/pt/#how-it-works">Como funciona</a></li>
+      <li><a href="/pt/#for-whom">Para quem</a></li>
+      <li><a href="/pt/#features">Vantagens</a></li>
+      <li><a href="/pt/#pricing">Preços</a></li>
+      <li><a href="/pt/#faq">FAQ</a></li>
+      <li class="mobile-auth">
+        <a href="/app/login" class="mobile-login">Entrar</a>
+        <a href="/app/register" class="mobile-register">Começar gratuitamente →</a>
+      </li>
+    </ul>
+    <div class="nav-actions">
+      <div class="nav-lang-dropdown">
+        <button class="nav-lang-btn">PT ▾</button>
+        <div class="nav-lang-menu">
+        <a href="/blog/indexing-api-and-manual-methods.html">English</a>
+        <a href="/uk/blog/indexing-api-and-manual-methods.html">Українська</a>
+        <a href="/es/blog/indexing-api-and-manual-methods.html">Español</a>
+        <a href="/pt/blog/indexing-api-and-manual-methods.html" class="active">Português</a>
+        <a href="/ru/blog/indexing-api-and-manual-methods.html">Русский</a>
+        <a href="/de/blog/indexing-api-and-manual-methods.html">Deutsch</a>
+        <a href="/fr/blog/indexing-api-and-manual-methods.html">Français</a>
+        <a href="/pl/blog/indexing-api-and-manual-methods.html">Polski</a>
+        </div>
+      </div>
+      <a href="/app/login" class="nav-login">Entrar</a>
+      <a href="/app/register" class="nav-cta">Começar gratuitamente →</a>
+      <button class="mobile-menu-btn" onclick="document.querySelector('.nav-links').classList.toggle('active')" aria-label="Main menu">☰</button>
+    </div>
+  </nav>
+
+<div class="page-wrap">
+  <article>
+    <div class="article-meta">
+      <span class="meta-tag">SEO</span>
+      <span class="meta-date">4 de julho de 2026</span>
+      <span class="meta-read">⏱ 8 minutos de leitura</span>
+    </div>
+
+    <h1>Como enviar seu site para indexação no Google e obter resultados rápidos?</h1>
+    <img src="/blog-images/blog_indexing_api_methods.png" alt="Enviar site para indexação no Google — métodos e ferramentas" loading="lazy" decoding="async" class="article-main-image" style="width:100%; border-radius:16px; margin: 24px 0; object-fit: cover; aspect-ratio: 1200/630;">
+
+    <div class="article-body">
+
+      <h2 id="problem">Por que novas páginas não aparecem no Google</h2>
+      <p>Proprietários de sites frequentemente enfrentam o problema de que novas páginas não aparecem nos resultados de pesquisa por semanas. Os algoritmos tornaram-se mais exigentes, e a indexação padrão no Google agora leva mais tempo do que antes.</p>
+
+      <h2 id="methods">Método 1: Google Search Console — envio manual</h2>
+      <p>O método mais simples — inserir manualmente a URL na ferramenta de inspeção de URL no Search Console e clicar em "Solicitar indexação". Bom para 1-2 páginas, mas não para centenas.</p>
+      <p>Limites: máximo de 10-15 URLs por dia, sem possibilidade de acompanhar o status de cada envio, requer trabalho manual constante.</p>
+
+      <h2 id="sitemap">Método 2: Mapa do site (sitemap.xml)</h2>
+      <p>Um elemento básico de SEO. O sitemap informa ao Google sobre a existência de páginas, mas não acelera sua indexação. O problema é que "gradualmente" pode significar semanas ou até meses.</p>
+
+      <h2 id="indexing-api">Método 3: Google Indexing API — uma ferramenta poderosa</h2>
+      <p>A Google Indexing API permite notificar diretamente o Google sobre novas URLs e iniciar seu rastreamento. O resultado — indexação em horas em vez de dias e semanas.</p>
+
+      <h2 id="problems">Por que surgem dificuldades</h2>
+      <p>Frequentemente no painel do webmaster, é possível ver o status "Descoberta — atualmente não indexada". Isso significa que o Google conhece a página, mas não a considera prioritária para rastreamento.</p>
+
+      <h2 id="solution">Como resolver o problema sem código</h2>
+      <p>Você não precisa entender os detalhes técnicos da Indexing API ou esperar semanas. Use um SEO fast indexer moderno — o serviço IndexFast.</p>
+
+      <div class="cta-block">
+        <h3>Indexe seu site em minutos</h3>
+        <p>IndexFast automatiza o trabalho com a Google Indexing API. Faça upload de um sitemap ou lista de URLs — o sistema os enviará pela API oficial e mostrará resultados em tempo real.</p>
+        <a href="/app/register">Começar grátis →</a>
+      </div>
+
+      <h2 id="comparison">Comparação dos métodos de indexação</h2>
+      <table class="compare-table">
+        <thead><tr><th>Método</th><th>Velocidade</th><th>Escala</th><th>Complexidade</th><th>Custo</th></tr></thead>
+        <tbody>
+          <tr><td>Search Console (manual)</td><td>Horas–dias</td><td>1–15 URLs/dia</td><td>Muito baixa</td><td>Grátis</td></tr>
+          <tr><td>Sitemap.xml</td><td>Dias–semanas</td><td>Todos os URLs</td><td>Baixa</td><td>Grátis</td></tr>
+          <tr><td>Indexing API (própria)</td><td>Horas</td><td>200 URLs/dia</td><td>Alta</td><td>Grátis</td></tr>
+          <tr><td>IndexFast</td><td>Horas</td><td>Ilimitado</td><td>Mínima</td><td>A partir de $9/mês</td></tr>
+        </tbody>
+      </table>
+
+      <h2 id="benefits">Vantagens do IndexFast</h2>
+      <p><strong>Indexação rápida do site</strong> sem precisar configurar a API você mesmo. Você conecta o site uma vez — o sistema funciona automaticamente.</p>
+      <p><strong>Automação</strong> — novas páginas são enviadas sem sua intervenção. Configure uma vez e esqueça o problema.</p>
+
+      <div class="cta-block">
+        <h3>Experimente o IndexFast em ação</h3>
+        <p>Faça upload da sua lista de URLs ou conecte um sitemap — o sistema os enviará via Google Indexing API e você verá os resultados amanhã de manhã.</p>
+        <a href="/app/register">Começar grátis →</a>
+      </div>
+
+      <h2 id="strategy">Estratégia de indexação ideal</h2>
+      <ol>
+        <li><strong>Sitemap.xml</strong> — mínimo básico necessário.</li>
+        <li><strong>Search Console</strong> — para páginas importantes que precisam de indexação imediata.</li>
+        <li><strong>Indexing API via IndexFast</strong> — para envio em massa e automação.</li>
+      </ol>
+
+      <hr style="border:none;border-top:1px solid rgba(255,255,255,0.07);margin:40px 0">
+
+      <h2 id="conclusion">Conclusão</h2>
+      <p>IndexFast permite enviar seu site para indexação no Google em minutos sem escrever código. Comece com o plano gratuito e veja os resultados no menor tempo possível!</p>
+
+      <div class="article-nav">
+        <a href="/pt/blog/masova-indeksaciya-saitu.html">
+          <span class="article-nav-label">← Artigo anterior</span>
+          <span class="article-nav-title">Indexação em massa de sites no Google</span>
+        </a>
+        <a href="/pt/blog/avtomatychna-indeksaciya.html" style="text-align:right;">
+          <span class="article-nav-label">Próximo artigo →</span>
+          <span class="article-nav-title">Indexação automática no Google</span>
+        </a>
+      </div>
+
+    </div>
+  </article>
+
+  <aside class="sidebar">
+    <div class="sidebar-card">
+      <h4>Índice</h4>
+      <ul class="toc-list">
+        <li><a href="#problem">Por que novas páginas não aparecem no Google</a></li>
+        <li><a href="#methods">Método 1: Google Search Console — envio manual</a></li>
+        <li><a href="#sitemap">Método 2: Mapa do site (sitemap.xml)</a></li>
+        <li><a href="#indexing-api">Método 3: Google Indexing API — uma ferramenta poderosa</a></li>
+        <li><a href="#problems">Por que surgem dificuldades</a></li>
+        <li><a href="#solution">Como resolver o problema sem código</a></li>
+        <li><a href="#comparison">Comparação dos métodos de indexação</a></li>
+        <li><a href="#benefits">Vantagens do IndexFast</a></li>
+        <li><a href="#strategy">Estratégia de indexação ideal</a></li>
+        <li><a href="#conclusion">Conclusão</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-card">
+      <h4>Leia também</h4>
+      <ul class="related-list">
+        <li><a href="/pt/blog/masova-indeksaciya-saitu.html">Indexação em massa de sites no Google: como indexar 500+ páginas em 24 horas</a></li>
+        <li><a href="/pt/blog/avtomatychna-indeksaciya.html">Indexação automática no Google: configure uma vez — funciona sempre</a></li>
+        <li><a href="/pt/blog/google-indexing-api-vs-sitemap.html">Google Indexing API vs Sitemap — qual é mais eficaz para indexação</a></li>
+      </ul>
+    </div>
+    <div class="sidebar-card" style="background: rgba(0,255,136,0.05); border-color: rgba(0,255,136,0.2);">
+      <h4 style="color: var(--green);">Experimente IndexFast</h4>
+      <p style="font-size:0.85rem; color:var(--muted); margin-bottom:16px; line-height:1.5;">Indexação automática de todas as páginas via Google Indexing API</p>
+      <a href="/app/register" style="display:block; background:var(--green); color:var(--black); text-align:center; padding:10px; border-radius:100px; font-family:var(--font-display); font-weight:700; font-size:0.85rem; text-decoration:none;">Começar grátis →</a>
+    </div>
+  </aside>
+</div>
+
+<footer role="contentinfo">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="/pt" class="logo">Index<span>Fast</span></a>
+      <p>Serviço de indexação automática de páginas no Google através da API oficial do Google Indexing.</p>
+    </div>
+    <div class="footer-col">
+      <p class="footer-title">Produto</p>
+      <ul>
+        <li><a href="/pt/#how-it-works">Como funciona</a></li>
+        <li><a href="/pt/#features">Vantagens</a></li>
+        <li><a href="/pt/#pricing">Preços</a></li>
+        <li><a href="/docs/">Documentação</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <p class="footer-title">Empresa</p>
+      <ul>
+        <li><a href="/about.html">Sobre nós</a></li>
+        <li><a href="/pt/blog/">Blog</a></li>
+        <li><a href="/affiliate.html">Programa de afiliados</a></li>
+        <li><a href="/contacts.html">Contato</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <p class="footer-title">Suporte</p>
+      <ul>
+        <li><a href="/pt/#faq">FAQ</a></li>
+        <li><a href="https://t.me/indexfastgoogle" target="_blank" rel="noopener noreferrer">Chat do Telegram</a></li>
+        <li><a href="mailto:indexfastapp@gmail.com">Suporte por e-mail</a></li>
+        <li><a href="/status.html">Status do serviço</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 IndexFast. Todos os direitos reservados.</p>
+    <div style="display:flex; gap:20px;">
+      <a href="/privacy-policy.html">Privacidade</a>
+      <a href="/terms.html">Termos</a>
+    </div>
+  </div>
+  <button id="backToTop" class="back-to-top" aria-label="Início">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+  </button>
+</footer>
+
+<script src="/js/blog.js" defer></script>
+</body>
+</html>
