@@ -97,6 +97,46 @@
   ],
   "redirects": [
     {
+      "source": "/pt/blog/discovered-currently-not-indexed/",
+      "destination": "/pt/blog/discovered-currently-not-indexed.html",
+      "permanent": true
+    },
+    {
+      "source": "/pl/blog/discovered-currently-not-indexed/",
+      "destination": "/pl/blog/discovered-currently-not-indexed.html",
+      "permanent": true
+    },
+    {
+      "source": "/fr/blog/discovered-currently-not-indexed/",
+      "destination": "/fr/blog/discovered-currently-not-indexed.html",
+      "permanent": true
+    },
+    {
+      "source": "/de/blog/discovered-currently-not-indexed/",
+      "destination": "/de/blog/discovered-currently-not-indexed.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/blog/discovered-currently-not-indexed/",
+      "destination": "/es/blog/discovered-currently-not-indexed.html",
+      "permanent": true
+    },
+    {
+      "source": "/ru/blog/discovered-currently-not-indexed/",
+      "destination": "/ru/blog/discovered-currently-not-indexed.html",
+      "permanent": true
+    },
+    {
+      "source": "/uk/blog/discovered-currently-not-indexed/",
+      "destination": "/uk/blog/discovered-currently-not-indexed.html",
+      "permanent": true
+    },
+    {
+      "source": "/blog/discovered-currently-not-indexed/",
+      "destination": "/blog/discovered-currently-not-indexed.html",
+      "permanent": true
+    },
+    {
       "source": "/pt/blog/indexing-api-ta-ruchni-metodi-2026.html",
       "destination": "/pt/blog/indexing-api-and-manual-methods.html",
       "permanent": true
