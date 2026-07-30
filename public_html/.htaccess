@@ -20,6 +20,8 @@ RewriteRule ^blog/on-page-seo-complete-guide-2026\.html$ /blog/on-page-seo-compl
 RewriteRule ^blog/google-search-console-posibnyk\.html$ /blog/google-search-console-guide.html [R=301,L]
 RewriteRule ^blog/core-web-vitals-2026\.html$ /blog/core-web-vitals.html [R=301,L]
 
+RewriteRule ^blog/yak-pereviriti-indeksaciyu-saitu\.html$ /blog/how-to-check-site-indexing.html [R=301,L]
+
 # ── Serve manual payment receipts securely from outside public_html
 RewriteRule ^storage/receipts/([^/]+)$ api/billing/serve_receipt.php?file=$1 [L,QSA]
 

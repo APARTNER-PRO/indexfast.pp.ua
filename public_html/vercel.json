@@ -100,23 +100,28 @@
             "source": "/blog/core-web-vitals-2026.html",
             "destination": "/blog/core-web-vitals.html",
             "permanent": true
-        },{
+        },
+        {
             "source": "/blog/google-search-console-posibnyk.html",
             "destination": "/blog/google-search-console-guide.html",
             "permanent": true
-        },{
+        },
+        {
             "source": "/blog/backlink-building-for-small-business-2026.html",
             "destination": "/blog/backlink-building-for-small-business.html",
             "permanent": true
-        },{
+        },
+        {
             "source": "/blog/cron-jobs-dlya-seo.html",
             "destination": "/blog/cron-jobs-for-seo.html",
             "permanent": true
-        },{
+        },
+        {
             "source": "/blog/on-page-seo-complete-guide-2026.html",
             "destination": "/blog/on-page-seo-complete-guide.html",
             "permanent": true
-        },{
+        },
+        {
             "source": "/blog/on-page-seo-complete-guide-2026.html",
             "destination": "/blog/on-page-seo-complete-guide.html",
             "permanent": true
@@ -375,6 +380,11 @@
             "source": "/api/auth/google/:match*",
             "destination": "https://test.developer.pp.ua/api/auth/google/:match*",
             "permanent": false
+        },
+        {
+            "source": "/blog/yak-pereviriti-indeksaciyu-saitu.html",
+            "destination": "/blog/how-to-check-site-indexing.html",
+            "permanent": true
         }
     ],
     "rewrites": [
