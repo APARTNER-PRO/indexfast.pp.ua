@@ -97,6 +97,11 @@
     ],
     "redirects": [
         {
+            "source": "/blog/on-page-seo-complete-guide-2026.html",
+            "destination": "/blog/on-page-seo-complete-guide.html",
+            "permanent": true
+        },
+        {
             "source": "/blog/yak-vybraty-drop-domen-dlya-pbn.html",
             "destination": "/blog/how-to-choose-an-expired-domain-for-pbn.html",
             "permanent": true

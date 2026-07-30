@@ -14,6 +14,7 @@ AddType application/xml .xml
 
 # ── HTTPS redirect
 RewriteEngine On
+RewriteRule ^blog/on-page-seo-complete-guide-2026\.html$ /blog/on-page-seo-complete-guide.html [R=301,L]
 
 # ── Serve manual payment receipts securely from outside public_html
 RewriteRule ^storage/receipts/([^/]+)$ api/billing/serve_receipt.php?file=$1 [L,QSA]
@@ -32,8 +33,8 @@ RewriteRule ^pricing-ltd$ /pricing-ltd.html [R=301,L]
 RewriteRule ^pricing-ltd/$ /pricing-ltd.html [R=301,L]
 
 # 301 redirects for new English-slug articles
-RewriteRule ^on-page-seo-complete-guide-2026$ /blog/on-page-seo-complete-guide-2026.html [R=301,L]
-RewriteRule ^on-page-seo-complete-guide-2026/$ /blog/on-page-seo-complete-guide-2026.html [R=301,L]
+RewriteRule ^on-page-seo-complete-guide-2026$ /blog/on-page-seo-complete-guide.html [R=301,L]
+RewriteRule ^on-page-seo-complete-guide-2026/$ /blog/on-page-seo-complete-guide.html [R=301,L]
 RewriteRule ^backlink-building-for-small-business-2026$ /blog/backlink-building-for-small-business-2026.html [R=301,L]
 RewriteRule ^backlink-building-for-small-business-2026/$ /blog/backlink-building-for-small-business-2026.html [R=301,L]
 
