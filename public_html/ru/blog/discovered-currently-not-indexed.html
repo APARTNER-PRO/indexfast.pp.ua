@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>"Обнаружено, но не проиндексировано": как исправить в 2026 — IndexFast</title>
+  <meta name="description" content="Страницы со статусом "Обнаружено — в настоящее время не проиндексировано" в Google Search Console? Объясняем причины и даём пошаговое решение через Google Indexing API.">
+  <meta name="keywords" content="обнаружено не проиндексировано, discovered not indexed, страницы не индексируются google, исправить индексацию, crawl budget">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+  <link rel="canonical" href="https://indexfast.pro/ru/blog/discovered-currently-not-indexed.html">
+
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://indexfast.pro/ru/blog/discovered-currently-not-indexed.html">
+  <meta property="og:title" content=""Обнаружено, но не проиндексировано": как исправить в 2026 — IndexFast">
+  <meta property="og:description" content="Страницы со статусом "Обнаружено — в настоящее время не проиндексировано" в Google Search Console? Объясняем причины и даём пошаговое решение через Google Indexing API.">
+  <meta property="og:image" content="https://indexfast.pro/blog-images/blog_not_indexed.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="ru_RU">
+  <meta property="article:published_time" content="2026-07-30T10:00:00+03:00">
+  <meta property="article:modified_time" content="2026-07-30T10:00:00+03:00">
+  <meta property="article:author" content="IndexFast">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": ""Обнаружено, но не проиндексировано": как исправить в 2026 — IndexFast",
+    "description": "Страницы со статусом "Обнаружено — в настоящее время не проиндексировано" в Google Search Console? Объясняем причины и даём пошаговое решение через Google Indexing API.",
+    "inLanguage": "ru",
+    "author": { "@type": "Organization", "name": "IndexFast", "url": "https://indexfast.pro" },
+    "publisher": { "@type": "Organization", "name": "IndexFast", "url": "https://indexfast.pro", "logo": { "@type": "ImageObject", "url": "https://indexfast.pro/logo.png" } },
+    "datePublished": "2026-07-30T10:00:00+03:00",
+    "dateModified": "2026-07-30T10:00:00+03:00",
+    "url": "https://indexfast.pro/ru/blog/discovered-currently-not-indexed.html",
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://indexfast.pro/ru/blog/discovered-currently-not-indexed.html" },
+    "image": { "@type": "ImageObject", "url": "https://indexfast.pro/blog-images/blog_not_indexed.png", "width": 1200, "height": 630 }
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Главная", "item": "https://indexfast.pro/ru/" },
+      { "@type": "ListItem", "position": 2, "name": "Блог", "item": "https://indexfast.pro/ru/blog/" },
+      { "@type": "ListItem", "position": 3, "name": ""Обнаружено, но не проиндексировано": как исправить", "item": "https://indexfast.pro/ru/blog/discovered-currently-not-indexed.html" }
+    ]
+  }
+  </script>
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content=""Обнаружено, но не проиндексировано": как исправить в 2026 — IndexFast">
+  <meta name="twitter:description" content="Страницы со статусом "Обнаружено — в настоящее время не проиндексировано" в Google Search Console? Объясняем причины и даём пошаговое решение через Google Indexing API.">
+  <meta name="twitter:image" content="https://indexfast.pro/blog-images/blog_not_indexed.png">
+
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/blog.css">
+</head>
+<body>
+
+<nav id="navbar" role="navigation" aria-label="Main menu">
+  <a href="/ru/" class="logo" aria-label="IndexFast">Index<span>Fast</span></a>
+  <ul class="nav-links">
+    <li><a href="/ru/#how-it-works">Как работает</a></li>
+    <li><a href="/ru/#for-whom">Для кого</a></li>
+    <li><a href="/ru/#features">Преимущества</a></li>
+    <li><a href="/ru/#pricing">Цены</a></li>
+    <li><a href="/ru/#faq">FAQ</a></li>
+    <li class="mobile-auth">
+      <a href="/app/login" class="mobile-login">Войти</a>
+      <a href="/app/register" class="mobile-register">Начать бесплатно →</a>
+    </li>
+  </ul>
+  <div class="nav-actions">
+    <div class="nav-lang-dropdown">
+      <button class="nav-lang-btn">RU ▾</button>
+      <div class="nav-lang-menu">
+        <a href="/blog/discovered-currently-not-indexed.html">English</a>
+        <a href="/uk/blog/discovered-currently-not-indexed.html">Українська</a>
+        <a href="/es/blog/discovered-currently-not-indexed.html">Español</a>
+        <a href="/pt/blog/discovered-currently-not-indexed.html">Português</a>
+        <a href="/ru/blog/discovered-currently-not-indexed.html" class="active">Русский</a>
+        <a href="/de/blog/discovered-currently-not-indexed.html">Deutsch</a>
+        <a href="/fr/blog/discovered-currently-not-indexed.html">Français</a>
+        <a href="/pl/blog/discovered-currently-not-indexed.html">Polski</a>
+      </div>
+    </div>
+    <a href="/app/login" class="nav-login">Войти</a>
+    <a href="/app/register" class="nav-cta">Начать бесплатно →</a>
+    <button class="mobile-menu-btn" onclick="document.querySelector('.nav-links').classList.toggle('active')" aria-label="Main menu">☰</button>
+  </div>
+</nav>
+
+<div class="page-wrap">
+  <article>
+    <div class="article-meta">
+      <span class="meta-tag">SEO Гайд</span>
+      <span class="meta-date">30 июля 2026</span>
+      <span class="meta-read">⏱ 12 минут чтения</span>
+    </div>
+
+    <h1>"Обнаружено, но не проиндексировано": почему Google игнорирует ваши страницы и как это исправить</h1>
+    <img src="/blog-images/blog_not_indexed.png" alt=""Обнаружено, но не проиндексировано": почему Google игнорирует ваши страницы и как это исправить" loading="lazy" decoding="async" class="article-main-image" style="width:100%; border-radius:16px; margin: 24px 0; object-fit: cover; aspect-ratio: 1200/630;">
+
+    <p class="article-lead">Вы открываете Google Search Console и видите список страниц со статусом "Обнаружено — в настоящее время не проиндексировано". Проходят дни, недели — страницы всё ещё не в Google. Это одна из самых распространённых и болезненных проблем для владельцев сайтов. Разбираемся, почему это происходит и как исправить раз и навсегда.</p>
+
+    <div class="article-body">
+
+      <h2 id="what-it-means">Что на самом деле означает "Обнаружено — в настоящее время не проиндексировано"</h2>
+      <p>Этот статус означает: Google нашёл URL — через sitemap или ссылку — но решил его пока не сканировать. То есть: Google знает, что страница существует, но выбрал её не посещать.</p>
+      <p>Ключевое слово — "выбрал". Это не техническая ошибка. Это решение Google, основанное на crawl budget вашего сайта и приоритете страницы.</p>
+      <div class="tip-box">
+        <strong>💡 Простая аналогия</strong>
+        <p>Представьте почтальона, которому нужно доставить 1000 писем. Он знает ваш адрес, но если считает доставку низкоприоритетной — кладёт письмо в конец очереди. Ваша страница ждёт месяцами, пока страницы конкурентов индексируются в тот же день.</p>
+      </div>
+
+      <h2 id="root-causes">Реальные причины, почему Google пропускает ваши страницы</h2>
+      <p>Большинство SEO-гайдов дают размытые ответы вроде "улучшите качество контента". Реальность конкретнее:</p>
+      <ul>
+        <li><strong>Исчерпан crawl budget.</strong> Google выделяет ограниченное количество сканирований на сайт в день. Большие сайты с тысячами страниц часто исчерпывают бюджет — новые страницы остаются в очереди.</li>
+        <li><strong>Низкий авторитет домена.</strong> Новые сайты или сайты с малым количеством ссылок получают меньший crawl budget.</li>
+        <li><strong>Медленный ответ сервера.</strong> Если сервер отвечает медленно (более 500мс), сканер Google замедляется или останавливается.</li>
+        <li><strong>Слишком много малоценных страниц.</strong> Если в sitemap есть пагинированные страницы фильтров, теги или дубликаты — Google тратит бюджет на них.</li>
+        <li><strong>Нет внутренней перелинковки.</strong> Страницы, которые есть только в sitemap, но не имеют внутренних ссылок — считаются низкоприоритетными.</li>
+        <li><strong>Недавно опубликована.</strong> Новые страницы на слабых сайтах могут ждать в очереди "обнаружено" месяцами.</li>
+      </ul>
+
+      <h2 id="what-not-to-do">Что НЕ делать (распространённые ошибки)</h2>
+      <p>Когда владельцы видят этот статус, они часто делают хуже:</p>
+      <ul>
+        <li>Постоянно запрашивают переиндексацию через "Проверка URL" в Search Console (лимит 10-15 URL в день)</li>
+        <li>Закрывают и открывают страницы в robots.txt в надежде на переобход</li>
+        <li>Удаляют страницы из sitemap думая, что это поможет</li>
+        <li>Бесконечно ждут — это может длиться месяцами</li>
+      </ul>
+      <div class="warn-box">
+        <strong>⚠ Ловушка ручной отправки URL</strong>
+        <p>Кнопка "Запросить индексацию" в Search Console выглядит как решение, но имеет жёсткие ограничения. Можно отправить 10-15 URL в день. Для сайта с сотнями проблемных страниц — это практически бесполезно.</p>
+      </div>
+
+      <h2 id="real-fix">Настоящее решение: заставить Google индексировать через официальный API</h2>
+      <p>Google предоставляет Indexing API именно для того, чтобы сайты могли уведомлять Google о важных страницах для немедленного сканирования. Когда вы отправляете запрос через API — Google приоритизирует сканирование этого URL — обычно в течение 24-48 часов.</p>
+      <p>Это не обходной путь. Это официальный рекомендованный Google метод ускорения индексации.</p>
+      <h3>Шаг 1: Правильно настройте Google Search Console</h3>
+      <p>Проверьте сайт в Google Search Console. Убедитесь, что есть корректный sitemap. Проверьте раздел "Ручные действия" — ручное наказание полностью заблокирует индексацию.</p>
+      <h3>Шаг 2: Сначала исправьте технические проблемы</h3>
+      <p>Перед отправкой исправьте базовые проблемы: время загрузки до 3 секунд, добавьте внутренние ссылки к изолированным страницам, удалите малоценный контент из sitemap.</p>
+      <h3>Шаг 3: Используйте Google Indexing API для отправки страниц</h3>
+      <p>Здесь происходит реальное ускорение. Через Indexing API можно уведомить Google о 200 URL в день — Googlebot сканирует их с высоким приоритетом. Разница:</p>
+      <div style="display:flex; gap:16px; margin: 24px 0; flex-wrap:wrap;">
+        <div style="flex:1; min-width:200px; background:rgba(255,107,107,0.08); border:1px solid rgba(255,107,107,0.2); border-radius:12px; padding:16px; text-align:center;">
+          <div style="color:#ff6b6b; font-size:0.8rem; margin-bottom:8px;">❌</div>
+          <div style="font-weight:700; color:#ff6b6b;">Без API: 2-8 недель</div>
+        </div>
+        <div style="flex:1; min-width:200px; background:rgba(0,255,136,0.08); border:1px solid rgba(0,255,136,0.2); border-radius:12px; padding:16px; text-align:center;">
+          <div style="color:var(--green); font-size:0.8rem; margin-bottom:8px;">✅</div>
+          <div style="font-weight:700; color:var(--green);">С API: 24-48 часов</div>
+        </div>
+      </div>
+
+      <h2 id="use-indexfast">Как сделать это без написания кода</h2>
+      <p>Ручная настройка Google Indexing API требует: проект Google Cloud, Service Account, JSON-ключ, написание API-запросов, автоматизация. Для не-разработчиков — значительный технический барьер.</p>
+      <p>IndexFast убирает всю эту сложность. Вы один раз подключаете Google Search Console, добавляете URL sitemap — и IndexFast автоматически:</p>
+      <ul>
+        <li>Читает sitemap и обнаруживает новые или обновлённые URL</li>
+        <li>Отправляет их через Google Indexing API от вашего имени</li>
+        <li>Автоматически управляет суточной квотой (200 URL/день)</li>
+        <li>Показывает детальный лог: какие страницы отправлены и когда</li>
+        <li>Запускается по расписанию — каждая новая страница индексируется без вашего участия</li>
+      </ul>
+      <p>Для страниц со статусом "Обнаружено" — можно массово отправить их сразу. Большинство пользователей видят эти страницы в Google через 24-48 часов.</p>
+
+      <div class="cta-block">
+        <h3>Исправьте "Обнаруженные" страницы сегодня</h3>
+        <p>Не ждите, пока Google сам найдёт ваши страницы. Подключите IndexFast и отправьте их на индексацию за несколько минут.</p>
+        <a href="/app/register">Начать бесплатно →</a>
+      </div>
+
+      <h2 id="prioritize">Какие страницы отправлять первыми</h2>
+      <p>Не пытайтесь индексировать всё сразу. С квотой 200 URL/день будьте стратегичны:</p>
+      <ol>
+        <li><strong>Сначала страницы, приносящие доход</strong> — товары, услуги, посадочные страницы</li>
+        <li><strong>Свежий контент</strong> — новые статьи блога, новости</li>
+        <li><strong>Недавно обновлённые страницы</strong> — если существенно изменили контент</li>
+        <li><strong>Пропустите тонкие страницы</strong> — пагинация, теги, фильтры</li>
+      </ol>
+
+      <h2 id="long-term">Долгосрочная стратегия: не допустить повторения проблемы</h2>
+      <p>После решения текущего завала — настройте систему чтобы новые страницы больше не зависали:</p>
+      <ul>
+        <li><strong>Автоматическая ежедневная индексация:</strong> Настройте IndexFast проверять sitemap каждый день и отправлять новые URL. Каждая опубликованная страница индексируется в тот же день.</li>
+        <li><strong>Внутренняя перелинковка:</strong> При публикации нового контента — ссылайтесь на него с 2-3 популярных существующих страниц.</li>
+        <li><strong>Чистота sitemap:</strong> Удалите страницы, которые не стоит индексировать (тонкий контент, дубликаты). Это даст Google больше бюджета для важных страниц.</li>
+        <li><strong>Мониторинг Search Console:</strong> Еженедельно проверяйте Покрытие > "Обнаружено — в настоящее время не проиндексировано". Если количество растёт — немедленно расследуйте.</li>
+      </ul>
+
+      <h2 id="case-real">Реальный пример: интернет-магазин с 800 "обнаруженными" страницами</h2>
+      <blockquote style="border-left:4px solid var(--green); padding-left:20px; margin:24px 0; font-style:italic; color:var(--muted); font-size:1.05rem; line-height:1.7;">
+        «Более 800 товарных страниц зависло в статусе "Обнаружено — в настоящее время не проиндексировано" на 3 месяца. Магазин получал почти нулевой органический трафик. После подключения IndexFast и отправки проблемных страниц — Google проиндексировал 650 из них за 5 дней. Трафик вырос на 340% за следующий месяц.»
+      </blockquote>
+      <p style="margin-top:-16px; font-size:0.9rem; color:var(--muted);">— Андрей К., владелец WooCommerce-магазина</p>
+      <p>Это не уникальный случай. Страницы со статусом "Обнаружено" — практически невидимы для тех, кто ищет в Google. Решение этой проблемы напрямую означает больше трафика, больше клиентов, больше дохода.</p>
+
+      <hr style="border:none;border-top:1px solid rgba(255,255,255,0.07);margin:40px 0">
+
+      <h2 id="summary">Итог: что сделать прямо сейчас</h2>
+      <ol>
+        <li>Откройте Google Search Console → Страницы → "Обнаружено — в настоящее время не проиндексировано"</li>
+        <li>Зафиксируйте сколько страниц и какие из них наиболее важные</li>
+        <li>Исправьте очевидные технические проблемы (медленная загрузка, отсутствие ссылок)</li>
+        <li>Подключите IndexFast и отправьте проблемные страницы через Indexing API</li>
+        <li>Настройте автоматическую индексацию чтобы будущие страницы не зависали</li>
+        <li>Проверьте через 48-72 часа — большинство страниц должны появиться в Google</li>
+      </ol>
+
+      <div class="article-nav">
+        <a href="/ru/blog/indexing-api-and-manual-methods.html">
+          <span class="article-nav-label">← Предыдущая статья</span>
+          <span class="article-nav-title">Google Indexing API vs ручные методы</span>
+        </a>
+        <a href="/ru/blog/what-is-sitemap-xml.html" style="text-align:right;">
+          <span class="article-nav-label">Следующая статья →</span>
+          <span class="article-nav-title">Что такое sitemap.xml</span>
+        </a>
+      </div>
+
+    </div>
+  </article>
+
+  <aside class="sidebar">
+    <div class="sidebar-card">
+      <h4>Содержание</h4>
+      <ul class="toc-list">
+        <li><a href="#what-it-means">Что на самом деле означает "Обнаружено — в настоящее время не проиндексировано"</a></li>
+        <li><a href="#root-causes">Реальные причины, почему Google пропускает ваши страницы</a></li>
+        <li><a href="#what-not-to-do">Что НЕ делать (распространённые ошибки)</a></li>
+        <li><a href="#real-fix">Настоящее решение: заставить Google индексировать через официальный API</a></li>
+        <li><a href="#use-indexfast">Как сделать это без написания кода</a></li>
+        <li><a href="#prioritize">Какие страницы отправлять первыми</a></li>
+        <li><a href="#long-term">Долгосрочная стратегия: не допустить повторения проблемы</a></li>
+        <li><a href="#case-real">Реальный пример: интернет-магазин с 800 "обнаруженными" страницами</a></li>
+        <li><a href="#summary">Итог: что сделать прямо сейчас</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-card">
+      <h4>Читайте также</h4>
+      <ul class="related-list">
+        <li><a href="/ru/blog/yak-pryskoriti-indeksaciyu-saitu-v-google.html">Как ускорить индексацию сайта в Google в 2026 году</a></li>
+        <li><a href="/ru/blog/what-is-sitemap-xml.html">Что такое sitemap.xml и зачем он нужен</a></li>
+        <li><a href="/ru/blog/indexing-api-and-manual-methods.html">Google Indexing API vs ручные методы: полное сравнение</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-card" style="background: rgba(0,255,136,0.05); border-color: rgba(0,255,136,0.2);">
+      <h4 style="color: var(--green);">Попробуйте IndexFast</h4>
+      <p style="font-size:0.85rem; color:var(--muted); margin-bottom:16px; line-height:1.5;">Автоматическая индексация всех страниц через официальный Google Indexing API. Без кода.</p>
+      <a href="/app/register" style="display:block; background:var(--green); color:var(--black); text-align:center; padding:10px; border-radius:100px; font-family:var(--font-display); font-weight:700; font-size:0.85rem; text-decoration:none;">Попробовать бесплатно →</a>
+    </div>
+  </aside>
+</div>
+
+<footer role="contentinfo">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="/ru/" class="logo">Index<span>Fast</span></a>
+      <p>Сервис автоматической индексации для Google и IndexNow через официальный Google Indexing API.</p>
+    </div>
+    <div class="footer-col">
+      <p class="footer-title">Продукт</p>
+      <ul>
+        <li><a href="/ru/#how-it-works">Как работает</a></li>
+        <li><a href="/ru/#features">Преимущества</a></li>
+        <li><a href="/ru/#pricing">Цены</a></li>
+        <li><a href="/docs/">Документация</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <p class="footer-title">Компания</p>
+      <ul>
+        <li><a href="/ru/about.html">О нас</a></li>
+        <li><a href="/ru/blog/">Блог</a></li>
+        <li><a href="/affiliate.html">Партнёрская программа</a></li>
+        <li><a href="/ru/contacts.html">Контакты</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <p class="footer-title">Поддержка</p>
+      <ul>
+        <li><a href="/ru/#faq">FAQ</a></li>
+        <li><a href="https://t.me/indexfastgoogle" target="_blank" rel="noopener noreferrer">Telegram Chat</a></li>
+        <li><a href="mailto:indexfastapp@gmail.com">Email Support</a></li>
+        <li><a href="/status.html">Статус сервиса</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 IndexFast. Все права защищены.</p>
+    <div style="display:flex; gap:20px;">
+      <a href="/privacy-policy.html">Конфиденциальность</a>
+      <a href="/terms.html">Условия</a>
+    </div>
+  </div>
+  <button id="backToTop" class="back-to-top" aria-label="Back to top">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+  </button>
+</footer>
+
+<script src="/js/blog.js" defer></script>
+</body>
+</html>

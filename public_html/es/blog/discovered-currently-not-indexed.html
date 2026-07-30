@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>"Detectado, actualmente no indexado": cómo solucionarlo en 2026 — IndexFast</title>
+  <meta name="description" content="¿Tus páginas muestran "Detectado — actualmente no indexado" en Google Search Console? Explicamos las causas y damos una solución paso a paso con Google Indexing API.">
+  <meta name="keywords" content="detectado no indexado, discovered not indexed, páginas no indexadas google, solucionar indexación, crawl budget">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+  <link rel="canonical" href="https://indexfast.pro/es/blog/discovered-currently-not-indexed.html">
+
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://indexfast.pro/es/blog/discovered-currently-not-indexed.html">
+  <meta property="og:title" content=""Detectado, actualmente no indexado": cómo solucionarlo en 2026 — IndexFast">
+  <meta property="og:description" content="¿Tus páginas muestran "Detectado — actualmente no indexado" en Google Search Console? Explicamos las causas y damos una solución paso a paso con Google Indexing API.">
+  <meta property="og:image" content="https://indexfast.pro/blog-images/blog_not_indexed.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="es_ES">
+  <meta property="article:published_time" content="2026-07-30T10:00:00+03:00">
+  <meta property="article:modified_time" content="2026-07-30T10:00:00+03:00">
+  <meta property="article:author" content="IndexFast">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": ""Detectado, actualmente no indexado": cómo solucionarlo en 2026 — IndexFast",
+    "description": "¿Tus páginas muestran "Detectado — actualmente no indexado" en Google Search Console? Explicamos las causas y damos una solución paso a paso con Google Indexing API.",
+    "inLanguage": "es",
+    "author": { "@type": "Organization", "name": "IndexFast", "url": "https://indexfast.pro" },
+    "publisher": { "@type": "Organization", "name": "IndexFast", "url": "https://indexfast.pro", "logo": { "@type": "ImageObject", "url": "https://indexfast.pro/logo.png" } },
+    "datePublished": "2026-07-30T10:00:00+03:00",
+    "dateModified": "2026-07-30T10:00:00+03:00",
+    "url": "https://indexfast.pro/es/blog/discovered-currently-not-indexed.html",
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://indexfast.pro/es/blog/discovered-currently-not-indexed.html" },
+    "image": { "@type": "ImageObject", "url": "https://indexfast.pro/blog-images/blog_not_indexed.png", "width": 1200, "height": 630 }
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Inicio", "item": "https://indexfast.pro/es/" },
+      { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://indexfast.pro/es/blog/" },
+      { "@type": "ListItem", "position": 3, "name": ""Detectado, no indexado": cómo solucionarlo", "item": "https://indexfast.pro/es/blog/discovered-currently-not-indexed.html" }
+    ]
+  }
+  </script>
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content=""Detectado, actualmente no indexado": cómo solucionarlo en 2026 — IndexFast">
+  <meta name="twitter:description" content="¿Tus páginas muestran "Detectado — actualmente no indexado" en Google Search Console? Explicamos las causas y damos una solución paso a paso con Google Indexing API.">
+  <meta name="twitter:image" content="https://indexfast.pro/blog-images/blog_not_indexed.png">
+
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/blog.css">
+</head>
+<body>
+
+<nav id="navbar" role="navigation" aria-label="Main menu">
+  <a href="/es/" class="logo" aria-label="IndexFast">Index<span>Fast</span></a>
+  <ul class="nav-links">
+    <li><a href="/es/#how-it-works">Cómo funciona</a></li>
+    <li><a href="/es/#for-whom">Para quién</a></li>
+    <li><a href="/es/#features">Ventajas</a></li>
+    <li><a href="/es/#pricing">Precios</a></li>
+    <li><a href="/es/#faq">FAQ</a></li>
+    <li class="mobile-auth">
+      <a href="/app/login" class="mobile-login">Iniciar sesión</a>
+      <a href="/app/register" class="mobile-register">Empezar gratis →</a>
+    </li>
+  </ul>
+  <div class="nav-actions">
+    <div class="nav-lang-dropdown">
+      <button class="nav-lang-btn">ES ▾</button>
+      <div class="nav-lang-menu">
+        <a href="/blog/discovered-currently-not-indexed.html">English</a>
+        <a href="/uk/blog/discovered-currently-not-indexed.html">Українська</a>
+        <a href="/es/blog/discovered-currently-not-indexed.html" class="active">Español</a>
+        <a href="/pt/blog/discovered-currently-not-indexed.html">Português</a>
+        <a href="/ru/blog/discovered-currently-not-indexed.html">Русский</a>
+        <a href="/de/blog/discovered-currently-not-indexed.html">Deutsch</a>
+        <a href="/fr/blog/discovered-currently-not-indexed.html">Français</a>
+        <a href="/pl/blog/discovered-currently-not-indexed.html">Polski</a>
+      </div>
+    </div>
+    <a href="/app/login" class="nav-login">Iniciar sesión</a>
+    <a href="/app/register" class="nav-cta">Empezar gratis →</a>
+    <button class="mobile-menu-btn" onclick="document.querySelector('.nav-links').classList.toggle('active')" aria-label="Main menu">☰</button>
+  </div>
+</nav>
+
+<div class="page-wrap">
+  <article>
+    <div class="article-meta">
+      <span class="meta-tag">Guía SEO</span>
+      <span class="meta-date">30 de julio de 2026</span>
+      <span class="meta-read">⏱ 12 min de lectura</span>
+    </div>
+
+    <h1>"Detectado, actualmente no indexado": por qué Google ignora tus páginas y cómo solucionarlo</h1>
+    <img src="/blog-images/blog_not_indexed.png" alt=""Detectado, actualmente no indexado": por qué Google ignora tus páginas y cómo solucionarlo" loading="lazy" decoding="async" class="article-main-image" style="width:100%; border-radius:16px; margin: 24px 0; object-fit: cover; aspect-ratio: 1200/630;">
+
+    <p class="article-lead">Abres Google Search Console y ves una lista de páginas con el estado "Detectado — actualmente no indexado". Pasan los días, las semanas — las páginas siguen sin aparecer en Google. Esto es uno de los problemas más frustrantes para los propietarios de sitios web. Explicamos exactamente por qué ocurre y cómo solucionarlo de una vez por todas.</p>
+
+    <div class="article-body">
+
+      <h2 id="what-it-means">Qué significa realmente "Detectado — actualmente no indexado"</h2>
+      <p>Este estado significa que Google ha encontrado la URL — a través de tu sitemap o un enlace — pero ha decidido no rastrearla todavía. Es decir: Google sabe que la página existe, pero ha elegido no visitarla.</p>
+      <p>La palabra clave aquí es "elegido". No es un error técnico. Es una decisión de Google basada en el crawl budget de tu sitio y la prioridad percibida de esa página.</p>
+      <div class="tip-box">
+        <strong>💡 Analogía simple</strong>
+        <p>Imagina un cartero con 1.000 cartas para entregar. Conoce tu dirección, pero si cree que la entrega es de baja prioridad, la pone al final de la cola. Tu página espera meses mientras las páginas de los competidores se indexan el mismo día.</p>
+      </div>
+
+      <h2 id="root-causes">Las razones reales por las que Google se salta tus páginas</h2>
+      <p>La mayoría de las guías SEO dan respuestas vagas como "mejora la calidad del contenido". La realidad es más concreta:</p>
+      <ul>
+        <li><strong>Crawl budget agotado.</strong> Google asigna un número limitado de rastreos por sitio al día. Los sitios grandes con miles de páginas a menudo agotan el presupuesto, dejando nuevas páginas en cola.</li>
+        <li><strong>Baja autoridad de dominio.</strong> Los sitios nuevos o con pocos backlinks reciben menos crawl budget.</li>
+        <li><strong>Respuesta lenta del servidor.</strong> Si tu servidor responde lentamente (más de 500ms), el rastreador de Google se ralentiza o se detiene.</li>
+        <li><strong>Demasiadas páginas de bajo valor.</strong> Si tu sitemap contiene páginas de filtros paginadas, etiquetas o contenido duplicado, Google "desperdicia" su presupuesto en ellas.</li>
+        <li><strong>Sin enlazado interno.</strong> Las páginas que solo existen en el sitemap pero no tienen enlaces internos se consideran de baja prioridad.</li>
+        <li><strong>Publicada recientemente.</strong> Las páginas nuevas en sitios de baja autoridad pueden esperar en la cola "detectado" durante meses.</li>
+      </ul>
+
+      <h2 id="what-not-to-do">Qué NO hacer (errores comunes)</h2>
+      <p>Cuando los propietarios ven este estado, suelen empeorar las cosas:</p>
+      <ul>
+        <li>Solicitar constantemente la reindexación mediante "Inspección de URL" en Search Console (límite de solo 10-15 URLs al día)</li>
+        <li>Bloquear y desbloquear páginas en robots.txt esperando un nuevo rastreo</li>
+        <li>Eliminar páginas del sitemap pensando que eso ayudará</li>
+        <li>Esperar indefinidamente sin hacer nada — esto puede durar meses</li>
+      </ul>
+      <div class="warn-box">
+        <strong>⚠ La trampa de la inspección manual de URL</strong>
+        <p>El botón "Solicitar indexación" en Search Console parece una solución, pero tiene límites muy estrictos. Puedes enviar quizás 10-15 URLs al día de esta forma. Para un sitio con cientos de páginas afectadas, esto es prácticamente inútil.</p>
+      </div>
+
+      <h2 id="real-fix">La solución real: forzar la indexación de Google mediante la API oficial</h2>
+      <p>Google proporciona la Indexing API específicamente para permitir que los sitios web notifiquen a Google sobre páginas importantes que necesitan rastreo inmediato. Cuando envías una solicitud a través de la API, Google prioriza el rastreo de esa URL — normalmente en 24-48 horas.</p>
+      <p>No es un atajo ni una técnica de sombrero gris. Es el método oficial recomendado por Google para acelerar la indexación.</p>
+      <h3>Paso 1: Configura Google Search Console correctamente</h3>
+      <p>Verifica tu sitio en Google Search Console. Asegúrate de tener un sitemap bien estructurado enviado. Verifica si hay penalizaciones manuales en "Acciones manuales".</p>
+      <h3>Paso 2: Soluciona primero los problemas técnicos</h3>
+      <p>Antes de forzar la indexación, soluciona lo que está roto: páginas que cargan en menos de 3 segundos, añade enlaces internos a páginas huérfanas, elimina páginas de bajo valor de tu sitemap.</p>
+      <h3>Paso 3: Usa la Google Indexing API para enviar páginas</h3>
+      <p>Aquí es donde ocurre la aceleración real. A través de la Indexing API puedes notificar a Google sobre 200 URLs al día — Google entonces envía Googlebot a rastrear esas URLs específicas con alta prioridad. La diferencia:</p>
+      <div style="display:flex; gap:16px; margin: 24px 0; flex-wrap:wrap;">
+        <div style="flex:1; min-width:200px; background:rgba(255,107,107,0.08); border:1px solid rgba(255,107,107,0.2); border-radius:12px; padding:16px; text-align:center;">
+          <div style="color:#ff6b6b; font-size:0.8rem; margin-bottom:8px;">❌</div>
+          <div style="font-weight:700; color:#ff6b6b;">Sin API: 2-8 semanas</div>
+        </div>
+        <div style="flex:1; min-width:200px; background:rgba(0,255,136,0.08); border:1px solid rgba(0,255,136,0.2); border-radius:12px; padding:16px; text-align:center;">
+          <div style="color:var(--green); font-size:0.8rem; margin-bottom:8px;">✅</div>
+          <div style="font-weight:700; color:var(--green);">Con API: 24-48 horas</div>
+        </div>
+      </div>
+
+      <h2 id="use-indexfast">Cómo hacerlo sin escribir código</h2>
+      <p>Configurar la Google Indexing API manualmente requiere: crear un proyecto en Google Cloud, una cuenta de servicio, descargar credenciales JSON, escribir llamadas API y configurar la automatización. Para no desarrolladores, esto es una barrera técnica significativa.</p>
+      <p>IndexFast elimina toda esa complejidad. Conectas tu Google Search Console una vez, añades la URL de tu sitemap — e IndexFast automáticamente:</p>
+      <ul>
+        <li>Lee tu sitemap y detecta URLs nuevas o actualizadas</li>
+        <li>Las envía a través de la Google Indexing API en tu nombre</li>
+        <li>Gestiona automáticamente la cuota diaria (200 URLs/día)</li>
+        <li>Muestra un registro detallado de qué páginas se enviaron y cuándo</li>
+        <li>Se ejecuta según un horario para que cada nueva página se indexe sin que tengas que hacer nada</li>
+      </ul>
+      <p>Para las páginas ya bloqueadas en estado "Detectado", puedes enviarlas en bloque inmediatamente. La mayoría de los usuarios ven esas páginas aparecer en Google en 24-48 horas.</p>
+
+      <div class="cta-block">
+        <h3>Soluciona tus páginas "Detectadas" hoy</h3>
+        <p>Deja de esperar a que Google encuentre tus páginas por sí solo. Conecta IndexFast y envíalas para indexación en minutos.</p>
+        <a href="/app/register">Empezar gratis →</a>
+      </div>
+
+      <h2 id="prioritize">Qué páginas priorizar primero</h2>
+      <p>No intentes indexarlo todo a la vez. Con una cuota de 200 URLs/día, sé estratégico:</p>
+      <ol>
+        <li><strong>Primero las páginas que generan ingresos</strong> — páginas de productos, servicios, landing pages</li>
+        <li><strong>Contenido fresco</strong> — nuevas entradas de blog, artículos de noticias</li>
+        <li><strong>Páginas actualizadas recientemente</strong> — si has cambiado significativamente el contenido existente</li>
+        <li><strong>Omite las páginas de contenido escaso</strong> — resultados paginados, páginas de etiquetas, combinaciones de filtros</li>
+      </ol>
+
+      <h2 id="long-term">A largo plazo: evita que el estado "Detectado" vuelva a ocurrir</h2>
+      <p>Una vez que hayas solucionado tu acumulado actual, configura un sistema para que las nuevas páginas nunca vuelvan a quedarse bloqueadas:</p>
+      <ul>
+        <li><strong>Indexación automática diaria:</strong> Configura IndexFast para que compruebe tu sitemap cada día y envíe automáticamente las nuevas URLs.</li>
+        <li><strong>Enlazado interno:</strong> Cuando publiques nuevo contenido, enlázalo desde 2-3 páginas populares existentes.</li>
+        <li><strong>Higiene del sitemap:</strong> Elimina las páginas que no quieres indexar (contenido escaso, duplicados) de tu sitemap.</li>
+        <li><strong>Monitoriza Search Console:</strong> Comprueba semanalmente Cobertura > "Detectado — actualmente no indexado". Si los números aumentan, investiga inmediatamente.</li>
+      </ul>
+
+      <h2 id="case-real">Ejemplo real: tienda online con 800 páginas "detectadas"</h2>
+      <blockquote style="border-left:4px solid var(--green); padding-left:20px; margin:24px 0; font-style:italic; color:var(--muted); font-size:1.05rem; line-height:1.7;">
+        "Tenía más de 800 páginas de productos bloqueadas en "Detectado — actualmente no indexado" durante 3 meses. Mi tienda obtenía casi nada de tráfico orgánico. Después de conectar IndexFast y enviar las páginas afectadas, Google indexó 650 de ellas en 5 días. El tráfico aumentó un 340% en el mes siguiente."
+      </blockquote>
+      <p style="margin-top:-16px; font-size:0.9rem; color:var(--muted);">— Andriy K., propietario de tienda WooCommerce</p>
+      <p>Esto no es único. Las páginas con estado "Detectado" son esencialmente invisibles para cualquiera que busque en Google. Solucionar esto se traduce directamente en más tráfico, más clientes y más ingresos.</p>
+
+      <hr style="border:none;border-top:1px solid rgba(255,255,255,0.07);margin:40px 0">
+
+      <h2 id="summary">Resumen: qué hacer ahora mismo</h2>
+      <ol>
+        <li>Ve a Google Search Console → Páginas → "Detectado — actualmente no indexado"</li>
+        <li>Anota cuántas páginas están afectadas y cuáles son más importantes</li>
+        <li>Soluciona los problemas técnicos obvios (carga lenta, sin enlaces internos)</li>
+        <li>Conecta IndexFast y envía tus páginas afectadas a través de la Indexing API</li>
+        <li>Configura la indexación automática para que las páginas futuras nunca vuelvan a bloquearse</li>
+        <li>Comprueba en 48-72 horas — la mayoría de las páginas deberían aparecer en Google</li>
+      </ol>
+
+      <div class="article-nav">
+        <a href="/es/blog/indexing-api-and-manual-methods.html">
+          <span class="article-nav-label">← Artículo anterior</span>
+          <span class="article-nav-title">Google Indexing API vs métodos manuales</span>
+        </a>
+        <a href="/es/blog/what-is-sitemap-xml.html" style="text-align:right;">
+          <span class="article-nav-label">Siguiente artículo →</span>
+          <span class="article-nav-title">Qué es sitemap.xml</span>
+        </a>
+      </div>
+
+    </div>
+  </article>
+
+  <aside class="sidebar">
+    <div class="sidebar-card">
+      <h4>Tabla de contenidos</h4>
+      <ul class="toc-list">
+        <li><a href="#what-it-means">Qué significa realmente "Detectado — actualmente no indexado"</a></li>
+        <li><a href="#root-causes">Las razones reales por las que Google se salta tus páginas</a></li>
+        <li><a href="#what-not-to-do">Qué NO hacer (errores comunes)</a></li>
+        <li><a href="#real-fix">La solución real: forzar la indexación de Google mediante la API oficial</a></li>
+        <li><a href="#use-indexfast">Cómo hacerlo sin escribir código</a></li>
+        <li><a href="#prioritize">Qué páginas priorizar primero</a></li>
+        <li><a href="#long-term">A largo plazo: evita que el estado "Detectado" vuelva a ocurrir</a></li>
+        <li><a href="#case-real">Ejemplo real: tienda online con 800 páginas "detectadas"</a></li>
+        <li><a href="#summary">Resumen: qué hacer ahora mismo</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-card">
+      <h4>Artículos relacionados</h4>
+      <ul class="related-list">
+        <li><a href="/es/blog/yak-pryskoriti-indeksaciyu-saitu-v-google.html">Cómo acelerar la indexación del sitio en Google en 2026</a></li>
+        <li><a href="/es/blog/what-is-sitemap-xml.html">Qué es sitemap.xml y por qué lo necesitas</a></li>
+        <li><a href="/es/blog/indexing-api-and-manual-methods.html">Google Indexing API vs métodos manuales: comparación completa</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-card" style="background: rgba(0,255,136,0.05); border-color: rgba(0,255,136,0.2);">
+      <h4 style="color: var(--green);">Prueba IndexFast gratis</h4>
+      <p style="font-size:0.85rem; color:var(--muted); margin-bottom:16px; line-height:1.5;">Indexación automática de todas tus páginas a través de la API oficial de Google Indexing. Sin código.</p>
+      <a href="/app/register" style="display:block; background:var(--green); color:var(--black); text-align:center; padding:10px; border-radius:100px; font-family:var(--font-display); font-weight:700; font-size:0.85rem; text-decoration:none;">Empezar gratis →</a>
+    </div>
+  </aside>
+</div>
+
+<footer role="contentinfo">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="/es/" class="logo">Index<span>Fast</span></a>
+      <p>Servicio de indexación automática para Google e IndexNow a través de la API oficial de Google Indexing.</p>
+    </div>
+    <div class="footer-col">
+      <p class="footer-title">Producto</p>
+      <ul>
+        <li><a href="/es/#how-it-works">Cómo funciona</a></li>
+        <li><a href="/es/#features">Características</a></li>
+        <li><a href="/es/#pricing">Precios</a></li>
+        <li><a href="/docs/">Documentación</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <p class="footer-title">Empresa</p>
+      <ul>
+        <li><a href="/es/about.html">Acerca de</a></li>
+        <li><a href="/es/blog/">Blog</a></li>
+        <li><a href="/affiliate.html">Programa de afiliados</a></li>
+        <li><a href="/es/contacts.html">Contacto</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <p class="footer-title">Soporte</p>
+      <ul>
+        <li><a href="/es/#faq">FAQ</a></li>
+        <li><a href="https://t.me/indexfastgoogle" target="_blank" rel="noopener noreferrer">Telegram Chat</a></li>
+        <li><a href="mailto:indexfastapp@gmail.com">Email Support</a></li>
+        <li><a href="/status.html">Estado del servicio</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 IndexFast. Todos los derechos reservados.</p>
+    <div style="display:flex; gap:20px;">
+      <a href="/privacy-policy.html">Privacidad</a>
+      <a href="/terms.html">Términos</a>
+    </div>
+  </div>
+  <button id="backToTop" class="back-to-top" aria-label="Back to top">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+  </button>
+</footer>
+
+<script src="/js/blog.js" defer></script>
+</body>
+</html>
