@@ -38,6 +38,8 @@ RewriteRule ^blog/shvydkist-saitu-seo\.html$ /blog/site-speed-seo.html [R=301,L]
 
 RewriteRule ^blog/masova-indeksaciya-saitu\.html$ /blog/mass-site-indexing.html [R=301,L]
 
+RewriteRule ^blog/indeksaciya-pislya-redyzajnu\.html$ /blog/indexing-after-redesign.html [R=301,L]
+
 # ── Serve manual payment receipts securely from outside public_html
 RewriteRule ^storage/receipts/([^/]+)$ api/billing/serve_receipt.php?file=$1 [L,QSA]
 

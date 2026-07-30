@@ -425,6 +425,11 @@
             "source": "/blog/masova-indeksaciya-saitu.html",
             "destination": "/blog/mass-site-indexing.html",
             "permanent": true
+        },
+        {
+            "source": "/blog/indeksaciya-pislya-redyzajnu.html",
+            "destination": "/blog/indexing-after-redesign.html",
+            "permanent": true
         }
     ],
     "rewrites": [
