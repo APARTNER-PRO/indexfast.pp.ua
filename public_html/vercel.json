@@ -395,6 +395,11 @@
             "source": "/blog/chomu-sait-ne-indeksuyetsya.html",
             "destination": "/blog/why-is-site-not-indexed.html",
             "permanent": true
+        },
+        {
+            "source": "/blog/seo-dlya-internet-magazynu.html",
+            "destination": "/blog/ecommerce-seo.html",
+            "permanent": true
         }
     ],
     "rewrites": [
