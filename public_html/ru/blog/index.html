@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
   <meta charset="UTF-8">
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
@@ -8,28 +8,28 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
   <link rel="manifest" href="/site.webmanifest">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Blog — IndexFast | SEO and indexing articles</title>
-  <meta name="description" content="Useful articles about SEO, indexing in Google, sitemap.xml and promotion tools. Practical tips from the IndexFast team.">
-  <link rel="canonical" href="https://indexfast.pro/blog/">
+  <title>Блог — IndexFast | SEO и индексация</title>
+  <meta name="description" content="Полезные статьи про SEO, индексацию в Google, sitemap.xml и инструменты продвижения. Практические советы от команды IndexFast.">
+  <link rel="canonical" href="https://indexfast.pro/ru/blog/">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://indexfast.pro/blog/">
-  <meta property="og:title" content="IndexFast Blog — SEO and website indexing">
-  <meta property="og:description" content="Useful articles about SEO, indexing and website promotion in Google.">
+  <meta property="og:url" content="https://indexfast.pro/ru/blog/">
+  <meta property="og:title" content="Блог IndexFast — SEO и индексация сайтов">
+  <meta property="og:description" content="Полезные статьи про SEO, индексацию и продвижение сайтов в Google.">
   <meta property="og:image" content="https://indexfast.pro/og-image.jpg">
-  <meta property="og:locale" content="en_US">
+  <meta property="og:locale" content="ru_RU">
   <meta property="og:site_name" content="IndexFast">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="IndexFast Blog — SEO and website indexing">
-  <meta name="twitter:description" content="Useful articles about SEO, indexing and website promotion in Google.">
+  <meta name="twitter:title" content="Блог IndexFast — SEO и индексация сайтов">
+  <meta name="twitter:description" content="Полезные статьи про SEO, индексацию и продвижение сайтов в Google.">
   <meta name="twitter:image" content="https://indexfast.pro/og-image.jpg">
 
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "Blog",
-    "name": "IndexFast Blog",
-    "description": "Articles about SEO, indexing in Google and website promotion",
-    "url": "https://indexfast.pro/blog/",
+    "name": "Блог IndexFast",
+    "description": "Статьи про SEO, индексацию в Google и продвижение сайтов",
+    "url": "https://indexfast.pro/ru/blog/",
     "publisher": {
       "@type": "Organization",
       "name": "IndexFast",
@@ -372,14 +372,14 @@
         {
             "@type": "ListItem",
             "position": 1,
-            "name": "Home",
+            "name": "Главная",
             "item": "https://indexfast.pro/"
         },
         {
             "@type": "ListItem",
             "position": 2,
-            "name": "Blog",
-            "item": "https://indexfast.pro/blog/"
+            "name": "Блог",
+            "item": "https://indexfast.pro/ru/blog/"
         }
     ]
   }
@@ -388,78 +388,53 @@
 <body>
 
 <nav>
-  <a href="/" class="logo">Index<span>Fast</span></a>
+  <a href="/ru/" class="logo">Index<span>Fast</span></a>
   <div class="nav-right">
-    <a href="/" class="nav-link">Home</a>
-    <a href="/docs/" class="nav-link">Docs</a>
-    <a href="/blog/" class="nav-link active">Blog</a>
-    <a href="/app/login" class="nav-login">Login</a>
-    <a href="/app/register" class="nav-cta">Try for free</a>
+    <a href="/ru/" class="nav-link">Главная</a>
+    <a href="/docs/" class="nav-link">Документация</a>
+    <a href="/ru/blog/" class="nav-link active">Блог</a>
+    <a href="/ru/app/login" class="nav-login">Войти</a>
+    <a href="/ru/app/register" class="nav-cta">Начать бесплатно</a>
   </div>
 </nav>
 
 <div class="blog-hero">
-  <div class="hero-eyebrow"><span class="hero-dot"></span>IndexFast Blog</div>
-  <h1>SEO and indexing —<br><em>without fluff</em></h1>
-  <p>Practical articles about speeding up indexing, setting up Google Search Console, and promoting websites in search.</p>
+  <div class="hero-eyebrow"><span class="hero-dot"></span>Блог IndexFast</div>
+  <h1>SEO и индексация —<br><em>без лишних слов</em></h1>
+  <p>Практические статьи об ускорении индексации, настройке Google Search Console и продвижении сайтов в поиске.</p>
 </div>
 
 <div class="filters-wrap">
   <div class="filters">
-    <button class="filter-btn active" onclick="filterArticles('all', this)">All articles</button>
+    <button class="filter-btn active" onclick="filterArticles('all', this)">Все статьи</button>
     <button class="filter-btn" onclick="filterArticles('seo', this)">SEO</button>
-    <button class="filter-btn" onclick="filterArticles('tech', this)">Technical</button>
-    <button class="filter-btn" onclick="filterArticles('guide', this)">Guides</button>
+    <button class="filter-btn" onclick="filterArticles('tech', this)">Техническое</button>
+    <button class="filter-btn" onclick="filterArticles('guide', this)">Гайды</button>
   </div>
 </div>
 
 <div class="articles-wrap">
   <div class="articles-grid" id="articlesGrid">
 
-    <a href="/blog/yak-pryskoriti-indeksaciyu-saitu-v-google.html" class="article-card featured" data-tags="seo guide">
-      <span class="featured-badge">⭐ Popular</span>
-      <div class="card-visual">
-        <div class="card-icon">🚀</div>
-        <div class="card-stats">
-          <div class="card-stat">7 methods</div>
-          <div class="card-stat">24h to index</div>
-        </div>
-      </div>
-      <div class="card-body">
-        <div class="card-meta">
-          <span class="card-tag tag-seo">SEO</span>
-          <span class="card-tag tag-guide">Guide</span>
-          <span class="card-dot"></span>
-          <span class="card-date">January 15, 2026</span>
-          <span class="card-dot"></span>
-          <span class="card-read">8 min read</span>
-        </div>
-        <h2 class="card-title">How to speed up website indexing in Google in 2026</h2>
-        <p class="card-desc">7 proven methods — from Google Indexing API to proper sitemap.xml setup. Practical tips for website owners of any size.</p>
-        <div class="card-footer">
-          <div class="card-author">
-            <div class="author-avatar">DK</div>
-            <span class="author-name">Dmytro Koval</span>
-          </div>
-          <span class="card-arrow">→</span>
-        </div>
-      </div>
-    </a>
-
-    <a href="/blog/fast-index-website-secrets.html" class="article-card" data-tags="seo">
+    <a href="/ru/blog/fast-index-website-secrets.html" class="article-card featured" data-tags="seo">
+      <span class="featured-badge">⭐ Популярное</span>
       <div class="card-visual">
         <div class="card-icon">🔍</div>
+        <div class="card-stats">
+          <div class="card-stat">7 мин</div>
+          <div class="card-stat">SEO + прибыль</div>
+        </div>
       </div>
       <div class="card-body">
         <div class="card-meta">
           <span class="card-tag tag-seo">SEO</span>
           <span class="card-dot"></span>
-          <span class="card-date">July 30, 2026</span>
+          <span class="card-date">30 июля 2026</span>
           <span class="card-dot"></span>
-          <span class="card-read">7 min read</span>
+          <span class="card-read">7 мин. чтения</span>
         </div>
-        <h3 class="card-title card-title-sm">Fast Index Website: secrets of fast SEO promotion and website indexing</h3>
-        <p class="card-desc">How to make your website index quickly and generate profits. SEO optimization, indexing factors and tools for fast promotion in Google.</p>
+        <h2 class="card-title">Быстрая индексация сайтов: секреты SEO и как быстрее получить прибыль</h2>
+        <p class="card-desc">Как сделать так, чтобы ваш сайт индексировался быстро и приносил прибыль. SEO-оптимизация, факторы индексации и инструменты для быстрого продвижения в Google.</p>
         <div class="card-footer">
           <div class="card-author">
             <div class="author-avatar">IF</div>
@@ -470,7 +445,32 @@
       </div>
     </a>
 
-    <a href="/blog/yak-vybraty-drop-domen-dlya-pbn.html" class="article-card" data-tags="seo guide">
+    <a href="/ru/blog/fast-index-website-secrets.html" class="article-card" data-tags="seo">
+      <div class="card-visual">
+        <div class="card-icon">🚀</div>
+      </div>
+      <div class="card-body">
+        <div class="card-meta">
+          <span class="card-tag tag-seo">SEO</span>
+          <span class="card-dot"></span>
+          <span class="card-date">30 июля 2026</span>
+          <span class="card-dot"></span>
+          <span class="card-read">7 мин. чтения</span>
+        </div>
+        <h3 class="card-title card-title-sm">Быстрая индексация: как сделать сайт видимым в Google</h3>
+        <p class="card-desc">Простые шаги для ускорения индексации и роста трафика.</p>
+        <div class="card-footer">
+          <div class="card-author">
+            <div class="author-avatar">IF</div>
+            <span class="author-name">IndexFast</span>
+          </div>
+          <span class="card-arrow">→</span>
+        </div>
+      </div>
+    </a>
+
+
+    <a href="/blog/yak-vybraty-drop-domen-dlya-pbn.html" class="article-card" data-tags="seo">
       <div class="card-visual">
         <div class="card-icon">🕸️</div>
       </div>
@@ -478,12 +478,12 @@
         <div class="card-meta">
           <span class="card-tag tag-seo">SEO</span>
           <span class="card-dot"></span>
-          <span class="card-date">July 4, 2026</span>
+          <span class="card-date">4 июля 2026</span>
           <span class="card-dot"></span>
-          <span class="card-read">8 min read</span>
+          <span class="card-read">8 мин. чтения</span>
         </div>
-        <h3 class="card-title card-title-sm">How to properly choose a dropped domain for PBN: 2026 guide</h3>
-        <p class="card-desc">Step-by-step guide to choosing and checking dropped domains for building a PBN network. How not to buy a spammed domain.</p>
+        <h3 class="card-title card-title-sm">Как правильно выбрать дроп-домен для PBN: инструкция 2026</h3>
+        <p class="card-desc">Пошаговая инструкция по выбору и проверке дроп-доменов для построения сети PBN. Как не купить заспамленный домен.</p>
         <div class="card-footer">
           <div class="card-author">
             <div class="author-avatar">IF</div>
@@ -494,45 +494,45 @@
       </div>
     </a>
 
-    <a href="/blog/shcho-take-sitemap-xml.html" class="article-card" data-tags="tech guide">
+    <a href="/blog/shcho-take-sitemap-xml.html" class="article-card" data-tags=" ">
       <div class="card-visual">
         <div class="card-icon">🗺</div>
       </div>
       <div class="card-body">
         <div class="card-meta">
-          <span class="card-tag tag-tech">Technical</span>
-          <span class="card-tag tag-guide">Guide</span>
+          <span class="card-tag tag-tech">Техническое</span>
+          <span class="card-tag tag-guide">Гайд</span>
           <span class="card-dot"></span>
-          <span class="card-date">January 20, 2026</span>
+          <span class="card-date">20 января 2026</span>
           <span class="card-dot"></span>
-          <span class="card-read">6 min read</span>
+          <span class="card-read">6 мин. чтения</span>
         </div>
-        <h3 class="card-title card-title-sm">What is sitemap.xml and why your site needs it</h3>
-        <p class="card-desc">Complete guide to sitemap.xml: structure, types, how to create and register in Google Search Console.</p>
+        <h3 class="card-title card-title-sm">Что такое sitemap.xml и зачем он нужен</h3>
+        <p class="card-desc">Полное руководство по sitemap.xml: структура, типы, как создать и зарегистрировать в Google Search Console.</p>
         <div class="card-footer">
           <div class="card-author">
             <div class="author-avatar">DK</div>
-            <span class="author-name">Dmytro Koval</span>
+            <span class="author-name">Дмитрий Коваль</span>
           </div>
           <span class="card-arrow">→</span>
         </div>
       </div>
     </a>
 
-    <a href="/blog/what-is-indexnow.html" class="article-card" data-tags="tech guide">
+    <a href="/blog/what-is-indexnow.html" class="article-card" data-tags="">
       <div class="card-visual">
         <div class="card-icon">⚡</div>
       </div>
       <div class="card-body">
         <div class="card-meta">
-          <span class="card-tag tag-tech">Technical</span>
+          <span class="card-tag tag-tech">Техническое</span>
           <span class="card-dot"></span>
-          <span class="card-date">July 3, 2026</span>
+          <span class="card-date">3 июля 2026</span>
           <span class="card-dot"></span>
-          <span class="card-read">6 min read</span>
+          <span class="card-read">6 мин. чтения</span>
         </div>
-        <h3 class="card-title card-title-sm">What is IndexNow and How to Set it Up in 2026</h3>
-        <p class="card-desc">Learn what the IndexNow protocol is, and how IndexFast completely automates the setup process.</p>
+        <h3 class="card-title card-title-sm">Что такое IndexNow и как настроить в 2026 году</h3>
+        <p class="card-desc">Узнайте, что такое протокол IndexNow и как IndexFast полностью автоматизирует процесс настройки.</p>
         <div class="card-footer">
           <div class="card-author">
             <div class="author-avatar">IF</div>
@@ -543,20 +543,20 @@
       </div>
     </a>
 
-    <a href="/blog/how-to-create-an-effective-design-portfolio.html" class="article-card" data-tags="guide">
+    <a href="/blog/how-to-create-an-effective-design-portfolio.html" class="article-card" data-tags="">
       <div class="card-visual">
         <div class="card-icon">🎨</div>
       </div>
       <div class="card-body">
         <div class="card-meta">
-          <span class="card-tag tag-guide">Guide</span>
+          <span class="card-tag tag-guide">Гайд</span>
           <span class="card-dot"></span>
-          <span class="card-date">June 27, 2026</span>
+          <span class="card-date">27 июня 2026</span>
           <span class="card-dot"></span>
-          <span class="card-read">6 min read</span>
+          <span class="card-read">6 мин. чтения</span>
         </div>
-        <h3 class="card-title card-title-sm">How to create an effective design portfolio</h3>
-        <p class="card-desc">Tips and best practices for creating a portfolio that attracts clients.</p>
+        <h3 class="card-title card-title-sm">Как создать эффективное дизайн-портфолио</h3>
+        <p class="card-desc">Советы и лучшие практики для создания портфолио, которое привлекает клиентов.</p>
         <div class="card-footer">
           <div class="card-author">
             <div class="author-avatar">IF</div>
@@ -567,7 +567,7 @@
       </div>
     </a>
 
-    <a href="/blog/how-to-index-backlinks.html" class="article-card" data-tags="seo guide">
+    <a href="/blog/how-to-index-backlinks.html" class="article-card" data-tags="seo">
       <div class="card-visual">
         <div class="card-icon">🔗</div>
       </div>
@@ -575,12 +575,12 @@
         <div class="card-meta">
           <span class="card-tag tag-seo">SEO</span>
           <span class="card-dot"></span>
-          <span class="card-date">July 3, 2026</span>
+          <span class="card-date">3 июля 2026</span>
           <span class="card-dot"></span>
-          <span class="card-read">7 min read</span>
+          <span class="card-read">7 мин. чтения</span>
         </div>
-        <h3 class="card-title card-title-sm">How to Index Backlinks Fast in 2026 (Safe & Automated)</h3>
-        <p class="card-desc">Building backlinks is useless if Google doesn't index them. Learn the best white-hat and automated strategies.</p>
+        <h3 class="card-title card-title-sm">Как быстро проиндексировать обратные ссылки в 2026 (безопасно и автоматически)</h3>
+        <p class="card-desc">Создание ссылок бесполезно, если Google их не индексирует. Узнайте лучшие white-hat и автоматизированные стратегии.</p>
         <div class="card-footer">
           <div class="card-author">
             <div class="author-avatar">IF</div>
@@ -591,20 +591,20 @@
       </div>
     </a>
 
-    <a href="/blog/starting-a-career-in-web-design.html" class="article-card" data-tags="career">
+    <a href="/blog/starting-a-career-in-web-design.html" class="article-card" data-tags="">
       <div class="card-visual">
         <div class="card-icon">🚀</div>
       </div>
       <div class="card-body">
         <div class="card-meta">
-          <span class="card-tag tag-guide">Career</span>
+          <span class="card-tag tag-guide">Карьера</span>
           <span class="card-dot"></span>
-          <span class="card-date">June 29, 2026</span>
+          <span class="card-date">29 июня 2026</span>
           <span class="card-dot"></span>
-          <span class="card-read">8 min read</span>
+          <span class="card-read">8 мин. чтения</span>
         </div>
-        <h3 class="card-title card-title-sm">Starting a career in web design in 2026</h3>
-        <p class="card-desc">Step-by-step guide: what skills to learn, how to create a portfolio and where to find first orders.</p>
+        <h3 class="card-title card-title-sm">Карьера в веб-дизайне: как начать с нуля</h3>
+        <p class="card-desc">Пошаговая инструкция: какие навыки изучить, как создать портфолио и где искать первые заказы.</p>
         <div class="card-footer">
           <div class="card-author">
             <div class="author-avatar">IF</div>
@@ -615,20 +615,20 @@
       </div>
     </a>
 
-    <a href="/blog/create-a-landing-page-that-performs-great.html" class="article-card" data-tags="marketing">
+    <a href="/blog/create-a-landing-page-that-performs-great.html" class="article-card" data-tags="">
       <div class="card-visual">
         <div class="card-icon">📈</div>
       </div>
       <div class="card-body">
         <div class="card-meta">
-          <span class="card-tag tag-guide">Marketing</span>
+          <span class="card-tag tag-guide">Маркетинг</span>
           <span class="card-dot"></span>
-          <span class="card-date">June 29, 2026</span>
+          <span class="card-date">29 июня 2026</span>
           <span class="card-dot"></span>
-          <span class="card-read">10 min read</span>
+          <span class="card-read">10 мин. чтения</span>
         </div>
-        <h3 class="card-title card-title-sm">How to create a landing page that sells: complete guide 2026</h3>
-        <p class="card-desc">Structure, CTA, SEO, speed and A/B testing. Increase conversion today.</p>
+        <h3 class="card-title card-title-sm">Как создать лендинг, который продаёт: полное руководство 2026</h3>
+        <p class="card-desc">Структура, CTA, SEO, скорость и A/B-тестирование. Увеличьте конверсию уже сегодня.</p>
         <div class="card-footer">
           <div class="card-author">
             <div class="author-avatar">IF</div>
@@ -639,20 +639,20 @@
       </div>
     </a>
 
-    <a href="/blog/how-can-designers-prepare-for-the-future.html" class="article-card" data-tags="career">
+    <a href="/blog/how-can-designers-prepare-for-the-future.html" class="article-card" data-tags="">
       <div class="card-visual">
         <div class="card-icon">🔮</div>
       </div>
       <div class="card-body">
         <div class="card-meta">
-          <span class="card-tag tag-guide">Design</span>
+          <span class="card-tag tag-guide">Гайд</span>
           <span class="card-dot"></span>
-          <span class="card-date">June 29, 2026</span>
+          <span class="card-date">29 июня 2026</span>
           <span class="card-dot"></span>
-          <span class="card-read">9 min read</span>
+          <span class="card-read">9 мин. чтения</span>
         </div>
-        <h3 class="card-title card-title-sm">How designers can prepare for the future: 2026 trends</h3>
-        <p class="card-desc">AI, dynamic interfaces, accessibility, design systems. How to stay competitive.</p>
+        <h3 class="card-title card-title-sm">Как дизайнерам подготовиться к будущему: тренды 2026</h3>
+        <p class="card-desc">ИИ, динамические интерфейсы, доступность, дизайн-системы. Как оставаться конкурентоспособным.</p>
         <div class="card-footer">
           <div class="card-author">
             <div class="author-avatar">IF</div>
@@ -663,20 +663,20 @@
       </div>
     </a>
 
-    <a href="/blog/building-a-navigation-component.html" class="article-card" data-tags="guide">
+    <a href="/blog/building-a-navigation-component.html" class="article-card" data-tags="">
       <div class="card-visual">
         <div class="card-icon">🧭</div>
       </div>
       <div class="card-body">
-        <div class="article-meta">
-          <span class="card-tag tag-guide">Guide</span>
+        <div class="card-meta">
+          <span class="card-tag tag-guide">Гайд</span>
           <span class="card-dot"></span>
-          <span class="card-date">June 27, 2026</span>
+          <span class="card-date">27 июня 2026</span>
           <span class="card-dot"></span>
-          <span class="card-read">7 min read</span>
+          <span class="card-read">7 мин. чтения</span>
         </div>
-        <h3 class="card-title card-title-sm">How to build navigation that doesn't break UX</h3>
-        <p class="card-desc">Good navigation keeps 40% of visitors. Proven patterns for desktop and mobile.</p>
+        <h3 class="card-title card-title-sm">Как создать навигацию, которая не ломает UX</h3>
+        <p class="card-desc">Правильная навигация удерживает 40% посетителей. Проверенные паттерны для десктопа и мобильных.</p>
         <div class="card-footer">
           <div class="card-author">
             <div class="author-avatar">IF</div>
@@ -692,15 +692,15 @@
         <div class="card-icon">📋</div>
       </div>
       <div class="card-body">
-        <div class="article-meta">
+        <div class="card-meta">
           <span class="card-tag tag-seo">SEO</span>
           <span class="card-dot"></span>
-          <span class="card-date">June 29, 2026</span>
+          <span class="card-date">29 июня 2026</span>
           <span class="card-dot"></span>
-          <span class="card-read">11 min read</span>
+          <span class="card-read">11 мин. чтения</span>
         </div>
-        <h3 class="card-title card-title-sm">On-Page SEO: complete guide 2026</h3>
-        <p class="card-desc">Title, meta description, H1-H6, content, internal linking, Core Web Vitals. Practical checklist.</p>
+        <h3 class="card-title card-title-sm">On-Page SEO: полное руководство 2026</h3>
+        <p class="card-desc">Title, meta description, H1-H6, контент, внутренние ссылки, Core Web Vitals. Практический чеклист.</p>
         <div class="card-footer">
           <div class="card-author">
             <div class="author-avatar">IF</div>
@@ -716,15 +716,15 @@
         <div class="card-icon">🔗</div>
       </div>
       <div class="card-body">
-        <div class="article-meta">
+        <div class="card-meta">
           <span class="card-tag tag-seo">SEO</span>
           <span class="card-dot"></span>
-          <span class="card-date">June 29, 2026</span>
+          <span class="card-date">29 июня 2026</span>
           <span class="card-dot"></span>
-          <span class="card-read">10 min read</span>
+          <span class="card-read">10 мин. чтения</span>
         </div>
-        <h3 class="card-title card-title-sm">Backlink building for small business in 2026</h3>
-        <p class="card-desc">7 methods to get quality links without budget: Digital PR, directories, guest posting.</p>
+        <h3 class="card-title card-title-sm">Линкбилдинг для малого бизнеса в 2026 году</h3>
+        <p class="card-desc">7 методов получить качественные ссылки без бюджета: Digital PR, каталоги, гостевые публикации.</p>
         <div class="card-footer">
           <div class="card-author">
             <div class="author-avatar">IF</div>
@@ -735,7 +735,6 @@
       </div>
     </a>
 
-    <!-- Coming soon cards -->
     <a href="/blog/google-search-console-posibnyk.html" class="article-card" data-tags="seo">
       <div class="card-visual" style="min-height:140px;">
         <div class="card-icon">🔍</div>
@@ -743,235 +742,235 @@
       <div class="card-body">
         <div class="card-meta">
           <span class="card-tag tag-seo">SEO</span>
-          <span class="card-date">February 10, 2026</span>
+          <span class="card-date">10 февраля 2026</span>
           <span class="card-dot"></span>
-          <span class="card-read">12 min read</span>
+          <span class="card-read">12 мин. чтения</span>
         </div>
-        <h3 class="card-title card-title-sm">Google Search Console: complete guide 2026</h3>
-        <p class="card-desc">How to set up, read reports and use to speed up indexing.</p>
+        <h3 class="card-title card-title-sm">Google Search Console: полное руководство 2026</h3>
+        <p class="card-desc">Как настроить, читать отчёты и использовать для ускорения индексации.</p>
         <div class="card-footer">
           <span class="card-arrow">→</span>
         </div>
       </div>
     </a>
 
-    <a href="/blog/cron-jobs-dlya-seo.html" class="article-card" data-tags="tech">
+    <a href="/blog/cron-jobs-dlya-seo.html" class="article-card" data-tags="">
       <div class="card-visual" style="min-height:140px;">
         <div class="card-icon">⚙️</div>
       </div>
       <div class="card-body">
         <div class="card-meta">
-          <span class="card-tag tag-tech">Technical</span>
-          <span class="card-date">March 5, 2026</span>
+          <span class="card-tag tag-tech">Техническое</span>
+          <span class="card-date">5 марта 2026</span>
           <span class="card-dot"></span>
-          <span class="card-read">9 min read</span>
+          <span class="card-read">9 мин. чтения</span>
         </div>
-        <h3 class="card-title card-title-sm">Cron jobs for SEO: automate the routine</h3>
-        <p class="card-desc">How to set up automatic script execution on the server — step-by-step guide.</p>
+        <h3 class="card-title card-title-sm">Cron jobs для SEO: автоматизируем рутину</h3>
+        <p class="card-desc">Как настроить автоматический запуск скриптов на сервере — пошаговая инструкция.</p>
         <div class="card-footer">
           <span class="card-arrow">→</span>
         </div>
       </div>
     </a>
 
-    <a href="/blog/core-web-vitals-2026.html" class="article-card" data-tags="guide">
+    <a href="/blog/core-web-vitals-2026.html" class="article-card" data-tags="">
       <div class="card-visual" style="min-height:140px;">
         <div class="card-icon">📊</div>
       </div>
       <div class="card-body">
         <div class="card-meta">
-          <span class="card-tag tag-guide">Guide</span>
-          <span class="card-date">March 20, 2026</span>
+          <span class="card-tag tag-guide">Гайд</span>
+          <span class="card-date">20 марта 2026</span>
           <span class="card-dot"></span>
-          <span class="card-read">10 min read</span>
+          <span class="card-read">10 мин. чтения</span>
         </div>
-        <h3 class="card-title card-title-sm">Core Web Vitals 2026: what is important to know</h3>
-        <p class="card-desc">LCP, CLS, INP — how they affect ranking and what to do to improve them.</p>
+        <h3 class="card-title card-title-sm">Core Web Vitals 2026: что важно знать</h3>
+        <p class="card-desc">LCP, CLS, INP — как они влияют на ранжирование и что делать для улучшения.</p>
         <div class="card-footer">
           <span class="card-arrow">→</span>
         </div>
       </div>
     </a>
 
-    <a href="/blog/yak-pereviriti-indeksaciyu-saitu.html" class="article-card" data-tags="seo guide">
+    <a href="/blog/yak-pereviriti-indeksaciyu-saitu.html" class="article-card" data-tags="seo ">
       <div class="card-visual">
         <div style="font-size:2.5rem">🔍</div>
-        <div class="card-tags"><span class="card-tag">SEO</span><span class="card-tag">Guide</span></div>
+        <div class="card-tags"><span class="card-tag">SEO</span><span class="card-tag">Гид</span></div>
       </div>
       <div class="card-body">
-        <div class="card-meta"><span class="card-date">March 10, 2026</span><span class="card-read">7 min</span></div>
-        <h3 class="card-title card-title-sm">How to check site indexing in Google — 7 methods</h3>
-        <p class="card-desc">From the site: operator to Search Console and third-party tools — all ways to find out if Google sees your site.</p>
-        <span class="card-arrow">Read →</span>
+        <div class="card-meta"><span class="card-date">10 марта 2026</span><span class="card-read">7 мин. чтения</span></div>
+        <h3 class="card-title card-title-sm">Как проверить индексацию сайта в Google — 7 методов</h3>
+        <p class="card-desc">От оператора site: до Search Console и сторонних инструментов — все способы узнать, видит ли Google ваш сайт.</p>
+        <span class="card-arrow">Читать →</span>
       </div>
     </a>
 
-    <a href="/blog/google-indexing-api-vs-sitemap.html" class="article-card" data-tags="tech">
+    <a href="/blog/google-indexing-api-vs-sitemap.html" class="article-card" data-tags=" api">
       <div class="card-visual">
         <div style="font-size:2.5rem">⚡</div>
-        <div class="card-tags"><span class="card-tag">Comparison</span><span class="card-tag">API</span></div>
+        <div class="card-tags"><span class="card-tag">Сравнение</span><span class="card-tag">API</span></div>
       </div>
       <div class="card-body">
-        <div class="card-meta"><span class="card-date">April 5, 2026</span><span class="card-read">9 min</span></div>
-        <h3 class="card-title card-title-sm">Google Indexing API vs Sitemap — what is more effective?</h3>
-        <p class="card-desc">Detailed comparison of two approaches: who is faster, where are the limits and how to combine both methods for maximum result.</p>
-        <span class="card-arrow">Read →</span>
+        <div class="card-meta"><span class="card-date">5 апреля 2026</span><span class="card-read">9 мин. чтения</span></div>
+        <h3 class="card-title card-title-sm">Google Indexing API vs Sitemap — что эффективнее</h3>
+        <p class="card-desc">Детальное сравнение двух подходов: кто быстрее, где лимиты и как совместить оба метода для максимального результата.</p>
+        <span class="card-arrow">Читать →</span>
       </div>
     </a>
 
-    <a href="/blog/chomu-sait-ne-indeksuyetsya.html" class="article-card" data-tags="seo">
+    <a href="/blog/chomu-sait-ne-indeksuyetsya.html" class="article-card" data-tags=" seo">
       <div class="card-visual">
         <div style="font-size:2.5rem">🚫</div>
-        <div class="card-tags"><span class="card-tag">Diagnosis</span><span class="card-tag">SEO</span></div>
+        <div class="card-tags"><span class="card-tag">Диагностика</span><span class="card-tag">SEO</span></div>
       </div>
       <div class="card-body">
-        <div class="card-meta"><span class="card-date">May 12, 2026</span><span class="card-read">11 min</span></div>
-        <h3 class="card-title card-title-sm">Why the site is not indexed in Google — 12 reasons</h3>
-        <p class="card-desc">Noindex, robots.txt, duplicates, slow site, penalties — we analyze each cause and what to do to fix it.</p>
-        <span class="card-arrow">Read →</span>
+        <div class="card-meta"><span class="card-date">12 мая 2026</span><span class="card-read">11 мин. чтения</span></div>
+        <h3 class="card-title card-title-sm">Почему сайт не индексируется в Google — 12 причин</h3>
+        <p class="card-desc">Noindex, robots.txt, дубли, медленный сайт, санкции — разбираем каждую причину и что конкретно делать для исправления.</p>
+        <span class="card-arrow">Читать →</span>
       </div>
     </a>
 
-    <a href="/blog/seo-dlya-internet-magazynu.html" class="article-card" data-tags="seo">
+    <a href="/blog/seo-dlya-internet-magazynu.html" class="article-card" data-tags="ecommerce seo">
       <div class="card-visual">
         <div style="font-size:2.5rem">🛒</div>
         <div class="card-tags"><span class="card-tag">E-commerce</span><span class="card-tag">SEO</span></div>
       </div>
       <div class="card-body">
-        <div class="card-meta"><span class="card-date">June 20, 2026</span><span class="card-read">10 min</span></div>
-        <h3 class="card-title card-title-sm">SEO for online store: indexing products and categories</h3>
-        <p class="card-desc">Crawl budget, variant duplicates, filters generating thousands of URLs — all e-commerce SEO challenges and solutions.</p>
-        <span class="card-arrow">Read →</span>
+        <div class="card-meta"><span class="card-date">20 июня 2026</span><span class="card-read">10 мин. чтения</span></div>
+        <h3 class="card-title card-title-sm">SEO для интернет-магазина: индексация товаров и категорий</h3>
+        <p class="card-desc">Crawl budget, дубли вариантов, фильтры, генерирующие тысячи URL — разбираем все e-commerce SEO вызовы и решения.</p>
+        <span class="card-arrow">Читать →</span>
       </div>
     </a>
 
-    <a href="/blog/wordpress-indeksaciya.html" class="article-card" data-tags="tech guide">
+    <a href="/blog/wordpress-indeksaciya.html" class="article-card" data-tags="wordpress ">
       <div class="card-visual">
         <div style="font-size:2.5rem">🔵</div>
-        <div class="card-tags"><span class="card-tag">WordPress</span><span class="card-tag">Guide</span></div>
+        <div class="card-tags"><span class="card-tag">WordPress</span><span class="card-tag">Гайд</span></div>
       </div>
       <div class="card-body">
-        <div class="card-meta"><span class="card-date">July 15, 2026</span><span class="card-read">9 min</span></div>
-        <h3 class="card-title card-title-sm">WordPress indexing: Yoast SEO setup and common mistakes</h3>
-        <p class="card-desc">Attachment pages, duplicate tags, author archives — how to fix typical WordPress SEO problems in 30 minutes.</p>
-        <span class="card-arrow">Read →</span>
+        <div class="card-meta"><span class="card-date">15 июля 2026</span><span class="card-read">9 мин. чтения</span></div>
+        <h3 class="card-title card-title-sm">Индексация WordPress: настройка Yoast SEO и типичные ошибки</h3>
+        <p class="card-desc">Attachment pages, дубли-теги, архивы авторов — как за 30 минут избавиться от типичных WordPress SEO-проблем.</p>
+        <span class="card-arrow">Читать →</span>
       </div>
     </a>
 
-    <a href="/blog/lokalne-seo.html" class="article-card" data-tags="seo guide">
+    <a href="/blog/lokalne-seo.html" class="article-card" data-tags="seo ">
       <div class="card-visual">
         <div style="font-size:2.5rem">📍</div>
-        <div class="card-tags"><span class="card-tag">Local SEO</span><span class="card-tag">Guide</span></div>
+        <div class="card-tags"><span class="card-tag">Локальное SEO</span><span class="card-tag">Гайд</span></div>
       </div>
       <div class="card-body">
-        <div class="card-meta"><span class="card-date">August 10, 2026</span><span class="card-read">10 min</span></div>
-        <h3 class="card-title card-title-sm">Local SEO: how to get into Google Maps and top search results</h3>
-        <p class="card-desc">Google Business Profile, reviews, NAP consistency, Schema.org LocalBusiness — complete guide for local businesses.</p>
-        <span class="card-arrow">Read →</span>
+        <div class="card-meta"><span class="card-date">10 августа 2026</span><span class="card-read">10 мин. чтения</span></div>
+        <h3 class="card-title card-title-sm">Локальное SEO: как попасть в Google Maps и топ поиска</h3>
+        <p class="card-desc">Google Бизнес-профиль, отзывы, NAP-консистентность, Schema.org LocalBusiness — полный гид для местного бизнеса.</p>
+        <span class="card-arrow">Читать →</span>
       </div>
     </a>
 
-    <a href="/blog/seo-audit-checklyst.html" class="article-card" data-tags="seo guide">
+    <a href="/blog/seo-audit-checklyst.html" class="article-card" data-tags=" ">
       <div class="card-visual">
         <div style="font-size:2.5rem">✅</div>
-        <div class="card-tags"><span class="card-tag">Audit</span><span class="card-tag">Checklist</span></div>
+        <div class="card-tags"><span class="card-tag">Аудит</span><span class="card-tag">Чеклист</span></div>
       </div>
       <div class="card-body">
-        <div class="card-meta"><span class="card-date">September 5, 2026</span><span class="card-read">12 min</span></div>
-        <h3 class="card-title card-title-sm">SEO site audit: complete checklist with 50 points</h3>
-        <p class="card-desc">From robots.txt and Core Web Vitals to E-E-A-T and link quality — 50 specific points for an independent SEO audit.</p>
-        <span class="card-arrow">Read →</span>
+        <div class="card-meta"><span class="card-date">5 сентября 2026</span><span class="card-read">12 мин. чтения</span></div>
+        <h3 class="card-title card-title-sm">SEO аудит сайта: полный чеклист из 50 пунктов</h3>
+        <p class="card-desc">От robots.txt и Core Web Vitals до E-E-A-T и качества ссылок — 50 конкретных пунктов для самостоятельного SEO-аудита.</p>
+        <span class="card-arrow">Читать →</span>
       </div>
     </a>
 
-    <a href="/blog/shvydkist-saitu-seo.html" class="article-card" data-tags="tech guide">
+    <a href="/blog/shvydkist-saitu-seo.html" class="article-card" data-tags=" corewebvitals">
       <div class="card-visual">
         <div style="font-size:2.5rem">⚡</div>
-        <div class="card-tags"><span class="card-tag">Speed</span><span class="card-tag">Core Web Vitals</span></div>
+        <div class="card-tags"><span class="card-tag">Скорость</span><span class="card-tag">Core Web Vitals</span></div>
       </div>
       <div class="card-body">
-        <div class="card-meta"><span class="card-date">October 20, 2026</span><span class="card-read">11 min</span></div>
-        <h3 class="card-title card-title-sm">Site speed and SEO: Core Web Vitals, LCP, INP, CLS</h3>
-        <p class="card-desc">How site speed affects Google rankings, how to measure Core Web Vitals and practically improve each metric.</p>
-        <span class="card-arrow">Read →</span>
+        <div class="card-meta"><span class="card-date">20 октября 2026</span><span class="card-read">11 мин. чтения</span></div>
+        <h3 class="card-title card-title-sm">Скорость сайта и SEO: Core Web Vitals, LCP, INP, CLS</h3>
+        <p class="card-desc">Как скорость сайта влияет на позиции в Google, как измерить Core Web Vitals и практически улучшить каждую метрику.</p>
+        <span class="card-arrow">Читать →</span>
       </div>
     </a>
 
-    <a href="/blog/masova-indeksaciya-saitu.html" class="article-card" data-tags="seo">
+    <a href="/blog/masova-indeksaciya-saitu.html" class="article-card" data-tags=" seo">
       <div class="card-visual">
         <div style="font-size:2.5rem">🚀</div>
-        <div class="card-tags"><span class="card-tag">Solution</span><span class="card-tag">SEO</span></div>
+        <div class="card-tags"><span class="card-tag">Решение</span><span class="card-tag">SEO</span></div>
       </div>
       <div class="card-body">
-        <div class="card-meta"><span class="card-date">November 15, 2026</span><span class="card-read">9 min</span></div>
-        <h3 class="card-title card-title-sm">Mass site indexing: how to index 500+ pages in 24 hours</h3>
-        <p class="card-desc">Why Google doesn't index all pages and how to solve this systematically via Google Indexing API — without manual work.</p>
-        <span class="card-arrow">Read →</span>
+        <div class="card-meta"><span class="card-date">15 ноября 2026</span><span class="card-read">9 мин. чтения</span></div>
+        <h3 class="card-title card-title-sm">Массовая индексация сайта: как проиндексировать 500+ страниц за 24 часа</h3>
+        <p class="card-desc">Почему Google не индексирует все страницы и как решить это системно через Google Indexing API — без ручной работы.</p>
+        <span class="card-arrow">Читать →</span>
       </div>
     </a>
 
-    <a href="/blog/indeksaciya-pislya-redyzajnu.html" class="article-card" data-tags="seo">
+    <a href="/blog/indeksaciya-pislya-redyzajnu.html" class="article-card" data-tags="seo ">
       <div class="card-visual">
         <div style="font-size:2.5rem">🔄</div>
-        <div class="card-tags"><span class="card-tag">SEO</span><span class="card-tag">Redesign</span></div>
+        <div class="card-tags"><span class="card-tag">SEO</span><span class="card-tag">Редизайн</span></div>
       </div>
       <div class="card-body">
-        <div class="card-meta"><span class="card-date">December 5, 2026</span><span class="card-read">9 min</span></div>
-        <h3 class="card-title card-title-sm">Indexing after redesign: how not to lose traffic</h3>
-        <p class="card-desc">301 redirects, updated sitemap and mass reindexing via API — step-by-step plan so Google sees the new site as soon as possible.</p>
-        <span class="card-arrow">Read →</span>
+        <div class="card-meta"><span class="card-date">5 декабря 2026</span><span class="card-read">9 мин. чтения</span></div>
+        <h3 class="card-title card-title-sm">Индексация после редизайна: как не потерять трафик</h3>
+        <p class="card-desc">301-редиректы, обновлённый sitemap и массовая переиндексация через API — пошаговый план, чтобы Google увидел новый сайт как можно быстрее.</p>
+        <span class="card-arrow">Читать →</span>
       </div>
     </a>
 
-    <a href="/blog/avtomatychna-indeksaciya.html" class="article-card" data-tags="tech">
+    <a href="/blog/avtomatychna-indeksaciya.html" class="article-card" data-tags=" api">
       <div class="card-visual">
         <div style="font-size:2.5rem">⚙️</div>
-        <div class="card-tags"><span class="card-tag">Automation</span><span class="card-tag">API</span></div>
+        <div class="card-tags"><span class="card-tag">Автоматизация</span><span class="card-tag">API</span></div>
       </div>
       <div class="card-body">
-        <div class="card-meta"><span class="card-date">December 20, 2026</span><span class="card-read">10 min</span></div>
-        <h3 class="card-title card-title-sm">Automatic indexing in Google: set up once — works always</h3>
-        <p class="card-desc">Three ways to automate sending new pages to Google: own script, WordPress plugins and IndexFast without code.</p>
-        <span class="card-arrow">Read →</span>
+        <div class="card-meta"><span class="card-date">20 декабря 2026</span><span class="card-read">10 мин. чтения</span></div>
+        <h3 class="card-title card-title-sm">Автоматическая индексация в Google: настройте раз — работает всегда</h3>
+        <p class="card-desc">Три способа автоматизировать отправку новых страниц в Google: собственный скрипт, WordPress-плагины и IndexFast без кода.</p>
+        <span class="card-arrow">Читать →</span>
       </div>
     </a>
 
-    <a href="/blog/best-google-indexing-tools-2026.html" class="article-card" data-tags="seo">
+    <a href="/blog/best-google-indexing-tools-2026.html" class="article-card" data-tags=" seo">
       <div class="card-visual">
         <div style="font-size:2.5rem">🛠️</div>
-        <div class="card-tags"><span class="card-tag">Tools</span><span class="card-tag">SEO</span></div>
+        <div class="card-tags"><span class="card-tag">Инструменты</span><span class="card-tag">SEO</span></div>
       </div>
       <div class="card-body">
-        <div class="card-meta"><span class="card-date">December 25, 2026</span><span class="card-read">10 min</span></div>
-        <h3 class="card-title card-title-sm">Best tools for indexing sites in Google (2026)</h3>
-        <p class="card-desc">Review of the most popular platforms: IndexFast, SpeedyIndex, Omega Indexer. Which service works best?</p>
-        <span class="card-arrow">Read →</span>
+        <div class="card-meta"><span class="card-date">25 декабря 2026</span><span class="card-read">10 мин. чтения</span></div>
+        <h3 class="card-title card-title-sm">Лучшие инструменты для индексации сайта в Google (2026)</h3>
+        <p class="card-desc">Обзор самых популярных платформ: IndexFast, SpeedyIndex, Omega Indexer. Какой сервис работает лучше всего?</p>
+        <span class="card-arrow">Читать →</span>
       </div>
     </a>
 
-    <a href="/blog/indexfast-vs-omega-indexer.html" class="article-card" data-tags="seo">
+    <a href="/blog/indexfast-vs-omega-indexer.html" class="article-card" data-tags="">
       <div class="card-visual">
         <div style="font-size:2.5rem">⚔️</div>
-        <div class="card-tags"><span class="card-tag">Comparison</span></div>
+        <div class="card-tags"><span class="card-tag">Сравнение</span></div>
       </div>
       <div class="card-body">
-        <div class="card-meta"><span class="card-date">December 28, 2026</span><span class="card-read">8 min</span></div>
-        <h3 class="card-title card-title-sm">IndexFast vs Omega Indexer: which is better?</h3>
-        <p class="card-desc">Detailed comparison of two indexing services: pricing, speed, link quality.</p>
-        <span class="card-arrow">Read →</span>
+        <div class="card-meta"><span class="card-date">28 декабря 2026</span><span class="card-read">8 мин. чтения</span></div>
+        <h3 class="card-title card-title-sm">IndexFast vs Omega Indexer: что лучше выбрать?</h3>
+        <p class="card-desc">Детальное сравнение двух сервисов индексации: цены, скорость работы, качество ссылок.</p>
+        <span class="card-arrow">Читать →</span>
       </div>
     </a>
 
-    <a href="/blog/indexfast-vs-speedyindex.html" class="article-card" data-tags="seo">
+    <a href="/blog/indexfast-vs-speedyindex.html" class="article-card" data-tags="">
       <div class="card-visual">
         <div style="font-size:2.5rem">⚡</div>
-        <div class="card-tags"><span class="card-tag">Comparison</span></div>
+        <div class="card-tags"><span class="card-tag">Сравнение</span></div>
       </div>
       <div class="card-body">
-        <div class="card-meta"><span class="card-date">December 30, 2026</span><span class="card-read">8 min</span></div>
-        <h3 class="card-title card-title-sm">IndexFast vs SpeedyIndex: objective test 2026</h3>
-        <p class="card-desc">We tested both tools on the same link pools. Who indexed pages faster?</p>
-        <span class="card-arrow">Read →</span>
+        <div class="card-meta"><span class="card-date">30 декабря 2026</span><span class="card-read">8 мин. чтения</span></div>
+        <h3 class="card-title card-title-sm">IndexFast vs SpeedyIndex: объективный тест 2026</h3>
+        <p class="card-desc">Мы протестировали оба инструмента на одинаковых пулах ссылок. Кто быстрее загнал страницы в индекс?</p>
+        <span class="card-arrow">Читать →</span>
       </div>
     </a>
 
@@ -981,12 +980,12 @@
 <div class="newsletter">
   <div class="newsletter-inner">
     <div class="newsletter-text">
-      <h3>New articles — to your inbox 📬</h3>
-      <p>Once a week — a useful article about SEO and indexing. No spam.</p>
+      <h3>Новые статьи — на почту 📬</h3>
+      <p>Раз в неделю — полезная статья про SEO и индексацию. Без спама.</p>
     </div>
     <div class="newsletter-form">
       <input type="email" class="newsletter-input" placeholder="your@email.com">
-      <button class="newsletter-btn" onclick="subscribeNewsletter(this)">Subscribe</button>
+      <button class="newsletter-btn" onclick="subscribeNewsletter(this)">Подписаться</button>
     </div>
   </div>
 </div>
@@ -994,45 +993,45 @@
 <footer role="contentinfo">
   <div class="footer-grid">
     <div class="footer-brand">
-      <a href="/" class="logo">Index<span>Fast</span></a>
-      <p>Automatic website page indexing service in Google through the official Google Indexing API.</p>
+      <a href="/ru/" class="logo">Index<span>Fast</span></a>
+      <p>Сервис автоматической индексации страниц сайта в Google через официальный Google Indexing API.</p>
     </div>
     <div class="footer-col">
-      <p class="footer-title">Product</p>
+      <p class="footer-title">Продукт</p>
       <ul>
-        <li><a href="/#how-it-works">How it works</a></li>
-        <li><a href="/#features">Advantages</a></li>
-        <li><a href="/#pricing">Pricing</a></li>
-        <li><a href="/docs/">Docs</a></li>
+        <li><a href="/ru/#how-it-works">Как это работает</a></li>
+        <li><a href="/ru/#features">Преимущества</a></li>
+        <li><a href="/ru/#pricing">Цены</a></li>
+        <li><a href="/docs/">Документация</a></li>
       </ul>
     </div>
     <div class="footer-col">
-      <p class="footer-title">Company</p>
+      <p class="footer-title">Компания</p>
       <ul>
-        <li><a href="/about.html">About us</a></li>
-        <li><a href="/blog/">Blog</a></li>
-        <li><a href="/affiliate.html">Affiliate program</a></li>
-        <li><a href="/contacts.html">Contacts</a></li>
+        <li><a href="/ru/about.html">О нас</a></li>
+        <li><a href="/ru/blog/">Блог</a></li>
+        <li><a href="/ru/affiliate.html">Партнерская программа</a></li>
+        <li><a href="/ru/contacts.html">Контакты</a></li>
       </ul>
     </div>
     <div class="footer-col">
-      <p class="footer-title">Support</p>
+      <p class="footer-title">Поддержка</p>
       <ul>
-        <li><a href="/#faq">FAQ</a></li>
-        <li><a href="https://t.me/indexfastgoogle" target="_blank" rel="noopener noreferrer">Telegram chat</a></li>
-        <li><a href="mailto:indexfastapp@gmail.com">Email support</a></li>
-        <li><a href="/status.html">Service status</a></li>
+        <li><a href="/ru/#faq">FAQ</a></li>
+        <li><a href="https://t.me/indexfastgoogle" target="_blank" rel="noopener noreferrer">Чат Telegram</a></li>
+        <li><a href="mailto:indexfastapp@gmail.com">Email поддержка</a></li>
+        <li><a href="/ru/status.html">Статус сервиса</a></li>
       </ul>
     </div>
   </div>
   <div class="footer-bottom">
-    <p>© 2026 IndexFast. All rights reserved.</p>
+    <p>© 2026 IndexFast. Все права защищены.</p>
     <div style="display:flex; gap:20px;">
-      <a href="/privacy-policy.html">Privacy</a>
-      <a href="/terms.html">Terms</a>
+      <a href="/ru/privacy-policy.html">Конфиденциальность</a>
+      <a href="/ru/terms.html">Условия</a>
     </div>
   </div>
-  <button id="backToTop" class="back-to-top" aria-label="Up">
+  <button id="backToTop" class="back-to-top" aria-label="Наверх">
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
   </button>
 </footer>
@@ -1058,7 +1057,7 @@
       setTimeout(() => input.style.borderColor = '', 1500);
       return;
     }
-    btn.textContent = '✓ Subscribed!';
+    btn.textContent = '✓ Подписано!';
     btn.style.background = '#00c96a';
     btn.disabled = true;
     input.disabled = true;
