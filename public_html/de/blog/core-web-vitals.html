@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
   <meta charset="UTF-8">
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
@@ -9,16 +9,16 @@
   <link rel="manifest" href="/site.webmanifest">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Core Web Vitals: What You Need to Know — IndexFast</title>
-  <meta name="description" content="LCP, CLS, INP — how Core Web Vitals affect Google rankings and what to do to improve them. Practical guide.">
+  <title>Core Web Vitals: Was Sie wissen müssen — IndexFast</title>
+  <meta name="description" content="LCP, CLS, INP — wie Core Web Vitals die Google-Rankings beeinflussen und was zu tun ist, um sie zu verbessern. Praktischer Leitfaden.">
   
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
   <link rel="canonical" href="https://indexfast.pro/blog/core-web-vitals.html">
 
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://indexfast.pro/blog/core-web-vitals.html">
-  <meta property="og:title" content="Core Web Vitals: What You Need to Know — IndexFast">
-  <meta property="og:description" content="LCP, CLS, INP — how Core Web Vitals affect Google rankings and what to do to improve them. Practical guide.">
+  <meta property="og:title" content="Core Web Vitals: Was Sie wissen müssen — IndexFast">
+  <meta property="og:description" content="LCP, CLS, INP — wie Core Web Vitals die Google-Rankings beeinflussen und was zu tun ist, um sie zu verbessern. Praktischer Leitfaden.">
   <meta property="og:image" content="https://indexfast.pro/blog-images/blog_core_web_vitals.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -31,9 +31,9 @@
   {
     "@context": "https://schema.org",
     "@type": "Article",
-    "headline": "Core Web Vitals: What You Need to Know — IndexFast",
-    "description": "LCP, CLS, INP — how Core Web Vitals affect Google rankings and what to do to improve them. Practical guide.",
-    "inLanguage": "en",
+    "headline": "Core Web Vitals: Was Sie wissen müssen — IndexFast",
+    "description": "LCP, CLS, INP — wie Core Web Vitals die Google-Rankings beeinflussen und was zu tun ist, um sie zu verbessern. Praktischer Leitfaden.",
+    "inLanguage": "de",
     "author": {
       "@type": "Organization",
       "name": "IndexFast",
@@ -65,8 +65,8 @@
   </script>
 
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Core Web Vitals: What You Need to Know — IndexFast">
-  <meta name="twitter:description" content="LCP, CLS, INP — how Core Web Vitals affect Google rankings and what to do to improve them. Practical guide.">
+  <meta name="twitter:title" content="Core Web Vitals: Was Sie wissen müssen — IndexFast">
+  <meta name="twitter:description" content="LCP, CLS, INP — wie Core Web Vitals die Google-Rankings beeinflussen und was zu tun ist, um sie zu verbessern. Praktischer Leitfaden.">
   <meta name="twitter:image" content="https://indexfast.pro/blog-images/blog_core_web_vitals.png">
 
   <script type="application/ld+json">
@@ -74,9 +74,9 @@
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     "itemListElement": [
-      { "@type": "ListItem", "position": 1, "name": "Головна", "item": "https://indexfast.pro/" },
-      { "@type": "ListItem", "position": 2, "name": "Блог", "item": "https://indexfast.pro/blog/" },
-      { "@type": "ListItem", "position": 3, "name": "Core Web Vitals: What You Need to Know", "item": "https://indexfast.pro/blog/core-web-vitals.html" }
+      { "@type": "ListItem", "position": 1, "name": "Startseite", "item": "https://indexfast.pro/" },
+      { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://indexfast.pro/blog/" },
+      { "@type": "ListItem", "position": 3, "name": "Core Web Vitals: Was Sie wissen müssen", "item": "https://indexfast.pro/blog/core-web-vitals.html" }
     ]
   }
   </script>
@@ -99,7 +99,7 @@ html { overflow-y: scroll !important; }
 </head>
 <body>
 
-<nav id="navbar" role="navigation" aria-label="Main menu" class="">
+<nav id="navbar" role="navigation" aria-label="Hauptmenü" class="">
     <a href="/de/" class="logo" aria-label="IndexFast">Index<span>Fast</span></a>
     <ul class="nav-links">
       <li><a href="/de/#how-it-works">Wie es funktioniert</a></li>
@@ -116,8 +116,8 @@ html { overflow-y: scroll !important; }
       <div class="nav-lang-dropdown">
         <button class="nav-lang-btn">DE ▾</button>
         <div class="nav-lang-menu">
-        <a href="/blog/core-web-vitals.html">English</a>
-        <a href="/uk/blog/core-web-vitals.html">Українська</a>
+        <a href="/de/blog/core-web-vitals.html">English</a>
+        <a href="/uk/blog/core-web-vitals.html">Ukrainisch</a>
         <a href="/pl/blog/core-web-vitals.html">Polski</a>
         <a href="/ru/blog/core-web-vitals.html">Русский</a>
         <a href="/de/blog/core-web-vitals.html" class="active">Deutsch</a>
@@ -128,7 +128,7 @@ html { overflow-y: scroll !important; }
       </div>
       <a href="/app/login" class="nav-login">Anmelden</a>
       <a href="/app/register" class="nav-cta">Kostenlos starten →</a>
-      <button class="mobile-menu-btn" onclick="document.querySelector('.nav-links').classList.toggle('active')" aria-label="Main menu">☰</button>
+      <button class="mobile-menu-btn" onclick="document.querySelector('.nav-links').classList.toggle('active')" aria-label="Hauptmenü">☰</button>
     </div>
   </nav>
 
@@ -139,21 +139,21 @@ html { overflow-y: scroll !important; }
       
       
       
-      <span class="meta-tag">Гайд</span>
-      <span class="meta-tag" style="background:rgba(255,208,96,0.08);border-color:rgba(255,208,96,0.2);color:#ffd060;">Швидкість</span>
-      <span class="meta-date">20 березня 2026</span>
-      <span class="meta-read">⏱ 10 хвилин читання</span>
+      <span class="meta-tag">Leitfaden</span>
+      <span class="meta-tag" style="background:rgba(255,208,96,0.08);border-color:rgba(255,208,96,0.2);color:#ffd060;">Geschwindigkeit</span>
+      <span class="meta-date">20. März 2026</span>
+      <span class="meta-read">⏱ 10 Minuten Lesezeit</span>
     
     
     
     
     </div>
 
-    <h1>Core Web Vitals: What You Need to Know</h1>
-    <img src="/blog-images/blog_core_web_vitals.png" alt="Core Web Vitals 2026 - LCP CLS INP метрики продуктивності" loading="lazy" decoding="async" class="article-main-image" style="width:100%; border-radius:16px; margin: 24px 0; object-fit: cover; aspect-ratio: 1200/630;">
+    <h1>Core Web Vitals: Was Sie wissen müssen</h1>
+    <img src="/blog-images/blog_core_web_vitals.png" alt="Core Web Vitals 2026 LCP CLS INP" loading="lazy" decoding="async" class="article-main-image" style="width:100%; border-radius:16px; margin: 24px 0; object-fit: cover; aspect-ratio: 1200/630;">
 
     <p class="article-lead">
-      Core Web Vitals are three Google metrics that measure the real user experience on a site. Since 2021 they have been an official ranking factor. In 2024 INP replaced FID. Let's break down each metric and how to improve it.
+      Core Web Vitals sind drei Google-Metriken, die die tatsächliche Benutzererfahrung auf einer Website messen. Seit 2021 sind sie ein offizieller Rankingfaktor. 2024 wurde INP durch FID ersetzt. Lassen Sie uns jede Metrik aufschlüsseln und wie man sie verbessert.
     </p>
 
     <div class="article-body">
@@ -162,131 +162,131 @@ html { overflow-y: scroll !important; }
       
       
 
-      <h2 id="what-are">What are Core Web Vitals</h2>
-      <p>Core Web Vitals (CWV) is a subset of Page Experience signals used by Google for ranking. Unlike Lighthouse lab tests, CWV are measured on real users via Chrome User Experience Report (CrUX).</p>
-      <p>The three current CWV metrics:</p>
+      <h2 id="what-are">Was sind Core Web Vitals</h2>
+      <p>Core Web Vitals (CWV) sind eine Teilmenge von Page Experience-Signalen, die Google für das Ranking verwendet. Im Gegensatz zu Lighthouse-Labortests werden CWV bei echten Nutzern über den Chrome User Experience Report (CrUX) gemessen.</p>
+      <p>Die drei aktuellen CWV-Metriken:</p>
 
       <div class="metric-grid">
         <div class="metric-card good">
           <div class="metric-icon">🖼️</div>
           <div class="metric-name">LCP</div>
-          <div class="metric-val green">≤ 2.5с</div>
-          <div class="metric-label">Largest Contentful Paint<br>Loading of main content</div>
+          <div class="metric-val green">≤ 2.5s</div>
+          <div class="metric-label">Largest Contentful Paint<br>Laden des Hauptinhalts</div>
         </div>
         <div class="metric-card needs">
           <div class="metric-icon">⬜</div>
           <div class="metric-name">CLS</div>
           <div class="metric-val green">≤ 0.1</div>
-          <div class="metric-label">Cumulative Layout Shift<br>Layout stability</div>
+          <div class="metric-label">Cumulative Layout Shift<br>Layout-Stabilität</div>
         </div>
         <div class="metric-card poor">
           <div class="metric-icon">👆</div>
           <div class="metric-name">INP</div>
-          <div class="metric-val green">≤ 200мс</div>
-          <div class="metric-label">Interaction to Next Paint<br>Response to interaction</div>
+          <div class="metric-val green">≤ 200ms</div>
+          <div class="metric-label">Interaction to Next Paint<br>Reaktion auf Interaktion</div>
         </div>
       </div>
 
       <div class="tip-box">
-        <strong>📌 Good vs Poor</strong>
-        <p>For each metric: green = good, yellow = needs improvement, red = poor. Google targets the 75th percentile.</p>
+        <strong>📌 Gut vs Schlecht</strong>
+        <p>Für jede Metrik: grün = gut, gelb = muss verbessert werden, rot = schlecht. Google zielt auf das 75. Perzentil ab.</p>
       </div>
 
       <h2 id="lcp">LCP — Largest Contentful Paint</h2>
-      <p>LCP measures the time until the largest visible element on the page is displayed — usually a hero image or H1.</p>
+      <p>LCP misst die Zeit bis das größte sichtbare Element auf der Seite angezeigt wird — normalerweise ein Hero-Bild oder H1.</p>
 
       <table class="compare-table">
-        <thead><tr><th>Value</th><th>Rating</th></tr></thead>
+        <thead><tr><th>Wert</th><th>Bewertung</th></tr></thead>
         <tbody>
-          <tr><td>≤ 2.5 seconds</td><td>✅ Good</td></tr>
-          <tr><td>2.5 – 4.0 seconds</td><td>⚠️ Needs improvement</td></tr>
-          <tr><td>&gt; 4.0 секунди</td><td>❌ Poor</td></tr>
+          <tr><td>≤ 2.5 Sekunden</td><td>✅ Gut</td></tr>
+          <tr><td>2.5 – 4.0 Sekunden</td><td>⚠️ Muss verbessert werden</td></tr>
+          <tr><td>&gt; 4.0 Sekunden</td><td>❌ Schlecht</td></tr>
         </tbody>
       </table>
 
-      <h3>How to improve LCP</h3>
+      <h3>Wie man LCP verbessert</h3>
       <ul>
-        <li><strong>Optimize images</strong> — convert to WebP or AVIF, add <code>loading="eager"</code> for hero images.</li>
-        <li><strong>Preload LCP element</strong> — add <code>&lt;link rel="preload" as="image"&gt;</code>.</li>
-        <li><strong>Use CDN</strong> — reduces TTFB.</li>
-        <li><strong>Remove blocking resources</strong> — move non-critical JS and CSS to defer/async.</li>
-        <li><strong>Server-Side Rendering</strong> — SSR drastically improves LCP for SPA.</li>
+        <li><strong>Bilder optimieren</strong> — in WebP oder AVIF konvertieren, <code>loading="eager"</code> für Hero-Bilder hinzufügen.</li>
+        <li><strong>LCP-Element vorladen</strong> — <code>&lt;link rel="preload" as="image"&gt;</code> hinzufügen.</li>
+        <li><strong>CDN verwenden</strong> — reduziert TTFB.</li>
+        <li><strong>Blockierende Ressourcen entfernen</strong> — nicht-kritisches JS und CSS auf defer/async verschieben.</li>
+        <li><strong>Server-Side Rendering</strong> — SSR verbessert LCP drastisch für SPAs.</li>
       </ul>
 
       <h2 id="cls">CLS — Cumulative Layout Shift</h2>
-      <p>CLS measures the cumulative shift of page elements during loading.</p>
+      <p>CLS misst die kumulative Verschiebung von Seitenelementen während des Ladens.</p>
 
       <table class="compare-table">
-        <thead><tr><th>Value</th><th>Rating</th></tr></thead>
+        <thead><tr><th>Wert</th><th>Bewertung</th></tr></thead>
         <tbody>
-          <tr><td>≤ 0.1</td><td>✅ Good</td></tr>
-          <tr><td>0.1 – 0.25</td><td>⚠️ Needs improvement</td></tr>
-          <tr><td>&gt; 0.25</td><td>❌ Poor</td></tr>
+          <tr><td>≤ 0.1</td><td>✅ Gut</td></tr>
+          <tr><td>0.1 – 0.25</td><td>⚠️ Muss verbessert werden</td></tr>
+          <tr><td>&gt; 0.25</td><td>❌ Schlecht</td></tr>
         </tbody>
       </table>
 
-      <h3>How to improve CLS</h3>
+      <h3>Wie man CLS verbessert</h3>
       <ul>
-        <li><strong>Specify image sizes</strong> — always add <code>width</code> and <code>height</code>.</li>
-        <li><strong>Reserve space for ads</strong> — set fixed sizes for ad blocks.</li>
-        <li><strong>Do not insert content above existing</strong> — banners and cookie notices should be at the bottom.</li>
-        <li><strong>Preload fonts</strong> — FOUT causes shifts.</li>
+        <li><strong>Bildgrößen angeben</strong> — immer <code>width</code> und <code>height</code> hinzufügen.</li>
+        <li><strong>Platz für Werbung reservieren</strong> — feste Größen für Werbeblöcke festlegen.</li>
+        <li><strong>Keinen Inhalt über bestehenden einfügen</strong> — Banner und Cookie-Hinweise sollten unten sein.</li>
+        <li><strong>Schriften vorladen</strong> — FOUT verursacht Verschiebungen.</li>
       </ul>
 
       <h2 id="inp">INP — Interaction to Next Paint</h2>
-      <p>INP replaced FID in March 2024. It measures the delay between user interaction and screen update.</p>
-      <p>Unlike FID, INP tracks <em>all</em> interactions and takes the worst value.</p>
+      <p>INP ersetzte FID im März 2024. Es misst die Verzögerung zwischen Benutzerinteraktion und Bildschirmaktualisierung.</p>
+      <p>Im Gegensatz zu FID verfolgt INP <em>alle</em> Interaktionen und nimmt den schlechtesten Wert.</p>
 
       <table class="compare-table">
-        <thead><tr><th>Value</th><th>Rating</th></tr></thead>
+        <thead><tr><th>Wert</th><th>Bewertung</th></tr></thead>
         <tbody>
-          <tr><td>≤ 200 ms</td><td>✅ Good</td></tr>
-          <tr><td>200 – 500 ms</td><td>⚠️ Needs improvement</td></tr>
-          <tr><td>&gt; 500 мс</td><td>❌ Poor</td></tr>
+          <tr><td>≤ 200 ms</td><td>✅ Gut</td></tr>
+          <tr><td>200 – 500 ms</td><td>⚠️ Muss verbessert werden</td></tr>
+          <tr><td>&gt; 500 ms</td><td>❌ Schlecht</td></tr>
         </tbody>
       </table>
 
-      <h3>How to improve INP</h3>
+      <h3>Wie man INP verbessert</h3>
       <ul>
-        <li><strong>Break up long tasks</strong> — any JS > 50ms blocks the browser.</li>
-        <li><strong>Reduce JS bundle size</strong> — code splitting and tree shaking.</li>
-        <li><strong>Avoid synchronous operations in event handlers</strong>.</li>
-        <li><strong>Check third-party scripts</strong> — chat bots and analytics often cause poor INP.</li>
+        <li><strong>Lange Aufgaben aufteilen</strong> — jedes JS > 50ms blockiert den Browser.</li>
+        <li><strong>JS-Bundles verkleinern</strong> — Code-Splitting und Tree-Shaking.</li>
+        <li><strong>Synchronisierte Operationen in Ereignis-Handlern vermeiden</strong>.</li>
+        <li><strong>Drittanbieter-Skripte überprüfen</strong> — Chatbots und Analysen verursachen oft schlechtes INP.</li>
       </ul>
 
       <div class="warn-box">
-        <strong>⚠️ INP and CWV</strong>
-        <p>INP is the hardest metric to optimize.</p>
+        <strong>⚠️ INP und CWV</strong>
+        <p>INP ist die schwierigste Metrik zu optimieren.</p>
       </div>
 
-      <h2 id="tools">How to Measure Core Web Vitals</h2>
+      <h2 id="tools">Wie man Core Web Vitals misst</h2>
 
-      <h3>Field Data</h3>
+      <h3>Felddaten</h3>
       <ul>
-        <li><strong>Google Search Console</strong> → "Page Experience".</li>
-        <li><strong>PageSpeed Insights</strong> — combines Field and Lab Data.</li>
-        <li><strong>CrUX Dashboard</strong> in Looker Studio.</li>
+        <li><strong>Google Search Console</strong> → "Seiten-Erfahrung".</li>
+        <li><strong>PageSpeed Insights</strong> — kombiniert Feld- und Labordaten.</li>
+        <li><strong>CrUX-Dashboard</strong> in Looker Studio.</li>
       </ul>
 
-      <h3>Lab Data</h3>
+      <h3>Labordaten</h3>
       <ul>
         <li><strong>Lighthouse</strong> in Chrome DevTools.</li>
-        <li><strong>WebPageTest</strong> — detailed waterfall testing.</li>
+        <li><strong>WebPageTest</strong> — detaillierte Wasserfall-Tests.</li>
       </ul>
 
       <div class="tip-box">
-        <strong>💡 Field Data is more important than Lab Data</strong>
-        <p>Google ranks based on Field Data (real users), not Lighthouse.</p>
+        <strong>💡 Felddaten sind wichtiger als Labordaten</strong>
+        <p>Google bewertet basierend auf Felddaten (echte Nutzer), nicht Lighthouse.</p>
       </div>
 
-      <h2 id="seo-impact">Impact of CWV on SEO</h2>
-      <p>Google confirmed: CWV is a ranking factor, but content is still more important.</p>
-      <p>Practically: if your site is in the green zone, CWV won't hinder growth.</p>
+      <h2 id="seo-impact">Auswirkungen von CWV auf SEO</h2>
+      <p>Google hat bestätigt: CWV ist ein Rankingfaktor, aber Inhalte sind immer noch wichtiger.</p>
+      <p>Praktisch: Wenn Ihre Website im grünen Bereich ist, wird CWV das Wachstum nicht behindern.</p>
 
       <div class="cta-inline">
-        <h3>Want fixed pages to be indexed faster?</h3>
-        <p>After technical improvements, it's important for Google to re-index pages quickly.</p>
-        <a href="/app/register" class="btn-cta">🚀 Index via IndexFast →</a>
+        <h3>Möchten Sie, dass korrigierte Seiten schneller indexiert werden?</h3>
+        <p>Nach technischen Verbesserungen ist es wichtig, dass Google die Seiten schnell neu indexiert.</p>
+        <a href="/app/register" class="btn-cta">🚀 Über IndexFast indexieren →</a>
       </div>
 
       
@@ -306,13 +306,13 @@ html { overflow-y: scroll !important; }
     
 
       <div class="article-nav">
-        <a href="/blog/how-to-check-site-indexing.html">
-          <span class="article-nav-label">← Previous Article</span>
-          <span class="article-nav-title">How to Check Site Indexing in Google — 7 Methods</span>
+        <a href="/de/blog/how-to-check-site-indexing.html">
+          <span class="article-nav-label">← Vorheriger Artikel</span>
+          <span class="article-nav-title">Wie man die Indexierung einer Website in Google überprüft — 7 Methoden</span>
         </a>
-        <a href="/blog/google-indexing-api-vs-sitemap.html" style="text-align:right;">
-          <span class="article-nav-label">Next Article →</span>
-          <span class="article-nav-title">Google Indexing API vs Sitemap — What is More Effective</span>
+        <a href="/de/blog/google-indexing-api-vs-sitemap.html" style="text-align:right;">
+          <span class="article-nav-label">Nächster Artikel →</span>
+          <span class="article-nav-title">Google Indexing API vs Sitemap — Was ist effektiver</span>
         </a>
       </div>
 
@@ -322,29 +322,29 @@ html { overflow-y: scroll !important; }
   <aside class="sidebar">
     
     <div class="sidebar-card">
-      <h4>Table of Contents</h4>
+      <h4>Inhaltsverzeichnis</h4>
       <ul class="toc-list">
-        <li><a href="#what-are">What are Core Web Vitals</a></li>
+        <li><a href="#what-are">Was sind Core Web Vitals</a></li>
         <li><a href="#lcp">LCP — Largest Contentful Paint</a></li>
         <li><a href="#cls">CLS — Cumulative Layout Shift</a></li>
         <li><a href="#inp">INP — Interaction to Next Paint</a></li>
-        <li><a href="#tools">How to Measure Core Web Vitals</a></li>
-        <li><a href="#seo-impact">Impact of CWV on SEO</a></li>
+        <li><a href="#tools">Wie man Core Web Vitals misst</a></li>
+        <li><a href="#seo-impact">Auswirkungen von CWV auf SEO</a></li>
       </ul>
     </div>
     
     <div class="sidebar-card">
-      <h4>Read Also</h4>
+      <h4>Auch lesen</h4>
       <ul class="related-list">
-        <li><a href="/blog/google-indexing-api-vs-sitemap.html">Google Indexing API vs Sitemap — What is More Effective</a></li>
-        <li><a href="/blog/why-is-site-not-indexed.html">Why is the Site Not Indexed in Google — 12 Reasons</a></li>
-        <li><a href="/blog/ecommerce-seo.html">SEO for E-commerce: Indexing Products and Categories</a></li>
+        <li><a href="/de/blog/google-indexing-api-vs-sitemap.html">Google Indexing API vs Sitemap — Was ist effektiver</a></li>
+        <li><a href="/de/blog/why-is-site-not-indexed.html">Warum wird die Website nicht in Google indexiert — 12 Gründe</a></li>
+        <li><a href="/de/blog/ecommerce-seo.html">SEO für E-Commerce: Indexierung von Produkten und Kategorien</a></li>
       </ul>
     </div>
     <div class="sidebar-card" style="background: rgba(0,255,136,0.05); border-color: rgba(0,255,136,0.2);">
-      <h4 style="color: var(--green);">Спробуйте IndexFast</h4>
-      <p style="font-size:0.85rem; color:var(--muted); margin-bottom:16px; line-height:1.5;">Автоматична індексація всіх сторінок через Google Indexing API</p>
-      <a href="/app/register" style="display:block; background:var(--green); color:var(--black); text-align:center; padding:10px; border-radius:100px; font-family:var(--font-display); font-weight:700; font-size:0.85rem; text-decoration:none;">Спробувати безкоштовно →</a>
+      <h4 style="color: var(--green);">Probieren Sie IndexFast aus</h4>
+      <p style="font-size:0.85rem; color:var(--muted); margin-bottom:16px; line-height:1.5;">Automatische Indexierung aller Seiten über die Google Indexing API</p>
+      <a href="/app/register" style="display:block; background:var(--green); color:var(--black); text-align:center; padding:10px; border-radius:100px; font-family:var(--font-display); font-weight:700; font-size:0.85rem; text-decoration:none;">Kostenlos ausprobieren →</a>
     </div>
   </aside>
 </div>
@@ -374,12 +374,12 @@ html { overflow-y: scroll !important; }
       </ul>
     </div>
     <div class="footer-col">
-      <p class="footer-title">Support</p>
+      <p class="footer-title">Unterstützung</p>
       <ul>
         <li><a href="/de/#faq">FAQ</a></li>
         <li><a href="https://t.me/indexfastgoogle" target="_blank" rel="noopener noreferrer">Telegram-Chat</a></li>
         <li><a href="mailto:indexfastapp@gmail.com">E-Mail-Support</a></li>
-        <li><a href="/de/status.html">Servicestatus</a></li>
+        <li><a href="/de/status.html">Service-Status</a></li>
       </ul>
     </div>
   </div>
@@ -390,7 +390,7 @@ html { overflow-y: scroll !important; }
       <a href="/de/terms.html">Bedingungen</a>
     </div>
   </div>
-  <button id="backToTop" class="back-to-top" aria-label="Back to top">
+  <button id="backToTop" class="back-to-top" aria-label="Zurück nach oben">
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
   </button>
 </footer>
