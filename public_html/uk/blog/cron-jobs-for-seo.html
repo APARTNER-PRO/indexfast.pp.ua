@@ -10,7 +10,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>Cron jobs для SEO: автоматизуємо рутину — IndexFast</title>
-  <meta name="description" content="Як налаштувати cron jobs для автоматичного запуску SEO-скриптів на сервері. Покроковий гайд для власників сайтів і розробників.">
+  <meta name="description" content="Як налаштувати cron jobs для автоматичного запуску SEO-скриптів на сервері. Покроковий гайд для власників сайтів.">
   
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
   <link rel="canonical" href="https://indexfast.pro/blog/cron-jobs-for-seo.html">
@@ -18,7 +18,7 @@
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://indexfast.pro/blog/cron-jobs-for-seo.html">
   <meta property="og:title" content="Cron jobs для SEO: автоматизуємо рутину — IndexFast">
-  <meta property="og:description" content="Як налаштувати cron jobs для автоматичного запуску SEO-скриптів на сервері. Покроковий гайд для власників сайтів і розробників.">
+  <meta property="og:description" content="Як налаштувати cron jobs для автоматичного запуску SEO-скриптів на сервері. Покроковий гайд для власників сайтів.">
   <meta property="og:image" content="https://indexfast.pro/blog-images/blog_cron_jobs.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -32,7 +32,7 @@
     "@context": "https://schema.org",
     "@type": "Article",
     "headline": "Cron jobs для SEO: автоматизуємо рутину — IndexFast",
-    "description": "Як налаштувати cron jobs для автоматичного запуску SEO-скриптів на сервері. Покроковий гайд для власників сайтів і розробників.",
+    "description": "Як налаштувати cron jobs для автоматичного запуску SEO-скриптів на сервері. Покроковий гайд для власників сайтів.",
     "inLanguage": "uk",
     "author": {
       "@type": "Organization",
@@ -66,7 +66,7 @@
 
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Cron jobs для SEO: автоматизуємо рутину — IndexFast">
-  <meta name="twitter:description" content="Як налаштувати cron jobs для автоматичного запуску SEO-скриптів на сервері. Покроковий гайд для власників сайтів і розробників.">
+  <meta name="twitter:description" content="Як налаштувати cron jobs для автоматичного запуску SEO-скриптів на сервері. Покроковий гайд для власників сайтів.">
   <meta name="twitter:image" content="https://indexfast.pro/blog-images/blog_cron_jobs.png">
 
   <script type="application/ld+json">
@@ -99,7 +99,7 @@ html { overflow-y: scroll !important; }
 </head>
 <body>
 
-<nav id="navbar" role="navigation" aria-label="Main menu" class="">
+<nav id="navbar" role="navigation" aria-label="Головне меню" class="">
     <a href="/uk/" class="logo" aria-label="IndexFast">Index<span>Fast</span></a>
     <ul class="nav-links">
       <li><a href="/uk/#how-it-works">Як це працює</a></li>
@@ -116,7 +116,7 @@ html { overflow-y: scroll !important; }
       <div class="nav-lang-dropdown">
         <button class="nav-lang-btn">UK ▾</button>
         <div class="nav-lang-menu">
-        <a href="/blog/cron-jobs-for-seo.html">English</a>
+        <a href="/uk/blog/cron-jobs-for-seo.html">English</a>
         <a href="/uk/blog/cron-jobs-for-seo.html" class="active">Українська</a>
         <a href="/pl/blog/cron-jobs-for-seo.html">Polski</a>
         <a href="/ru/blog/cron-jobs-for-seo.html">Русский</a>
@@ -128,7 +128,7 @@ html { overflow-y: scroll !important; }
       </div>
       <a href="/app/login" class="nav-login">Увійти</a>
       <a href="/app/register" class="nav-cta">Почати безкоштовно →</a>
-      <button class="mobile-menu-btn" onclick="document.querySelector('.nav-links').classList.toggle('active')" aria-label="Main menu">☰</button>
+      <button class="mobile-menu-btn" onclick="document.querySelector('.nav-links').classList.toggle('active')" aria-label="Головне меню">☰</button>
     </div>
   </nav>
 
@@ -162,8 +162,8 @@ html { overflow-y: scroll !important; }
       
       
 
-      <h2 id="what-is-cron">Що таке cron і crontab</h2>
-      <p><strong>Cron</strong> — демон (фонова служба) в Unix/Linux системах, який виконує заплановані команди у визначений час. <strong>Crontab</strong> — файл конфігурації, де описані завдання.</p>
+      <h2 id="what-is-cron">Що таке cron і crontab?</h2>
+      <p><strong>Cron</strong> — демон, який виконує заплановані команди. <strong>Crontab</strong> — це файл конфігурації.</p>
       <p>Кожен рядок crontab має формат:</p>
       <div class="code-block"><span class="cv">* * * * *</span>  <span class="ck">команда</span>
 <span class="cm">│ │ │ │ └── день тижня (0-7, де 0 і 7 = неділя)</span>
@@ -181,7 +181,7 @@ html { overflow-y: scroll !important; }
 
       <div class="tip-box">
         <strong>💡 &gt;&gt; та 2&gt;&amp;1</strong>
-        <p>Символ <code>&gt;&gt;</code> дописує вивід у файл лога (не перезаписує). <code>2&gt;&amp;1</code> перенаправляє помилки туди ж. Завжди додавайте логування щоб розуміти що відбувається.</p>
+        <p>Символ <code>&gt;&gt;</code> дописує вивід у файл лога. <code>2&gt;&amp;1</code> перенаправляє помилки туди ж. Завжди додавайте логування щоб розуміти що відбувається.</p>
       </div>
 
       <h3>Оновлення sitemap</h3>
@@ -206,11 +206,11 @@ html { overflow-y: scroll !important; }
       </ol>
 
       <h3>Якщо немає доступу до SSH</h3>
-      <p>Більшість хостинг-панелей (cPanel, Plesk, ISPmanager) мають графічний інтерфейс для cron jobs. Шукайте розділ «Cron Jobs» або «Планувальник задач» у панелі керування хостингом.</p>
+      <p>Більшість хостинг-панелей мають графічний інтерфейс для cron jobs.</p>
 
       <div class="warn-box">
         <strong>⚠️ Важливо: абсолютні шляхи</strong>
-        <p>У cron не завантажується оточення користувача, тому завжди вказуйте повні шляхи до виконуваних файлів: не <code>php script.php</code>, а <code>/usr/bin/php /var/www/html/script.php</code>. Шлях до php: <code>which php</code></p>
+        <p>Завжди вказуйте абсолютні шляхи до виконуваних файлів у cron.</p>
       </div>
 
       <h2 id="indexfast-cron">Cron для автоматичної індексації з IndexFast</h2>
@@ -224,12 +224,12 @@ html { overflow-y: scroll !important; }
 
       <div class="cta-inline">
         <h3>Хочете без cron і SSH?</h3>
-        <p>IndexFast PRO має вбудований планувальник — налаштуйте розклад прямо в кабінеті, без доступу до сервера.</p>
+        <p>IndexFast PRO має вбудований планувальник — налаштуйте розклад прямо в кабінеті.</p>
         <a href="/app/register" class="btn-cta">🚀 Спробувати безкоштовно →</a>
       </div>
 
       <h2 id="monitoring">Моніторинг cron jobs</h2>
-      <p>Cron по замовчуванню надсилає вивід на пошту root. Щоб отримувати листи на свою пошту, додайте на початку crontab:</p>
+      <p>За замовчуванням cron надсилає вивід на пошту root. Щоб отримувати листи, додайте:</p>
       <div class="code-block"><span class="ck">MAILTO</span>=<span class="cv">"<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="b1c8dec4c3f1d4dcd0d8dd9fd2dedc">[email&nbsp;protected]</a>"</span></div>
       <p>Або перегляньте системний лог: <code>grep CRON /var/log/syslog</code></p>
 
@@ -249,13 +249,13 @@ html { overflow-y: scroll !important; }
     
 
       <div class="article-nav">
-        <a href="/blog/indexing-after-redesign.html">
+        <a href="/uk/blog/indexing-after-redesign.html">
           <span class="article-nav-label">← Попередня стаття</span>
-          <span class="article-nav-title">Індексація сайту після редизайну: як не втратити трафік</span>
+          <span class="article-nav-title">Індексація сайту після редизайну</span>
         </a>
-        <a href="/blog/how-to-check-site-indexing.html" style="text-align:right;">
+        <a href="/uk/blog/how-to-check-site-indexing.html" style="text-align:right;">
           <span class="article-nav-label">Наступна стаття →</span>
-          <span class="article-nav-title">Як перевірити індексацію сайту в Google — 7 методів у 2026 році</span>
+          <span class="article-nav-title">Як перевірити індексацію сайту в Google у 2026 році</span>
         </a>
       </div>
 
@@ -267,7 +267,7 @@ html { overflow-y: scroll !important; }
     <div class="sidebar-card">
       <h4>Зміст статті</h4>
       <ul class="toc-list">
-        <li><a href="#what-is-cron">Що таке cron і crontab</a></li>
+        <li><a href="#what-is-cron">Що таке cron і crontab?</a></li>
         <li><a href="#examples">Практичні приклади для SEO</a></li>
         <li><a href="#setup">Як налаштувати crontab</a></li>
         <li><a href="#indexfast-cron">Cron для автоматичної індексації з IndexFast</a></li>
@@ -278,9 +278,9 @@ html { overflow-y: scroll !important; }
     <div class="sidebar-card">
       <h4>Читайте також</h4>
       <ul class="related-list">
-        <li><a href="/blog/how-to-check-site-indexing.html">Як перевірити індексацію сайту в Google — 7 методів у 2026 році</a></li>
-        <li><a href="/blog/core-web-vitals.html">Core Web Vitals 2026: що важливо знати</a></li>
-        <li><a href="/blog/google-indexing-api-vs-sitemap.html">Google Indexing API vs Sitemap — що ефективніше для індексації у 2026 році</a></li>
+        <li><a href="/uk/blog/how-to-check-site-indexing.html">Як перевірити індексацію сайту в Google у 2026 році</a></li>
+        <li><a href="/uk/blog/core-web-vitals.html">Core Web Vitals 2026</a></li>
+        <li><a href="/uk/blog/google-indexing-api-vs-sitemap.html">Google Indexing API vs Sitemap у 2026 році</a></li>
       </ul>
     </div>
     <div class="sidebar-card" style="background: rgba(0,255,136,0.05); border-color: rgba(0,255,136,0.2);">
@@ -332,7 +332,7 @@ html { overflow-y: scroll !important; }
       <a href="/uk/terms.html">Умови</a>
     </div>
   </div>
-  <button id="backToTop" class="back-to-top" aria-label="Back to top">
+  <button id="backToTop" class="back-to-top" aria-label="Назад до верху">
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
   </button>
 </footer>
