@@ -9,16 +9,16 @@
   <link rel="manifest" href="/site.webmanifest">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Core Web Vitals 2026: що важливо знати — IndexFast</title>
-  <meta name="description" content="LCP, CLS, INP — як Core Web Vitals впливають на ранжування в Google і що зробити щоб покращити показники. Практичний гайд 2026.">
+  <title>Core Web Vitals: що важливо знати — IndexFast</title>
+  <meta name="description" content="LCP, CLS, INP — як Core Web Vitals впливають на ранжування в Google і що зробити, щоб покращити їх. Практичний гайд.">
   
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
   <link rel="canonical" href="https://indexfast.pro/blog/core-web-vitals.html">
 
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://indexfast.pro/blog/core-web-vitals.html">
-  <meta property="og:title" content="Core Web Vitals 2026: що важливо знати — IndexFast">
-  <meta property="og:description" content="LCP, CLS, INP — як Core Web Vitals впливають на ранжування в Google і що зробити щоб покращити показники. Практичний гайд 2026.">
+  <meta property="og:title" content="Core Web Vitals: що важливо знати — IndexFast">
+  <meta property="og:description" content="LCP, CLS, INP — як Core Web Vitals впливають на ранжування в Google і що зробити, щоб покращити їх. Практичний гайд.">
   <meta property="og:image" content="https://indexfast.pro/blog-images/blog_core_web_vitals.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -31,8 +31,8 @@
   {
     "@context": "https://schema.org",
     "@type": "Article",
-    "headline": "Core Web Vitals 2026: що важливо знати — IndexFast",
-    "description": "LCP, CLS, INP — як Core Web Vitals впливають на ранжування в Google і що зробити щоб покращити показники. Практичний гайд 2026.",
+    "headline": "Core Web Vitals: що важливо знати — IndexFast",
+    "description": "LCP, CLS, INP — як Core Web Vitals впливають на ранжування в Google і що зробити, щоб покращити їх. Практичний гайд.",
     "inLanguage": "uk",
     "author": {
       "@type": "Organization",
@@ -65,8 +65,8 @@
   </script>
 
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Core Web Vitals 2026: що важливо знати — IndexFast">
-  <meta name="twitter:description" content="LCP, CLS, INP — як Core Web Vitals впливають на ранжування в Google і що зробити щоб покращити показники. Практичний гайд 2026.">
+  <meta name="twitter:title" content="Core Web Vitals: що важливо знати — IndexFast">
+  <meta name="twitter:description" content="LCP, CLS, INP — як Core Web Vitals впливають на ранжування в Google і що зробити, щоб покращити їх. Практичний гайд.">
   <meta name="twitter:image" content="https://indexfast.pro/blog-images/blog_core_web_vitals.png">
 
   <script type="application/ld+json">
@@ -76,7 +76,7 @@
     "itemListElement": [
       { "@type": "ListItem", "position": 1, "name": "Головна", "item": "https://indexfast.pro/" },
       { "@type": "ListItem", "position": 2, "name": "Блог", "item": "https://indexfast.pro/blog/" },
-      { "@type": "ListItem", "position": 3, "name": "Core Web Vitals 2026: що важливо знати", "item": "https://indexfast.pro/blog/core-web-vitals.html" }
+      { "@type": "ListItem", "position": 3, "name": "Core Web Vitals: що важливо знати", "item": "https://indexfast.pro/blog/core-web-vitals.html" }
     ]
   }
   </script>
@@ -116,7 +116,7 @@ html { overflow-y: scroll !important; }
       <div class="nav-lang-dropdown">
         <button class="nav-lang-btn">UK ▾</button>
         <div class="nav-lang-menu">
-        <a href="/blog/core-web-vitals.html">English</a>
+        <a href="/uk/blog/core-web-vitals.html">English</a>
         <a href="/uk/blog/core-web-vitals.html" class="active">Українська</a>
         <a href="/pl/blog/core-web-vitals.html">Polski</a>
         <a href="/ru/blog/core-web-vitals.html">Русский</a>
@@ -149,8 +149,8 @@ html { overflow-y: scroll !important; }
     
     </div>
 
-    <h1>Core Web Vitals 2026: що важливо знати</h1>
-    <img src="/blog-images/blog_core_web_vitals.png" alt="Core Web Vitals 2026 - LCP CLS INP метрики продуктивності" loading="lazy" decoding="async" class="article-main-image" style="width:100%; border-radius:16px; margin: 24px 0; object-fit: cover; aspect-ratio: 1200/630;">
+    <h1>Core Web Vitals: що важливо знати</h1>
+    <img src="/blog-images/blog_core_web_vitals.png" alt="Core Web Vitals 2026 LCP CLS INP" loading="lazy" decoding="async" class="article-main-image" style="width:100%; border-radius:16px; margin: 24px 0; object-fit: cover; aspect-ratio: 1200/630;">
 
     <p class="article-lead">
       Core Web Vitals — три метрики Google, які вимірюють реальний досвід користувача на сайті. З 2021 року вони є офіційним фактором ранжування. У 2024 INP замінив FID. Розбираємо кожну метрику та як її покращити.
@@ -189,11 +189,11 @@ html { overflow-y: scroll !important; }
 
       <div class="tip-box">
         <strong>📌 Хороший vs Поганий</strong>
-        <p>Для кожної метрики: зелений = добре, жовтий = потребує покращення, червоний = погано. Google орієнтується на 75-й перцентиль — тобто 75% сесій мають потрапляти в зелену зону.</p>
+        <p>Для кожної метрики: зелений = добре, жовтий = потребує покращення, червоний = погано. Google орієнтується на 75-й перцентиль.</p>
       </div>
 
       <h2 id="lcp">LCP — Largest Contentful Paint</h2>
-      <p>LCP вимірює час до відображення найбільшого видимого елемента сторінки — зазвичай це hero-зображення, велике фото або заголовок H1.</p>
+      <p>LCP вимірює час до відображення найбільшого видимого елемента сторінки — зазвичай це hero-зображення або заголовок H1.</p>
 
       <table class="compare-table">
         <thead><tr><th>Значення</th><th>Оцінка</th></tr></thead>
@@ -206,15 +206,15 @@ html { overflow-y: scroll !important; }
 
       <h3>Як покращити LCP</h3>
       <ul>
-        <li><strong>Оптимізуйте зображення</strong> — конвертуйте у WebP або AVIF, додайте атрибут <code>loading="eager"</code> для hero-зображення</li>
-        <li><strong>Preload LCP-елемент</strong> — додайте <code>&lt;link rel="preload" as="image"&gt;</code> для головного зображення</li>
-        <li><strong>Використовуйте CDN</strong> — зменшує Time to First Byte (TTFB), який напряму впливає на LCP</li>
-        <li><strong>Прибрати блокуючі ресурси</strong> — перенесіть некритичні JS та CSS в defer/async</li>
-        <li><strong>Server-Side Rendering</strong> — для React/Vue/Angular сайтів SSR різко покращує LCP</li>
+        <li><strong>Оптимізуйте зображення</strong> — конвертуйте у WebP або AVIF, додайте атрибут <code>loading="eager"</code> для hero-зображення.</li>
+        <li><strong>Preload LCP-елемент</strong> — додайте <code>&lt;link rel="preload" as="image"&gt;</code>.</li>
+        <li><strong>Використовуйте CDN</strong> — зменшує TTFB.</li>
+        <li><strong>Прибрати блокуючі ресурси</strong> — перенесіть некритичні JS та CSS в defer/async.</li>
+        <li><strong>Server-Side Rendering</strong> — SSR різко покращує LCP для SPA.</li>
       </ul>
 
       <h2 id="cls">CLS — Cumulative Layout Shift</h2>
-      <p>CLS вимірює сумарне зміщення елементів сторінки під час завантаження. Якщо кнопка «стрибає» під час читання тексту — це поганий CLS. Зазвичай це означає, що користувач натискає не те що хотів.</p>
+      <p>CLS вимірює сумарне зміщення елементів сторінки під час завантаження.</p>
 
       <table class="compare-table">
         <thead><tr><th>Значення</th><th>Оцінка</th></tr></thead>
@@ -227,15 +227,15 @@ html { overflow-y: scroll !important; }
 
       <h3>Як покращити CLS</h3>
       <ul>
-        <li><strong>Вказуйте розміри зображень</strong> — завжди додавайте <code>width</code> і <code>height</code> атрибути в <code>&lt;img&gt;</code></li>
-        <li><strong>Резервуйте місце для реклами</strong> — задайте фіксовані розміри рекламним блокам заздалегідь</li>
-        <li><strong>Не вставляйте контент над існуючим</strong> — банери та cookie-повідомлення знизу не впливають на CLS</li>
-        <li><strong>Preload шрифти</strong> — FOUT (flash of unstyled text) спричиняє зміщення; використовуйте <code>font-display: optional</code> або <code>swap</code></li>
+        <li><strong>Вказуйте розміри зображень</strong> — завжди додавайте <code>width</code> і <code>height</code>.</li>
+        <li><strong>Резервуйте місце для реклами</strong> — задайте фіксовані розміри рекламним блокам.</li>
+        <li><strong>Не вставляйте контент над існуючим</strong> — банери та cookie-повідомлення повинні бути внизу.</li>
+        <li><strong>Preload шрифти</strong> — FOUT викликає зміщення.</li>
       </ul>
 
       <h2 id="inp">INP — Interaction to Next Paint</h2>
-      <p>INP замінив FID (First Input Delay) у березні 2024 року. Він вимірює затримку між будь-якою взаємодією користувача (клік, тап, натискання клавіші) та наступним оновленням екрана.</p>
-      <p>На відміну від FID, який вимірював лише першу взаємодію, INP відстежує <em>всі</em> взаємодії протягом сесії і бере найгірше значення.</p>
+      <p>INP замінив FID у березні 2024 року. Він вимірює затримку між взаємодією користувача та оновленням екрана.</p>
+      <p>На відміну від FID, INP відстежує <em>всі</em> взаємодії та бере найгірше значення.</p>
 
       <table class="compare-table">
         <thead><tr><th>Значення</th><th>Оцінка</th></tr></thead>
@@ -248,44 +248,44 @@ html { overflow-y: scroll !important; }
 
       <h3>Як покращити INP</h3>
       <ul>
-        <li><strong>Розбийте довгі задачі</strong> — будь-який JS що виконується понад 50мс блокує браузер; використовуйте <code>setTimeout</code> або <code>scheduler.yield()</code></li>
-        <li><strong>Зменшіть розмір JS-бандлу</strong> — code splitting і tree shaking зменшують час парсингу</li>
-        <li><strong>Уникайте синхронних операцій в обробниках подій</strong> — важкі обчислення виносьте у Web Workers</li>
-        <li><strong>Перевірте сторонні скрипти</strong> — чат-боти, аналітика, A/B тестери часто є головними винуватцями поганого INP</li>
+        <li><strong>Розбийте довгі задачі</strong> — будь-який JS > 50мс блокує браузер.</li>
+        <li><strong>Зменшіть розмір JS-бандлу</strong> — code splitting і tree shaking.</li>
+        <li><strong>Уникайте синхронних операцій в обробниках подій</strong>.</li>
+        <li><strong>Перевірте сторонні скрипти</strong> — чат-боти та аналітика часто викликають поганий INP.</li>
       </ul>
 
       <div class="warn-box">
-        <strong>⚠️ INP і CWV 2026</strong>
-        <p>INP — найскладніша для оптимізації метрика. На сайтах з великою кількістю JS (React, Vue, важкі CMS) часто саме INP тягне оцінку вниз. Почніть з аудиту в Chrome DevTools → Performance → Long Tasks.</p>
+        <strong>⚠️ INP і CWV</strong>
+        <p>INP — найскладніша метрика для оптимізації.</p>
       </div>
 
       <h2 id="tools">Як виміряти Core Web Vitals</h2>
 
-      <h3>Реальні дані (Field Data)</h3>
+      <h3>Польові дані</h3>
       <ul>
-        <li><strong>Google Search Console</strong> → «Взаємодія зі сторінкою» — показує CWV на основі реальних користувачів Chrome</li>
-        <li><strong>PageSpeed Insights</strong> (pagespeed.web.dev) — поєднує Field Data і Lab Data</li>
-        <li><strong>CrUX Dashboard</strong> в Looker Studio — деталізована аналітика по сегментах</li>
+        <li><strong>Google Search Console</strong> → "Взаємодія зі сторінкою".</li>
+        <li><strong>PageSpeed Insights</strong> — поєднує польові та лабораторні дані.</li>
+        <li><strong>CrUX Dashboard</strong> в Looker Studio.</li>
       </ul>
 
-      <h3>Лабораторні дані (Lab Data)</h3>
+      <h3>Лабораторні дані</h3>
       <ul>
-        <li><strong>Lighthouse</strong> у Chrome DevTools — F12 → Lighthouse → Generate report</li>
-        <li><strong>WebPageTest</strong> — детальний waterfall, тестування з різних локацій</li>
+        <li><strong>Lighthouse</strong> у Chrome DevTools.</li>
+        <li><strong>WebPageTest</strong> — детальне тестування.</li>
       </ul>
 
       <div class="tip-box">
-        <strong>💡 Field Data важливіший за Lab Data</strong>
-        <p>Google ранжує на основі Field Data (реальних користувачів), а не Lighthouse. Можна мати 100 балів у Lighthouse і все одно поганий CWV якщо реальні користувачі зіштовхуються з проблемами.</p>
+        <strong>💡 Польові дані важливіші за лабораторні</strong>
+        <p>Google ранжує на основі польових даних (реальних користувачів), а не Lighthouse.</p>
       </div>
 
       <h2 id="seo-impact">Вплив CWV на SEO</h2>
-      <p>Google підтвердив: Core Web Vitals є фактором ранжування в межах Page Experience signal. Але масштаб впливу менший ніж у контентних факторів — при рівному контенті перемагає сторінка з кращим CWV.</p>
-      <p>Практично: якщо ваш сайт в зеленій зоні по всіх трьох метриках — CWV не заважає зростанню. Якщо в червоній — виправлення дасть помітний приріст у конкурентних нішах.</p>
+      <p>Google підтвердив: CWV є фактором ранжування, але контент все ще важливіший.</p>
+      <p>Практично: якщо ваш сайт у зеленій зоні, CWV не заважає зростанню.</p>
 
       <div class="cta-inline">
-        <h3>Хочете щоб виправлені сторінки швидше проіндексувались?</h3>
-        <p>Після технічних покращень важливо щоб Google переіндексував сторінки якомога швидше — і побачив оновлені метрики.</p>
+        <h3>Хочете, щоб виправлені сторінки швидше проіндексувались?</h3>
+        <p>Після технічних покращень важливо, щоб Google швидко переіндексував сторінки.</p>
         <a href="/app/register" class="btn-cta">🚀 Проіндексувати через IndexFast →</a>
       </div>
 
@@ -306,13 +306,13 @@ html { overflow-y: scroll !important; }
     
 
       <div class="article-nav">
-        <a href="/blog/how-to-check-site-indexing.html">
+        <a href="/uk/blog/how-to-check-site-indexing.html">
           <span class="article-nav-label">← Попередня стаття</span>
-          <span class="article-nav-title">Як перевірити індексацію сайту в Google — 7 методів у 2026 році</span>
+          <span class="article-nav-title">Як перевірити індексацію сайту в Google — 7 методів</span>
         </a>
-        <a href="/blog/google-indexing-api-vs-sitemap.html" style="text-align:right;">
+        <a href="/uk/blog/google-indexing-api-vs-sitemap.html" style="text-align:right;">
           <span class="article-nav-label">Наступна стаття →</span>
-          <span class="article-nav-title">Google Indexing API vs Sitemap — що ефективніше для індексації у 2026 році</span>
+          <span class="article-nav-title">Google Indexing API vs Sitemap — що ефективніше</span>
         </a>
       </div>
 
@@ -336,9 +336,9 @@ html { overflow-y: scroll !important; }
     <div class="sidebar-card">
       <h4>Читайте також</h4>
       <ul class="related-list">
-        <li><a href="/blog/google-indexing-api-vs-sitemap.html">Google Indexing API vs Sitemap — що ефективніше для індексації у 2026 році</a></li>
-        <li><a href="/blog/why-is-site-not-indexed.html">Чому сайт не індексується в Google — 12 причин і як їх виправити</a></li>
-        <li><a href="/blog/ecommerce-seo.html">SEO для інтернет-магазину: індексація товарів і категорій у 2026 році</a></li>
+        <li><a href="/uk/blog/google-indexing-api-vs-sitemap.html">Google Indexing API vs Sitemap — що ефективніше</a></li>
+        <li><a href="/uk/blog/why-is-site-not-indexed.html">Чому сайт не індексується в Google — 12 причин</a></li>
+        <li><a href="/uk/blog/ecommerce-seo.html">SEO для інтернет-магазину: індексація товарів і категорій</a></li>
       </ul>
     </div>
     <div class="sidebar-card" style="background: rgba(0,255,136,0.05); border-color: rgba(0,255,136,0.2);">
