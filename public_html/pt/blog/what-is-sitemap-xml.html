@@ -10,19 +10,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>O que é sitemap.xml e por que você precisa dele — IndexFast</title>
-  <meta name="description" content="Guia completo para sitemap.xml: o que é, como se parece, como criar e registrar no Google Search Console. Tipos de sitemap, erros e melhores práticas de 2026.">
-  <meta name="keywords" content="o que é sitemap xml, exemplo de sitemap xml, como criar sitemap, google sitemap, sitemap index, enviar sitemap para o search console">
+  <meta name="description" content="Guia completo sobre sitemap.xml: o que é, como é, como criar e registrar no Google Search Console. Tipos de sitemap, erros e melhores práticas em 2026.">
+  <meta name="keywords" content="o que é sitemap xml, exemplo de sitemap xml, como criar sitemap, sitemap google, índice de sitemap, enviar sitemap para search console">
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
   <link rel="canonical" href="https://indexfast.pro/pt/blog/what-is-sitemap-xml.html">
 
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://indexfast.pro/pt/blog/what-is-sitemap-xml.html">
   <meta property="og:title" content="O que é sitemap.xml e por que você precisa dele — IndexFast">
-  <meta property="og:description" content="Guia completo para sitemap.xml: o que é, como se parece, como criar e registrar no Google Search Console. Tipos de sitemap, erros e melhores práticas de 2026.">
+  <meta property="og:description" content="Guia completo sobre sitemap.xml: o que é, como é, como criar e registrar no Google Search Console. Tipos de sitemap, erros e melhores práticas em 2026.">
   <meta property="og:image" content="https://indexfast.pro/blog-images/blog_what_is_sitemap.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:locale" content="pt_PT">
+  <meta property="og:locale" content="pt_BR">
   <meta property="article:published_time" content="2026-01-20T10:00:00+02:00">
   <meta property="article:modified_time" content="2026-01-20T10:00:00+02:00">
   <meta property="article:author" content="IndexFast">
@@ -32,7 +32,7 @@
     "@context": "https://schema.org",
     "@type": "Article",
     "headline": "O que é sitemap.xml e por que você precisa dele — IndexFast",
-    "description": "Guia completo para sitemap.xml: o que é, como se parece, como criar e registrar no Google Search Console. Tipos de sitemap, erros e melhores práticas de 2026.",
+    "description": "Guia completo sobre sitemap.xml: o que é, como é, como criar e registrar no Google Search Console. Tipos de sitemap, erros e melhores práticas em 2026.",
     "inLanguage": "pt",
     "author": {
       "@type": "Organization",
@@ -66,7 +66,7 @@
 
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="O que é sitemap.xml e por que você precisa dele — IndexFast">
-  <meta name="twitter:description" content="Guia completo para sitemap.xml: o que é, como se parece, como criar e registrar no Google Search Console. Tipos de sitemap, erros e melhores práticas de 2026.">
+  <meta name="twitter:description" content="Guia completo sobre sitemap.xml: o que é, como é, como criar e registrar no Google Search Console. Tipos de sitemap, erros e melhores práticas em 2026.">
   <meta name="twitter:image" content="https://indexfast.pro/blog-images/blog_what_is_sitemap.png">
 
   <script type="application/ld+json">
@@ -106,10 +106,10 @@ html { overflow-y: scroll !important; }
       <li><a href="/pt/#for-whom">Para quem</a></li>
       <li><a href="/pt/#features">Vantagens</a></li>
       <li><a href="/pt/#pricing">Preços</a></li>
-      <li><a href="/pt/#faq">Perguntas frequentes</a></li>
+      <li><a href="/pt/#faq">FAQ</a></li>
       <li class="mobile-auth">
         <a href="/app/login" class="mobile-login">Entrar</a>
-        <a href="/app/register" class="mobile-register">Começar grátis →</a>
+        <a href="/app/register" class="mobile-register">Comece grátis →</a>
       </li>
     </ul>
     <div class="nav-actions">
@@ -127,7 +127,7 @@ html { overflow-y: scroll !important; }
       </div>
       </div>
       <a href="/app/login" class="nav-login">Entrar</a>
-      <a href="/app/register" class="nav-cta">Começar grátis →</a>
+      <a href="/app/register" class="nav-cta">Comece grátis →</a>
       <button class="mobile-menu-btn" onclick="document.querySelector('.nav-links').classList.toggle('active')" aria-label="Main menu">☰</button>
     </div>
   </nav>
@@ -142,59 +142,60 @@ html { overflow-y: scroll !important; }
     </div>
 
     <h1>O que é sitemap.xml e por que você precisa dele</h1>
-    <img src="/blog-images/blog_what_is_sitemap.png" alt="O que é sitemap.xml - estrutura de árvore do site" loading="lazy" decoding="async" class="article-main-image" style="width:100%; border-radius:16px; margin: 24px 0; object-fit: cover; aspect-ratio: 1200/630;">
+    <img src="/blog-images/blog_what_is_sitemap.png" alt="O que é sitemap.xml - estrutura da árvore do site" loading="lazy" decoding="async" class="article-main-image" style="width:100%; border-radius:16px; margin: 24px 0; object-fit: cover; aspect-ratio: 1200/630;">
 
     <div class="article-body">
 
-      <p class="article-lead">Sitemap.xml é um dos arquivos mais importantes para o SEO, frequentemente esquecido ou configurado incorretamente. Vamos analisar o que é, como se parece, como criá-lo e por que ele afeta diretamente a velocidade de indexação do seu site.</p>
+      <p class="article-lead">Sitemap.xml é um dos arquivos mais importantes para SEO, que muitas vezes é esquecido ou configurado incorretamente. Vamos analisar o que é, como é, como criá-lo e por que ele afeta diretamente a velocidade de indexação do seu site.</p>
       <h2 id="what-is">O que é sitemap.xml?</h2>
-      <p>Um Sitemap é um arquivo XML que contém uma lista de todas as URLs importantes do seu site. Ele está localizado em <code>https://your-site.com/sitemap.xml</code> e funciona como um "guia" para os rastreadores dos mecanismos de busca.</p>
+      <p>Um Sitemap é um arquivo XML que contém uma lista de todas as URLs importantes do seu site. Ele está localizado em <code>https://your-site.com/sitemap.xml</code> e atua como um "guia" para os rastreadores de mecanismos de busca.</p>
+      <p>Imagine que seu site é um grande prédio de escritórios. Sem um mapa de andares, o faxineiro (Googlebot) vagaria pelos corredores aleatoriamente, possivelmente nunca encontrando algumas salas. Um Sitemap é exatamente esse plano que mostra onde tudo está localizado.</p>
       <div class="tip-box">
         <strong>📌 Posição Oficial do Google</strong>
-        <p>O Google recomenda o uso de um sitemap para qualquer site com mais de 500 páginas, sites novos com poucos links externos e sites com conteúdo de mídia (vídeos, imagens).</p>
+        <p>O Google recomenda usar um sitemap para qualquer site com mais de 500 páginas, novos sites com poucos links externos e sites com conteúdo de mídia (vídeo, imagens).</p>
       </div>
       <h2 id="structure">Estrutura do sitemap.xml</h2>
-      <p>Um sitemap básico é assim:</p>
+      <p>Um sitemap básico se parece com isto:</p>
       <div class="code-block"><span class="cm">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
 <span class="ct">&lt;urlset</span> xmlns=<span class="cv">"http://www.sitemaps.org/schemas/sitemap/0.9"</span><span class="ct">&gt;</span>
 
   <span class="ct">&lt;url&gt;</span>
     <span class="ct">&lt;loc&gt;</span>https://your-site.com/about<span class="ct">&lt;/loc&gt;</span>
     <span class="ct">&lt;lastmod&gt;</span>2026-01-20<span class="ct">&lt;/lastmod&gt;</span>
-    <span class="ct">&lt;changefreq&gt;</span>monthly<span class="ct">&lt;/changefreq&gt;</span>
+    <span class="ct">&lt;changefreq&gt;</span>mensal<span class="ct">&lt;/changefreq&gt;</span>
     <span class="ct">&lt;priority&gt;</span>0.8<span class="ct">&lt;/priority&gt;</span>
   <span class="ct">&lt;/url&gt;</span>
 
 <span class="ct">&lt;/urlset&gt;</span></div>
-      <h3>O que as tags significam:</h3>
+      <h3>O que os tags significam:</h3>
       <table class="compare-table">
         <thead>
           <tr><th>Tag</th><th>Obrigatório</th><th>Descrição</th></tr>
         </thead>
         <tbody>
-          <tr><td><code>&lt;loc&gt;</code></td><td>✅ Sim</td><td>URL completo da página começando com https://</td></tr>
+          <tr><td><code>&lt;loc&gt;</code></td><td>✅ Sim</td><td>URL completa da página começando com https://</td></tr>
           <tr><td><code>&lt;lastmod&gt;</code></td><td>❌ Não</td><td>Data da última modificação (formato AAAA-MM-DD)</td></tr>
-          <tr><td><code>&lt;changefreq&gt;</code></td><td>❌ Não</td><td>Frequência de mudanças: always, hourly, daily, weekly, monthly, yearly, never</td></tr>
-          <tr><td><code>&lt;priority&gt;</code></td><td>❌ Não</td><td>Prioridade de 0.0 a 1.0 (o padrão é 0.5)</td></tr>
+          <tr><td><code>&lt;changefreq&gt;</code></td><td>❌ Não</td><td>Frequência de mudanças: sempre, a cada hora, diariamente, semanalmente, mensalmente, anualmente, nunca</td></tr>
+          <tr><td><code>&lt;priority&gt;</code></td><td>❌ Não</td><td>Prioridade de 0.0 a 1.0 (padrão é 0.5)</td></tr>
         </tbody>
       </table>
       <div class="warn-box">
         <strong>⚠️ Bom saber</strong>
-        <p>O Google declarou oficialmente que <code>changefreq</code> e <code>priority</code> são ignorados na maioria das vezes. No entanto, <code>lastmod</code> realmente importa - o Google prioriza páginas com uma data de modificação recente.</p>
+        <p>O Google afirmou oficialmente que <code>changefreq</code> e <code>priority</code> são em sua maioria ignorados. No entanto, <code>lastmod</code> realmente importa — o Google prioriza páginas com uma data de modificação recente.</p>
       </div>
       <h2 id="types">Tipos de sitemaps</h2>
       <h3>Sitemap regular</h3>
       <p>Uma lista de URLs em formato XML. Adequado para sites com até 50.000 páginas.</p>
-      <h3>Sitemap Index</h3>
-      <p>Se você tiver mais de 50.000 URLs ou o arquivo exceder 50 MB, use um índice de sitemap. Este é um "arquivo pai" que se vincula a arquivos sitemap separados.</p>
+      <h3>Índice de Sitemap</h3>
+      <p>Se você tiver mais de 50.000 URLs ou o arquivo exceder 50 MB — use um índice de sitemap. Este é um "arquivo pai" que vincula a arquivos de sitemap separados.</p>
       <div class="tip-box">
-        <strong>✅ IndexFast suporta Sitemap Index</strong>
-        <p>O IndexFast reconhece e processa automaticamente tanto os sitemaps regulares quanto os índices de sitemaps de qualquer profundidade.</p>
+        <strong>✅ IndexFast suporta Índice de Sitemap</strong>
+        <p>O IndexFast reconhece e processa automaticamente tanto sitemaps regulares quanto índices de sitemap de qualquer profundidade.</p>
       </div>
       <h2 id="create">Como criar um sitemap.xml</h2>
       <div class="steps-list">
         <div class="step-item"><div class="step-num">1</div><div class="step-content"><strong>WordPress</strong><p>Plugins como Yoast SEO ou Rank Math geram um sitemap automaticamente em <code>/sitemap_index.xml</code>.</p></div></div>
-        <div class="step-item"><div class="step-num">2</div><div class="step-content"><strong>Webflow / Shopify</strong><p>Os sitemaps são gerados automaticamente e estão disponíveis em <code>/sitemap.xml</code>.</p></div></div>
+        <div class="step-item"><div class="step-num">2</div><div class="step-content"><strong>Webflow / Shopify</strong><p>Sitemaps são gerados automaticamente e estão disponíveis em <code>/sitemap.xml</code>.</p></div></div>
         <div class="step-item"><div class="step-num">3</div><div class="step-content"><strong>Desenvolvimento Personalizado (PHP/Node)</strong><p>Gere dinamicamente a partir do banco de dados usando pacotes ou escreva um script simples.</p></div></div>
       </div>
       <h2 id="register">Como registrar seu sitemap no Google</h2>
@@ -207,21 +208,21 @@ Sitemap: https://your-site.com/sitemap.xml</div>
       <ol>
         <li>Abra o Search Console → selecione sua propriedade.</li>
         <li>No menu à esquerda: Indexação → Sitemaps.</li>
-        <li>Insira o URL do seu sitemap e clique em "Enviar".</li>
+        <li>Insira a URL do seu sitemap e clique em "Enviar".</li>
       </ol>
-      <h2 id="mistakes">Erros comuns no sitemap</h2>
+      <h2 id="mistakes">Erros comuns de sitemap</h2>
       <ul>
-        <li><strong>URLs com noindex</strong> — não inclua páginas com uma tag <code>noindex</code>.</li>
+        <li><strong>URLs com noindex</strong> — não inclua páginas com a tag <code>noindex</code>.</li>
         <li><strong>Links quebrados</strong> — todas as URLs no sitemap devem retornar um código de status 200, não 301 ou 404.</li>
-        <li><strong>lastmod desatualizado</strong> — se você especificar lastmod, atualize-o apenas quando houver alterações reais.</li>
+        <li><strong>Data lastmod desatualizada</strong> — se você especificar lastmod, atualize-a apenas quando houver mudanças reais.</li>
         <li><strong>Sitemap ausente no robots.txt</strong> — o Google pode simplesmente não encontrar seu arquivo.</li>
       </ul>
-      <h2 id="sitemap-and-indexing">Sitemap + Indexing API = velocidade máxima</h2>
-      <p>Mesmo um sitemap registrado no Search Console não garante indexação rápida. O Google pode processá-lo em uma semana ou talvez em um mês.</p>
-      <p>A estratégia mais eficaz é combinar um sitemap atualizado com o envio ativo de URLs por meio da API de Indexação do Google. Você não espera que o Google venha por conta própria - você diz a ele "aqui está uma nova página, rasteje-a agora".</p>
+      <h2 id="sitemap-and-indexing">Sitemap + API de Indexação = velocidade máxima</h2>
+      <p>Mesmo um sitemap registrado no Search Console não garante indexação rápida. O Google pode processá-lo em uma semana, ou talvez em um mês.</p>
+      <p>A estratégia mais eficaz é combinar um sitemap atualizado com o envio ativo de URLs via API de Indexação do Google. Você não espera que o Google venha por conta própria — você diz a ele "aqui está uma nova página, rastreie agora".</p>
       <div class="cta-block">
         <h3>Envie seu sitemap para indexação agora mesmo</h3>
-        <p>O IndexFast lerá seu sitemap.xml e enviará todas as URLs pela API de Indexação do Google. O resultado - páginas no Google até amanhã.</p>
+        <p>O IndexFast lerá seu sitemap.xml e enviará todas as URLs via API de Indexação do Google. O resultado — páginas no Google até amanhã.</p>
         <a href="/pt/#pricing">Experimente grátis →</a>
       </div>
 
@@ -248,8 +249,8 @@ Sitemap: https://your-site.com/sitemap.xml</div>
         <li><a href="#types">Tipos de sitemaps</a></li>
         <li><a href="#create">Como criar um sitemap.xml</a></li>
         <li><a href="#register">Como registrar seu sitemap no Google</a></li>
-        <li><a href="#mistakes">Erros comuns no sitemap</a></li>
-        <li><a href="#sitemap-and-indexing">Sitemap + Indexing API = velocidade máxima</a></li>
+        <li><a href="#mistakes">Erros comuns de sitemap</a></li>
+        <li><a href="#sitemap-and-indexing">Sitemap + API de Indexação = velocidade máxima</a></li>
       </ul>
     </div>
     
@@ -257,14 +258,14 @@ Sitemap: https://your-site.com/sitemap.xml</div>
       <h4>Leia também</h4>
       <ul class="related-list">
         <li><a href="/pt/blog/google-search-console-guide.html">Google Search Console: guia completo 2026</a></li>
-        <li><a href="/pt/blog/indexing-after-redesign.html">Indexação após reformulação: como não perder tráfego</a></li>
-        <li><a href="/pt/blog/cron-jobs-for-seo.html">Tarefas Cron para SEO: automatizando a rotina</a></li>
+        <li><a href="/pt/blog/indexing-after-redesign.html">Indexação após redesign: como não perder tráfego</a></li>
+        <li><a href="/pt/blog/cron-jobs-for-seo.html">Cron jobs para SEO: automatizando rotinas</a></li>
       </ul>
     </div>
     <div class="sidebar-card" style="background: rgba(0,255,136,0.05); border-color: rgba(0,255,136,0.2);">
-      <h4 style="color: var(--green);">Experimente IndexFast</h4>
-      <p style="font-size:0.85rem; color:var(--muted); margin-bottom:16px; line-height:1.5;">Indexação automática de todas as páginas via Google Indexing API</p>
-      <a href="/app/register" style="display:block; background:var(--green); color:var(--black); text-align:center; padding:10px; border-radius:100px; font-family:var(--font-display); font-weight:700; font-size:0.85rem; text-decoration:none;">Começar grátis →</a>
+      <h4 style="color: var(--green);">Experimente o IndexFast</h4>
+      <p style="font-size:0.85rem; color:var(--muted); margin-bottom:16px; line-height:1.5;">Indexação automática de todas as páginas via API de Indexação do Google</p>
+      <a href="/app/register" style="display:block; background:var(--green); color:var(--black); text-align:center; padding:10px; border-radius:100px; font-family:var(--font-display); font-weight:700; font-size:0.85rem; text-decoration:none;">Comece grátis →</a>
     </div>
   </aside>
 </div>
@@ -273,7 +274,7 @@ Sitemap: https://your-site.com/sitemap.xml</div>
   <div class="footer-grid">
     <div class="footer-brand">
       <a href="/pt/" class="logo">Index<span>Fast</span></a>
-      <p>Serviço de indexação automática de páginas de sites no Google através da API oficial de Indexação do Google.</p>
+      <p>Serviço de indexação automática de páginas do site no Google através da API oficial de Indexação do Google.</p>
     </div>
     <div class="footer-col">
       <p class="footer-title">Produto</p>
@@ -281,7 +282,7 @@ Sitemap: https://your-site.com/sitemap.xml</div>
         <li><a href="/pt/#how-it-works">Como funciona</a></li>
         <li><a href="/pt/#features">Vantagens</a></li>
         <li><a href="/pt/#pricing">Preços</a></li>
-        <li><a href="/pt/docs/">Docs</a></li>
+        <li><a href="/pt/docs/">Documentação</a></li>
       </ul>
     </div>
     <div class="footer-col">
@@ -296,9 +297,9 @@ Sitemap: https://your-site.com/sitemap.xml</div>
     <div class="footer-col">
       <p class="footer-title">Suporte</p>
       <ul>
-        <li><a href="/pt/#faq">Perguntas frequentes</a></li>
-        <li><a href="https://t.me/indexfastgoogle" target="_blank" rel="noopener noreferrer">Chat do Telegram</a></li>
-        <li><a href="mailto:indexfastapp@gmail.com">Suporte por e-mail</a></li>
+        <li><a href="/pt/#faq">FAQ</a></li>
+        <li><a href="https://t.me/indexfastgoogle" target="_blank" rel="noopener noreferrer">Chat no Telegram</a></li>
+        <li><a href="mailto:indexfastapp@gmail.com">Suporte por email</a></li>
         <li><a href="/pt/status.html">Status do serviço</a></li>
       </ul>
     </div>
